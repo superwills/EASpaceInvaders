@@ -11,10 +11,22 @@ Game::Game() {
 	bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
 	flashesRem = 0;
   
-  for( int i = 0; i < 25; i++ ) {
-    invaders.push_back( new Invader );
+  // Lay the invaders out
+  const int rowsOfInvaders = 5;
+  const int invadersPerRow = 11; // 11 across in the original game.
+  float boardSize = sdl->winWidth * .8;
+  float invaderSize = boardSize / invadersPerRow;
+  
+  for( int row = 0; row < rowsOfInvaders; row++ ) {
+    for( int i = 0; i < invadersPerRow; i++ ) {
+      RectF box;
+      box.y = (rowsOfInvaders - row) * ( invaderSize + 5 );
+      box.x = i*( invaderSize + 5 );
+      
+      box.w = box.h = invaderSize;
+      invaders.push_back( new Invader( box ) );
+    }
   }
-
 	leftPaddle = new Paddle( Vector2f(25,100), 10, "left paddle" );
 	rightPaddle = new Paddle( Vector2f(25,100), 10, "right paddle" );
 	title = new TitleScreen( "title", "assets/title.jpg" );

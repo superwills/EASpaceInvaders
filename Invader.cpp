@@ -1,5 +1,5 @@
 #include "Invader.h"
 
-Invader::Invader() {
+Invader::Invader( const RectF& rectangle ) : Sprite( rectangle ) {
   name = makeString( "Invader %d", spriteId );
 }

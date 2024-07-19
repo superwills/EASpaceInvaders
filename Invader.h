@@ -4,6 +4,7 @@
 
 class Invader : public Sprite {
 public:
-  Invader();
+  // Must specify where/size of Invader to construct
+  Invader( const RectF& rectangle );
   
 };

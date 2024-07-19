@@ -26,9 +26,9 @@ class SDLWindow {
 	map<Music, Mix_Music*> musics;
 	map<SFX, Mix_Chunk*> sfx;
 
-  int winWidth = 640, winHeight = 480;
   
 public:
+  int winWidth = 640, winHeight = 480;
 	SDL_Window *window = 0;
 	SDL_Renderer *renderer = 0;
   inline static TTF_Font *defaultFont = 0; // default rendering font.
