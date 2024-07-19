@@ -52,6 +52,7 @@ Game::Game() {
 	sdl->loadWavSound( SFX::Win, "assets/sounds/win.wav" );
 	
 	setState( GameState::Title );
+  changeScore( 0 ); // Create the scoresprite for the 1st time
 }
 
 bool Game::isState( GameState state ) {
@@ -103,29 +104,23 @@ void Game::togglePause() {
 	}
 }
 
+void Game::changeScore( int byScoreValue ) {
+  score += byScoreValue;
+  
+  // Unfortunately not efficient due to not using tex atlases..
+  if( scoreSprite ) {
+    delete scoreSprite;
+  }
+  scoreSprite = Sprite::Text( makeString( "%d", score ), White );
+  scoreSprite->scale( 0.48f );
+  scoreSprite->setCenter( sdl->getSize().x/2 - scoreSprite->box.w,
+    scoreSprite->box.h/2 );
+}
+
 void Game::resetBall() {
 	ball->setCenter( sdl->getSize()/2 );
 	ball->vel = Vector2f::random(-1, 1);
 	ball->vel.setLen( ball->lastStartSpeed * 2.f );
-	drawScores();
-}
-
-void Game::drawScores() {
-	if( leftScoreSprite ) {
-		delete leftScoreSprite;
-	}
-	leftScoreSprite = Sprite::Text( makeString( "%d", leftScoreValue ), White );
-	leftScoreSprite->scale( 0.48f );
-	leftScoreSprite->setCenter( sdl->getSize().x/2 - leftScoreSprite->box.w,
-		leftScoreSprite->box.h/2 );
-
-	if( rightScoreSprite ) {
-		delete rightScoreSprite;
-	}
-	rightScoreSprite = Sprite::Text( makeString( "%d", rightScoreValue ), White );
-	rightScoreSprite->scale( 0.48f );
-	rightScoreSprite->setCenter( sdl->getSize().x/2 + rightScoreSprite->box.w,
-		rightScoreSprite->box.h/2 );
 }
 
 void Game::checkForCollisions() {
@@ -201,8 +196,7 @@ void Game::draw() {
 	else {
 		player->draw();
 		ball->draw();
-		leftScoreSprite->draw();
-		rightScoreSprite->draw();
+		scoreSprite->draw();
 	}
 	
 	if( gameState == GameState::Paused ) {

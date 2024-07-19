@@ -28,9 +28,8 @@ private:
 	SDL_Color bkgColor;	// the current background color
   int flashesRem = 0;
   
-	// Keeping track of scores
-	int leftScoreValue = 0, rightScoreValue = 0;
-	Sprite *leftScoreSprite = 0, *rightScoreSprite = 0;
+	int score = 0;
+  Sprite *scoreSprite = 0;
 	
 	// For unpausing
 	GameState prevState, gameState;
@@ -45,8 +44,9 @@ public:
 	GameState getState();
 	void setState( GameState newState );
 	void togglePause();
+  
+  void changeScore( int byScoreValue );
 	void resetBall();
-	void drawScores();
 	void checkForCollisions();
 	void runGame();
 	void update();
