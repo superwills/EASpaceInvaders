@@ -27,7 +27,7 @@ using namespace std;
 #include "Vectorf.h"
 
 // Stores everything to do with SDL, and game assets
-class SDL {
+class SDLWindow {
 	// asset maps: filename=>SDL_* objects
 	map<string, SDL_Texture*> texes;
 	map<string, Mix_Music*> musics;
@@ -38,10 +38,12 @@ class SDL {
 public:
 	SDL_Window* window = 0;
 	SDL_Renderer* renderer = 0;
+  
+  static void SDLInit();
 
 	// ctor requires just window width & height
-	SDL(const char *title, int windowWidth, int windowHeight);
-	~SDL();
+  SDLWindow(const char *title, int windowWidth, int windowHeight);
+	~SDLWindow();
 	
 	inline Vector2f getSize(){
 		return Vector2f( winWidth, winHeight );

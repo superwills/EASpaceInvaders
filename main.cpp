@@ -10,7 +10,7 @@ using namespace std;
 int main(int argc, char* args[]) {
 	srand(time(0));
 	
-	SDL sdl( "Ping", 800, 600 );
+  SDLWindow sdl( "Ping", 800, 600 );
 	
 	// Construct our Game object, to retain gamestate information
 	Game game( sdl );

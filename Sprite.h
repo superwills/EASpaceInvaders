@@ -10,7 +10,7 @@ class Sprite
 {
 public:
 	// Eq of singletons, but not singleton.
-	static SDL* sdl;		// The SDL object, for rendering
+	static SDLWindow* sdl;		// The SDL object, for rendering
 	static Game* game;		// The Game object, which contains all game world objects
 
 	// object name, for debugging purposes

@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "Colors.h"
 
-Game::Game( SDL& iSdl ):
+Game::Game( SDLWindow& iSdl ):
 	leftScoreValue(0), rightScoreValue(0), leftScoreSprite(0), rightScoreSprite(0)
 {
 	// Link up the static reference to this Game object inside Sprite:
@@ -82,21 +82,15 @@ void Game::setState( GameState newState )
 	{
 	case Title:
 		// start the title music
-		sdl->playMusic( "song 91 7.ogg" );
+		sdl->playMusic( "assets/sounds/1721341344111_2337.mod.mp3" );
 	 	break;
 	
 	case Running:
 	case JustScored:
 		// game song
 		// if prevstate was Running, don't restart the music
-		if( prevState == Paused )
-		{
+		if( prevState == Paused ) {
 			Mix_ResumeMusic(); // unpause the music
-		}
-		else if( prevState == Title )
-		{
-			// start the in-game music
-			sdl->playMusic( "song 81 6.flac" );
 		}
 		break;
 	

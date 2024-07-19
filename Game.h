@@ -7,13 +7,16 @@
 #include "Controller.h"
 #include "TitleScreen.h"
 
+#include <memory>
+using std::shared_ptr;
+
 class Game {
 public:
 	enum GameState { Title, Running, JustScored, Paused, Exiting };
 	
 private:
 	// The SDL object, which allows us to draw and play sounds
-	SDL* sdl;
+	SDLWindow* sdl;
 	
 	// Need a ball and paddles for this game
 	Ball* ball;
@@ -42,7 +45,7 @@ private:
 	Controller controller;
 
 public:
-	Game( SDL& iSdl );
+	Game( SDLWindow& iSdl );
 	~Game();
 	void leftPlayerScored();
 	void rightPlayerScored();

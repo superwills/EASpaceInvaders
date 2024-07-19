@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Colors.h"
 
-SDL* Sprite::sdl;
+SDLWindow* Sprite::sdl;
 Game* Sprite::game;
 
 void Sprite::defaults()
