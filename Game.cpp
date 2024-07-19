@@ -27,16 +27,15 @@ Game::Game() {
       invaders.push_back( new Invader( box ) );
     }
   }
-	leftPaddle = new Paddle( Vector2f(25,100), 10 );
-	rightPaddle = new Paddle( Vector2f(25,100), 10 );
+  
+	player = new Paddle( Vector2f( 25, 25 ), 10 );
 	title = new TitleScreen( "space invaders!" );
 	pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
 	pausedText->setCenter( sdl->getSize()/2 );
 
 	// Set initial positions for player paddles
-	float centerH = sdl->getSize().y/2.f - leftPaddle->box.h/2;
-	leftPaddle->setPos( Vector2f( leftPaddle->getPos().x, centerH ) );
-	rightPaddle->setPos( Vector2f( sdl->getSize().x - rightPaddle->box.w, centerH ) );
+	float centerH = sdl->getSize().y/2.f - player->box.h/2;
+	player->setPos( Vector2f( sdl->getSize().x - player->box.w, centerH ) );
 	
 	// Create the ball
 	ball = new Ball( 32 );
@@ -147,29 +146,14 @@ void Game::drawScores() {
 void Game::checkForCollisions() {
 	bool ballHit = false;
 	// check the ball's rect against the paddle's rects
-	if( ball->box.hit( leftPaddle->box ) ) {
-    int sfxId = (int)SFX::Ping0 + randInt( 0, 2 );
-		sdl->playSound( (SFX)sfxId );
-		
-		// Push the ball off the paddle, so they don't interpenetrate
-		float overlap = leftPaddle->box.right() - ball->box.left();
-		ball->box.x += overlap;
-
-		// let the bounce angle be proportional to distance from center paddle
-		float y = ball->box.centroid().y - leftPaddle->box.centroid().y;
-		float a = M_PI/2.f * y/leftPaddle->box.h;
-		ball->vel.setAngle( a );
-		
-		ballHit = true;
-	}
-
-  if( ball->box.hit( rightPaddle->box ) ) {
+	
+  if( ball->box.hit( player->box ) ) {
     sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
-		float overlap = rightPaddle->box.left() - ball->box.right();
+		float overlap = player->box.left() - ball->box.right();
 		ball->box.x += overlap;
 		
-		float y = rightPaddle->box.centroid().y - ball->box.centroid().y;
-		float a = M_PI + M_PI/2.f * y/rightPaddle->box.h;
+		float y = player->box.centroid().y - ball->box.centroid().y;
+		float a = M_PI + M_PI/2.f * y/player->box.h;
 		ball->vel.setAngle( a );
 		
 		ballHit = true;
@@ -183,19 +167,13 @@ void Game::checkForCollisions() {
 
 void Game::runGame() {
 	// Use the controller state to change gamestate
-	if( controller.mouseY < 0 || controller.keystate[SDL_SCANCODE_UP] )
-		rightPaddle->moveUp();
-	else if( controller.mouseY > 0 || controller.keystate[SDL_SCANCODE_DOWN] )
-		rightPaddle->moveDown();
+	if( controller.mouseX < 0 || controller.keystate[SDL_SCANCODE_UP] )
+    player->moveUp();
+	else if( controller.mouseX > 0 || controller.keystate[SDL_SCANCODE_DOWN] )
+    player->moveDown();
 
-	if( controller.keystate[SDL_SCANCODE_W] )
-		leftPaddle->moveUp();
-	if( controller.keystate[SDL_SCANCODE_S] )
-		leftPaddle->moveDown();
-	
 	// let the game objects update themselves
-	leftPaddle->update();
-	rightPaddle->update();
+	player->update();
 	ball->update();
   
   for( Invader *invader : invaders ) {
@@ -242,8 +220,7 @@ void Game::draw() {
 		title->draw();
 	}
 	else {
-		leftPaddle->draw();
-		rightPaddle->draw();
+		player->draw();
 		ball->draw();
 		leftScoreSprite->draw();
 		rightScoreSprite->draw();

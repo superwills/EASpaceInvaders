@@ -21,8 +21,7 @@ private:
   vector<Invader*> invaders;
 	// Need a ball and paddles for this game
 	Ball* ball;
-	Paddle* leftPaddle;
-	Paddle* rightPaddle;
+	Paddle* player;
 
 	TitleScreen* title;
 	Sprite* pausedText;
