@@ -29,8 +29,7 @@ class SDLWindow {
 
   
 public:
-  int winWidth = 640, winHeight = 480;
-	SDL_Window *window = 0;
+  SDL_Window *window = 0;
 	SDL_Renderer *renderer = 0;
   inline static TTF_Font *defaultFont = 0; // default rendering font.
   
@@ -41,9 +40,8 @@ public:
   SDLWindow( const string &title, int windowWidth, int windowHeight );
 	~SDLWindow();
 	
-	inline Vector2f getSize(){
-		return Vector2f( winWidth, winHeight );
-	}
+  // Not cached, get it from the physical window
+  Vector2f getWindowSize();
 	void setColor( SDL_Color color );
 
 	// SDL supplied graphics primitives functionality

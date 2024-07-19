@@ -11,14 +11,15 @@ Game::Game() {
   
   title = new TitleScreen( "space invaders!" );
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
-  pausedText->setCenter( sdl->getSize()/2 );
+  Vector2f windowSize = sdl->getWindowSize();
+  pausedText->setCenter( windowSize/2 );
 
 	bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
   
   // Lay the invaders out
   const int rowsOfInvaders = 5;
   const int invadersPerRow = 11; // 11 across in the original game.
-  float boardSize = sdl->winWidth * .8;
+  float boardSize = windowSize.x * .8;
   float invaderSize = boardSize / invadersPerRow;
   
   for( int row = 0; row < rowsOfInvaders; row++ ) {
@@ -32,11 +33,11 @@ Game::Game() {
     }
   }
   
-	player = new Player( Vector2f( 25, 25 ), 10 );
+	player = new Player( windowSize );
 	
 	// Set initial positions for player paddles
-	float centerH = sdl->getSize().y/2.f - player->box.h/2;
-	player->setPos( Vector2f( sdl->getSize().x - player->box.w, centerH ) );
+	float centerH = windowSize.y/2.f - player->box.h/2;
+	player->setPos( Vector2f( windowSize.x - player->box.w, centerH ) );
 	
 	// Create the ball
 	ball = new Ball( 32 );
@@ -50,6 +51,8 @@ Game::Game() {
 	sdl->loadWavSound( SFX::Ping2, "assets/sounds/ping2.wav" );
 	sdl->loadWavSound( SFX::Ping3, "assets/sounds/ping3.wav" );
 	sdl->loadWavSound( SFX::Win, "assets/sounds/win.wav" );
+  
+  sdl->loadMusic( Music::Background0, "assets/sounds/1721341344111_2337.mod.mp3" );
 	
 	setState( GameState::Title );
   changeScore( 0 ); // Create the scoresprite for the 1st time
@@ -66,10 +69,8 @@ Game::GameState Game::getState() {
 void Game::setState( GameState newState ) {
 	prevState = gameState;
 	
-	switch( newState )
-	{
+	switch( newState ) {
   case GameState::Title:
-		// start the title music
 		sdl->playMusic( Music::Background0 );
 	 	break;
 	
@@ -113,12 +114,12 @@ void Game::changeScore( int byScoreValue ) {
   }
   scoreSprite = Sprite::Text( makeString( "%d", score ), White );
   scoreSprite->scale( 0.48f );
-  scoreSprite->setCenter( sdl->getSize().x/2 - scoreSprite->box.w,
+  scoreSprite->setCenter( sdl->getWindowSize().x/2 - scoreSprite->box.w,
     scoreSprite->box.h/2 );
 }
 
 void Game::resetBall() {
-	ball->setCenter( sdl->getSize()/2 );
+	ball->setCenter( sdl->getWindowSize()/2 );
 	ball->vel = Vector2f::random(-1, 1);
 	ball->vel.setLen( ball->lastStartSpeed * 2.f );
 }

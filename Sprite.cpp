@@ -60,8 +60,9 @@ void Sprite::enforceWorldLimits() {
     box.y += overshot;
 	}
   
-	if( box.bottom() > sdl->getSize().y ) {
-		float overshot = sdl->getSize().y - box.bottom();
+  Vector2f windowSize = sdl->getWindowSize();
+	if( box.bottom() > windowSize.y ) {
+		float overshot = windowSize.y - box.bottom();
     box.y += overshot;
 	}
   
@@ -72,8 +73,8 @@ void Sprite::enforceWorldLimits() {
     box.x += overshot;
 	}
   
-	if( box.right() > sdl->getSize().x ) {
-		float overshot = sdl->getSize().x - box.right();
+	if( box.right() > windowSize.x ) {
+		float overshot = windowSize.x - box.right();
     box.x += overshot;
 	}
 }

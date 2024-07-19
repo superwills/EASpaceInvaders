@@ -29,11 +29,9 @@ void SDLWindow::ExitApp( const string &msg ) {
   exit( 1 );
 }
 
-SDLWindow::SDLWindow( const string &title, int windowWidth, int windowHeight ) :
-    winWidth( windowWidth ), winHeight( windowHeight ) {
-	
+SDLWindow::SDLWindow( const string &title, int windowWidth, int windowHeight ) {
 	window = SDL_CreateWindow( title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-    winWidth, winHeight, SDL_WINDOW_SHOWN );
+    windowWidth, windowHeight, SDL_WINDOW_SHOWN );
 	if( !window )	{
 		ExitApp( "SDL_CreateWindow failed" );
 	}
@@ -60,6 +58,12 @@ SDLWindow::~SDLWindow() {
 	SDL_DestroyWindow( window );
 
 	SDL_Quit();
+}
+
+Vector2f SDLWindow::getWindowSize() {
+  int w, h;
+  SDL_GetWindowSize( window, &w, &h );
+  return Vector2f( w, h );
 }
 
 void SDLWindow::setColor( SDL_Color color ) {
