@@ -1,9 +1,8 @@
 #include "TitleScreen.h"
 #include "Colors.h"
 
-TitleScreen::TitleScreen(string title, string filename):
-Sprite(title, filename)
-{
+TitleScreen::TitleScreen( string title, string filename ) :
+    Sprite( filename ) {
 	color = SDL_ColorMake(0,0,0,0);
 }
 

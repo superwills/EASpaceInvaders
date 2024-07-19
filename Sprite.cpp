@@ -2,70 +2,68 @@
 #include "Game.h"
 #include "Colors.h"
 
-void Sprite::defaults() {
-	color = SDL_ColorMake( 255, 255, 255, 255 );
-	hidden = false;
+Sprite::Sprite() {
+  name = makeString( "Sprite %d", spriteId );
 }
 
-Sprite::Sprite(string iname) {
-	defaults();
-	name = iname;
-	tex = 0;
-}
-
-Sprite::Sprite(string iname, SDL_Texture* iTex) {
-	defaults();
-	name = iname;
+Sprite::Sprite( SDL_Texture* iTex ) {
+	name = makeString( "Sprite %d from texture", spriteId );
 	tex = iTex;
 	retrieveTexSize();
 }
 
-Sprite::Sprite(string iname, string filename) {
-	defaults();
-	name = iname;
-	tex = sdl->loadTexture(filename);
+Sprite::Sprite( string filename ) {
+  name = makeString( "Sprite %d from file `%s`", spriteId, filename.c_str() );
+  tex = sdl->loadTexture( filename );
 	retrieveTexSize();
 }
 
-Sprite* Sprite::Text(TTF_Font* font, string text, SDL_Color iColor) {
-	return new Sprite( string("Text ") + text, sdl->makeText( font, text, iColor ) );
+Sprite* Sprite::Text( string text, SDL_Color iColor ) {
+  SDL_Texture* tex = sdl->makeTextTexture( text, iColor );
+  if( !tex ) {
+    error( "Sprite::Text couldn't make text texture for `%s`", text.c_str() );
+    return 0;
+  }
+  
+	Sprite *sprite = new Sprite( tex );
+  return sprite;
 }
 
 Vector2f Sprite::getPos() {
-	return rect.xy();
+	return box.xy();
 }
 
 void Sprite::setPos( Vector2f pos ) {
-	rect.xy() = pos;
+  box.xy() = pos;
 }
 
 Vector2f Sprite::getCenter() {
-	return rect.centroid();
+	return box.centroid();
 }
 
 void Sprite::setCenter( Vector2f pos ) {
-	rect.setCenter( pos );
+  box.setCenter( pos );
 }
 
 void Sprite::setSize( Vector2f size ) {
-	rect.size() = size;
+  box.size() = size;
 }
 
 void Sprite::scale( float s ) {
-	rect.size() *= s;
+  box.size() *= s;
 }
 
 void Sprite::bounceTopAndBottom() {
-	if( rect.top() < 0 )
+	if( box.top() < 0 )
 	{
-		float overshot = 0 - rect.top();
-		rect.y += overshot;
+		float overshot = 0 - box.top();
+    box.y += overshot;
 		vel.y = -vel.y; // reflect y vel
 	}
-	if( rect.bottom() > sdl->getSize().y )
+	if( box.bottom() > sdl->getSize().y )
 	{
-		float overshot = sdl->getSize().y - rect.bottom();
-		rect.y += overshot;
+		float overshot = sdl->getSize().y - box.bottom();
+    box.y += overshot;
 		vel.y = -vel.y; // reflect y vel
 	}
 }
@@ -74,59 +72,52 @@ void Sprite::bounceLeftAndRight()
 {
 	// ensure stays within bounds of world
 	// two of these can happen simultaneously, which is why no else is used
-	if( rect.left() < 0 )
+	if( box.left() < 0 )
 	{
-		float overshot = - rect.left();
-		rect.x += overshot;
+		float overshot = - box.left();
+    box.x += overshot;
 		vel.x = -vel.x; // reflect x vel
 	}
-	if( rect.right() > sdl->getSize().x )
+	if( box.right() > sdl->getSize().x )
 	{
-		float overshot = sdl->getSize().x - rect.right();
-		rect.x += overshot;
+		float overshot = sdl->getSize().x - box.right();
+    box.x += overshot;
 		vel.x = -vel.x; // reflect x vel
 	}
 }
 
-void Sprite::show()
-{
+void Sprite::show() {
 	hidden = false;
 }
 
-void Sprite::hide()
-{
+void Sprite::hide() {
 	hidden = true;
 }
 
-void Sprite::update()
-{
-	rect.xy() += vel;
+void Sprite::update() {
+  box.xy() += vel;
 	bounceTopAndBottom();
 	bounceLeftAndRight();
 }
 
-void Sprite::draw()
-{
+void Sprite::draw() {
 	if( hidden )
-		return ; // just don't draw
+		return; // just don't draw
 	
 	sdl->setColor( color );
-	if( !tex )
-	{
+	if( !tex ) {
 		// no texture, so draw a solid rect
-		sdl->fillRect( rect.x, rect.y, rect.w, rect.h, color );
+		sdl->fillRect( box.x, box.y, box.w, box.h, color );
 	}
-	else
-	{
+	else {
 		// Convert our floating pt rect to an int-based rect
-		SDL_Rect r = { (int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+		SDL_Rect r = { (int)box.x, (int)box.y, (int)box.w, (int)box.h};
 		sdl->drawTexture( r, tex );
 	}
 }
 
-void Sprite::retrieveTexSize()
-{
-	int w,h;
+void Sprite::retrieveTexSize() {
+	int w, h;
 	SDL_QueryTexture( tex, 0, 0, &w, &h );
-	rect.w=w, rect.h=h;
+  box.w=w, box.h=h;
 }

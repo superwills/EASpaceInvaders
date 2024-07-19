@@ -31,12 +31,13 @@ class SDLWindow {
 public:
 	SDL_Window *window = 0;
 	SDL_Renderer *renderer = 0;
+  inline static TTF_Font *defaultFont = 0; // default rendering font.
   
   static void SDLInit();
-  static void errorOut( const char *msg );
+  static void ExitApp( const string &msg );
 
 	// ctor requires just window width & height
-  SDLWindow( const char *title, int windowWidth, int windowHeight );
+  SDLWindow( const string &title, int windowWidth, int windowHeight );
 	~SDLWindow();
 	
 	inline Vector2f getSize(){
@@ -50,17 +51,20 @@ public:
 	void fillRect( int x, int y, int w, int h, SDL_Color color );
 	void drawTexture( SDL_Rect rect, SDL_Texture *tex );
 	
-	SDL_Surface* loadSurface( string filename );
-	SDL_Texture* loadTexture( string filename );
-	SDL_Texture* makeText( TTF_Font *font, string text, SDL_Color color );
+	SDL_Surface* loadSurface( const string &filename );
+	SDL_Texture* loadTexture( const string &filename );
+  
+  // Makes a texture containing `text`, in `color` specified
+  // A lot less efficient than texture atlasing, but good for prototype
+	SDL_Texture* makeTextTexture( const string &text, SDL_Color color );
   
 	// Knowing SDLWindow is slowly becoming a god-class, in the interests of
   // simplicity we add on sound playing functionality here. SDL makes the code simple,
   // so it isn't a lot of code.
-  void loadMusic( Music musicId, string filename );
+  void loadMusic( Music musicId, const string &filename );
   void playMusic( Music musicId );
   
-  void loadWavSound( SFX sfxId, string waveFilename );
+  void loadWavSound( SFX sfxId, const string &waveFilename );
   void playSound( SFX sfxId );
 };
 

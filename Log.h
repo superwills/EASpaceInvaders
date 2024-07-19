@@ -9,8 +9,7 @@ using namespace std;
 
 /////////////////LOGGING
 
-enum ErrorLevel
-{
+enum ErrorLevel {
   Info    = 1 << 0, // 1
   Warning = 1 << 1, // 2
   Error   = 1 << 2  // 4

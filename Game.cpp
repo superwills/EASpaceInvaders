@@ -1,30 +1,30 @@
 #include "Game.h"
 #include "Colors.h"
 
+#include "Invader.h"
+
 Game* game = 0;
 
 Game::Game() {
 	gameState = Title;
 
-	font = TTF_OpenFont("assets/unispace.ttf", 128);
-	if( !font ) {
-		error("TTF_OpenFont: %s", TTF_GetError());
-	}
-	
-	// Create game sprites
 	bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
 	flashesRem = 0;
+  
+  for( int i = 0; i < 25; i++ ) {
+    invaders.push_back( new Invader );
+  }
 
 	leftPaddle = new Paddle( Vector2f(25,100), 10, "left paddle" );
 	rightPaddle = new Paddle( Vector2f(25,100), 10, "right paddle" );
 	title = new TitleScreen( "title", "assets/title.jpg" );
-	pausedText = Sprite::Text( font, "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
+	pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
 	pausedText->setCenter( sdl->getSize()/2 );
 
 	// Set initial positions for player paddles
-	float centerH = sdl->getSize().y/2.f - leftPaddle->rect.h/2;
+	float centerH = sdl->getSize().y/2.f - leftPaddle->box.h/2;
 	leftPaddle->setPos( Vector2f( leftPaddle->getPos().x, centerH ) );
-	rightPaddle->setPos( Vector2f( sdl->getSize().x - rightPaddle->rect.w, centerH ) );
+	rightPaddle->setPos( Vector2f( sdl->getSize().x - rightPaddle->box.w, centerH ) );
 	
 	// Create the ball
 	ball = new Ball( 32, "the ball" );
@@ -40,10 +40,6 @@ Game::Game() {
 	sdl->loadWavSound( SFX::Win, "assets/sounds/win.wav" );
 	
 	setState( Title );
-}
-
-Game::~Game() {
-	
 }
 
 void Game::leftPlayerScored() {
@@ -122,46 +118,46 @@ void Game::drawScores() {
 	if( leftScoreSprite ) {
 		delete leftScoreSprite;
 	}
-	leftScoreSprite = Sprite::Text( font, makeString( "%d", leftScoreValue ), White );
+	leftScoreSprite = Sprite::Text( makeString( "%d", leftScoreValue ), White );
 	leftScoreSprite->scale( 0.48f );
-	leftScoreSprite->setCenter( sdl->getSize().x/2 - leftScoreSprite->rect.w,
-		leftScoreSprite->rect.h/2 );
+	leftScoreSprite->setCenter( sdl->getSize().x/2 - leftScoreSprite->box.w,
+		leftScoreSprite->box.h/2 );
 
 	if( rightScoreSprite ) {
 		delete rightScoreSprite;
 	}
-	rightScoreSprite = Sprite::Text( font, makeString( "%d", rightScoreValue ), White );
+	rightScoreSprite = Sprite::Text( makeString( "%d", rightScoreValue ), White );
 	rightScoreSprite->scale( 0.48f );
-	rightScoreSprite->setCenter( sdl->getSize().x/2 + rightScoreSprite->rect.w,
-		rightScoreSprite->rect.h/2 );
+	rightScoreSprite->setCenter( sdl->getSize().x/2 + rightScoreSprite->box.w,
+		rightScoreSprite->box.h/2 );
 }
 
 void Game::checkForCollisions() {
 	bool ballHit = false;
 	// check the ball's rect against the paddle's rects
-	if( ball->rect.hit( leftPaddle->rect ) ) {
+	if( ball->box.hit( leftPaddle->box ) ) {
     int sfxId = (int)SFX::Ping0 + randInt( 0, 2 );
 		sdl->playSound( (SFX)sfxId );
 		
 		// Push the ball off the paddle, so they don't interpenetrate
-		float overlap = leftPaddle->rect.right() - ball->rect.left();
-		ball->rect.x += overlap;
+		float overlap = leftPaddle->box.right() - ball->box.left();
+		ball->box.x += overlap;
 
 		// let the bounce angle be proportional to distance from center paddle
-		float y = ball->rect.centroid().y - leftPaddle->rect.centroid().y;
-		float a = M_PI/2.f * y/leftPaddle->rect.h;
+		float y = ball->box.centroid().y - leftPaddle->box.centroid().y;
+		float a = M_PI/2.f * y/leftPaddle->box.h;
 		ball->vel.setAngle( a );
 		
 		ballHit = true;
 	}
 
-  if( ball->rect.hit( rightPaddle->rect ) ) {
+  if( ball->box.hit( rightPaddle->box ) ) {
     sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
-		float overlap = rightPaddle->rect.left() - ball->rect.right();
-		ball->rect.x += overlap;
+		float overlap = rightPaddle->box.left() - ball->box.right();
+		ball->box.x += overlap;
 		
-		float y = rightPaddle->rect.centroid().y - ball->rect.centroid().y;
-		float a = M_PI + M_PI/2.f * y/rightPaddle->rect.h;
+		float y = rightPaddle->box.centroid().y - ball->box.centroid().y;
+		float a = M_PI + M_PI/2.f * y/rightPaddle->box.h;
 		ball->vel.setAngle( a );
 		
 		ballHit = true;
@@ -189,6 +185,10 @@ void Game::runGame() {
 	leftPaddle->update();
 	rightPaddle->update();
 	ball->update();
+  
+  for( Invader *invader : invaders ) {
+    
+  }
 	
 	// Check for collisions after each object moves
 	checkForCollisions();
@@ -240,6 +240,10 @@ void Game::draw() {
 	if( gameState == Paused ) {
 		pausedText->draw();
 	}
+  
+  for( Invader* invader : invaders ) {
+    invader->draw();
+  }
 	
 	SDL_RenderPresent( sdl->renderer );
 }

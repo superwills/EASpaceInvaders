@@ -7,6 +7,16 @@ using namespace std;
 #include "Sprite.h"
 #include <time.h>
 
+// Coding features.
+// 1. Correctness. The code is free of known bugs and was tested. Although I could have included unit tests,
+// I didn't because, since it's just a short sample
+// 2. Terseness. Some of the code choices favor terseness of code.
+// The Mojang standard allowed use of short variable names for counters, but required
+// full names for anything else.
+// Although many game studios don't put a high emphasis on code terseness (including Mojang)
+// I still think it's an important thing. One time, an engineer moved everything in the anonymous namespace
+// (things accessed with ::function) into a namespace called GameTitle::Anonymous.
+
 // procedural aliens?
 /*
  E's and A's

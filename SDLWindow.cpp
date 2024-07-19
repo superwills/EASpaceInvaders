@@ -5,31 +5,37 @@ SDLWindow *sdl = 0;
 
 void SDLWindow::SDLInit() {
   if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
-    errorOut( "SDL_Init failed" );
+    ExitApp( "SDL_Init failed" );
   }
   
   if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 512 ) < 0 )  {
     string err = makeString( "Mix_OpenAudio failed: `%s`", Mix_GetError() );
-    errorOut( err.c_str() );
+    ExitApp( err.c_str() );
   }
   
   if( TTF_Init() < 0 ) {
-    errorOut( "TTF_Init failed" );
+    ExitApp( "TTF_Init failed" );
   }
+  
+  defaultFont = TTF_OpenFont("assets/unispace.ttf", 128);
+  if( !defaultFont ) {
+    ExitApp( makeString( "TTF_OpenFont: %s", TTF_GetError() ) );
+  }
+  
 }
 
-void SDLWindow::errorOut( const char *msg ) {
-  printf( "`%s`: SDL: `%s`\n", msg, SDL_GetError() );
+void SDLWindow::ExitApp( const string &msg ) {
+  printf( "`%s`: SDL: `%s`\n", msg.c_str(), SDL_GetError() );
   exit( 1 );
 }
 
-SDLWindow::SDLWindow(const char *title, int windowWidth, int windowHeight) :
+SDLWindow::SDLWindow( const string &title, int windowWidth, int windowHeight ) :
     winWidth( windowWidth ), winHeight( windowHeight ) {
 	
-	window = SDL_CreateWindow( title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+	window = SDL_CreateWindow( title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     winWidth, winHeight, SDL_WINDOW_SHOWN );
 	if( !window )	{
-		errorOut( "SDL_CreateWindow failed" );
+		ExitApp( "SDL_CreateWindow failed" );
 	}
 	
   renderer = SDL_GetRenderer( window );
@@ -42,7 +48,7 @@ SDLWindow::SDLWindow(const char *title, int windowWidth, int windowHeight) :
   renderer = SDL_CreateRenderer( window, -1,
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE );
   if( !renderer ) {
-    errorOut( "Could not create renderer" );
+    ExitApp( "Could not create renderer" );
   }
 	  
 	// Turn on alpha blending
@@ -81,7 +87,7 @@ void SDLWindow::drawTexture( SDL_Rect rect, SDL_Texture *tex ) {
 	SDL_RenderCopy( renderer, tex, NULL, &rect );
 }
 
-SDL_Surface* SDLWindow::loadSurface( string filename ) {
+SDL_Surface* SDLWindow::loadSurface( const string &filename ) {
 	SDL_Surface* surface = IMG_Load( filename.c_str() );
   if( !surface ) {
     error( "Couldn't load surface `%s`!", filename.c_str() );
@@ -89,7 +95,7 @@ SDL_Surface* SDLWindow::loadSurface( string filename ) {
   return surface;
 }
 
-SDL_Texture* SDLWindow::loadTexture( string filename ) {
+SDL_Texture* SDLWindow::loadTexture( const string &filename ) {
 	auto iter = texes.find( filename );
 	if( iter != texes.end() )	{
 		warning( "%s already loaded", filename.c_str() );
@@ -114,25 +120,24 @@ SDL_Texture* SDLWindow::loadTexture( string filename ) {
 	return tex;
 }
 
-SDL_Texture* SDLWindow::makeText( TTF_Font* font, string text, SDL_Color color ) {
-	SDL_Surface *messageSurface = TTF_RenderText_Solid( font, text.c_str(), color );
-  if( !messageSurface ) {
+SDL_Texture* SDLWindow::makeTextTexture( const string &text, SDL_Color color ) {
+	SDL_Surface *textSurface = TTF_RenderText_Solid( defaultFont, text.c_str(), color );
+  if( !textSurface ) {
     error( "TTF_RenderText_Solid failed %s", text.c_str() );
     return 0;
   }
   
-	SDL_Texture *texture = SDL_CreateTextureFromSurface( renderer, messageSurface );
-  
+	SDL_Texture *texture = SDL_CreateTextureFromSurface( renderer, textSurface );
   if( !texture ) {
     error( "SDL_CreateTextureFromSurface failed %s", text.c_str() );
     return 0;
   }
 	
-  SDL_FreeSurface( messageSurface );
+  SDL_FreeSurface( textSurface );
 	return texture;
 }
 
-void SDLWindow::loadMusic( Music musicId, string filename ) {
+void SDLWindow::loadMusic( Music musicId, const string &filename ) {
 	auto iter = musics.find( musicId );
 	if( iter != musics.end() ) {
 		warning( "Music `%s` already loaded", filename.c_str() );
@@ -157,7 +162,7 @@ void SDLWindow::playMusic( Music musicId ) {
   Mix_PlayMusic( it->second, -1 );
 }
 
-void SDLWindow::loadWavSound( SFX sfxId, string waveFilename ) {
+void SDLWindow::loadWavSound( SFX sfxId, const string &waveFilename ) {
 	auto iter = sfx.find( sfxId );
   if( iter != sfx.end() ) {
 		warning( "Sound `%s` already loaded", waveFilename.c_str() );

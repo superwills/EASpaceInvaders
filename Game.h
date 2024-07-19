@@ -8,13 +8,17 @@
 #include "TitleScreen.h"
 
 #include <memory>
+#include <vector>
 using std::shared_ptr;
+
+class Invader;
 
 class Game {
 public:
 	enum GameState { Title, Running, JustScored, Paused, Exiting };
 	
 private:
+  vector<Invader*> invaders;
 	// Need a ball and paddles for this game
 	Ball* ball;
 	Paddle* leftPaddle;
@@ -29,17 +33,14 @@ private:
 	int leftScoreValue = 0, rightScoreValue = 0;
 	Sprite *leftScoreSprite = 0, *rightScoreSprite = 0;
 	
-	TTF_Font *font;
-	
-  // For unpausing
-	GameState prevState;
-	GameState gameState;
+	// For unpausing
+	GameState prevState, gameState;
 	
 	Controller controller;
 
 public:
 	Game();
-	~Game();
+  ~Game() { }
 	void leftPlayerScored();
 	void rightPlayerScored();
   

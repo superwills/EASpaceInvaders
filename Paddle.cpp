@@ -1,20 +1,19 @@
 #include "Paddle.h"
 
-Paddle::Paddle(Vector2f size, float iSpeed, string iname):Sprite(iname)
-{
-	rect.w = size.x;
-	rect.h = size.y;
+Paddle::Paddle(Vector2f size, float iSpeed, string iname):Sprite(iname) {
+  box.w = size.x;
+  box.h = size.y;
 	speed = iSpeed;
 }
 
 void Paddle::moveDown()
 {
-	rect.y += speed;
+  box.y += speed;
 	bounceTopAndBottom();
 }
 
 void Paddle::moveUp()
 {
-	rect.y -= speed;
+  box.y -= speed;
 	bounceTopAndBottom();
 }
