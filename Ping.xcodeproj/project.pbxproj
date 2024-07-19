@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D9200672C4AA657001198CA /* assets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D9200662C4AA5DB001198CA /* assets */; };
 		9FC715BE1A1527C4004FDDD1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715BD1A1527C4004FDDD1 /* main.cpp */; };
 		9FC715D71A152805004FDDD1 /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CD1A152805004FDDD1 /* Ball.cpp */; };
 		9FC715D81A152805004FDDD1 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CE1A152805004FDDD1 /* Colors.cpp */; };
@@ -26,16 +27,6 @@
 		9FC716241A152A19004FDDD1 /* SDL2_image.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7161E1A152A10004FDDD1 /* SDL2_image.framework */; };
 		9FC716251A152A19004FDDD1 /* SDL2_mixer.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7161F1A152A10004FDDD1 /* SDL2_mixer.framework */; };
 		9FC716261A152A19004FDDD1 /* SDL2_ttf.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC716201A152A10004FDDD1 /* SDL2_ttf.framework */; };
-		9FC7162A1A152C39004FDDD1 /* Nobile-Bold.ttf in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC716291A152C39004FDDD1 /* Nobile-Bold.ttf */; };
-		9FC716341A152E4F004FDDD1 /* song 10 5.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7162B1A152E39004FDDD1 /* song 10 5.ogg */; };
-		9FC716351A152E4F004FDDD1 /* song 91 7.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7162C1A152E39004FDDD1 /* song 91 7.ogg */; };
-		9FC716371A152E4F004FDDD1 /* ping0.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7162E1A152E39004FDDD1 /* ping0.wav */; };
-		9FC716381A152E4F004FDDD1 /* ping1.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7162F1A152E39004FDDD1 /* ping1.wav */; };
-		9FC716391A152E4F004FDDD1 /* ping2.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC716301A152E39004FDDD1 /* ping2.wav */; };
-		9FC7163A1A152E4F004FDDD1 /* ping3.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC716311A152E39004FDDD1 /* ping3.wav */; };
-		9FC7163B1A152E4F004FDDD1 /* win.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC716321A152E39004FDDD1 /* win.wav */; };
-		9FC7163D1A152E64004FDDD1 /* title.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7163C1A152E5E004FDDD1 /* title.jpg */; };
-		9FC7163F1A152E82004FDDD1 /* song 81 6.flac in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7163E1A152E7F004FDDD1 /* song 81 6.flac */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,16 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9FC7163F1A152E82004FDDD1 /* song 81 6.flac in CopyFiles */,
-				9FC7163D1A152E64004FDDD1 /* title.jpg in CopyFiles */,
-				9FC716341A152E4F004FDDD1 /* song 10 5.ogg in CopyFiles */,
-				9FC716351A152E4F004FDDD1 /* song 91 7.ogg in CopyFiles */,
-				9FC716371A152E4F004FDDD1 /* ping0.wav in CopyFiles */,
-				9FC716381A152E4F004FDDD1 /* ping1.wav in CopyFiles */,
-				9FC716391A152E4F004FDDD1 /* ping2.wav in CopyFiles */,
-				9FC7163A1A152E4F004FDDD1 /* ping3.wav in CopyFiles */,
-				9FC7163B1A152E4F004FDDD1 /* win.wav in CopyFiles */,
-				9FC7162A1A152C39004FDDD1 /* Nobile-Bold.ttf in CopyFiles */,
+				3D9200672C4AA657001198CA /* assets in CopyFiles */,
 				9FC716241A152A19004FDDD1 /* SDL2_image.framework in CopyFiles */,
 				9FC716251A152A19004FDDD1 /* SDL2_mixer.framework in CopyFiles */,
 				9FC716261A152A19004FDDD1 /* SDL2_ttf.framework in CopyFiles */,
@@ -65,6 +47,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D9200662C4AA5DB001198CA /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		9FC7159C1A152601004FDDD1 /* Ping */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ping; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FC715BD1A1527C4004FDDD1 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9FC715BF1A152805004FDDD1 /* Ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ball.h; sourceTree = "<group>"; };
@@ -94,16 +77,6 @@
 		9FC716201A152A10004FDDD1 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_ttf.framework; sourceTree = "<group>"; };
 		9FC716271A152AA8004FDDD1 /* StdWilUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StdWilUtil.h; sourceTree = "<group>"; };
 		9FC716281A152B68004FDDD1 /* math_ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math_ext.h; sourceTree = "<group>"; };
-		9FC716291A152C39004FDDD1 /* Nobile-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nobile-Bold.ttf"; sourceTree = "<group>"; };
-		9FC7162B1A152E39004FDDD1 /* song 10 5.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "song 10 5.ogg"; sourceTree = "<group>"; };
-		9FC7162C1A152E39004FDDD1 /* song 91 7.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "song 91 7.ogg"; sourceTree = "<group>"; };
-		9FC7162E1A152E39004FDDD1 /* ping0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ping0.wav; sourceTree = "<group>"; };
-		9FC7162F1A152E39004FDDD1 /* ping1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ping1.wav; sourceTree = "<group>"; };
-		9FC716301A152E39004FDDD1 /* ping2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ping2.wav; sourceTree = "<group>"; };
-		9FC716311A152E39004FDDD1 /* ping3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ping3.wav; sourceTree = "<group>"; };
-		9FC716321A152E39004FDDD1 /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = win.wav; sourceTree = "<group>"; };
-		9FC7163C1A152E5E004FDDD1 /* title.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = title.jpg; sourceTree = "<group>"; };
-		9FC7163E1A152E7F004FDDD1 /* song 81 6.flac */ = {isa = PBXFileReference; lastKnownFileType = file; path = "song 81 6.flac"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +97,7 @@
 		9FC715931A152601004FDDD1 = {
 			isa = PBXGroup;
 			children = (
-				9FC716331A152E3C004FDDD1 /* assets */,
+				3D9200662C4AA5DB001198CA /* assets */,
 				9FC715E31A152813004FDDD1 /* Game */,
 				9FC715E21A152810004FDDD1 /* util */,
 				9FC715E11A15280B004FDDD1 /* SDL */,
@@ -187,23 +160,6 @@
 				9FC715D21A152805004FDDD1 /* Paddle.cpp */,
 			);
 			name = Game;
-			sourceTree = "<group>";
-		};
-		9FC716331A152E3C004FDDD1 /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				9FC7163C1A152E5E004FDDD1 /* title.jpg */,
-				9FC7162B1A152E39004FDDD1 /* song 10 5.ogg */,
-				9FC7162C1A152E39004FDDD1 /* song 91 7.ogg */,
-				9FC7163E1A152E7F004FDDD1 /* song 81 6.flac */,
-				9FC7162E1A152E39004FDDD1 /* ping0.wav */,
-				9FC7162F1A152E39004FDDD1 /* ping1.wav */,
-				9FC716301A152E39004FDDD1 /* ping2.wav */,
-				9FC716311A152E39004FDDD1 /* ping3.wav */,
-				9FC716321A152E39004FDDD1 /* win.wav */,
-				9FC716291A152C39004FDDD1 /* Nobile-Bold.ttf */,
-			);
-			name = assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

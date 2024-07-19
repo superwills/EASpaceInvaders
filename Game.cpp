@@ -9,7 +9,7 @@ Game::Game( SDL& iSdl ):
 	sdl = &iSdl;
 	gameState = Title;
 
-	font = TTF_OpenFont("Nobile-Bold.ttf", 128);
+	font = TTF_OpenFont("assets/Nobile-Bold.ttf", 128);
 	if(!font)
 	{
 		error("TTF_OpenFont: %s", TTF_GetError());
@@ -21,7 +21,7 @@ Game::Game( SDL& iSdl ):
 
 	leftPaddle = new Paddle( Vector2f(25,100), 10, "left paddle" );
 	rightPaddle = new Paddle( Vector2f(25,100), 10, "right paddle" );
-	title = new TitleScreen( "title", "title.jpg" );
+	title = new TitleScreen( "title", "assets/title.jpg" );
 	pausedText = Sprite::Text( font, "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
 	pausedText->setCenter( sdl->getSize()/2 );
 
@@ -37,11 +37,11 @@ Game::Game( SDL& iSdl ):
 	
 	// load the sfx. These sfx were created with SFXR
 	// http://www.drpetter.se/project_sfxr.html
-	sdl->loadWavSound( "ping0.wav" );
-	sdl->loadWavSound( "ping1.wav" );
-	sdl->loadWavSound( "ping2.wav" );
-	sdl->loadWavSound( "ping3.wav" );
-	sdl->loadWavSound( "win.wav" );
+	sdl->loadWavSound( "assets/sounds/ping0.wav" );
+	sdl->loadWavSound( "assets/sounds/ping1.wav" );
+	sdl->loadWavSound( "assets/sounds/ping2.wav" );
+	sdl->loadWavSound( "assets/sounds/ping3.wav" );
+	sdl->loadWavSound( "assets/sounds/win.wav" );
 	
 	setState( Title );
 }
@@ -56,7 +56,7 @@ void Game::leftPlayerScored()
 	leftScoreValue++;
 	resetBall();
 	gameState = JustScored;
-	sdl->playSound( "win.wav" );
+	sdl->playSound( "assets/sounds/win.wav" );
 	flashesRem = 60;
 }
 
@@ -65,7 +65,7 @@ void Game::rightPlayerScored()
 	rightScoreValue++;
 	resetBall();
 	gameState = JustScored;
-	sdl->playSound( "win.wav" );
+	sdl->playSound( "assets/sounds/win.wav" );
 	flashesRem = 60;
 }
 
@@ -160,7 +160,7 @@ void Game::checkForCollisions()
 	// check the ball's rect against the paddle's rects
 	if( ball->rect.hit( leftPaddle->rect ) )
 	{
-		sdl->playSound( makeString( "ping%d.wav", randInt(0,2) ) );
+		sdl->playSound( makeString( "assets/sounds/ping%d.wav", randInt(0,2) ) );
 		
 		// Push the ball off the paddle, so they don't interpenetrate
 		float overlap = leftPaddle->rect.right() - ball->rect.left();
@@ -174,9 +174,8 @@ void Game::checkForCollisions()
 		ballHit = true;
 	}
 
-	if( ball->rect.hit( rightPaddle->rect ) )
-	{
-		sdl->playSound( makeString( "ping%d.wav", randInt(0,2) ) );
+  if( ball->rect.hit( rightPaddle->rect ) ) {
+		sdl->playSound( makeString( "assets/sounds/ping%d.wav", randInt(0,2) ) );
 		float overlap = rightPaddle->rect.left() - ball->rect.right();
 		ball->rect.x += overlap;
 		
@@ -188,8 +187,7 @@ void Game::checkForCollisions()
 	}
 
 	// when the ball is hit the ball bounces and speeds up a bit
-	if( ballHit )
-	{
+	if( ballHit )	{
 		ball->vel *= 1.2f;
 	}
 }

@@ -151,8 +151,7 @@ Mix_Music* SDL::loadMusic( string filename ) {
 
 Mix_Chunk* SDL::loadWavSound( string waveFilename ) {
 	map<string,Mix_Chunk*>::iterator iter = sfx.find(waveFilename);
-	if( iter != sfx.end() )
-	{
+  if( iter != sfx.end() ) {
 		warning( "Sound `%s` already loaded", waveFilename.c_str() );
 		return iter->second;
 	}

@@ -27,8 +27,7 @@ using namespace std;
 #include "Vectorf.h"
 
 // Stores everything to do with SDL, and game assets
-class SDL
-{
+class SDL {
 	// asset maps: filename=>SDL_* objects
 	map<string, SDL_Texture*> texes;
 	map<string, Mix_Music*> musics;
