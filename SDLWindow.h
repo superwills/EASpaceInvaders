@@ -43,7 +43,7 @@ public:
 	}
 	void setColor( SDL_Color color );
 
-	// Draws you a simple line
+	// SDL supplied functionality
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
 	void rect( int x, int y, int w, int h, SDL_Color color );
 	void fillRect( int x, int y, int w, int h, SDL_Color color );

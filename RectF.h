@@ -1,8 +1,6 @@
-#ifndef RECTF_H
-#define RECTF_H
+#pragma once
 
-struct RectF
-{
+struct RectF {
   // x,y is TOP LEFT corner of the rectangle
   float x,y,w,h ;
   
@@ -365,5 +363,3 @@ struct RectF
     this->println( "" ) ;
   }
 } ;
-
-#endif

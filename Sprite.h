@@ -6,10 +6,8 @@
 
 class Game;
 
-class Sprite
-{
+class Sprite {
 public:
-	// Eq of singletons, but not singleton.
 	static SDLWindow* sdl;		// The SDL object, for rendering
 	static Game* game;		// The Game object, which contains all game world objects
 

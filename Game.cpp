@@ -7,7 +7,7 @@ Game::Game( SDLWindow& iSdl ) {
 	sdl = &iSdl;
 	gameState = Title;
 
-	font = TTF_OpenFont("assets/Nobile-Bold.ttf", 128);
+	font = TTF_OpenFont("assets/unispace.ttf", 128);
 	if( !font ) {
 		error("TTF_OpenFont: %s", TTF_GetError());
 	}

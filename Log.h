@@ -1,9 +1,4 @@
-#ifndef LOG_H
-#define LOG_H
-
-#pragma warning( disable:4996 ) // strcpy_s warning
-#pragma warning( disable:4482 )
-#pragma warning( disable:4244 ) // conversion from `double` to `float`
+#pragma once
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -47,4 +42,3 @@ void info( short iColor, const char *fmt, ... );
 
 void info( const char *fmt, ... );
 
-#endif

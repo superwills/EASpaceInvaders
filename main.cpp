@@ -9,7 +9,7 @@ using namespace std;
 
 int main(int argc, char* args[]) {
   SDLWindow::SDLInit();
-	srand( time( 0 ) );
+	srand( (uint32_t)time( 0 ) );
 	
   SDLWindow sdl( "Ping", 800, 600 );
 	

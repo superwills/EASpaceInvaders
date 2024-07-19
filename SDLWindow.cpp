@@ -44,35 +44,27 @@ SDLWindow::SDLWindow(const char* title, int windowWidth, int windowHeight) :
     errorOut( "Could not create renderer" );
   }
 	  
-	// create a hardware accelerated renderer
-	// that displays only once per refresh interval
-  
-  
 	// Turn on alpha blending
 	SDL_SetRenderDrawBlendMode( renderer, SDL_BLENDMODE_BLEND );
 }
 
 SDLWindow::~SDLWindow() {
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer( renderer );
+	SDL_DestroyWindow( window );
 
 	SDL_Quit();
 }
 
-void SDLWindow::setColor( SDL_Color color )
-{
+void SDLWindow::setColor( SDL_Color color ) {
 	SDL_SetRenderDrawColor( renderer, color.r, color.g, color.b, color.a );
 }
 
-// Draws you a simple line
-void SDLWindow::line( int startX, int startY, int endX, int endY, SDL_Color color )
-{
+void SDLWindow::line( int startX, int startY, int endX, int endY, SDL_Color color ) {
 	SDL_SetRenderDrawColor( renderer, color.r, color.g, color.b, color.a );
 	SDL_RenderDrawLine( renderer, startX, startY, endX, endY );
 }
 
-void SDLWindow::rect( int x, int y, int w, int h, SDL_Color color )
-{
+void SDLWindow::rect( int x, int y, int w, int h, SDL_Color color ) {
 	SDL_Rect rect = { x, y, w, h };
 	setColor( color );
 	SDL_RenderDrawRect( renderer, &rect );
@@ -89,8 +81,7 @@ void SDLWindow::drawTexture( SDL_Rect rect, SDL_Texture* tex ) {
 }
 
 void SDLWindow::playMusic( string musicFile ) {
-	/// stop all other music
-	Mix_HaltMusic();
+	Mix_HaltMusic(); // stop all other music.
 
 	if( musics.find(musicFile) == musics.end() ) 	{
 		loadMusic( musicFile );
@@ -100,8 +91,7 @@ void SDLWindow::playMusic( string musicFile ) {
 }
 
 void SDLWindow::playSound( string soundFile ) {
-	if( sfx.find(soundFile) == sfx.end() )
-	{
+	if( sfx.find(soundFile) == sfx.end() ) {
 		warning( "Sound %s not yet loaded!", soundFile.c_str() );
 		loadWavSound( soundFile );
 	}
@@ -117,8 +107,7 @@ SDL_Surface* SDLWindow::loadSurface( string filename ) {
 
 SDL_Texture* SDLWindow::loadTexture( string filename ) {
 	map<string,SDL_Texture*>::iterator iter = texes.find( filename );
-	if( iter != texes.end() )
-	{
+	if( iter != texes.end() )	{
 		warning( "%s already loaded", filename.c_str() );
 		return iter->second;
 	}
@@ -141,8 +130,7 @@ SDL_Texture* SDLWindow::makeText( TTF_Font* font, string text, SDL_Color color )
 
 Mix_Music* SDLWindow::loadMusic( string filename ) {
 	map<string,Mix_Music*>::iterator iter = musics.find(filename);
-	if( iter != musics.end() )
-	{
+	if( iter != musics.end() ) {
 		warning( "Music `%s` already loaded", filename.c_str() );
 		return iter->second;
 	}

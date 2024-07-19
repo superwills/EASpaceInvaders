@@ -1,6 +1,2 @@
-*.ncb
-
-*.sdf
-Debug/
-
-
+.DS_Store
+UserInterfaceState.xcuserstate
