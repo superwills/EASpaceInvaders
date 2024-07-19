@@ -142,8 +142,6 @@
 		9FC715E21A152810004FDDD1 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				3D92006E2C4AB561001198CA /* randomUtil.h */,
-				3D92006D2C4AB561001198CA /* randomUtil.cpp */,
 				9FC715C01A152805004FDDD1 /* Colors.h */,
 				9FC715CE1A152805004FDDD1 /* Colors.cpp */,
 				9FC715CC1A152805004FDDD1 /* Vectorf.h */,
@@ -152,6 +150,8 @@
 				9FC715D11A152805004FDDD1 /* Log.cpp */,
 				9FC716281A152B68004FDDD1 /* math_ext.h */,
 				3D9200692C4AB27A001198CA /* math_ext.cpp */,
+				3D92006E2C4AB561001198CA /* randomUtil.h */,
+				3D92006D2C4AB561001198CA /* randomUtil.cpp */,
 				9FC716271A152AA8004FDDD1 /* StdWilUtil.h */,
 				9FC715D51A152805004FDDD1 /* StdWilUtil.cpp */,
 			);

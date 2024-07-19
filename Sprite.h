@@ -8,9 +8,7 @@ class Game;
 
 class Sprite {
 public:
-	static Game* game;		// The Game object, which contains all game world objects
-
-	// object name, for debugging purposes
+	// every object has a name for debug
 	string name;
 	
 	// I keep a RECTANGLE to represent the sprite.
@@ -24,7 +22,7 @@ public:
 	SDL_Color color;
 
 	// Texture, if any
-	SDL_Texture* tex;
+	SDL_Texture *tex;
 	
 	bool hidden;
 

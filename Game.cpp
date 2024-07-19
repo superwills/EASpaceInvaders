@@ -1,8 +1,9 @@
 #include "Game.h"
 #include "Colors.h"
 
+Game* game = 0;
+
 Game::Game() {
-	Sprite::game = this;
 	gameState = Title;
 
 	font = TTF_OpenFont("assets/unispace.ttf", 128);

@@ -52,3 +52,5 @@ public:
 	void update();
 	void draw();
 };
+
+extern Game* game;

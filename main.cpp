@@ -31,9 +31,9 @@ int main(int argc, char* args[]) {
 	srand( (uint32_t)time( 0 ) );
 	
   sdl = new SDLWindow( "Space Invaders", 800, 600 );
-	Game game;
+  game = new Game;
 
-	while( game.getState() != Game::Exiting ) {
+	while( game->getState() != Game::Exiting ) {
 		// Read controller input
 		SDL_Event e;
 
@@ -41,19 +41,21 @@ int main(int argc, char* args[]) {
 		while( SDL_PollEvent( &e ) ) {
 			if( e.type == SDL_QUIT || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE ) {
 				// the game will exit on the next frame
-				game.setState( Game::Exiting );
+				game->setState( Game::Exiting );
 			}
 			else if( e.type == SDL_KEYDOWN && e.key.keysym.scancode == SDL_SCANCODE_P ) {
-				game.togglePause();
+				game->togglePause();
 			}
-			else if( e.type == SDL_KEYDOWN && game.getState() == Game::Title ) {
-				game.setState( Game::Running );
+			else if( e.type == SDL_KEYDOWN && game->getState() == Game::Title ) {
+				game->setState( Game::Running );
 			}
 		}
 		
-		game.update();
-    game.draw();
+		game->update();
+    game->draw();
 	}
+  
+  delete game;
   delete sdl;
 	
 	return 0;

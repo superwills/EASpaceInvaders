@@ -2,8 +2,6 @@
 #include "Game.h"
 #include "Colors.h"
 
-Game* Sprite::game;
-
 void Sprite::defaults() {
 	color = SDL_ColorMake( 255, 255, 255, 255 );
 	hidden = false;
