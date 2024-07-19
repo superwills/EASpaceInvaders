@@ -1,5 +1,4 @@
-#ifndef SDLO_H
-#define SDLO_H
+#pragma once
 
 #include <map>
 using namespace std;
@@ -64,5 +63,3 @@ public:
 	Mix_Music* loadMusic( string filename );
 	Mix_Chunk *loadWavSound( string waveFilename );
 };
-
-#endif

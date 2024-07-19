@@ -2,7 +2,7 @@
 #include <string>
 using namespace std;
 
-#include "SDLO.h"
+#include "SDLWindow.h"
 #include "Game.h"
 #include "Sprite.h"
 #include <time.h>

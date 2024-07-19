@@ -1,7 +1,6 @@
-#ifndef SPRITE_H
-#define SPRITE_H
+#pragma once
 
-#include "SDLO.h"
+#include "SDLWindow.h"
 #include "Vectorf.h"
 #include "RectF.h"
 
@@ -62,4 +61,3 @@ private:
 	void retrieveTexSize();
 };
 
-#endif

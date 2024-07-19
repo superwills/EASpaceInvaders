@@ -1,15 +1,13 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
-#include "SDLO.h"
+#include "SDLWindow.h"
 #include "Sprite.h"
 #include "Paddle.h"
 #include "Ball.h"
 #include "Controller.h"
 #include "TitleScreen.h"
 
-class Game
-{
+class Game {
 public:
 	enum GameState { Title, Running, JustScored, Paused, Exiting };
 	
@@ -59,5 +57,3 @@ public:
 	void update();
 	void draw();
 };
-
-#endif

@@ -1,10 +1,8 @@
-#ifndef PADDLE_H
-#define PADDLE_H
+#pragma once
 
 #include "Sprite.h"
 
-class Paddle : public Sprite
-{
+class Paddle : public Sprite {
 	float speed;
 
 public:
@@ -12,5 +10,3 @@ public:
 	void moveDown();
 	void moveUp();
 };
-
-#endif

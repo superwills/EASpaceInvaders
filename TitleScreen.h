@@ -1,13 +1,9 @@
-#ifndef TITLE_H
-#define TITLE_H
+#pragma once
 
 #include "Sprite.h"
 
-class TitleScreen : public Sprite
-{
+class TitleScreen : public Sprite {
 public:
 	TitleScreen(string title, string filename);
 	void update();
 };
-
-#endif

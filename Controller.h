@@ -1,5 +1,4 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
+#pragma once
 
 #ifdef __APPLE__
 #include <SDL2/sdl.h>
@@ -17,5 +16,3 @@ public:
 	// Updates the controller -- call once per frame
 	void update();
 };
-
-#endif

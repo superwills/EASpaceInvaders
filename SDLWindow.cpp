@@ -1,4 +1,4 @@
-#include "SDLO.h"
+#include "SDLWindow.h"
 #include "Sprite.h"
 
 // ctor requires just window width & height
