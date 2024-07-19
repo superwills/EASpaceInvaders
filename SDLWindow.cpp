@@ -3,27 +3,32 @@
 
 void SDLWindow::SDLInit() {
   if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
-    error( "SDL init error: %s\n", SDL_GetError() );
-    exit( 1 );
+    errorOut( "SDL_Init failed" );
   }
   
   if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 512 ) < 0 )  {
-    error( "SDL_mixer Error: %s\n", Mix_GetError() );
+    string err = makeString( "Mix_OpenAudio failed: `%s`", Mix_GetError() );
+    errorOut( err.c_str() );
   }
   
-  // Start up true-type fonts
-  TTF_Init();
-
+  if( TTF_Init() < 0 ) {
+    errorOut( "TTF_Init failed" );
+  }
 }
 
-SDLWindow::SDLWindow(const char* title, int windowWidth, int windowHeight) {
+void SDLWindow::errorOut( const char* msg ) {
+  printf( "`%s`: SDL: `%s`\n", msg, SDL_GetError() );
+  exit( 1 );
+}
+
+SDLWindow::SDLWindow(const char* title, int windowWidth, int windowHeight) :
+    winWidth( windowWidth ), winHeight( windowHeight ) {
 	Sprite::sdl = this; //BAD.
   
 	window = SDL_CreateWindow( title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-		windowWidth, windowHeight, SDL_WINDOW_SHOWN );
+    winWidth, winHeight, SDL_WINDOW_SHOWN );
 	if( !window )	{
-		error("Window could not be created! error: %s\n", SDL_GetError());
-		exit( 1 );
+		errorOut( "SDL_CreateWindow failed" );
 	}
 	
   renderer = SDL_GetRenderer( window );
@@ -36,8 +41,7 @@ SDLWindow::SDLWindow(const char* title, int windowWidth, int windowHeight) {
   renderer = SDL_CreateRenderer( window, -1,
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE );
   if( !renderer ) {
-    error( "Could not create renderer %s", SDL_GetError() );
-    exit( 1 );
+    errorOut( "Could not create renderer" );
   }
 	  
 	// create a hardware accelerated renderer

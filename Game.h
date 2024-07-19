@@ -15,7 +15,6 @@ public:
 	enum GameState { Title, Running, JustScored, Paused, Exiting };
 	
 private:
-	// The SDL object, which allows us to draw and play sounds
 	SDLWindow* sdl;
 	
 	// Need a ball and paddles for this game
@@ -29,8 +28,8 @@ private:
 	int flashesRem;
 
 	// Keeping track of scores
-	int leftScoreValue, rightScoreValue;
-	Sprite *leftScoreSprite, *rightScoreSprite;
+	int leftScoreValue = 0, rightScoreValue = 0;
+	Sprite *leftScoreSprite = 0, *rightScoreSprite = 0;
 	
 	// The font we use to draw the scores
 	TTF_Font* font;

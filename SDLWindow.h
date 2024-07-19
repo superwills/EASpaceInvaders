@@ -13,14 +13,6 @@ using namespace std;
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
-
-// If you link the SDL libraries here, you don't
-// have to worry about setting the project settings
-#pragma comment( lib, "SDL2.lib" )
-#pragma comment( lib, "SDL2main.lib" )
-#pragma comment( lib, "SDL2_image.lib" )
-#pragma comment( lib, "SDL2_mixer.lib" )
-#pragma comment( lib, "SDL2_ttf.lib" )
 #endif
 
 #include "Log.h"
@@ -33,16 +25,17 @@ class SDLWindow {
 	map<string, Mix_Music*> musics;
 	map<string, Mix_Chunk*> sfx;
 
-  inline static int winWidth = 640, winHeight = 480;
+  int winWidth = 640, winHeight = 480;
   
 public:
-	SDL_Window* window = 0;
-	SDL_Renderer* renderer = 0;
+	SDL_Window *window = 0;
+	SDL_Renderer *renderer = 0;
   
   static void SDLInit();
+  static void errorOut( const char* msg );
 
 	// ctor requires just window width & height
-  SDLWindow(const char *title, int windowWidth, int windowHeight);
+  SDLWindow( const char *title, int windowWidth, int windowHeight );
 	~SDLWindow();
 	
 	inline Vector2f getSize(){

@@ -1,17 +1,14 @@
 #include "Game.h"
 #include "Colors.h"
 
-Game::Game( SDLWindow& iSdl ):
-	leftScoreValue(0), rightScoreValue(0), leftScoreSprite(0), rightScoreSprite(0)
-{
+Game::Game( SDLWindow& iSdl ) {
 	// Link up the static reference to this Game object inside Sprite:
 	Sprite::game = this;
 	sdl = &iSdl;
 	gameState = Title;
 
 	font = TTF_OpenFont("assets/Nobile-Bold.ttf", 128);
-	if(!font)
-	{
+	if( !font ) {
 		error("TTF_OpenFont: %s", TTF_GetError());
 	}
 	
@@ -46,8 +43,7 @@ Game::Game( SDLWindow& iSdl ):
 	setState( Title );
 }
 
-Game::~Game()
-{
+Game::~Game() {
 	
 }
 
