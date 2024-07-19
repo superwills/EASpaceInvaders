@@ -7,6 +7,8 @@
 #include "StdWilUtil.h"
 #include "math_ext.h"
 
+#include "randomUtil.h"
+
 // NAN is the worst thing that can happen to a computation.
 // NAN fails any comparison test ( 0 < nan is false, 0 > nan is false, 0 == nan is false )
 // NAN is toxic (0*nan=nan, 0+nan=nan), the basic result of nan is to mess EVERYTHING UP.

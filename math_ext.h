@@ -1,5 +1,6 @@
-#ifndef MATH_EXT_H
-#define MATH_EXT_H
+#pragma once
+
+#include <math.h>
 
 #define EPS_MIN 1e-6f
 #define EPS 1e-3f
@@ -8,12 +9,7 @@
 #define RADTODEGCONST 57.295779513082320876798154814105
 #define RADIANS(degreeMeasure) (degreeMeasure*DEGTORADCONST)
 #define DEGREES(radianMeasure) (radianMeasure*RADTODEGCONST)
-#define FREE(str) if(str){free(str);str=0;}
-#define DESTROY(OBJ) if(OBJ){delete (OBJ); (OBJ)=0;}
-#define DESTROY_ARRAY(ARR) if(ARR){delete[] (ARR); (ARR)=0;}
-#define OVERWRITE(OBJ,WITHME) {if(OBJ) delete(OBJ); (OBJ)=WITHME;}
-
-// 
+ 
 #define FLOOR(x) ( ((x)>0) ? ((int)(x)) : (((int)(x))-1) )
 #define CEIL(x) ( ((x)<0) ? ((int)(x)) : ((int)(x)+1) )
 
@@ -70,11 +66,6 @@ inline unsigned int hibit( unsigned int x )
 // (k)   ( n-k )
 int binomial( int n, int k ) ;
 
-// (0=>+1, 1=>-1)
-inline int NEG( bool neg ){
-	return -2*neg+1 ;
-}
-
 // ++++ => +1
 // ---- => -1
 inline int signum( float val ){
@@ -90,23 +81,19 @@ inline int signum( int i ){
 	else return 0 ;
 }
 
-inline bool isNear( float a, float b )
-{
+inline bool isNear( float a, float b ) {
 	return fabsf( a - b ) <= EPS_MIN ;
 }
 
-inline bool isNear( short a, short b, short tolerance )
-{
+inline bool isNear( short a, short b, short tolerance ) {
 	return abs( a - b ) <= tolerance ;
 }
 
 // returns true if `val` is within `eps` units of `reference`
-inline bool isNear( float val, float reference, float eps ) 
-{
+inline bool isNear( float val, float reference, float eps ) {
 	return fabsf( val-reference ) < eps ;
 }
 
-//!! dangerous because caller might use reversed order
 template <typename T>
 inline bool isBetweenOrdered( T val, T lowerBound, T upperBound ) {
 	return lowerBound <= val && val <= upperBound ;
@@ -115,91 +102,16 @@ inline bool isBetweenOrdered( T val, T lowerBound, T upperBound ) {
 // (a ≤ b ≤ c) can work if (a ≤ b) returns -inf if true and +inf if false (which forces 2nd comparison to fail).
 // but that spoils short cct eval.
 template <typename T>
-inline bool isBetween( T val, T boundA, T boundB )
-{
+inline bool isBetween( T val, T boundA, T boundB ) {
 	// if( boundA > boundB ) swap(boundA,boundB) ;  return isBetweenOrdered( val, boundA, boundB ) ;
 	return (boundA <= val && val <= boundB) ||
 		(boundB <= val && val <= boundA) ;
 }
 
-inline float lerp( float t, float A, float B ){
-	return A + (B-A)*t ; // == A*(1.f-t) + B*t ;
+inline float lerp( float t, float A, float B ) {
+	return A + (B-A)*t; // == A*(1.f-t) + B*t ;
 }
-inline float unlerp( float v, float A, float B ){
-	return (v-A)/(B-A) ;
-}
-
-inline float randFloat() {
-	return (float)rand()/RAND_MAX ; 
+inline float unlerp( float v, float A, float B ) {
+	return (v-A)/(B-A);
 }
 
-// -1,1 => -1 + ( rand between 0 and 2 )
-inline float randFloat( float low, float high ) {
-	return low + (high-low)*randFloat() ;
-}
-
-// low of 0
-inline float randFloat( float high ) {
-	return high*randFloat() ;
-}
-
-// assumes low=0
-inline int randInt( int high ) {
-	if( !high ) return high ;
-	return rand() % high ;
-}
-
-// between low and (high-1)
-inline int randInt( int low, int high ) {
-	// modulus 0 is an error
-	if( low==high ) return low ;
-	return low + rand() % (high-low) ;
-}
-
-// maxVal is 1 over the max
-inline vector<int> randomOrder( int maxVal )
-{
-	vector<int> results ;
-
-	// fisher-yates
-	vector<int> indices( maxVal ) ;
-
-	// "fill the hat with numbers", in order
-	for( int i = 0 ; i < maxVal ; i++ )
-		indices[i] = i ;
-
-	// indices:  0 1 2 3 4
-
-	// Now push random indices into songIndexShuffledOrder
-	// do this n times.
-	for( int i = 0 ; i < maxVal ; i++ )
-	{
-		// starts: 5
-		int numsRem = maxVal - i ;
-
-		// random number on [0,4]
-		int index = randInt( 0, numsRem ) ;
-
-		// say you got 3, then you will add 3 into the order array:
-		// indices:    0 1 2 3 4
-		// songOrder:  3
-		results.push_back( indices[index] ) ;
-
-		// This next step is what prevents repeat.
-		// Now swap indices, the BACK elt with the JUST SELECTED elt.
-		// indices:    0 1 2 4 //3
-		// Now on the next iteration, __3 will no longer be selected__,
-		// because i=1, so the max # will be 3.
-		::swap( indices[index], indices[numsRem-1] ) ;
-	}
-
-	return results ;
-}
-
-inline int randSign()
-{
-	return -1 + 2*randInt(0,2) ; // -1+0 or -1+2=+1
-}
-
-
-#endif

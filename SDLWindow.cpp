@@ -80,23 +80,25 @@ void SDLWindow::drawTexture( SDL_Rect rect, SDL_Texture* tex ) {
 	SDL_RenderCopy( renderer, tex, NULL, &rect );
 }
 
-void SDLWindow::playMusic( string musicFile ) {
-	Mix_HaltMusic(); // stop all other music.
-
-	if( musics.find(musicFile) == musics.end() ) 	{
-		loadMusic( musicFile );
+void SDLWindow::playMusic( Music musicId ) {
+  auto it = musics.find( musicId );
+	if( it == musics.end() ) 	{
+    warning( "no music %d", musicId );
+    return;
 	}
 
-	Mix_PlayMusic( musics[musicFile], -1 );
+  Mix_HaltMusic(); // stop all other music.
+	Mix_PlayMusic( it->second, -1 );
 }
 
-void SDLWindow::playSound( string soundFile ) {
-	if( sfx.find(soundFile) == sfx.end() ) {
-		warning( "Sound %s not yet loaded!", soundFile.c_str() );
-		loadWavSound( soundFile );
+void SDLWindow::playSound( SFX sfxId ) {
+  auto it = sfx.find( sfxId );
+	if( it == sfx.end() ) {
+		warning( "No sound %d", sfxId );
+    return;
 	}
 
-	Mix_PlayChannel( -1, sfx[soundFile], 0 ) ;
+	Mix_PlayChannel( -1, it->second, 0 ) ;
 }
 
 SDL_Surface* SDLWindow::loadSurface( string filename ) {
@@ -128,28 +130,32 @@ SDL_Texture* SDLWindow::makeText( TTF_Font* font, string text, SDL_Color color )
 	return texture;
 }
 
-Mix_Music* SDLWindow::loadMusic( string filename ) {
-	map<string,Mix_Music*>::iterator iter = musics.find(filename);
+Mix_Music* SDLWindow::loadMusic( Music musicId, string filename ) {
+	auto iter = musics.find( musicId );
 	if( iter != musics.end() ) {
 		warning( "Music `%s` already loaded", filename.c_str() );
 		return iter->second;
 	}
 
 	Mix_Music *music = Mix_LoadMUS( filename.c_str() ) ;
-	if( !music ) error( "Couldn't load music `%s`!", filename.c_str() );
-	musics[filename] = music;
+  if( !music ) {
+    error( "Couldn't load music `%s`!", filename.c_str() );
+  }
+	musics[ musicId ] = music;
 	return music;
 }
 
-Mix_Chunk* SDLWindow::loadWavSound( string waveFilename ) {
-	map<string,Mix_Chunk*>::iterator iter = sfx.find(waveFilename);
+Mix_Chunk* SDLWindow::loadWavSound( SFX sfxId, string waveFilename ) {
+	auto iter = sfx.find( sfxId );
   if( iter != sfx.end() ) {
 		warning( "Sound `%s` already loaded", waveFilename.c_str() );
 		return iter->second;
 	}
 
 	Mix_Chunk *sound = Mix_LoadWAV( waveFilename.c_str() ) ;
-	if( !sound ) error( "Couldn't load sound `%s`!", waveFilename.c_str() );
-	sfx[waveFilename] = sound;
+  if( !sound ) {
+    error( "Couldn't load sound `%s`!", waveFilename.c_str() );
+  }
+	sfx[ sfxId ] = sound;
 	return sound;
 }

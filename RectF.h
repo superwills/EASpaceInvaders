@@ -1,5 +1,7 @@
 #pragma once
 
+#include "randomUtil.h"
+
 struct RectF {
   // x,y is TOP LEFT corner of the rectangle
   float x,y,w,h ;

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3D9200672C4AA657001198CA /* assets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D9200662C4AA5DB001198CA /* assets */; };
+		3D92006A2C4AB27A001198CA /* math_ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D9200692C4AB27A001198CA /* math_ext.cpp */; };
+		3D92006C2C4AB501001198CA /* Assets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D92006B2C4AB501001198CA /* Assets.cpp */; };
+		3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D92006D2C4AB561001198CA /* randomUtil.cpp */; };
 		9FC715BE1A1527C4004FDDD1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715BD1A1527C4004FDDD1 /* main.cpp */; };
 		9FC715D71A152805004FDDD1 /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CD1A152805004FDDD1 /* Ball.cpp */; };
 		9FC715D81A152805004FDDD1 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CE1A152805004FDDD1 /* Colors.cpp */; };
@@ -48,6 +51,11 @@
 
 /* Begin PBXFileReference section */
 		3D9200662C4AA5DB001198CA /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
+		3D9200682C4AACFF001198CA /* Assets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Assets.h; sourceTree = "<group>"; };
+		3D9200692C4AB27A001198CA /* math_ext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = math_ext.cpp; sourceTree = "<group>"; };
+		3D92006B2C4AB501001198CA /* Assets.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Assets.cpp; sourceTree = "<group>"; };
+		3D92006D2C4AB561001198CA /* randomUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = randomUtil.cpp; sourceTree = "<group>"; };
+		3D92006E2C4AB561001198CA /* randomUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = randomUtil.h; sourceTree = "<group>"; };
 		9FC7159C1A152601004FDDD1 /* Ping */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ping; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FC715BD1A1527C4004FDDD1 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9FC715BF1A152805004FDDD1 /* Ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ball.h; sourceTree = "<group>"; };
@@ -134,6 +142,8 @@
 		9FC715E21A152810004FDDD1 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				3D92006E2C4AB561001198CA /* randomUtil.h */,
+				3D92006D2C4AB561001198CA /* randomUtil.cpp */,
 				9FC715C01A152805004FDDD1 /* Colors.h */,
 				9FC715CE1A152805004FDDD1 /* Colors.cpp */,
 				9FC715CC1A152805004FDDD1 /* Vectorf.h */,
@@ -141,6 +151,7 @@
 				9FC715C31A152805004FDDD1 /* Log.h */,
 				9FC715D11A152805004FDDD1 /* Log.cpp */,
 				9FC716281A152B68004FDDD1 /* math_ext.h */,
+				3D9200692C4AB27A001198CA /* math_ext.cpp */,
 				9FC716271A152AA8004FDDD1 /* StdWilUtil.h */,
 				9FC715D51A152805004FDDD1 /* StdWilUtil.cpp */,
 			);
@@ -150,6 +161,8 @@
 		9FC715E31A152813004FDDD1 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3D9200682C4AACFF001198CA /* Assets.h */,
+				3D92006B2C4AB501001198CA /* Assets.cpp */,
 				9FC715C21A152805004FDDD1 /* Game.h */,
 				9FC715D01A152805004FDDD1 /* Game.cpp */,
 				9FC715CB1A152805004FDDD1 /* TitleScreen.h */,
@@ -218,6 +231,7 @@
 				9FC715D81A152805004FDDD1 /* Colors.cpp in Sources */,
 				9FC715D71A152805004FDDD1 /* Ball.cpp in Sources */,
 				9FC715DD1A152805004FDDD1 /* SDLWindow.cpp in Sources */,
+				3D92006C2C4AB501001198CA /* Assets.cpp in Sources */,
 				9FC715BE1A1527C4004FDDD1 /* main.cpp in Sources */,
 				9FC715E01A152805004FDDD1 /* TitleScreen.cpp in Sources */,
 				9FC715D91A152805004FDDD1 /* Controller.cpp in Sources */,
@@ -225,6 +239,8 @@
 				9FC715DC1A152805004FDDD1 /* Paddle.cpp in Sources */,
 				9FC715DF1A152805004FDDD1 /* StdWilUtil.cpp in Sources */,
 				9FC715DE1A152805004FDDD1 /* Sprite.cpp in Sources */,
+				3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */,
+				3D92006A2C4AB27A001198CA /* math_ext.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

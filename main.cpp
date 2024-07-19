@@ -7,6 +7,25 @@ using namespace std;
 #include "Sprite.h"
 #include <time.h>
 
+// procedural aliens?
+/*
+ E's and A's
+ A very big J enemy
+
+ flying saucer's that fly by that say UFO on them.
+
+ 8 bit tones
+
+ Default song of:
+ https://www.stef.be/bassoontracker
+
+ Particle effects. Can we do a geometry shader?
+
+ GLEW is here:
+
+ /usr/local/Cellar/glew/2.2.0_1/include
+*/
+
 int main(int argc, char* args[]) {
   SDLWindow::SDLInit();
 	srand( (uint32_t)time( 0 ) );

@@ -34,11 +34,11 @@ Game::Game( SDLWindow& iSdl ) {
 	
 	// load the sfx. These sfx were created with SFXR
 	// http://www.drpetter.se/project_sfxr.html
-	sdl->loadWavSound( "assets/sounds/ping0.wav" );
-	sdl->loadWavSound( "assets/sounds/ping1.wav" );
-	sdl->loadWavSound( "assets/sounds/ping2.wav" );
-	sdl->loadWavSound( "assets/sounds/ping3.wav" );
-	sdl->loadWavSound( "assets/sounds/win.wav" );
+	sdl->loadWavSound( SFX::Ping0, "assets/sounds/ping0.wav" );
+	sdl->loadWavSound( SFX::Ping1, "assets/sounds/ping1.wav" );
+	sdl->loadWavSound( SFX::Ping2, "assets/sounds/ping2.wav" );
+	sdl->loadWavSound( SFX::Ping3, "assets/sounds/ping3.wav" );
+	sdl->loadWavSound( SFX::Win, "assets/sounds/win.wav" );
 	
 	setState( Title );
 }
@@ -52,7 +52,7 @@ void Game::leftPlayerScored()
 	leftScoreValue++;
 	resetBall();
 	gameState = JustScored;
-	sdl->playSound( "assets/sounds/win.wav" );
+	sdl->playSound( SFX::Win );
 	flashesRem = 60;
 }
 
@@ -61,7 +61,7 @@ void Game::rightPlayerScored()
 	rightScoreValue++;
 	resetBall();
 	gameState = JustScored;
-	sdl->playSound( "assets/sounds/win.wav" );
+	sdl->playSound( SFX::Win );
 	flashesRem = 60;
 }
 
@@ -78,7 +78,7 @@ void Game::setState( GameState newState )
 	{
 	case Title:
 		// start the title music
-		sdl->playMusic( "assets/sounds/1721341344111_2337.mod.mp3" );
+		sdl->playMusic( Music::Background0 );
 	 	break;
 	
 	case Running:
@@ -150,7 +150,8 @@ void Game::checkForCollisions()
 	// check the ball's rect against the paddle's rects
 	if( ball->rect.hit( leftPaddle->rect ) )
 	{
-		sdl->playSound( makeString( "assets/sounds/ping%d.wav", randInt(0,2) ) );
+    int sfxId = (int)SFX::Ping0 + randInt( 0, 2 );
+		sdl->playSound( (SFX)sfxId );
 		
 		// Push the ball off the paddle, so they don't interpenetrate
 		float overlap = leftPaddle->rect.right() - ball->rect.left();
@@ -165,7 +166,8 @@ void Game::checkForCollisions()
 	}
 
   if( ball->rect.hit( rightPaddle->rect ) ) {
-		sdl->playSound( makeString( "assets/sounds/ping%d.wav", randInt(0,2) ) );
+    int sfxId = (int)SFX::Ping0 + randInt( 0, 2 );
+		sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
 		float overlap = rightPaddle->rect.left() - ball->rect.right();
 		ball->rect.x += overlap;
 		

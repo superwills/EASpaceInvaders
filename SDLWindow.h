@@ -17,13 +17,14 @@ using namespace std;
 
 #include "Log.h"
 #include "Vectorf.h"
+#include "Assets.h"
 
 // Stores everything to do with SDL, and game assets
 class SDLWindow {
 	// asset maps: filename=>SDL_* objects
 	map<string, SDL_Texture*> texes;
-	map<string, Mix_Music*> musics;
-	map<string, Mix_Chunk*> sfx;
+	map<Music, Mix_Music*> musics;
+	map<SFX, Mix_Chunk*> sfx;
 
   int winWidth = 640, winHeight = 480;
   
@@ -48,12 +49,18 @@ public:
 	void rect( int x, int y, int w, int h, SDL_Color color );
 	void fillRect( int x, int y, int w, int h, SDL_Color color );
 	void drawTexture( SDL_Rect rect, SDL_Texture* tex );
-	void playMusic( string musicFile );
-	void playSound( string soundFile );
 	
 	SDL_Surface* loadSurface( string filename );
 	SDL_Texture* loadTexture( string filename );
 	SDL_Texture* makeText( TTF_Font* font, string text, SDL_Color color );
-	Mix_Music* loadMusic( string filename );
-	Mix_Chunk *loadWavSound( string waveFilename );
+  
+	// Knowing SDLWindow is slowly becoming a god-class, in the interests of
+  // simplicity we add on sound playing functionality here. SDL makes the code simple,
+  // so it isn't a lot of code.
+  Mix_Music* loadMusic( Music musicId, string filename );
+  void playMusic( Music musicId );
+  
+  Mix_Chunk *loadWavSound( SFX sfxId, string waveFilename );
+  void playSound( SFX sfxId );
 };
+
