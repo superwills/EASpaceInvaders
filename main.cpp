@@ -30,9 +30,8 @@ int main(int argc, char* args[]) {
   SDLWindow::SDLInit();
 	srand( (uint32_t)time( 0 ) );
 	
-  SDLWindow sdl( "Ping", 800, 600 );
-	
-	Game game( sdl );
+  sdl = new SDLWindow( "Space Invaders", 800, 600 );
+	Game game;
 
 	while( game.getState() != Game::Exiting ) {
 		// Read controller input
@@ -55,6 +54,7 @@ int main(int argc, char* args[]) {
 		game.update();
     game.draw();
 	}
+  delete sdl;
 	
 	return 0;
 }

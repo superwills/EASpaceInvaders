@@ -1,10 +1,8 @@
 #include "Game.h"
 #include "Colors.h"
 
-Game::Game( SDLWindow& iSdl ) {
-	// Link up the static reference to this Game object inside Sprite:
+Game::Game() {
 	Sprite::game = this;
-	sdl = &iSdl;
 	gameState = Title;
 
 	font = TTF_OpenFont("assets/unispace.ttf", 128);

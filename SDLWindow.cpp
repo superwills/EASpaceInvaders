@@ -1,6 +1,8 @@
 #include "SDLWindow.h"
 #include "Sprite.h"
 
+SDLWindow *sdl = 0;
+
 void SDLWindow::SDLInit() {
   if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
     errorOut( "SDL_Init failed" );
@@ -16,15 +18,14 @@ void SDLWindow::SDLInit() {
   }
 }
 
-void SDLWindow::errorOut( const char* msg ) {
+void SDLWindow::errorOut( const char *msg ) {
   printf( "`%s`: SDL: `%s`\n", msg, SDL_GetError() );
   exit( 1 );
 }
 
-SDLWindow::SDLWindow(const char* title, int windowWidth, int windowHeight) :
+SDLWindow::SDLWindow(const char *title, int windowWidth, int windowHeight) :
     winWidth( windowWidth ), winHeight( windowHeight ) {
-	Sprite::sdl = this; //BAD.
-  
+	
 	window = SDL_CreateWindow( title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     winWidth, winHeight, SDL_WINDOW_SHOWN );
 	if( !window )	{
@@ -76,7 +77,7 @@ void SDLWindow::fillRect( int x, int y, int w, int h, SDL_Color color ) {
 	SDL_RenderFillRect( renderer, &rect );
 }
 
-void SDLWindow::drawTexture( SDL_Rect rect, SDL_Texture* tex ) {
+void SDLWindow::drawTexture( SDL_Rect rect, SDL_Texture *tex ) {
 	SDL_RenderCopy( renderer, tex, NULL, &rect );
 }
 

@@ -33,7 +33,7 @@ public:
 	SDL_Renderer *renderer = 0;
   
   static void SDLInit();
-  static void errorOut( const char* msg );
+  static void errorOut( const char *msg );
 
 	// ctor requires just window width & height
   SDLWindow( const char *title, int windowWidth, int windowHeight );
@@ -48,11 +48,11 @@ public:
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
 	void rect( int x, int y, int w, int h, SDL_Color color );
 	void fillRect( int x, int y, int w, int h, SDL_Color color );
-	void drawTexture( SDL_Rect rect, SDL_Texture* tex );
+	void drawTexture( SDL_Rect rect, SDL_Texture *tex );
 	
 	SDL_Surface* loadSurface( string filename );
 	SDL_Texture* loadTexture( string filename );
-	SDL_Texture* makeText( TTF_Font* font, string text, SDL_Color color );
+	SDL_Texture* makeText( TTF_Font *font, string text, SDL_Color color );
   
 	// Knowing SDLWindow is slowly becoming a god-class, in the interests of
   // simplicity we add on sound playing functionality here. SDL makes the code simple,
@@ -64,3 +64,6 @@ public:
   void playSound( SFX sfxId );
 };
 
+// Give access to the SDL object using this extern.
+// Alternatively could have used SDLWindow::instance()
+extern SDLWindow *sdl;

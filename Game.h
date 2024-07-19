@@ -15,8 +15,6 @@ public:
 	enum GameState { Title, Running, JustScored, Paused, Exiting };
 	
 private:
-	SDLWindow* sdl;
-	
 	// Need a ball and paddles for this game
 	Ball* ball;
 	Paddle* leftPaddle;
@@ -40,7 +38,7 @@ private:
 	Controller controller;
 
 public:
-	Game( SDLWindow& iSdl );
+	Game();
 	~Game();
 	void leftPlayerScored();
 	void rightPlayerScored();

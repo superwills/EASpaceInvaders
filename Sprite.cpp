@@ -2,75 +2,62 @@
 #include "Game.h"
 #include "Colors.h"
 
-SDLWindow* Sprite::sdl;
 Game* Sprite::game;
 
-void Sprite::defaults()
-{
+void Sprite::defaults() {
 	color = SDL_ColorMake( 255, 255, 255, 255 );
 	hidden = false;
 }
 
-Sprite::Sprite(string iname)
-{
+Sprite::Sprite(string iname) {
 	defaults();
 	name = iname;
 	tex = 0;
 }
 
-Sprite::Sprite(string iname, SDL_Texture* iTex)
-{
+Sprite::Sprite(string iname, SDL_Texture* iTex) {
 	defaults();
 	name = iname;
 	tex = iTex;
 	retrieveTexSize();
 }
 
-Sprite::Sprite(string iname, string filename)
-{
+Sprite::Sprite(string iname, string filename) {
 	defaults();
 	name = iname;
 	tex = sdl->loadTexture(filename);
 	retrieveTexSize();
 }
 
-Sprite* Sprite::Text(TTF_Font* font, string text, SDL_Color iColor)
-{
+Sprite* Sprite::Text(TTF_Font* font, string text, SDL_Color iColor) {
 	return new Sprite( string("Text ") + text, sdl->makeText( font, text, iColor ) );
 }
 
-Vector2f Sprite::getPos()
-{
+Vector2f Sprite::getPos() {
 	return rect.xy();
 }
 
-void Sprite::setPos( Vector2f pos )
-{
+void Sprite::setPos( Vector2f pos ) {
 	rect.xy() = pos;
 }
 
-Vector2f Sprite::getCenter()
-{
+Vector2f Sprite::getCenter() {
 	return rect.centroid();
 }
 
-void Sprite::setCenter( Vector2f pos )
-{
+void Sprite::setCenter( Vector2f pos ) {
 	rect.setCenter( pos );
 }
 
-void Sprite::setSize( Vector2f size )
-{
+void Sprite::setSize( Vector2f size ) {
 	rect.size() = size;
 }
 
-void Sprite::scale( float s )
-{
+void Sprite::scale( float s ) {
 	rect.size() *= s;
 }
 
-void Sprite::bounceTopAndBottom()
-{
+void Sprite::bounceTopAndBottom() {
 	if( rect.top() < 0 )
 	{
 		float overshot = 0 - rect.top();
