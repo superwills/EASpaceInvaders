@@ -40,15 +40,20 @@ int main(int argc, char* args[]) {
 		// SDL_PollEvent returns nonzero while there are more events
 		while( SDL_PollEvent( &e ) ) {
 			if( e.type == SDL_QUIT || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE ) {
-				// the game will exit on the next frame
-				game->setState( Game::Exiting );
+        game->setState( Game::Exiting );  // the game will exit on the next frame
 			}
-			else if( e.type == SDL_KEYDOWN && e.key.keysym.scancode == SDL_SCANCODE_P ) {
-				game->togglePause();
-			}
-			else if( e.type == SDL_KEYDOWN && game->getState() == Game::Title ) {
-				game->setState( Game::Running );
-			}
+      else if( e.type == SDL_KEYDOWN ) {
+        if( game->isState( Game::Title ) ) {
+          // any key down at title starts the game.
+          game->setState( Game::Running );
+        }
+        else {
+          // p during play pauses the game.
+          if( e.key.keysym.scancode == SDL_SCANCODE_P ) {
+            game->togglePause();
+          }
+        }
+      }
 		}
 		
 		game->update();

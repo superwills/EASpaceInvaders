@@ -62,13 +62,15 @@ void Game::rightPlayerScored() {
 	flashesRem = 60;
 }
 
-Game::GameState Game::getState()
-{
+bool Game::isState( GameState state ) {
+  return gameState == state;
+}
+
+Game::GameState Game::getState() {
 	return gameState;
 }
 
-void Game::setState( GameState newState )
-{
+void Game::setState( GameState newState ) {
 	prevState = gameState;
 	
 	switch( newState )
@@ -98,32 +100,26 @@ void Game::setState( GameState newState )
 	gameState = newState;
 }
 
-void Game::togglePause()
-{
-	if( gameState == Paused )
-	{
+void Game::togglePause() {
+	if( gameState == Paused ) {
 		setState( prevState ); //go back to the previous state
 		pausedText->hide();
 	}
-	else
-	{
+	else {
 		setState( Paused );
 		pausedText->show();
 	}
 }
 
-void Game::resetBall()
-{
+void Game::resetBall() {
 	ball->setCenter( sdl->getSize()/2 );
 	ball->vel = Vector2f::random(-1, 1);
 	ball->vel.setLen( ball->lastStartSpeed * 2.f );
 	drawScores();
 }
 
-void Game::drawScores()
-{
-	if( leftScoreSprite )
-	{
+void Game::drawScores() {
+	if( leftScoreSprite ) {
 		delete leftScoreSprite;
 	}
 	leftScoreSprite = Sprite::Text( font, makeString( "%d", leftScoreValue ), White );
@@ -131,8 +127,7 @@ void Game::drawScores()
 	leftScoreSprite->setCenter( sdl->getSize().x/2 - leftScoreSprite->rect.w,
 		leftScoreSprite->rect.h/2 );
 
-	if( rightScoreSprite )
-	{
+	if( rightScoreSprite ) {
 		delete rightScoreSprite;
 	}
 	rightScoreSprite = Sprite::Text( font, makeString( "%d", rightScoreValue ), White );
@@ -141,12 +136,10 @@ void Game::drawScores()
 		rightScoreSprite->rect.h/2 );
 }
 
-void Game::checkForCollisions()
-{
+void Game::checkForCollisions() {
 	bool ballHit = false;
 	// check the ball's rect against the paddle's rects
-	if( ball->rect.hit( leftPaddle->rect ) )
-	{
+	if( ball->rect.hit( leftPaddle->rect ) ) {
     int sfxId = (int)SFX::Ping0 + randInt( 0, 2 );
 		sdl->playSound( (SFX)sfxId );
 		
@@ -163,8 +156,7 @@ void Game::checkForCollisions()
 	}
 
   if( ball->rect.hit( rightPaddle->rect ) ) {
-    int sfxId = (int)SFX::Ping0 + randInt( 0, 2 );
-		sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
+    sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
 		float overlap = rightPaddle->rect.left() - ball->rect.right();
 		ball->rect.x += overlap;
 		
@@ -181,8 +173,7 @@ void Game::checkForCollisions()
 	}
 }
 
-void Game::runGame()
-{
+void Game::runGame() {
 	// Use the controller state to change gamestate
 	if( controller.mouseY < 0 || controller.keystate[SDL_SCANCODE_UP] )
 		rightPaddle->moveUp();
@@ -203,51 +194,42 @@ void Game::runGame()
 	checkForCollisions();
 }
 
-void Game::update()
-{
+void Game::update() {
 	// Get controller inputs first:
 	controller.update();
 
-	if( gameState == Title )
-	{
+	if( gameState == Title )	{
 		title->update();
 	}
-	else if( gameState == JustScored )
-	{
+	else if( gameState == JustScored ) {
 		// Now if we're in the "JustScored" state, then
 		// the action pauses for a bit while the screen flashes
 		flashesRem--;
 		// change the color only every few frames
-		if( every(flashesRem,3) )
-		{
+    if( every(flashesRem,3) ) {
 			bkgColor = SDL_ColorMake( randInt(0,255), randInt(0,255), randInt(0,255), randInt(0,255) );
 		}
-		if( !flashesRem )
-		{
+		if( !flashesRem ) {
 			bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
 			setState( Running );
 		}
 	}
-	else if( gameState == Running )
-	{
+	else if( gameState == Running ) {
 		runGame();
 	}
 }
 
-void Game::draw()
-{
+void Game::draw() {
 	// Set the background's color,
 	sdl->setColor( bkgColor );
 
 	// clears the bkg to bkgColor
 	SDL_RenderClear( sdl->renderer );
 	
-	if( gameState == Title )
-	{
+	if( gameState == Title ) {
 		title->draw();
 	}
-	else
-	{
+	else {
 		leftPaddle->draw();
 		rightPaddle->draw();
 		ball->draw();
@@ -255,8 +237,7 @@ void Game::draw()
 		rightScoreSprite->draw();
 	}
 	
-	if( gameState == Paused )
-	{
+	if( gameState == Paused ) {
 		pausedText->draw();
 	}
 	

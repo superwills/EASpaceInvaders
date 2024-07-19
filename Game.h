@@ -42,6 +42,8 @@ public:
 	~Game();
 	void leftPlayerScored();
 	void rightPlayerScored();
+  
+  bool isState( GameState state );
 	GameState getState();
 	void setState( GameState newState );
 	void togglePause();
