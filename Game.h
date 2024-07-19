@@ -31,16 +31,12 @@ private:
 	int leftScoreValue = 0, rightScoreValue = 0;
 	Sprite *leftScoreSprite = 0, *rightScoreSprite = 0;
 	
-	// The font we use to draw the scores
-	TTF_Font* font;
+	TTF_Font *font;
 	
-	// The previous state the game was in (used for unpausing)
+  // For unpausing
 	GameState prevState;
-
-	// what mode the game is running in
 	GameState gameState;
 	
-	// An object to represent the game controller
 	Controller controller;
 
 public:
@@ -49,7 +45,6 @@ public:
 	void leftPlayerScored();
 	void rightPlayerScored();
 	GameState getState();
-	// change fsm state
 	void setState( GameState newState );
 	void togglePause();
 	void resetBall();

@@ -47,8 +47,7 @@ Game::~Game() {
 	
 }
 
-void Game::leftPlayerScored()
-{
+void Game::leftPlayerScored() {
 	leftScoreValue++;
 	resetBall();
 	gameState = JustScored;
@@ -56,8 +55,7 @@ void Game::leftPlayerScored()
 	flashesRem = 60;
 }
 
-void Game::rightPlayerScored()
-{
+void Game::rightPlayerScored() {
 	rightScoreValue++;
 	resetBall();
 	gameState = JustScored;

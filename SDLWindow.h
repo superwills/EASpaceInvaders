@@ -44,7 +44,7 @@ public:
 	}
 	void setColor( SDL_Color color );
 
-	// SDL supplied functionality
+	// SDL supplied graphics primitives functionality
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
 	void rect( int x, int y, int w, int h, SDL_Color color );
 	void fillRect( int x, int y, int w, int h, SDL_Color color );
@@ -57,10 +57,10 @@ public:
 	// Knowing SDLWindow is slowly becoming a god-class, in the interests of
   // simplicity we add on sound playing functionality here. SDL makes the code simple,
   // so it isn't a lot of code.
-  Mix_Music* loadMusic( Music musicId, string filename );
+  void loadMusic( Music musicId, string filename );
   void playMusic( Music musicId );
   
-  Mix_Chunk *loadWavSound( SFX sfxId, string waveFilename );
+  void loadWavSound( SFX sfxId, string waveFilename );
   void playSound( SFX sfxId );
 };
 

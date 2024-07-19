@@ -80,61 +80,62 @@ void SDLWindow::drawTexture( SDL_Rect rect, SDL_Texture* tex ) {
 	SDL_RenderCopy( renderer, tex, NULL, &rect );
 }
 
-void SDLWindow::playMusic( Music musicId ) {
-  auto it = musics.find( musicId );
-	if( it == musics.end() ) 	{
-    warning( "no music %d", musicId );
-    return;
-	}
-
-  Mix_HaltMusic(); // stop all other music.
-	Mix_PlayMusic( it->second, -1 );
-}
-
-void SDLWindow::playSound( SFX sfxId ) {
-  auto it = sfx.find( sfxId );
-	if( it == sfx.end() ) {
-		warning( "No sound %d", sfxId );
-    return;
-	}
-
-	Mix_PlayChannel( -1, it->second, 0 ) ;
-}
-
 SDL_Surface* SDLWindow::loadSurface( string filename ) {
-	SDL_Surface* surf = IMG_Load( filename.c_str() );
-	if( !surf ) error( "Couldn't load surface `%s`!", filename.c_str() );
-    return surf;
+	SDL_Surface* surface = IMG_Load( filename.c_str() );
+  if( !surface ) {
+    error( "Couldn't load surface `%s`!", filename.c_str() );
+  }
+  return surface;
 }
 
 SDL_Texture* SDLWindow::loadTexture( string filename ) {
-	map<string,SDL_Texture*>::iterator iter = texes.find( filename );
+	auto iter = texes.find( filename );
 	if( iter != texes.end() )	{
 		warning( "%s already loaded", filename.c_str() );
 		return iter->second;
 	}
-
-	SDL_Texture* tex = SDL_CreateTextureFromSurface( renderer, loadSurface(filename) );
-    if( !tex ) error( "loadTexture: SDL_CreateTextureFromSurface failed %s %s", filename.c_str(), SDL_GetError() );
+  
+  SDL_Surface *surface = loadSurface( filename );
+  if( !surface ) {
+    error( "loadTexture couldn't load surface" );
+    return 0;
+  }
+  
+	SDL_Texture *tex = SDL_CreateTextureFromSurface( renderer, surface );
+  if( !tex ) {
+    error( "`%s`: SDL_CreateTextureFromSurface failed %s", filename.c_str(), SDL_GetError() );
+    return 0;
+  }
+  
+  // default textures to allow alpha blend.
 	SDL_SetTextureBlendMode( tex, SDL_BLENDMODE_BLEND );
-	texes[ filename ] = tex;
+	texes[ filename ] = tex; // You can look up textures later also.
 	return tex;
 }
 
 SDL_Texture* SDLWindow::makeText( TTF_Font* font, string text, SDL_Color color ) {
-	SDL_Surface *messagesurf = TTF_RenderText_Solid( font, text.c_str(), color );
-    if( !messagesurf ) error( "TTF_RenderText_Solid failed %s", text.c_str() );
-	SDL_Texture* texture = SDL_CreateTextureFromSurface( renderer, messagesurf );
-    if( !texture ) error( "TTF_RenderText_Solid texture failed %s", text.c_str() );
-	SDL_FreeSurface( messagesurf );
+	SDL_Surface *messageSurface = TTF_RenderText_Solid( font, text.c_str(), color );
+  if( !messageSurface ) {
+    error( "TTF_RenderText_Solid failed %s", text.c_str() );
+    return 0;
+  }
+  
+	SDL_Texture *texture = SDL_CreateTextureFromSurface( renderer, messageSurface );
+  
+  if( !texture ) {
+    error( "SDL_CreateTextureFromSurface failed %s", text.c_str() );
+    return 0;
+  }
+	
+  SDL_FreeSurface( messageSurface );
 	return texture;
 }
 
-Mix_Music* SDLWindow::loadMusic( Music musicId, string filename ) {
+void SDLWindow::loadMusic( Music musicId, string filename ) {
 	auto iter = musics.find( musicId );
 	if( iter != musics.end() ) {
 		warning( "Music `%s` already loaded", filename.c_str() );
-		return iter->second;
+    return;
 	}
 
 	Mix_Music *music = Mix_LoadMUS( filename.c_str() ) ;
@@ -142,14 +143,24 @@ Mix_Music* SDLWindow::loadMusic( Music musicId, string filename ) {
     error( "Couldn't load music `%s`!", filename.c_str() );
   }
 	musics[ musicId ] = music;
-	return music;
 }
 
-Mix_Chunk* SDLWindow::loadWavSound( SFX sfxId, string waveFilename ) {
+void SDLWindow::playMusic( Music musicId ) {
+  auto it = musics.find( musicId );
+  if( it == musics.end() )   {
+    warning( "no music %d", musicId );
+    return;
+  }
+
+  Mix_HaltMusic(); // stop all other music.
+  Mix_PlayMusic( it->second, -1 );
+}
+
+void SDLWindow::loadWavSound( SFX sfxId, string waveFilename ) {
 	auto iter = sfx.find( sfxId );
   if( iter != sfx.end() ) {
 		warning( "Sound `%s` already loaded", waveFilename.c_str() );
-		return iter->second;
+		return;
 	}
 
 	Mix_Chunk *sound = Mix_LoadWAV( waveFilename.c_str() ) ;
@@ -157,5 +168,15 @@ Mix_Chunk* SDLWindow::loadWavSound( SFX sfxId, string waveFilename ) {
     error( "Couldn't load sound `%s`!", waveFilename.c_str() );
   }
 	sfx[ sfxId ] = sound;
-	return sound;
 }
+
+void SDLWindow::playSound( SFX sfxId ) {
+  auto it = sfx.find( sfxId );
+  if( it == sfx.end() ) {
+    warning( "No sound %d", sfxId );
+    return;
+  }
+
+  Mix_PlayChannel( -1, it->second, 0 ) ;
+}
+
