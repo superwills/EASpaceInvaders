@@ -4,6 +4,13 @@
 
 Sprite::Sprite() {
   name = makeString( "Sprite %d", spriteId );
+  
+  // Here i'm initializing the size to a non-zero values, so there aren't surprises :)
+  box.w = box.h = 64;
+}
+
+Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
+  name = makeString( "Sprite %d", spriteId );
 }
 
 Sprite::Sprite( SDL_Texture* iTex ) {

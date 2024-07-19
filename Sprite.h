@@ -25,6 +25,7 @@ public:
 	Vector2f vel;
 	
 	Sprite();
+  Sprite( const RectF& rectangle );
 	Sprite( SDL_Texture* iTex );
 	Sprite( string filename );
   
