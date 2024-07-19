@@ -42,8 +42,7 @@ public:
 	}
 	void setSize( const Vector2f &size );
 	void scale( float s );
-	void bounceTopAndBottom();
-	void bounceLeftAndRight();
+	void enforceWorldLimits();
 	void show();
 	void hide();
   

@@ -54,33 +54,27 @@ void Sprite::scale( float s ) {
   box.size() *= s;
 }
 
-void Sprite::bounceTopAndBottom() {
+void Sprite::enforceWorldLimits() {
 	if( box.top() < 0 ) {
 		float overshot = 0 - box.top();
     box.y += overshot;
-		vel.y = -vel.y; // reflect y vel
 	}
+  
 	if( box.bottom() > sdl->getSize().y ) {
 		float overshot = sdl->getSize().y - box.bottom();
     box.y += overshot;
-		vel.y = -vel.y; // reflect y vel
 	}
-}
-
-void Sprite::bounceLeftAndRight()
-{
+  
 	// ensure stays within bounds of world
 	// two of these can happen simultaneously, which is why no else is used
 	if( box.left() < 0 ) {
 		float overshot = - box.left();
     box.x += overshot;
-		vel.x = -vel.x; // reflect x vel
 	}
   
 	if( box.right() > sdl->getSize().x ) {
 		float overshot = sdl->getSize().x - box.right();
     box.x += overshot;
-		vel.x = -vel.x; // reflect x vel
 	}
 }
 
@@ -94,8 +88,7 @@ void Sprite::hide() {
 
 void Sprite::update() {
   box.xy() += vel;
-	bounceTopAndBottom();
-	bounceLeftAndRight();
+	enforceWorldLimits();
 }
 
 void Sprite::draw() {

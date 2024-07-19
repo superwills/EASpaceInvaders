@@ -21,14 +21,7 @@ void Ball::update()
 	box.xy() += vel;
 	
 	// don't exit top or bottom
-	bounceTopAndBottom();
+	enforceWorldLimits();
 	
-	if( box.left() < 0 )
-	{
-		game->rightPlayerScored();
-	}
-	if( box.right() > sdl->getSize().x )
-	{
-		game->leftPlayerScored();
-	}
+	
 }

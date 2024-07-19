@@ -7,6 +7,7 @@ class Player : public Sprite {
 
 public:
 	Player( Vector2f size, float iSpeed );
-	void moveDown();
-	void moveUp();
+  
+  // Player restricted to moving in x.
+	void move( float x );
 };

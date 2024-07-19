@@ -7,14 +7,13 @@
 Game* game = 0;
 
 Game::Game() {
-	gameState = Title;
+	gameState = GameState::Title;
   
   title = new TitleScreen( "space invaders!" );
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
   pausedText->setCenter( sdl->getSize()/2 );
 
 	bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
-	flashesRem = 0;
   
   // Lay the invaders out
   const int rowsOfInvaders = 5;
@@ -52,23 +51,7 @@ Game::Game() {
 	sdl->loadWavSound( SFX::Ping3, "assets/sounds/ping3.wav" );
 	sdl->loadWavSound( SFX::Win, "assets/sounds/win.wav" );
 	
-	setState( Title );
-}
-
-void Game::leftPlayerScored() {
-	leftScoreValue++;
-	resetBall();
-	gameState = JustScored;
-	sdl->playSound( SFX::Win );
-	flashesRem = 60;
-}
-
-void Game::rightPlayerScored() {
-	rightScoreValue++;
-	resetBall();
-	gameState = JustScored;
-	sdl->playSound( SFX::Win );
-	flashesRem = 60;
+	setState( GameState::Title );
 }
 
 bool Game::isState( GameState state ) {
@@ -84,25 +67,25 @@ void Game::setState( GameState newState ) {
 	
 	switch( newState )
 	{
-	case Title:
+  case GameState::Title:
 		// start the title music
 		sdl->playMusic( Music::Background0 );
 	 	break;
 	
-	case Running:
-	case JustScored:
+  case GameState::Running:
+  case GameState::Won:
 		// game song
 		// if prevstate was Running, don't restart the music
-		if( prevState == Paused ) {
+		if( prevState == GameState::Paused ) {
 			Mix_ResumeMusic(); // unpause the music
 		}
 		break;
 	
-	case Paused:
+  case GameState::Paused:
 		Mix_PauseMusic();
 		break;
 	
-	case Exiting:
+  case GameState::Exiting:
 		break;
 	}
 
@@ -110,12 +93,12 @@ void Game::setState( GameState newState ) {
 }
 
 void Game::togglePause() {
-	if( gameState == Paused ) {
+	if( gameState == GameState::Paused ) {
 		setState( prevState ); //go back to the previous state
 		pausedText->hide();
 	}
 	else {
-		setState( Paused );
+		setState( GameState::Paused );
 		pausedText->show();
 	}
 }
@@ -169,10 +152,8 @@ void Game::checkForCollisions() {
 
 void Game::runGame() {
 	// Use the controller state to change gamestate
-	if( controller.mouseX < 0 || controller.keystate[SDL_SCANCODE_UP] )
-    player->moveUp();
-	else if( controller.mouseX > 0 || controller.keystate[SDL_SCANCODE_DOWN] )
-    player->moveDown();
+	player->move( controller.mouseX );
+	//|| controller.keystate[SDL_SCANCODE_LEFT/RIGHT]
 
 	// let the game objects update themselves
 	player->update();
@@ -190,23 +171,21 @@ void Game::update() {
 	// Get controller inputs first:
 	controller.update();
 
-	if( gameState == Title )	{
+	if( gameState == GameState::Title )	{
 		title->update();
 	}
-	else if( gameState == JustScored ) {
-		// Now if we're in the "JustScored" state, then
-		// the action pauses for a bit while the screen flashes
+	else if( gameState == GameState::Won ) {
 		flashesRem--;
 		// change the color only every few frames
-    if( every(flashesRem,3) ) {
-			bkgColor = SDL_ColorMake( randInt(0,255), randInt(0,255), randInt(0,255), randInt(0,255) );
+    if( every( flashesRem, 3 ) ) {
+      bkgColor = SDL_RandomSolidColor();
 		}
 		if( !flashesRem ) {
 			bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
-			setState( Running );
+			setState( GameState::Running );
 		}
 	}
-	else if( gameState == Running ) {
+	else if( gameState == GameState::Running ) {
 		runGame();
 	}
 }
@@ -216,7 +195,7 @@ void Game::draw() {
 
 	SDL_RenderClear( sdl->renderer );
 	
-	if( gameState == Title ) {
+	if( gameState == GameState::Title ) {
 		title->draw();
 	}
 	else {
@@ -226,7 +205,7 @@ void Game::draw() {
 		rightScoreSprite->draw();
 	}
 	
-	if( gameState == Paused ) {
+	if( gameState == GameState::Paused ) {
 		pausedText->draw();
 	}
   

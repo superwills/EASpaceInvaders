@@ -43,19 +43,19 @@ int main(int argc, char* args[]) {
   sdl = new SDLWindow( "Space Invaders", 800, 600 );
   game = new Game;
 
-	while( game->getState() != Game::Exiting ) {
+	while( !game->isState( Game::GameState::Exiting ) ) {
 		// Read controller input
 		SDL_Event e;
 
 		// SDL_PollEvent returns nonzero while there are more events
 		while( SDL_PollEvent( &e ) ) {
 			if( e.type == SDL_QUIT || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE ) {
-        game->setState( Game::Exiting );  // the game will exit on the next frame
+        game->setState( Game::GameState::Exiting );  // the game will exit on the next frame
 			}
       else if( e.type == SDL_KEYDOWN ) {
-        if( game->isState( Game::Title ) ) {
+        if( game->isState( Game::GameState::Title ) ) {
           // any key down at title starts the game.
-          game->setState( Game::Running );
+          game->setState( Game::GameState::Running );
         }
         else {
           // p during play pauses the game.

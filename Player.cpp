@@ -7,12 +7,8 @@ Player::Player( Vector2f size, float iSpeed ) {
 	speed = iSpeed;
 }
 
-void Player::moveDown() {
-  box.y += speed;
-	bounceTopAndBottom();
+void Player::move( float x ) {
+  box.x += x;
+	enforceWorldLimits();
 }
 
-void Player::moveUp() {
-  box.y -= speed;
-	bounceTopAndBottom();
-}

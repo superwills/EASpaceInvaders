@@ -15,7 +15,7 @@ class Player;
 
 class Game {
 public:
-	enum GameState { Title, Running, JustScored, Paused, Exiting };
+	enum class GameState { Title, Running, Paused, Won, Lost, Exiting };
 	
 private:
   vector<Invader*> invaders;
@@ -26,8 +26,8 @@ private:
 	TitleScreen* title;
 	Sprite* pausedText;
 	SDL_Color bkgColor;	// the current background color
-	int flashesRem;
-
+  int flashesRem = 0;
+  
 	// Keeping track of scores
 	int leftScoreValue = 0, rightScoreValue = 0;
 	Sprite *leftScoreSprite = 0, *rightScoreSprite = 0;
@@ -40,9 +40,7 @@ private:
 public:
 	Game();
   ~Game() { }
-	void leftPlayerScored();
-	void rightPlayerScored();
-  
+	
   bool isState( GameState state );
 	GameState getState();
 	void setState( GameState newState );
