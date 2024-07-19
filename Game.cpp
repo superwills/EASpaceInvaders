@@ -2,6 +2,7 @@
 #include "Colors.h"
 
 #include "Invader.h"
+#include "Player.h"
 
 Game* game = 0;
 
@@ -28,7 +29,7 @@ Game::Game() {
     }
   }
   
-	player = new Paddle( Vector2f( 25, 25 ), 10 );
+	player = new Player( Vector2f( 25, 25 ), 10 );
 	title = new TitleScreen( "space invaders!" );
 	pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
 	pausedText->setCenter( sdl->getSize()/2 );
@@ -210,10 +211,8 @@ void Game::update() {
 }
 
 void Game::draw() {
-	// Set the background's color,
 	sdl->setColor( bkgColor );
 
-	// clears the bkg to bkgColor
 	SDL_RenderClear( sdl->renderer );
 	
 	if( gameState == Title ) {

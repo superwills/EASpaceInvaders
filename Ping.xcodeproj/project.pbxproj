@@ -18,7 +18,7 @@
 		9FC715D91A152805004FDDD1 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CF1A152805004FDDD1 /* Controller.cpp */; };
 		9FC715DA1A152805004FDDD1 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D01A152805004FDDD1 /* Game.cpp */; };
 		9FC715DB1A152805004FDDD1 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D11A152805004FDDD1 /* Log.cpp */; };
-		9FC715DC1A152805004FDDD1 /* Paddle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D21A152805004FDDD1 /* Paddle.cpp */; };
+		9FC715DC1A152805004FDDD1 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D21A152805004FDDD1 /* Player.cpp */; };
 		9FC715DD1A152805004FDDD1 /* SDLWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D31A152805004FDDD1 /* SDLWindow.cpp */; };
 		9FC715DE1A152805004FDDD1 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D41A152805004FDDD1 /* Sprite.cpp */; };
 		9FC715DF1A152805004FDDD1 /* StdWilUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D51A152805004FDDD1 /* StdWilUtil.cpp */; };
@@ -66,7 +66,7 @@
 		9FC715C11A152805004FDDD1 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		9FC715C21A152805004FDDD1 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		9FC715C31A152805004FDDD1 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
-		9FC715C51A152805004FDDD1 /* Paddle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paddle.h; sourceTree = "<group>"; };
+		9FC715C51A152805004FDDD1 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		9FC715C71A152805004FDDD1 /* RectF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RectF.h; sourceTree = "<group>"; };
 		9FC715C81A152805004FDDD1 /* SDLWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLWindow.h; sourceTree = "<group>"; };
 		9FC715C91A152805004FDDD1 /* Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sprite.h; sourceTree = "<group>"; };
@@ -77,7 +77,7 @@
 		9FC715CF1A152805004FDDD1 /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
 		9FC715D01A152805004FDDD1 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		9FC715D11A152805004FDDD1 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
-		9FC715D21A152805004FDDD1 /* Paddle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Paddle.cpp; sourceTree = "<group>"; };
+		9FC715D21A152805004FDDD1 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		9FC715D31A152805004FDDD1 /* SDLWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWindow.cpp; sourceTree = "<group>"; };
 		9FC715D41A152805004FDDD1 /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprite.cpp; sourceTree = "<group>"; };
 		9FC715D51A152805004FDDD1 /* StdWilUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StdWilUtil.cpp; sourceTree = "<group>"; };
@@ -180,8 +180,8 @@
 				9FC715D01A152805004FDDD1 /* Game.cpp */,
 				3D667CC72C4ADA370014BCD0 /* Invader.h */,
 				3D667CC62C4ADA370014BCD0 /* Invader.cpp */,
-				9FC715C51A152805004FDDD1 /* Paddle.h */,
-				9FC715D21A152805004FDDD1 /* Paddle.cpp */,
+				9FC715C51A152805004FDDD1 /* Player.h */,
+				9FC715D21A152805004FDDD1 /* Player.cpp */,
 				9FC715CB1A152805004FDDD1 /* TitleScreen.h */,
 				9FC715D61A152805004FDDD1 /* TitleScreen.cpp */,
 			);
@@ -249,7 +249,7 @@
 				9FC715E01A152805004FDDD1 /* TitleScreen.cpp in Sources */,
 				9FC715D91A152805004FDDD1 /* Controller.cpp in Sources */,
 				9FC715DA1A152805004FDDD1 /* Game.cpp in Sources */,
-				9FC715DC1A152805004FDDD1 /* Paddle.cpp in Sources */,
+				9FC715DC1A152805004FDDD1 /* Player.cpp in Sources */,
 				9FC715DF1A152805004FDDD1 /* StdWilUtil.cpp in Sources */,
 				9FC715DE1A152805004FDDD1 /* Sprite.cpp in Sources */,
 				3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */,

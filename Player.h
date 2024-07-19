@@ -2,11 +2,11 @@
 
 #include "Sprite.h"
 
-class Paddle : public Sprite {
+class Player : public Sprite {
 	float speed;
 
 public:
-	Paddle( Vector2f size, float iSpeed );
+	Player( Vector2f size, float iSpeed );
 	void moveDown();
 	void moveUp();
 };

@@ -2,7 +2,6 @@
 
 #include "SDLWindow.h"
 #include "Sprite.h"
-#include "Paddle.h"
 #include "Ball.h"
 #include "Controller.h"
 #include "TitleScreen.h"
@@ -12,6 +11,7 @@
 using std::shared_ptr;
 
 class Invader;
+class Player;
 
 class Game {
 public:
@@ -21,7 +21,7 @@ private:
   vector<Invader*> invaders;
 	// Need a ball and paddles for this game
 	Ball* ball;
-	Paddle* player;
+	Player* player;
 
 	TitleScreen* title;
 	Sprite* pausedText;

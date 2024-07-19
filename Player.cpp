@@ -1,18 +1,18 @@
-#include "Paddle.h"
+#include "Player.h"
 
-Paddle::Paddle( Vector2f size, float iSpeed ) {
+Player::Player( Vector2f size, float iSpeed ) {
       
   box.w = size.x;
   box.h = size.y;
 	speed = iSpeed;
 }
 
-void Paddle::moveDown() {
+void Player::moveDown() {
   box.y += speed;
 	bounceTopAndBottom();
 }
 
-void Paddle::moveUp() {
+void Player::moveUp() {
   box.y -= speed;
 	bounceTopAndBottom();
 }
