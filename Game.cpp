@@ -8,6 +8,10 @@ Game* game = 0;
 
 Game::Game() {
 	gameState = Title;
+  
+  title = new TitleScreen( "space invaders!" );
+  pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
+  pausedText->setCenter( sdl->getSize()/2 );
 
 	bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
 	flashesRem = 0;
@@ -30,10 +34,7 @@ Game::Game() {
   }
   
 	player = new Player( Vector2f( 25, 25 ), 10 );
-	title = new TitleScreen( "space invaders!" );
-	pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
-	pausedText->setCenter( sdl->getSize()/2 );
-
+	
 	// Set initial positions for player paddles
 	float centerH = sdl->getSize().y/2.f - player->box.h/2;
 	player->setPos( Vector2f( sdl->getSize().x - player->box.w, centerH ) );
