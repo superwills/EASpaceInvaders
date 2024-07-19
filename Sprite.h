@@ -27,21 +27,20 @@ public:
 	Sprite();
   Sprite( const RectF& rectangle );
 	Sprite( SDL_Texture* iTex );
-	Sprite( string filename );
-  
+	
   // Makes a text sprite in the default font
-	static Sprite* Text( string text, SDL_Color iColor );
+	static Sprite* Text( const string &text, SDL_Color iColor );
 	Vector2f getPos();
 	Vector2f getCenter();
-	void setPos( Vector2f pos );
+	void setPos( const Vector2f &pos );
 	void setPos( float x, float y ) {
-		setCenter(Vector2f(x,y));
+		setCenter( Vector2f( x, y ) );
 	}
 	void setCenter( Vector2f pos );
 	void setCenter( float x, float y ) {
-		setCenter(Vector2f(x,y));
+		setCenter( Vector2f( x, y ) );
 	}
-	void setSize( Vector2f size );
+	void setSize( const Vector2f &size );
 	void scale( float s );
 	void bounceTopAndBottom();
 	void bounceLeftAndRight();

@@ -5,7 +5,7 @@
 class Ball : public Sprite {
 public:
 	float lastStartSpeed;
-	Ball(float size, string iname);
+	Ball( float size );
 	void saveLastStartSpeed();
 	virtual void update();
 };

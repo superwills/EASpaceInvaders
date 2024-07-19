@@ -18,6 +18,7 @@ using namespace std;
 #include "Log.h"
 #include "Vectorf.h"
 #include "Assets.h"
+#include "RectF.h"
 
 // Stores everything to do with SDL, and game assets
 class SDLWindow {
@@ -48,6 +49,7 @@ public:
 	// SDL supplied graphics primitives functionality
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
 	void rect( int x, int y, int w, int h, SDL_Color color );
+  void fillRect( const RectF &rect, SDL_Color color );
 	void fillRect( int x, int y, int w, int h, SDL_Color color );
 	void drawTexture( SDL_Rect rect, SDL_Texture *tex );
 	

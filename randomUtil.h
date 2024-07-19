@@ -15,30 +15,30 @@ inline uint32_t randInt() {
   return MTRandom32();
 }
 
-// assumes low=0
-inline uint32_t randInt( int high ) {
-  if( !high ) {
-    return high;
+// between 0 -> (highEx - 1)
+inline uint32_t randInt( int highEx ) {
+  if( !highEx ) {
+    return highEx;
   }
-  return MTRandom32() % high;
+  return MTRandom32() % highEx;
 }
 
 // between low and (high-1)
-inline uint32_t randInt( int low, int high ) {
+inline uint32_t randInt( int lowIn, int highEx ) {
   // modulus 0 is an error
-  if( low == high ) {
-    return low;
+  if( lowIn == highEx ) {
+    return lowIn;
   }
-  return low + MTRandom32() % (high-low);
+  return lowIn + MTRandom32() % ( highEx - lowIn );
 }
 
 // between low and high, inclusive of high end
-inline uint32_t randIntIn( int low, int highInc ) {
+inline uint32_t randIntIn( int lowIn, int highIn ) {
   // modulus 0 is an error
-  if( low == highInc ) {
-    return low;
+  if( lowIn == highIn ) {
+    return lowIn;
   }
-  return low + MTRandom32() % (highInc + 1 - low);
+  return lowIn + MTRandom32() % ( highIn + 1 - lowIn );
 }
 
 inline uint32_t randIntInRange( int low, int range ) {

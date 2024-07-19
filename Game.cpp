@@ -27,9 +27,9 @@ Game::Game() {
       invaders.push_back( new Invader( box ) );
     }
   }
-	leftPaddle = new Paddle( Vector2f(25,100), 10, "left paddle" );
-	rightPaddle = new Paddle( Vector2f(25,100), 10, "right paddle" );
-	title = new TitleScreen( "title", "assets/title.jpg" );
+	leftPaddle = new Paddle( Vector2f(25,100), 10 );
+	rightPaddle = new Paddle( Vector2f(25,100), 10 );
+	title = new TitleScreen( "space invaders!" );
 	pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
 	pausedText->setCenter( sdl->getSize()/2 );
 
@@ -39,7 +39,7 @@ Game::Game() {
 	rightPaddle->setPos( Vector2f( sdl->getSize().x - rightPaddle->box.w, centerH ) );
 	
 	// Create the ball
-	ball = new Ball( 32, "the ball" );
+	ball = new Ball( 32 );
 	resetBall();
 	ball->saveLastStartSpeed();
 	

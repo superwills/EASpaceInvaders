@@ -1,19 +1,12 @@
 #include "TitleScreen.h"
 #include "Colors.h"
 
-TitleScreen::TitleScreen( string title, string filename ) :
-    Sprite( filename ) {
-	color = SDL_ColorMake(0,0,0,0);
+TitleScreen::TitleScreen( const string &titleText ) :
+    Sprite( RectF( 0, 0, sdl->winWidth, sdl->winHeight ) ) {
 }
 
-void TitleScreen::update()
-{
-	if( color.r < 255 )
-	{
-		color.r++;
-		color.g++;
-		color.b++;
-		color.a++;
-		SDL_SetTextureColorMod( tex, color.r, color.g, color.b );
-	}
+void TitleScreen::update() {
+	
+  // Use a random color
+  //SDL_SetTextureColorMod( tex, color.r, color.g, color.b );
 }

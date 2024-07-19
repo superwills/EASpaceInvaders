@@ -19,13 +19,7 @@ Sprite::Sprite( SDL_Texture* iTex ) {
 	retrieveTexSize();
 }
 
-Sprite::Sprite( string filename ) {
-  name = makeString( "Sprite %d from file `%s`", spriteId, filename.c_str() );
-  tex = sdl->loadTexture( filename );
-	retrieveTexSize();
-}
-
-Sprite* Sprite::Text( string text, SDL_Color iColor ) {
+Sprite* Sprite::Text( const string &text, SDL_Color iColor ) {
   SDL_Texture* tex = sdl->makeTextTexture( text, iColor );
   if( !tex ) {
     error( "Sprite::Text couldn't make text texture for `%s`", text.c_str() );
@@ -40,7 +34,7 @@ Vector2f Sprite::getPos() {
 	return box.xy();
 }
 
-void Sprite::setPos( Vector2f pos ) {
+void Sprite::setPos( const Vector2f &pos ) {
   box.xy() = pos;
 }
 
@@ -52,7 +46,7 @@ void Sprite::setCenter( Vector2f pos ) {
   box.setCenter( pos );
 }
 
-void Sprite::setSize( Vector2f size ) {
+void Sprite::setSize( const Vector2f &size ) {
   box.size() = size;
 }
 
@@ -61,14 +55,12 @@ void Sprite::scale( float s ) {
 }
 
 void Sprite::bounceTopAndBottom() {
-	if( box.top() < 0 )
-	{
+	if( box.top() < 0 ) {
 		float overshot = 0 - box.top();
     box.y += overshot;
 		vel.y = -vel.y; // reflect y vel
 	}
-	if( box.bottom() > sdl->getSize().y )
-	{
+	if( box.bottom() > sdl->getSize().y ) {
 		float overshot = sdl->getSize().y - box.bottom();
     box.y += overshot;
 		vel.y = -vel.y; // reflect y vel
@@ -79,14 +71,13 @@ void Sprite::bounceLeftAndRight()
 {
 	// ensure stays within bounds of world
 	// two of these can happen simultaneously, which is why no else is used
-	if( box.left() < 0 )
-	{
+	if( box.left() < 0 ) {
 		float overshot = - box.left();
     box.x += overshot;
 		vel.x = -vel.x; // reflect x vel
 	}
-	if( box.right() > sdl->getSize().x )
-	{
+  
+	if( box.right() > sdl->getSize().x ) {
 		float overshot = sdl->getSize().x - box.right();
     box.x += overshot;
 		vel.x = -vel.x; // reflect x vel
@@ -108,13 +99,14 @@ void Sprite::update() {
 }
 
 void Sprite::draw() {
-	if( hidden )
-		return; // just don't draw
-	
+  if( hidden ) {
+    return; // just don't draw
+  }
+  
 	sdl->setColor( color );
 	if( !tex ) {
 		// no texture, so draw a solid rect
-		sdl->fillRect( box.x, box.y, box.w, box.h, color );
+		sdl->fillRect( box, color );
 	}
 	else {
 		// Convert our floating pt rect to an int-based rect

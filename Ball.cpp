@@ -1,8 +1,7 @@
 #include "Ball.h"
 #include "Game.h"
 
-Ball::Ball(float size, string iname):Sprite( iname )
-{
+Ball::Ball( float size ) {
 	lastStartSpeed = 2;
 	box.w = box.h = size;
 	color.b = 0;

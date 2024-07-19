@@ -1,5 +1,7 @@
 #include "Colors.h"
 
+#include "randomUtil.h"
+
 SDL_Color White = { 255, 255, 255, 255 },
   Black = { 0, 0, 0, 255 },
   Red = { 255, 0, 0, 255 },
@@ -9,3 +11,6 @@ SDL_Color White = { 255, 255, 255, 255 },
   Magenta = { 255, 0, 255, 255 },
   Cyan = { 0, 255, 255, 255 };
 
+SDL_Color SDL_RandomSolidColor() {
+  return SDL_ColorMake( randInt( 256 ), randInt( 256 ), randInt( 256 ), 255 );
+}

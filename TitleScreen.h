@@ -4,6 +4,6 @@
 
 class TitleScreen : public Sprite {
 public:
-	TitleScreen(string title, string filename);
+	TitleScreen( const string &titleText );
 	void update();
 };

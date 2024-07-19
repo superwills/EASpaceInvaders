@@ -77,6 +77,10 @@ void SDLWindow::rect( int x, int y, int w, int h, SDL_Color color ) {
 	SDL_RenderDrawRect( renderer, &rect );
 }
 
+void SDLWindow::fillRect( const RectF &rect, SDL_Color color ) {
+  fillRect( rect.x, rect.y, rect.w, rect.h, color );
+}
+
 void SDLWindow::fillRect( int x, int y, int w, int h, SDL_Color color ) {
 	SDL_Rect rect = { x, y, w, h };
 	setColor( color );
