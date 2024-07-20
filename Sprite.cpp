@@ -7,16 +7,22 @@ Sprite::Sprite() {
   
   // Here i'm initializing the size to a non-zero values, so there aren't surprises :)
   box.w = box.h = 64;
+  
+  game->allSprites.push_back( this );
 }
 
 Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
   name = makeString( "Sprite %d", spriteId );
+
+  game->allSprites.push_back( this );
 }
 
 Sprite::Sprite( SDL_Texture *iTex ) {
 	name = makeString( "Sprite %d from texture", spriteId );
 	addAnimationFrame( iTex, White, 1 );
 	retrieveTexSize();
+ 
+  game->allSprites.push_back( this ); 
 }
 
 void Sprite::addBlankAnimationFrame() {

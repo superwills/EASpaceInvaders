@@ -17,15 +17,17 @@ class Game {
 public:
 	enum class GameState { Title, Running, Paused, Won, Lost, Exiting };
 	
+  //vector< shared_ptr<Sprite> > allSprites;
+  vector< Sprite* > allSprites;
+   
 private:
   TitleScreen *title;
 	Sprite *pausedText;
 	
   Player *player;
   vector<Invader*> invaders;
-
+  
 	SDL_Color bkgColor;	// the current background color
-  int flashesRem = 0;
   
 	int score = 0;
   Sprite *scoreSprite = 0;
@@ -38,6 +40,7 @@ public:
 	Game();
   ~Game() { }
 	
+  void init(); 
   bool isState( GameState state );
 	GameState getState();
 	void setState( GameState newState );

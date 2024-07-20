@@ -46,6 +46,7 @@ int main(int argc, char* args[]) {
 	
   sdl = new SDLWindow( "Space Invaders", 800, 600 );
   game = new Game;
+  game->init();
 
 	while( !game->isState( Game::GameState::Exiting ) ) {
 		// Read controller input

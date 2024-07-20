@@ -58,3 +58,4 @@ private:
 	void retrieveTexSize();
 };
 
+typedef shared_ptr<Sprite> SharedSprite;

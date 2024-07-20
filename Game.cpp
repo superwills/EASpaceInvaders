@@ -9,6 +9,10 @@ Game* game = 0;
 Game::Game() {
 	gameState = GameState::Title;
   
+}
+
+void Game::init() {
+
   title = new TitleScreen( "space invaders!" );
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
   Vector2f windowSize = sdl->getWindowSize();
@@ -119,8 +123,7 @@ void Game::changeScore( int byScoreValue ) {
   }
   scoreSprite = Sprite::Text( makeString( "%d", score ), White );
   scoreSprite->scale( 0.48f );
-  scoreSprite->setCenter( sdl->getWindowSize().x/2 - scoreSprite->box.w,
-    scoreSprite->box.h/2 );
+  scoreSprite->setCenter( sdl->getWindowSize().x/2, scoreSprite->box.h/2 );
 }
 
 void Game::checkForCollisions() {
@@ -138,13 +141,6 @@ void Game::runGame() {
 	// Use the controller state to change gamestate
 	player->move( controller.mouseX );
 	//|| controller.keystate[SDL_SCANCODE_LEFT/RIGHT]
-
-	// let the game objects update themselves
-	player->update();
-	
-  for( Invader *invader : invaders ) {
-    
-  }
 	
 	// Check for collisions after each object moves
 	checkForCollisions();
@@ -153,24 +149,15 @@ void Game::runGame() {
 void Game::update() {
 	// Get controller inputs first:
 	controller.update();
-
-	if( gameState == GameState::Title )	{
-		title->update();
-	}
-	else if( gameState == GameState::Won ) {
-		flashesRem--;
-		// change the color only every few frames
-    if( every( flashesRem, 3 ) ) {
-      bkgColor = SDL_RandomSolidColor();
-		}
-		if( !flashesRem ) {
-			bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
-			setState( GameState::Running );
-		}
-	}
-	else if( gameState == GameState::Running ) {
+ 
+  if( gameState == GameState::Running ) {
 		runGame();
 	}
+ 
+  for( Sprite* sprite : allSprites ) {
+    sprite->update();
+  }
+  
 }
 
 void Game::draw() {
@@ -178,6 +165,11 @@ void Game::draw() {
 
 	SDL_RenderClear( sdl->renderer );
 	
+  for( Sprite* sprite : allSprites ) {
+    sprite->draw();
+  }
+  
+  #if 0
 	if( gameState == GameState::Title ) {
 		title->draw();
 	}
@@ -193,7 +185,8 @@ void Game::draw() {
   for( Invader* invader : invaders ) {
     invader->draw();
   }
-	
+	#endif
+  
 	SDL_RenderPresent( sdl->renderer );
 }
 
