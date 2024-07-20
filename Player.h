@@ -2,6 +2,8 @@
 
 #include "Sprite.h"
 
+class Bullet;
+
 class Player : public Sprite {
 public:
   // Sizing is based on world size.
@@ -10,5 +12,5 @@ public:
   // Player restricted to moving in x.
 	void move( float x );
  
-  void shoot(); 
+  shared_ptr<Bullet> shoot(); 
 };

@@ -24,6 +24,8 @@ void Player::move( float x ) {
 	enforceWorldLimits();
 }
 
-void Player::shoot() {
-  new Bullet( box );
+
+shared_ptr<Bullet> Player::shoot() {
+  return std::make_shared<Bullet>( box );
 }
+

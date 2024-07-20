@@ -133,7 +133,7 @@ void Game::changeScore( int byScoreValue ) {
 
 void Game::checkForCollisions() {
 	// check bullets against invaders
-  for( Bullet *bullet : Bullet::allBullets ) {
+  for( shared_ptr<Bullet> bullet : allBullets ) {
     for( shared_ptr<Invader> invader : allInvaders ) {
       if( bullet->box.hit( invader->box ) ) {
         puts( "Hit invader" );
@@ -141,10 +141,7 @@ void Game::checkForCollisions() {
         invader->die();
       }
     }
-  } 
- 
-  
-	
+  }
 }
 
 void Game::clearDead() {
@@ -154,7 +151,9 @@ void Game::clearDead() {
     } ), allSharedSprites.end()
   );
   
-  Bullet::clearDead();
+  allBullets.erase( std::remove_if( allBullets.begin(), allBullets.end(), []( shared_ptr<Bullet> bullet ) {
+    return bullet->dead;
+  } ), allBullets.end() );
   
   allInvaders.erase( std::remove_if( allInvaders.begin(), allInvaders.end(), []( shared_ptr<Invader> invader ) {
     return invader->dead;
@@ -173,7 +172,8 @@ void Game::runGame() {
   }
   
   if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
-    player->shoot();
+    shared_ptr<Bullet> bullet = player->shoot();
+    allBullets.push_back( bullet );
   }
 	
 	// Check for collisions after each object moves
@@ -218,9 +218,10 @@ void Game::draw() {
     } 
 		player->draw();
 		scoreSprite->draw();
-    for( Bullet *bullet : Bullet::allBullets ) {
+  
+    for( shared_ptr<Bullet> bullet : allBullets ) {
       bullet->draw();
-    }  
+    }
 	  break;
 	
   case GameState::Paused: 

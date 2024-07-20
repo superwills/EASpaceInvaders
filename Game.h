@@ -9,6 +9,7 @@
 #include <vector>
 using std::shared_ptr;
 
+class Bullet;
 class Invader;
 class Player;
 
@@ -26,12 +27,13 @@ private:
   // both allInvaders and allSprites).
   vector< shared_ptr<Sprite> > allSharedSprites;
   
+  vector< shared_ptr<Bullet> > allBullets;
   vector< shared_ptr<Invader> > allInvaders;
   
 	SDL_Color bkgColor;	// the current background color
   
 	int score = 0;
-  shared_ptr<Sprite> scoreSprite = 0;
+  shared_ptr<Sprite> scoreSprite;
 	
 	GameState prevState = GameState::Title;
   GameState gameState = GameState::Title;

@@ -2,11 +2,6 @@
 
 #include "SDLWindow.h"
 
-void Bullet::clearDead() {
-  allBullets.erase( std::remove_if( allBullets.begin(), allBullets.end(), []( Bullet *bullet ) {
-    return bullet->dead;
-  } ), allBullets.end() );
-}
 
 Bullet::Bullet( const RectF &playerBox ) {
 	name = "Bullet/" + name;
@@ -21,12 +16,6 @@ Bullet::Bullet( const RectF &playerBox ) {
   
   addAnimationFrame( 0, Yellow, .2 );
   addAnimationFrame( 0, Red, .2 );
-  
-  allBullets.push_back( this );
-}
-
-Bullet::~Bullet() {
-  
 }
 
 void Bullet::update() {

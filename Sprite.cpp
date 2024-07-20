@@ -20,7 +20,8 @@ Sprite::Sprite( SDL_Texture *iTex ) {
 }
 
 Sprite::~Sprite() {
-  
+  // When a sprite is going down, we can release all the textures it has in it's animation.
+  animation.releaseAllTextures();
 }
 
 void Sprite::addBlankAnimationFrame() {

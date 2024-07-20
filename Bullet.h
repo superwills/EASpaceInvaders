@@ -2,13 +2,13 @@
 
 #include "Sprite.h"
 #include "Vectorf.h"
+#include "RectF.h"
+
+#include <memory>
+using std::shared_ptr;
 
 class Bullet : public Sprite {
 public:
-  inline static vector< Bullet* > allBullets;
-  static void clearDead();
-  
-	Bullet( const RectF &playerBox );
-  ~Bullet(); 
-	void update() override;
+  Bullet( const RectF &playerBox );
+  void update() override;
 };

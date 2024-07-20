@@ -16,10 +16,6 @@ struct Animation {
     Frame() { }
     Frame( SDL_Texture *iTex, SDL_Color iColor, float iDuration ) :
       tex( iTex ), color( iColor ), duration( iDuration ) { }
-      
-    void println() {
-      printf( "%d %d %f\n", tex, color, duration );
-    }
   };
   
   Frame ErrFrame; // You get this frame back if you have no animation frames set up.
@@ -31,6 +27,15 @@ private:
   
 public:  
   Animation() {
+  }
+  
+  // Not in dtor in case you copy this object
+  void releaseAllTextures() {
+    for( Frame& frame : frames ) {
+      if( frame.tex ) {
+        SDL_DestroyTexture( frame.tex );
+      }
+    }
   }
   
   void addFrame( const Frame& frame ) {
