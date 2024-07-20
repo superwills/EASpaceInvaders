@@ -21,7 +21,6 @@ void SDLWindow::SDLInit() {
   if( !defaultFont ) {
     ExitApp( makeString( "TTF_OpenFont: %s", TTF_GetError() ) );
   }
-  
 }
 
 void SDLWindow::ExitApp( const string &msg ) {
@@ -100,37 +99,15 @@ void SDLWindow::drawTexture( const RectF &rect, SDL_Texture *tex ) {
 	SDL_RenderCopy( renderer, tex, NULL, &sdlRect );
 }
 
-SDL_Surface* SDLWindow::loadSurface( const string &filename ) {
-	SDL_Surface* surface = IMG_Load( filename.c_str() );
-  if( !surface ) {
-    error( "Couldn't load surface `%s`!", filename.c_str() );
-  }
-  return surface;
-}
-
-SDL_Texture* SDLWindow::loadTexture( const string &filename ) {
+shared_ptr<Texture> SDLWindow::loadTexture( const string &filename ) {
 	auto iter = texes.find( filename );
 	if( iter != texes.end() )	{
 		warning( "`%s` already loaded", filename.c_str() );
 		return iter->second;
 	}
   
-  SDL_Surface *surface = loadSurface( filename );
-  if( !surface ) {
-    error( "loadSurface failed" );
-    return 0;
-  }
-  
-	SDL_Texture *tex = SDL_CreateTextureFromSurface( renderer, surface );
-  if( !tex ) {
-    error( "`%s`: SDL_CreateTextureFromSurface failed %s", filename.c_str(), SDL_GetError() );
-    return 0;
-  }
-  SDL_FreeSurface( surface );
-  
-  // default textures to allow alpha blend.
-	SDL_SetTextureBlendMode( tex, SDL_BLENDMODE_BLEND );
-	texes[ filename ] = tex; // You can look up textures later also.
+  shared_ptr<Texture> tex = std::make_shared<Texture>( filename, renderer );
+	texes[ filename ] = tex;
 	return tex;
 }
 
@@ -142,12 +119,13 @@ SDL_Texture* SDLWindow::makeTextTexture( const string &text, SDL_Color color ) {
   }
   
 	SDL_Texture *texture = SDL_CreateTextureFromSurface( renderer, textSurface );
+  SDL_FreeSurface( textSurface ); 
+  
   if( !texture ) {
     error( "SDL_CreateTextureFromSurface failed %s", text.c_str() );
     return 0;
   }
-	
-  SDL_FreeSurface( textSurface );
+  
 	return texture;
 }
 
