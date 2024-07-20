@@ -8,13 +8,13 @@ Sprite::Sprite() {
   // Here i'm initializing the size to a non-zero values, so there aren't surprises :)
   box.w = box.h = 64;
   
-  game->allSprites.push_back( this );
+  allSprites.push_back( this );
 }
 
 Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
   name = makeString( "Sprite %d", spriteId );
 
-  game->allSprites.push_back( this );
+  allSprites.push_back( this );
 }
 
 Sprite::Sprite( SDL_Texture *iTex ) {
@@ -22,7 +22,11 @@ Sprite::Sprite( SDL_Texture *iTex ) {
 	addAnimationFrame( iTex, White, 1 );
 	retrieveTexSize();
  
-  game->allSprites.push_back( this ); 
+  allSprites.push_back( this ); 
+}
+
+Sprite::~Sprite() {
+  allSprites.erase( std::remove( allSprites.begin(), allSprites.end(), this ) );
 }
 
 void Sprite::addBlankAnimationFrame() {

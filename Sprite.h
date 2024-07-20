@@ -20,6 +20,7 @@ protected:
   bool hidden = 0;
 
 public:
+  inline static vector< Sprite* > allSprites;
   Animation animation; // Single frame if static.
   
 	// This member represents the position & the size of the sprite combined
@@ -28,6 +29,7 @@ public:
 	Sprite();
   Sprite( const RectF& rectangle );
 	Sprite( SDL_Texture* iTex );
+  ~Sprite();
   
   void addBlankAnimationFrame();
   void addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ); 

@@ -13,14 +13,15 @@ Game::Game() {
 
 void Game::init() {
 
+  bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
+  
   title = new TitleScreen( "space invaders!" );
+  
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
+  
   Vector2f windowSize = sdl->getWindowSize();
   pausedText->setCenter( windowSize/2 );
 
-	bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
-  
-	
 	// load the sfx. These sfx were created with SFXR
 	// http://www.drpetter.se/project_sfxr.html
 	sdl->loadWavSound( SFX::Ping0, "assets/sounds/ping0.wav" );
@@ -109,7 +110,8 @@ void Game::populateInvaders() {
       box.x = i*( invaderSize + 5 );
       
       box.w = box.h = invaderSize;
-      invaders.push_back( new Invader( box ) );
+      
+      Invader *invader = new Invader( box );
     }
   }
 }
@@ -147,14 +149,13 @@ void Game::runGame() {
 }
 
 void Game::update() {
-	// Get controller inputs first:
 	controller.update();
  
   if( gameState == GameState::Running ) {
 		runGame();
 	}
  
-  for( Sprite* sprite : allSprites ) {
+  for( Sprite* sprite : Sprite::allSprites ) {
     sprite->update();
   }
   
@@ -165,28 +166,27 @@ void Game::draw() {
 
 	SDL_RenderClear( sdl->renderer );
 	
-  for( Sprite* sprite : allSprites ) {
-    sprite->draw();
-  }
-  
-  #if 0
-	if( gameState == GameState::Title ) {
+  switch( gameState ) {
+  case GameState::Title:
+  case GameState::Won:
+  case GameState::Lost:
+  case GameState::Exiting:
 		title->draw();
-	}
-	else {
+	  break;
+    
+	case GameState::Running:
+    for( Invader* invader : Invader::allInvaders ) {
+      invader->draw();
+    } 
 		player->draw();
 		scoreSprite->draw();
-	}
+	  break;
 	
-	if( gameState == GameState::Paused ) {
+  case GameState::Paused: 
 		pausedText->draw();
-	}
-  
-  for( Invader* invader : invaders ) {
-    invader->draw();
+	  break;
   }
-	#endif
-  
+	
 	SDL_RenderPresent( sdl->renderer );
 }
 
