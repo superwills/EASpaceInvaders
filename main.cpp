@@ -8,14 +8,16 @@ using namespace std;
 #include <time.h>
 
 // Coding features.
-// 1. Correctness. The code is free of known bugs and was tested. Although I could have included unit tests,
-// I didn't because, since it's just a short sample
-// 2. Terseness. Some of the code choices favor terseness of code.
-// The Mojang standard allowed use of short variable names for counters, but required
-// full names for anything else.
-// Although many game studios don't put a high emphasis on code terseness (including Mojang)
-// I still think it's an important thing. One time, an engineer moved everything in the anonymous namespace
-// (things accessed with ::function) into a namespace called GameTitle::Anonymous.
+// I'm influenced by the Mojang standard from working on Minecraft
+// - Init all vars
+// - Array bounds access & ptrs are always checked when they can be null
+//   - May catch ~90%? of bugs
+// - Exit program at some large failure points (eg renderer won't start)
+// - Code tries to be brief while still being clear
+// - Try to add helpful errors msgs
+// - Some comments for any surprising things
+
+
 
 // Powerups? Laser? Spread gun?
 

@@ -15,12 +15,12 @@ Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
 
 Sprite::Sprite( SDL_Texture *iTex ) {
 	name = makeString( "Sprite %d from texture", spriteId );
-	addAnimationFrame( iTex, 1 );
+	addAnimationFrame( iTex, White, 1 );
 	retrieveTexSize();
 }
 
-void Sprite::addAnimationFrame( SDL_Texture *tex, float duration ) {
-  animation.addFrame( Animation::Frame( tex, duration ) );
+void Sprite::addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ) {
+  animation.addFrame( Animation::Frame( tex, color, duration ) );
 }
 
 Sprite* Sprite::Text( const string &text, SDL_Color iColor ) {
@@ -92,6 +92,7 @@ void Sprite::hide() {
 }
 
 void Sprite::update() {
+  animation.update( 1./60 );
   enforceWorldLimits();
 }
 

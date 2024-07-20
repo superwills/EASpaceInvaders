@@ -10,22 +10,21 @@ using std::vector;
 
 class Game;
 
-
+// Really basic animation cycler
 struct Animation {
   struct Frame {
     SDL_Texture *tex = 0;
-    float duration = 0;
     SDL_Color color = White;
+    float duration = 0;
     
     Frame() { }
-    Frame( SDL_Texture *iTex, float iDuration ) :
-      tex( iTex ), duration( iDuration ) { }
+    Frame( SDL_Texture *iTex, SDL_Color iColor, float iDuration ) :
+      tex( iTex ), color( iColor ), duration( iDuration ) { }
   };
   inline static Frame BlankFrame;
   
 private:
-  // Amount of time on current frame
-  float time = 0;
+  float time = 0; // Amount of time we've spent on current frame
   int cf = 0;
   vector<Frame> frames;
   
@@ -55,7 +54,7 @@ public:
     }
     
     time += t;
-    Frame& f = frames[ cf ];
+    Frame& f = getCurrentFrame();
     
     if( time > f.duration ) {
       cycleFlag( cf, 0, (int)frames.size() );
@@ -82,7 +81,7 @@ public:
   Sprite( const RectF& rectangle );
 	Sprite( SDL_Texture* iTex );
  
-  void addAnimationFrame( SDL_Texture *tex, float duration ); 
+  void addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ); 
 	
   // Makes a text sprite in the default font
 	static Sprite* Text( const string &text, SDL_Color iColor );

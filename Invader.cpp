@@ -4,7 +4,8 @@
 
 Invader::Invader( const RectF& rectangle ) : Sprite( rectangle ) {
   name = "Invader/" + name; // prepend Invader.
-  addAnimationFrame( 0, HUGEF );
+  addAnimationFrame( 0, Blue, .1 );
+  addAnimationFrame( 0, Green, .1 );
 }
 
 
