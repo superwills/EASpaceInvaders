@@ -24,7 +24,9 @@ Bullet::~Bullet() {
 }
 
 void Bullet::update() {
-  Sprite::update();
+  //Sprite::update();
+  animation.update( 1./60 ); // Only update the animation, but don't enforce world limits like for other sprites.
+  
 	box.y--;
 	
 	if( box.y < 0 ) {
