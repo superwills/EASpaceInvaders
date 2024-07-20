@@ -27,12 +27,11 @@ class SDLWindow {
 	map<string, SDL_Texture*> texes;
 	map<Music, Mix_Music*> musics;
 	map<SFX, Mix_Chunk*> sfx;
-
-  
-public:
   SDL_Window *window = 0;
 	SDL_Renderer *renderer = 0;
   inline static TTF_Font *defaultFont = 0; // default rendering font.
+  
+public:
   
   static void SDLInit();
   static void ExitApp( const string &msg );
