@@ -19,6 +19,10 @@ Sprite::Sprite( SDL_Texture *iTex ) {
 	retrieveTexSize();
 }
 
+void Sprite::addBlankAnimationFrame() {
+  animation.addFrame( Animation::Frame( 0, White, 1 ) );
+}
+
 void Sprite::addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ) {
   animation.addFrame( Animation::Frame( tex, color, duration ) );
 }

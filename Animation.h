@@ -47,15 +47,10 @@ public:
   }
   
   void update( float t ) {
-    if( frames.empty() ) {
-      // No animation
-      return;
-    }
-    
     time += t;
-    Frame& f = getCurrentFrame();
+    Frame& frame = getCurrentFrame();
     
-    if( time > f.duration ) {
+    if( time > frame.duration ) {
       cycleArrayIndex( frameIndex, frames.size() );
       time = 0;
     }

@@ -28,7 +28,8 @@ public:
 	Sprite();
   Sprite( const RectF& rectangle );
 	Sprite( SDL_Texture* iTex );
- 
+  
+  void addBlankAnimationFrame();
   void addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ); 
 	
   // Makes a text sprite in the default font

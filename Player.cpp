@@ -11,6 +11,7 @@ Player::Player( const Vector2f &windowSize ) {
   
   setCenter( hCenter, windowSize.y - box.h/2 );
   
+  addBlankAnimationFrame();
 }
 
 void Player::move( float x ) {
