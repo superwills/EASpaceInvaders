@@ -49,7 +49,8 @@ public:
 	void rect( int x, int y, int w, int h, SDL_Color color );
   void fillRect( const RectF &rect, SDL_Color color );
 	void fillRect( int x, int y, int w, int h, SDL_Color color );
-	void drawTexture( SDL_Rect rect, SDL_Texture *tex );
+	void drawTexture( const RectF &rect, SDL_Texture *tex );
+	void drawTexture( const SDL_Rect &rect, SDL_Texture *tex );
 	
 	SDL_Surface* loadSurface( const string &filename );
 	SDL_Texture* loadTexture( const string &filename );

@@ -107,9 +107,7 @@ void Sprite::draw() {
 		sdl->fillRect( box, af.color );
 	}
 	else {
-		// Convert our floating pt rect to an int-based rect
-		SDL_Rect r = { (int)box.x, (int)box.y, (int)box.w, (int)box.h};
-		sdl->drawTexture( r, af.tex );
+		sdl->drawTexture( box, af.tex );
 	}
 }
 

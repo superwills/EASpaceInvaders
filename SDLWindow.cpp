@@ -89,7 +89,13 @@ void SDLWindow::fillRect( int x, int y, int w, int h, SDL_Color color ) {
 	SDL_RenderFillRect( renderer, &rect );
 }
 
-void SDLWindow::drawTexture( SDL_Rect rect, SDL_Texture *tex ) {
+void SDLWindow::drawTexture( const RectF &rect, SDL_Texture *tex ) {
+ // Convert our floating pt rect to an int-based rect
+  SDL_Rect r = { (int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h };
+	SDL_RenderCopy( renderer, tex, NULL, &r );
+}
+
+void SDLWindow::drawTexture( const SDL_Rect &rect, SDL_Texture *tex ) {
 	SDL_RenderCopy( renderer, tex, NULL, &rect );
 }
 

@@ -48,7 +48,7 @@ public:
     return frames[ cf ];
   }
   
-  void update( double t ) {
+  void update( float t ) {
     if( frames.empty() ) {
       // No animation
       return;
