@@ -28,11 +28,11 @@ public:
 	
 	Sprite();
   Sprite( const RectF& rectangle );
-	Sprite( SDL_Texture* iTex );
-  virtual ~Sprite();
+	Sprite( shared_ptr<Texture> iTex );
+  virtual ~Sprite() { }
   
   void addBlankAnimationFrame();
-  void addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ); 
+  void addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float duration ); 
   
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, SDL_Color iColor );
@@ -61,8 +61,6 @@ public:
 	virtual void draw();
 	virtual void die();
   
-private:
-	void retrieveTexSize();
 };
 
 typedef shared_ptr<Sprite> SharedSprite;

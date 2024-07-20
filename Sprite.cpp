@@ -1,6 +1,8 @@
 #include "Sprite.h"
-#include "Game.h"
+
 #include "Colors.h"
+#include "Game.h"
+#include "Texture.h"
 
 Sprite::Sprite() {
   name = makeString( "Sprite %d", spriteId );
@@ -13,37 +15,28 @@ Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
   name = makeString( "Sprite %d", spriteId );
 }
 
-Sprite::Sprite( SDL_Texture *iTex ) {
+Sprite::Sprite( shared_ptr<Texture> iTex ) {
 	name = makeString( "Sprite %d from texture", spriteId );
 	addAnimationFrame( iTex, White, 1 );
-	retrieveTexSize();
-}
-
-Sprite::~Sprite() {
-  // When a sprite is going down, we can release all the textures it has in it's animation.
-  animation.releaseAllTextures();
+  
+	box.w = box.h = 64;
 }
 
 void Sprite::addBlankAnimationFrame() {
   animation.addFrame( Animation::Frame( 0, White, 1 ) );
 }
 
-void Sprite::addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ) {
+void Sprite::addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float duration ) {
   animation.addFrame( Animation::Frame( tex, color, duration ) );
 }
 
 shared_ptr<Sprite> Sprite::Text( const string &text, SDL_Color iColor ) {
-  SDL_Texture* tex = sdl->makeTextTexture( text, iColor );
-  if( !tex ) {
-    error( "Sprite::Text couldn't make text texture for `%s`", text.c_str() );
-    return 0;
-  }
-  
-	return std::make_shared<Sprite>( tex );
+  shared_ptr<Texture> tex = sdl->makeTextTexture( text, iColor );
+  return std::make_shared<Sprite>( tex );
 }
 
 void Sprite::loadSpritesheet( const string &filename, int numFrames, const RectF& frameSize ) {
-  // All frames use the same tex, but 
+  // All frames use the same tex.
   shared_ptr<Texture> tex = sdl->loadTexture( filename );
   // need to use shared_ptr, building Texture class now..
   
@@ -132,12 +125,4 @@ void Sprite::die() {
   // The reason for doing this is it is awkward to remove from collections while iterating
   // (which is often when we discover the object died)
   dead = 1;
-}
-
-void Sprite::retrieveTexSize() {
-  Animation::Frame &animFrame = animation.getCurrentFrame();
-  
-	int w, h;
-	SDL_QueryTexture( animFrame.tex, 0, 0, &w, &h );
-  box.w=w, box.h=h;
 }

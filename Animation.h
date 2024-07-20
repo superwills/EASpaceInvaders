@@ -3,19 +3,20 @@
 #include "Colors.h"
 #include "StdWilUtil.h"
 
+struct Texture;
+
 #include <vector>
 using std::vector;
 
 // Really basic animation cycler
 struct Animation {
   struct Frame {
-    SDL_Texture *tex = 0;
+    shared_ptr<Texture> tex;
     SDL_Color color = White;
     float duration = 0;
     
     Frame() { }
-    Frame( SDL_Texture *iTex, SDL_Color iColor, float iDuration ) :
-      tex( iTex ), color( iColor ), duration( iDuration ) { }
+    Frame( shared_ptr<Texture> iTex, SDL_Color iColor, float iDuration );
   };
   
   Frame ErrFrame; // You get this frame back if you have no animation frames set up.
@@ -27,15 +28,6 @@ private:
   
 public:  
   Animation() {
-  }
-  
-  // Not in dtor in case you copy this object
-  void releaseAllTextures() {
-    for( Frame& frame : frames ) {
-      if( frame.tex ) {
-        SDL_DestroyTexture( frame.tex );
-      }
-    }
   }
   
   void addFrame( const Frame& frame ) {

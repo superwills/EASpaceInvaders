@@ -21,46 +21,6 @@ using namespace std;
 #include "RectF.h"
 #include "Vectorf.h"
 
-// Light object wrapper around an SDL_Texture to provide destruction
-struct Texture {
-  SDL_Texture *sdlTex = 0;
-  
-  Texture( const string &filename, SDL_Renderer *renderer ) {
-    // Load first as a "surface"
-    SDL_Surface *surface = IMG_Load( filename.c_str() );
-    if( !surface ) {
-      error( "Couldn't load surface `%s`!", filename.c_str() );
-      return;
-    }
-    
-    loadTextureFromSurface( surface, renderer );
-  }
-  
-  Texture( SDL_Surface *surface, SDL_Renderer *renderer ) {
-    loadTextureFromSurface( surface, renderer );
-  }
-  
-  void loadTextureFromSurface( SDL_Surface *surface, SDL_Renderer *renderer ) {
-    // convert the surface to a texture
-    sdlTex = SDL_CreateTextureFromSurface( renderer, surface );
-    SDL_FreeSurface( surface );
-    
-    if( !sdlTex ) {
-      error( "SDL_CreateTextureFromSurface failed %s", SDL_GetError() );
-      return;
-    }
-    
-    // default textures to allow alpha blend.
-    SDL_SetTextureBlendMode( sdlTex, SDL_BLENDMODE_BLEND );
-  }
-  
-  ~Texture() {
-    if( sdlTex ) {
-      SDL_DestroyTexture( sdlTex );
-    }
-  }
-};
-
 // Stores everything to do with SDL, and game assets
 class SDLWindow {
 	// asset maps: filename=>SDL_* objects
@@ -91,13 +51,13 @@ public:
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
 	void outlineRect( const RectF &rect, SDL_Color color );
 	void fillRect( const RectF &rect, SDL_Color color );
-	void drawTexture( const RectF &rect, SDL_Texture *tex );
+	void drawTexture( const RectF &rect, shared_ptr<Texture> tex );
 	void draw( const RectF &rect, const Animation::Frame &animationFrame ); 
 	shared_ptr<Texture> loadTexture( const string &filename );
   
   // Makes a texture containing `text`, in `color` specified
   // A lot less efficient than texture atlasing, but good for prototype
-	SDL_Texture* makeTextTexture( const string &text, SDL_Color color );
+	shared_ptr<Texture> makeTextTexture( const string &text, SDL_Color color );
   
 	// Knowing SDLWindow is slowly becoming a god-class, in the interests of
   // simplicity we add on sound playing functionality here. SDL makes the code simple,

@@ -1,5 +1,9 @@
 #include "SDLWindow.h"
+
 #include "Sprite.h"
+#include "Texture.h"
+
+#include <assert.h>
 
 SDLWindow *sdl = 0;
 
@@ -93,10 +97,12 @@ void SDLWindow::fillRect( const RectF &rect, SDL_Color color ) {
 	SDL_RenderFillRect( renderer, &sdlRect );
 }
 
-void SDLWindow::drawTexture( const RectF &rect, SDL_Texture *tex ) {
- // Convert our floating pt rect to an int-based rect
+void SDLWindow::drawTexture( const RectF &rect, shared_ptr<Texture> tex ) {
+  assert( tex->sdlTex && "sdlTex must be set" );
+  
+  // Convert our floating pt rect to an int-based rect
   SDL_Rect sdlRect = rect.toSDLRect();
-	SDL_RenderCopy( renderer, tex, NULL, &sdlRect );
+	SDL_RenderCopy( renderer, tex->sdlTex, NULL, &sdlRect );
 }
 
 shared_ptr<Texture> SDLWindow::loadTexture( const string &filename ) {
@@ -111,22 +117,15 @@ shared_ptr<Texture> SDLWindow::loadTexture( const string &filename ) {
 	return tex;
 }
 
-SDL_Texture* SDLWindow::makeTextTexture( const string &text, SDL_Color color ) {
+shared_ptr<Texture> SDLWindow::makeTextTexture( const string &text, SDL_Color color ) {
 	SDL_Surface *textSurface = TTF_RenderText_Solid( defaultFont, text.c_str(), color );
   if( !textSurface ) {
     error( "TTF_RenderText_Solid failed %s", text.c_str() );
     return 0;
   }
   
-	SDL_Texture *texture = SDL_CreateTextureFromSurface( renderer, textSurface );
-  SDL_FreeSurface( textSurface ); 
-  
-  if( !texture ) {
-    error( "SDL_CreateTextureFromSurface failed %s", text.c_str() );
-    return 0;
-  }
-  
-	return texture;
+	shared_ptr<Texture> texture = std::make_shared<Texture>( textSurface, renderer );
+  return texture;
 }
 
 void SDLWindow::loadMusic( Music musicId, const string &filename ) {
