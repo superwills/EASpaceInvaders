@@ -43,7 +43,10 @@ public:
 	
   // Not cached, get it from the physical window
   Vector2f getWindowSize();
+  void clear( SDL_Color color );
 	void setColor( SDL_Color color );
+  // Finished rendering the frame 
+  void present(); 
 
 	// SDL supplied graphics primitives functionality
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );

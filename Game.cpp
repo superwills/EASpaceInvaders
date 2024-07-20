@@ -162,11 +162,9 @@ void Game::update() {
 }
 
 void Game::draw() {
-	sdl->setColor( bkgColor );
+	sdl->clear( bkgColor );
 
-	SDL_RenderClear( sdl->renderer );
-	
-  switch( gameState ) {
+	switch( gameState ) {
   case GameState::Title:
   case GameState::Won:
   case GameState::Lost:
@@ -187,6 +185,6 @@ void Game::draw() {
 	  break;
   }
 	
-	SDL_RenderPresent( sdl->renderer );
+	sdl->present();
 }
 

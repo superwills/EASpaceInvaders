@@ -64,8 +64,17 @@ Vector2f SDLWindow::getWindowSize() {
   return Vector2f( w, h );
 }
 
+void SDLWindow::clear( SDL_Color color ) {
+  setColor( color );
+  SDL_RenderClear( sdl->renderer );
+}
+
 void SDLWindow::setColor( SDL_Color color ) {
 	SDL_SetRenderDrawColor( renderer, color.r, color.g, color.b, color.a );
+}
+
+void SDLWindow::present() {
+  SDL_RenderPresent( renderer );
 }
 
 void SDLWindow::line( int startX, int startY, int endX, int endY, SDL_Color color ) {
