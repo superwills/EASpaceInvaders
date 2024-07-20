@@ -138,6 +138,8 @@ void Game::checkForCollisions() {
       if( bullet->box.hit( invader->box ) ) {
         puts( "Hit invader" );
         //sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
+        
+        changeScore( invader->scoreValue );
         invader->die();
       }
     }
@@ -173,6 +175,7 @@ void Game::runGame() {
   
   if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
     shared_ptr<Bullet> bullet = player->shoot();
+    allSharedSprites.push_back( bullet );
     allBullets.push_back( bullet );
   }
 	

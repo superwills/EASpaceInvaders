@@ -3,11 +3,11 @@
 #include "Sprite.h"
 
 class Invader : public Sprite {
-  int scoreValue = 1;
+  
 public:
+  int scoreValue = 1;
   
   // Must specify where/size of Invader to construct
   Invader( const RectF& rectangle );
-  ~Invader();
   
 };

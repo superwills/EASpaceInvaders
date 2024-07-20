@@ -11,8 +11,3 @@ Invader::Invader( const RectF& rectangle ) : Sprite( rectangle ) {
 }
 
 
-Invader::~Invader() {
-  game->changeScore( scoreValue );
-  
-  
-}
