@@ -11,7 +11,7 @@ using std::vector;
 
 class Game;
 
-class Sprite {
+class Sprite : public std::enable_shared_from_this<Sprite> {
   inline static int NextSpriteId = 0;
   
 protected:
@@ -22,6 +22,9 @@ protected:
   
 public:
   inline static vector< Sprite* > allSprites;
+  
+  inline static vector< shared_ptr<Sprite> > allSharedSprites;
+  
   static void clearDead();
   
   Animation animation; // Single frame if static.

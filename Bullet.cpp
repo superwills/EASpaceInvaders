@@ -26,7 +26,7 @@ Bullet::Bullet( const RectF &playerBox ) {
 }
 
 Bullet::~Bullet() {
-  allBullets.erase( std::remove( allBullets.begin(), allBullets.end(), this ) );
+  
 }
 
 void Bullet::update() {

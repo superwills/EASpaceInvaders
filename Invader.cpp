@@ -22,5 +22,5 @@ Invader::Invader( const RectF& rectangle ) : Sprite( rectangle ) {
 Invader::~Invader() {
   game->changeScore( scoreValue );
   
-  allInvaders.erase( std::remove( allInvaders.begin(), allInvaders.end(), this ) );
+  
 }

@@ -6,6 +6,12 @@ void Sprite::clearDead() {
   allSprites.erase( std::remove_if( allSprites.begin(), allSprites.end(), []( Sprite *sprite ) {
     return sprite->dead;
   } ) );
+  
+  allSharedSprites.erase(
+    std::remove_if( allSharedSprites.begin(), allSharedSprites.end(), []( shared_ptr<Sprite> sprite ) {
+      return sprite->dead;
+    } )
+  );
 }
 
 Sprite::Sprite() {
@@ -15,12 +21,16 @@ Sprite::Sprite() {
   box.w = box.h = 64;
   
   allSprites.push_back( this );
+  
+  allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
   name = makeString( "Sprite %d", spriteId );
 
   allSprites.push_back( this );
+  
+  allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::Sprite( SDL_Texture *iTex ) {
@@ -29,10 +39,12 @@ Sprite::Sprite( SDL_Texture *iTex ) {
 	retrieveTexSize();
  
   allSprites.push_back( this ); 
+  
+  allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::~Sprite() {
-  allSprites.erase( std::remove( allSprites.begin(), allSprites.end(), this ) );
+  
 }
 
 void Sprite::addBlankAnimationFrame() {
