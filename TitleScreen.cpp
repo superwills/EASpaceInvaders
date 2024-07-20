@@ -17,7 +17,7 @@ TitleScreen::TitleScreen( const string &titleText ) :
 
 void TitleScreen::update() {
   // Use a random color
-  Animation::Frame &af = animation.getCurrentFrame();
-  af.color = SDL_RandomSolidColor();
-  SDL_SetTextureColorMod( af.tex, af.color.r, af.color.g, af.color.b );
+  Animation::Frame &animFrame = animation.getCurrentFrame();
+  animFrame.color = SDL_RandomSolidColor();
+  SDL_SetTextureColorMod( animFrame.tex, animFrame.color.r, animFrame.color.g, animFrame.color.b );
 }

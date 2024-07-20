@@ -16,10 +16,6 @@ Game::Game() {
 
 	bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
   
-	// Create the ball
-	ball = new Ball( 32 );
-	resetBall();
-	ball->saveLastStartSpeed();
 	
 	// load the sfx. These sfx were created with SFXR
 	// http://www.drpetter.se/project_sfxr.html
@@ -127,29 +123,15 @@ void Game::changeScore( int byScoreValue ) {
     scoreSprite->box.h/2 );
 }
 
-void Game::resetBall() {
-	ball->setCenter( sdl->getWindowSize()/2 );
-}
-
 void Game::checkForCollisions() {
-	bool ballHit = false;
-	// check the ball's rect against the paddle's rects
+	// check bullets against invaders
+ 
+  // check
+  
+  // invader->box.hit( player->box )  
 	
-  if( ball->box.hit( player->box ) ) {
-    sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
-		float overlap = player->box.left() - ball->box.right();
-		ball->box.x += overlap;
-		
-		float y = player->box.centroid().y - ball->box.centroid().y;
-		float a = M_PI + M_PI/2.f * y/player->box.h;
-		
-		ballHit = true;
-	}
-
-	// when the ball is hit the ball bounces and speeds up a bit
-	if( ballHit )	{
-		
-	}
+  //sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
+	
 }
 
 void Game::runGame() {
@@ -159,8 +141,7 @@ void Game::runGame() {
 
 	// let the game objects update themselves
 	player->update();
-	ball->update();
-  
+	
   for( Invader *invader : invaders ) {
     
   }
@@ -202,7 +183,6 @@ void Game::draw() {
 	}
 	else {
 		player->draw();
-		ball->draw();
 		scoreSprite->draw();
 	}
 	

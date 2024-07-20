@@ -18,20 +18,18 @@ public:
 	enum class GameState { Title, Running, Paused, Won, Lost, Exiting };
 	
 private:
+  TitleScreen *title;
+	Sprite *pausedText;
+	
+  Player *player;
   vector<Invader*> invaders;
-	// Need a ball and paddles for this game
-	Ball* ball;
-	Player* player;
 
-	TitleScreen* title;
-	Sprite* pausedText;
 	SDL_Color bkgColor;	// the current background color
   int flashesRem = 0;
   
 	int score = 0;
   Sprite *scoreSprite = 0;
 	
-	// For unpausing
 	GameState prevState, gameState;
 	
 	Controller controller;
@@ -48,7 +46,6 @@ public:
   void initGameBoard();
   void populateInvaders();
   void changeScore( int byScoreValue );
-	void resetBall();
 	void checkForCollisions();
 	void runGame();
 	void update();

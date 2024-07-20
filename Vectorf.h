@@ -1,5 +1,4 @@
-#ifndef VECTORF_H
-#define VECTORF_H
+#pragma once
 
 #include <stdio.h>
 #include <float.h>
@@ -23,20 +22,12 @@
 // See https://gist.github.com/superwills/6159033
 // for the matrix characters
 
-union Vector2f
-{
-	struct { float x,y; } ;
-	float elts[2] ;
-
+struct Vector2f {
+	float x, y;
+	
 	Vector2f():x(0.f),y(0.f){}
 	Vector2f( float ix, float iy ):x(ix),y(iy){}
 	Vector2f( float iv ):x(iv),y(iv){}
-
-	// makes compiler consider class has "nontrivial" copy assignment operator  
-	// inline Vector2f& operator=( const Vector2f& v ) {
-	//   x=v.x, y=v.y ;
-	//   return *this ;
-	// }
 
 	inline Vector2f& operator=( float v ) {
 		x=y=v;
@@ -368,4 +359,3 @@ inline Vector2f operator-( float s, const Vector2f& v )
 	return Vector2f(s-v.x,s-v.y);
 }
 
-#endif

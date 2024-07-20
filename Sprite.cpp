@@ -101,21 +101,21 @@ void Sprite::draw() {
     return; // just don't draw
   }
   
-  Animation::Frame &af = animation.getCurrentFrame();
-  sdl->setColor( af.color );
-	if( !af.tex ) {
+  Animation::Frame &animFrame = animation.getCurrentFrame();
+  sdl->setColor( animFrame.color );
+	if( !animFrame.tex ) {
 		// no texture, so draw a solid rect
-		sdl->fillRect( box, af.color );
+		sdl->fillRect( box, animFrame.color );
 	}
 	else {
-		sdl->drawTexture( box, af.tex );
+		sdl->drawTexture( box, animFrame.tex );
 	}
 }
 
 void Sprite::retrieveTexSize() {
-  Animation::Frame &af = animation.getCurrentFrame();
+  Animation::Frame &animFrame = animation.getCurrentFrame();
   
 	int w, h;
-	SDL_QueryTexture( af.tex, 0, 0, &w, &h );
+	SDL_QueryTexture( animFrame.tex, 0, 0, &w, &h );
   box.w=w, box.h=h;
 }
