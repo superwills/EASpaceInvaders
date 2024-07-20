@@ -6,13 +6,15 @@
 #include <sdl.h>
 #endif
 
-// handles user input and modifies the game state based on that
-class Controller
-{
+// handles user input
+class Controller {
+  const Uint8 *keystate = 0;
+  
 public:
-	int mouseX, mouseY;
-	const Uint8 *keystate;
-	Controller();
-	// Updates the controller -- call once per frame
+	int mouseX = 0, mouseY = 0;
+  
+  Controller();
 	void update();
+ 
+  bool isPressed( uint16_t key );
 };

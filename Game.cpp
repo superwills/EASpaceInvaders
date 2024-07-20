@@ -30,6 +30,7 @@ void Game::init() {
 	sdl->loadWavSound( SFX::Ping3, "assets/sounds/ping3.wav" );
 	sdl->loadWavSound( SFX::Win, "assets/sounds/win.wav" );
   
+  // https://www.stef.be/bassoontracker
   sdl->loadMusic( Music::Background0, "assets/sounds/1721341344111_2337.mod.mp3" );
 	
 	setState( GameState::Title );
@@ -142,7 +143,13 @@ void Game::checkForCollisions() {
 void Game::runGame() {
 	// Use the controller state to change gamestate
 	player->move( controller.mouseX );
-	//|| controller.keystate[SDL_SCANCODE_LEFT/RIGHT]
+ 
+  if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
+    player->move( -1 );
+  }
+  if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
+    player->move( 1 );
+  } 
 	
 	// Check for collisions after each object moves
 	checkForCollisions();

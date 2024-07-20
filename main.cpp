@@ -23,15 +23,9 @@ using namespace std;
 
 // procedural aliens?
 /*
- E's and A's
  A very big J enemy
 
  flying saucer's that fly by that say UFO on them.
-
- 8 bit tones
-
- Default song of:
- https://www.stef.be/bassoontracker
 
  Particle effects. Can we do a geometry shader?
 

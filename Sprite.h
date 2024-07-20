@@ -29,7 +29,7 @@ public:
 	Sprite();
   Sprite( const RectF& rectangle );
 	Sprite( SDL_Texture* iTex );
-  ~Sprite();
+  virtual ~Sprite();
   
   void addBlankAnimationFrame();
   void addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ); 
