@@ -1,6 +1,8 @@
 #include "Player.h"
 
 Player::Player( const Vector2f &windowSize ) {
+  name = "Player/" + name;
+  
   float playerWidth = windowSize.x * .05; // 5% of worldWidth
   box.w = box.h = playerWidth;
   

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "randomUtil.h"
+#include "Vectorf.h"
 
 struct RectF {
   // x,y is TOP LEFT corner of the rectangle

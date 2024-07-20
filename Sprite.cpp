@@ -102,7 +102,7 @@ void Sprite::draw() {
   }
   
   Animation::Frame &af = animation.getCurrentFrame();
-	sdl->setColor( af.color );
+  sdl->setColor( af.color );
 	if( !af.tex ) {
 		// no texture, so draw a solid rect
 		sdl->fillRect( box, af.color );

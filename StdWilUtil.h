@@ -114,6 +114,11 @@ inline float clamp_11( float x ) {
 	else return x;
 }
 
+template<typename T>
+inline bool isValidIndex( int index, const vector<T>& container ) {
+  return index >= 0 && index < container.size();
+}
+
 // It's hard to decide what happens at 0.  Here i made it so
 // 1 and 0 don't have the same sign.  neither do -1 and 0.
 // 0 is considered as a distinct sign than +/-.  So also,
@@ -174,6 +179,15 @@ inline int decycleFlag( int &val, int minVal, int maxVal ) {
 		val = maxVal;
 
 	return val;
+}
+
+inline int cycleArrayIndex( int &index, size_t arraySize ) {
+  if( ++index > arraySize ) {
+    // reset
+    index = 0;
+  }
+  
+  return index;
 }
 
 string makeString( const char *fmt, ... );

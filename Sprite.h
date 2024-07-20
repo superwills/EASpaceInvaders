@@ -1,74 +1,22 @@
 #pragma once
 
+#include "Animation.h"
+#include "Colors.h"
+#include "RectF.h"
 #include "SDLWindow.h"
 #include "Vectorf.h"
-#include "RectF.h"
-#include "Colors.h"
 
 #include <vector>
 using std::vector;
 
 class Game;
 
-// Really basic animation cycler
-struct Animation {
-  struct Frame {
-    SDL_Texture *tex = 0;
-    SDL_Color color = White;
-    float duration = 0;
-    
-    Frame() { }
-    Frame( SDL_Texture *iTex, SDL_Color iColor, float iDuration ) :
-      tex( iTex ), color( iColor ), duration( iDuration ) { }
-  };
-  inline static Frame BlankFrame;
-  
-private:
-  float time = 0; // Amount of time we've spent on current frame
-  int cf = 0;
-  vector<Frame> frames;
-  
-public:  
-  Animation() {
-  }
-  
-  void addFrame( const Frame& frame ) {
-    frames.emplace_back( frame );
-  }
-  
-  Frame& getCurrentFrame() {
-    // If the animation is empty when you try to grab from it, it creates a blank frame that you get back
-    if( frames.empty() ) {
-      frames.emplace_back( BlankFrame );
-    }
-    
-    // Ensure the index is in a valid range. frames.size() >= 1 here.
-    ::clamp( cf, 0, (int)frames.size() );
-    return frames[ cf ];
-  }
-  
-  void update( float t ) {
-    if( frames.empty() ) {
-      // No animation
-      return;
-    }
-    
-    time += t;
-    Frame& f = getCurrentFrame();
-    
-    if( time > f.duration ) {
-      cycleFlag( cf, 0, (int)frames.size() );
-      time = 0;
-    }
-  }
-};
-
 class Sprite {
   inline static int NextSpriteId = 0;
   
 protected:
   int spriteId = NextSpriteId++;
-  string name;    // every object has a name for debug
+  string name;    // takes space but helps in debug
   bool hidden = 0;
 
 public:

@@ -2,7 +2,9 @@
 #include "Game.h"
 
 Ball::Ball( float size ) {
-	lastStartSpeed = 2;
+	name = "Ball/" + name;
+  
+  lastStartSpeed = 2;
 	box.w = box.h = size;
 }
 

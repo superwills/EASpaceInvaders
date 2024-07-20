@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D667CC82C4ADA370014BCD0 /* Invader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CC62C4ADA370014BCD0 /* Invader.cpp */; };
+		3D667CCC2C4BDC330014BCD0 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CCA2C4BDC330014BCD0 /* Animation.cpp */; };
 		3D9200672C4AA657001198CA /* assets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D9200662C4AA5DB001198CA /* assets */; };
 		3D92006A2C4AB27A001198CA /* math_ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D9200692C4AB27A001198CA /* math_ext.cpp */; };
 		3D92006C2C4AB501001198CA /* Assets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D92006B2C4AB501001198CA /* Assets.cpp */; };
@@ -53,6 +54,8 @@
 /* Begin PBXFileReference section */
 		3D667CC62C4ADA370014BCD0 /* Invader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Invader.cpp; sourceTree = "<group>"; };
 		3D667CC72C4ADA370014BCD0 /* Invader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Invader.h; sourceTree = "<group>"; };
+		3D667CCA2C4BDC330014BCD0 /* Animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
+		3D667CCB2C4BDC330014BCD0 /* Animation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Animation.h; sourceTree = "<group>"; };
 		3D9200662C4AA5DB001198CA /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		3D9200682C4AACFF001198CA /* Assets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Assets.h; sourceTree = "<group>"; };
 		3D9200692C4AB27A001198CA /* math_ext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = math_ext.cpp; sourceTree = "<group>"; };
@@ -172,6 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				3D667CC92C4ADAE50014BCD0 /* base */,
+				3D667CCB2C4BDC330014BCD0 /* Animation.h */,
+				3D667CCA2C4BDC330014BCD0 /* Animation.cpp */,
 				3D9200682C4AACFF001198CA /* Assets.h */,
 				3D92006B2C4AB501001198CA /* Assets.cpp */,
 				9FC715BF1A152805004FDDD1 /* Ball.h */,
@@ -254,6 +259,7 @@
 				9FC715DE1A152805004FDDD1 /* Sprite.cpp in Sources */,
 				3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */,
 				3D92006A2C4AB27A001198CA /* math_ext.cpp in Sources */,
+				3D667CCC2C4BDC330014BCD0 /* Animation.cpp in Sources */,
 				3D667CC82C4ADA370014BCD0 /* Invader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

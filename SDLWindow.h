@@ -15,10 +15,11 @@ using namespace std;
 #include <SDL_ttf.h>
 #endif
 
-#include "Log.h"
-#include "Vectorf.h"
+#include "Animation.h"
 #include "Assets.h"
+#include "Log.h"
 #include "RectF.h"
+#include "Vectorf.h"
 
 // Stores everything to do with SDL, and game assets
 class SDLWindow {
@@ -51,6 +52,7 @@ public:
 	void fillRect( int x, int y, int w, int h, SDL_Color color );
 	void drawTexture( const RectF &rect, SDL_Texture *tex );
 	void drawTexture( const SDL_Rect &rect, SDL_Texture *tex );
+  void draw( const RectF &rect, const Animation::Frame &animationFrame ); 
 	
 	SDL_Surface* loadSurface( const string &filename );
 	SDL_Texture* loadTexture( const string &filename );
