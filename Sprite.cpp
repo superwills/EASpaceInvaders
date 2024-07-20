@@ -2,40 +2,21 @@
 #include "Game.h"
 #include "Colors.h"
 
-void Sprite::clearDead() {
-  info( "There are %zu shared sprites", allSharedSprites.size() );
-  allSharedSprites.erase(
-    std::remove_if( allSharedSprites.begin(), allSharedSprites.end(), []( shared_ptr<Sprite> sprite ) {
-    
-      if( sprite->dead ) {
-        info( "Sprite `%s` dead", sprite->name.c_str() );
-      }
-      return sprite->dead;
-    } ), allSharedSprites.end()
-  );
-}
-
 Sprite::Sprite() {
   name = makeString( "Sprite %d", spriteId );
   
   // Here i'm initializing the size to a non-zero values, so there aren't surprises :)
   box.w = box.h = 64;
-  
-  //allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
   name = makeString( "Sprite %d", spriteId );
-
-  //allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::Sprite( SDL_Texture *iTex ) {
 	name = makeString( "Sprite %d from texture", spriteId );
 	addAnimationFrame( iTex, White, 1 );
 	retrieveTexSize();
- 
-  //allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::~Sprite() {

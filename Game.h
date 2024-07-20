@@ -19,8 +19,13 @@ public:
 private:
   shared_ptr<TitleScreen> title;
 	shared_ptr<Sprite> pausedText;
-	
   shared_ptr<Player> player;
+  
+  // Main collections for easy iteration on objects of a type.
+  // Objects may appear in more than one list (eg Invaders appear in
+  // both allInvaders and allSprites).
+  vector< shared_ptr<Sprite> > allSharedSprites;
+  
   
 	SDL_Color bkgColor;	// the current background color
   

@@ -12,9 +12,10 @@ void Game::init() {
   bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
   
   title = std::make_shared<TitleScreen>( "space invaders!" );
-  Sprite::allSharedSprites.push_back( title );
+  allSharedSprites.push_back( title );
   
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
+  allSharedSprites.push_back( pausedText );
   
   Vector2f windowSize = sdl->getWindowSize();
   pausedText->setCenter( windowSize/2 );
@@ -109,7 +110,8 @@ void Game::populateInvaders() {
       
       box.w = box.h = invaderSize;
       
-      new Invader( box );
+      shared_ptr<Invader> invader = std::make_shared<Invader>( box );
+      allSharedSprites.push_back( invader );
     }
   }
 }
@@ -145,7 +147,12 @@ void Game::checkForCollisions() {
 }
 
 void Game::clearDead() {
-  Sprite::clearDead();
+  allSharedSprites.erase(
+    std::remove_if( allSharedSprites.begin(), allSharedSprites.end(), []( shared_ptr<Sprite> sprite ) {
+      return sprite->dead;
+    } ), allSharedSprites.end()
+  );
+  
   Bullet::clearDead();
   Invader::clearDead();
 }
@@ -183,7 +190,7 @@ void Game::update() {
 		runGame();
 	}
  
-  for( shared_ptr<Sprite> sprite : Sprite::allSharedSprites ) {
+  for( shared_ptr<Sprite> sprite : allSharedSprites ) {
     sprite->update();
   }
   

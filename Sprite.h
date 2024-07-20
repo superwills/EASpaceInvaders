@@ -18,13 +18,9 @@ protected:
   int spriteId = NextSpriteId++;
   string name;    // takes space but helps in debug
   bool hidden = 0;
-  bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   
 public:
-  inline static vector< shared_ptr<Sprite> > allSharedSprites;
-  
-  static void clearDead();
-  
+  bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   Animation animation; // Single frame if static.
   
 	// This member represents the position & the size of the sprite combined
