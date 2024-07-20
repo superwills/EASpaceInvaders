@@ -33,17 +33,21 @@ public:
   
   void addBlankAnimationFrame();
   void addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ); 
-	
+  
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, SDL_Color iColor );
+ 
+  // I did not want to parse the json for spritesheet loading, so you have to specify params manually
+  // Limitations: frameSize must be the same for all the spritesheet frames. 
+  void loadSpritesheet( const string &filename, int numFrames, const RectF& frameSize );
 	Vector2f getPos();
 	Vector2f getCenter();
 	void setPos( const Vector2f &pos );
-	void setPos( float x, float y ) {
+	inline void setPos( float x, float y ) {
 		setCenter( Vector2f( x, y ) );
 	}
-	void setCenter( Vector2f pos );
-	void setCenter( float x, float y ) {
+	void setCenter( const Vector2f &pos );
+	inline void setCenter( float x, float y ) {
 		setCenter( Vector2f( x, y ) );
 	}
 	void setSize( const Vector2f &size );

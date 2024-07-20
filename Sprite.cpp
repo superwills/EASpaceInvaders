@@ -42,6 +42,13 @@ shared_ptr<Sprite> Sprite::Text( const string &text, SDL_Color iColor ) {
 	return std::make_shared<Sprite>( tex );
 }
 
+void Sprite::loadSpritesheet( const string &filename, int numFrames, const RectF& frameSize ) {
+  // All frames use the same tex, but 
+  SDL_Texture *tex = sdl->loadTexture( filename );
+  // need to use shared_ptr, building Texture class now..
+  
+}
+
 Vector2f Sprite::getPos() {
 	return box.xy();
 }
@@ -54,7 +61,7 @@ Vector2f Sprite::getCenter() {
 	return box.centroid();
 }
 
-void Sprite::setCenter( Vector2f pos ) {
+void Sprite::setCenter( const Vector2f &pos ) {
   box.setCenter( pos );
 }
 

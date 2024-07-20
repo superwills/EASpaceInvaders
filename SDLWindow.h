@@ -21,6 +21,17 @@ using namespace std;
 #include "RectF.h"
 #include "Vectorf.h"
 
+// Light object wrapper around an SDL_Texture to provide destruction
+struct Texture {
+  Texture( const string &filename ) {
+  
+  }
+  
+  ~Texture() {
+    
+  }
+};
+
 // Stores everything to do with SDL, and game assets
 class SDLWindow {
 	// asset maps: filename=>SDL_* objects
@@ -54,7 +65,11 @@ public:
 	void drawTexture( const RectF &rect, SDL_Texture *tex );
 	void draw( const RectF &rect, const Animation::Frame &animationFrame ); 
 	
+private:
+  // Surfaces are used by SDL but we don't use them outside of this class 
 	SDL_Surface* loadSurface( const string &filename );
+  
+public:
 	SDL_Texture* loadTexture( const string &filename );
   
   // Makes a texture containing `text`, in `color` specified

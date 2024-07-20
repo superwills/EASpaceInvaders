@@ -111,13 +111,13 @@ SDL_Surface* SDLWindow::loadSurface( const string &filename ) {
 SDL_Texture* SDLWindow::loadTexture( const string &filename ) {
 	auto iter = texes.find( filename );
 	if( iter != texes.end() )	{
-		warning( "%s already loaded", filename.c_str() );
+		warning( "`%s` already loaded", filename.c_str() );
 		return iter->second;
 	}
   
   SDL_Surface *surface = loadSurface( filename );
   if( !surface ) {
-    error( "loadTexture couldn't load surface" );
+    error( "loadSurface failed" );
     return 0;
   }
   
@@ -126,6 +126,7 @@ SDL_Texture* SDLWindow::loadTexture( const string &filename ) {
     error( "`%s`: SDL_CreateTextureFromSurface failed %s", filename.c_str(), SDL_GetError() );
     return 0;
   }
+  SDL_FreeSurface( surface );
   
   // default textures to allow alpha blend.
 	SDL_SetTextureBlendMode( tex, SDL_BLENDMODE_BLEND );
