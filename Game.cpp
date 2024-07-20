@@ -112,6 +112,7 @@ void Game::populateInvaders() {
       
       shared_ptr<Invader> invader = std::make_shared<Invader>( box );
       allSharedSprites.push_back( invader );
+      allInvaders.push_back( invader );
     }
   }
 }
@@ -133,7 +134,7 @@ void Game::changeScore( int byScoreValue ) {
 void Game::checkForCollisions() {
 	// check bullets against invaders
   for( Bullet *bullet : Bullet::allBullets ) {
-    for( Invader *invader : Invader::allInvaders ) {
+    for( shared_ptr<Invader> invader : allInvaders ) {
       if( bullet->box.hit( invader->box ) ) {
         puts( "Hit invader" );
         //sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
@@ -154,7 +155,10 @@ void Game::clearDead() {
   );
   
   Bullet::clearDead();
-  Invader::clearDead();
+  
+  allInvaders.erase( std::remove_if( allInvaders.begin(), allInvaders.end(), []( shared_ptr<Invader> invader ) {
+    return invader->dead;
+  } ), allInvaders.end() );
 }
 
 void Game::runGame() {
@@ -209,7 +213,7 @@ void Game::draw() {
 	  break;
     
 	case GameState::Running:
-    for( Invader *invader : Invader::allInvaders ) {
+    for( shared_ptr<Invader> invader : allInvaders ) {
       invader->draw();
     } 
 		player->draw();

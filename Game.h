@@ -26,6 +26,7 @@ private:
   // both allInvaders and allSprites).
   vector< shared_ptr<Sprite> > allSharedSprites;
   
+  vector< shared_ptr<Invader> > allInvaders;
   
 	SDL_Color bkgColor;	// the current background color
   
