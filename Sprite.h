@@ -5,7 +5,64 @@
 #include "RectF.h"
 #include "Colors.h"
 
+#include <vector>
+using std::vector;
+
 class Game;
+
+
+struct Animation {
+  struct Frame {
+    SDL_Texture *tex = 0;
+    float duration = 0;
+    SDL_Color color = White;
+    
+    Frame() { }
+    Frame( SDL_Texture *iTex, float iDuration ) :
+      tex( iTex ), duration( iDuration ) { }
+  };
+  inline static Frame BlankFrame;
+  
+private:
+  // Amount of time on current frame
+  float time = 0;
+  int cf = 0;
+  vector<Frame> frames;
+  
+public:  
+  Animation() {
+  }
+  
+  void addFrame( const Frame& frame ) {
+    frames.emplace_back( frame );
+  }
+  
+  Frame& getCurrentFrame() {
+    // If the animation is empty when you try to grab from it, it creates a blank frame that you get back
+    if( frames.empty() ) {
+      frames.emplace_back( BlankFrame );
+    }
+    
+    // Ensure the index is in a valid range. frames.size() >= 1 here.
+    ::clamp( cf, 0, (int)frames.size() );
+    return frames[ cf ];
+  }
+  
+  void update( double t ) {
+    if( frames.empty() ) {
+      // No animation
+      return;
+    }
+    
+    time += t;
+    Frame& f = frames[ cf ];
+    
+    if( time > f.duration ) {
+      cycleFlag( cf, 0, (int)frames.size() );
+      time = 0;
+    }
+  }
+};
 
 class Sprite {
   inline static int NextSpriteId = 0;
@@ -16,17 +73,16 @@ protected:
   bool hidden = 0;
 
 public:
-  SDL_Color color = White;
-  SDL_Texture *tex = 0; // Texture, if any
+  Animation animation; // Single frame if static.
   
 	// This member represents the position & the size of the sprite combined
   RectF box;
 	
-	Vector2f vel;
-	
 	Sprite();
   Sprite( const RectF& rectangle );
 	Sprite( SDL_Texture* iTex );
+ 
+  void addAnimationFrame( SDL_Texture *tex, float duration ); 
 	
   // Makes a text sprite in the default font
 	static Sprite* Text( const string &text, SDL_Color iColor );

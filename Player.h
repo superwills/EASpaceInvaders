@@ -5,7 +5,7 @@
 class Player : public Sprite {
 public:
   // Sizing is based on world size.
-	Player( const Vector2f &worldSize );
+	Player( const Vector2f &windowSize );
   
   // Player restricted to moving in x.
 	void move( float x );

@@ -1,8 +1,14 @@
 #include "Player.h"
 
-Player::Player( const Vector2f &worldSize ) {
-  float playerWidth = worldSize.x * .05; // 5% of worldWidth
+Player::Player( const Vector2f &windowSize ) {
+  float playerWidth = windowSize.x * .05; // 5% of worldWidth
   box.w = box.h = playerWidth;
+  
+  // Set initial positions for player paddles
+  float hCenter = windowSize.y/2;
+  
+  setCenter( hCenter, windowSize.y - box.h/2 );
+  
 }
 
 void Player::move( float x ) {

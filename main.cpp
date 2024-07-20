@@ -17,6 +17,8 @@ using namespace std;
 // I still think it's an important thing. One time, an engineer moved everything in the anonymous namespace
 // (things accessed with ::function) into a namespace called GameTitle::Anonymous.
 
+// Powerups? Laser? Spread gun?
+
 // procedural aliens?
 /*
  E's and A's

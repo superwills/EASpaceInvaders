@@ -13,10 +13,14 @@ Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
   name = makeString( "Sprite %d", spriteId );
 }
 
-Sprite::Sprite( SDL_Texture* iTex ) {
+Sprite::Sprite( SDL_Texture *iTex ) {
 	name = makeString( "Sprite %d from texture", spriteId );
-	tex = iTex;
+	addAnimationFrame( iTex, 1 );
 	retrieveTexSize();
+}
+
+void Sprite::addAnimationFrame( SDL_Texture *tex, float duration ) {
+  animation.addFrame( Animation::Frame( tex, duration ) );
 }
 
 Sprite* Sprite::Text( const string &text, SDL_Color iColor ) {
@@ -88,8 +92,7 @@ void Sprite::hide() {
 }
 
 void Sprite::update() {
-  box.xy() += vel;
-	enforceWorldLimits();
+  enforceWorldLimits();
 }
 
 void Sprite::draw() {
@@ -97,20 +100,23 @@ void Sprite::draw() {
     return; // just don't draw
   }
   
-	sdl->setColor( color );
-	if( !tex ) {
+  Animation::Frame &af = animation.getCurrentFrame();
+	sdl->setColor( af.color );
+	if( !af.tex ) {
 		// no texture, so draw a solid rect
-		sdl->fillRect( box, color );
+		sdl->fillRect( box, af.color );
 	}
 	else {
 		// Convert our floating pt rect to an int-based rect
 		SDL_Rect r = { (int)box.x, (int)box.y, (int)box.w, (int)box.h};
-		sdl->drawTexture( r, tex );
+		sdl->drawTexture( r, af.tex );
 	}
 }
 
 void Sprite::retrieveTexSize() {
+  Animation::Frame &af = animation.getCurrentFrame();
+  
 	int w, h;
-	SDL_QueryTexture( tex, 0, 0, &w, &h );
+	SDL_QueryTexture( af.tex, 0, 0, &w, &h );
   box.w=w, box.h=h;
 }

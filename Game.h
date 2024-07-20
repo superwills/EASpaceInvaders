@@ -45,6 +45,8 @@ public:
 	void setState( GameState newState );
 	void togglePause();
   
+  void initGameBoard();
+  void populateInvaders();
   void changeScore( int byScoreValue );
 	void resetBall();
 	void checkForCollisions();

@@ -38,13 +38,11 @@ SDLWindow::SDLWindow( const string &title, int windowWidth, int windowHeight ) {
 	
   renderer = SDL_GetRenderer( window );
   if( renderer ) {
-    // delete default to get one with vsync on
     info( "Destroying old renderer" );
     SDL_DestroyRenderer( renderer );
   }
   
-  renderer = SDL_CreateRenderer( window, -1,
-    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE );
+  renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE );
   if( !renderer ) {
     ExitApp( "Could not create renderer" );
   }

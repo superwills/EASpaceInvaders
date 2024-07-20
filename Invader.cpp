@@ -3,10 +3,10 @@
 #include "Game.h"
 
 Invader::Invader( const RectF& rectangle ) : Sprite( rectangle ) {
-  name = makeString( "Invader %d", spriteId );
-  
-  color = SDL_RandomSolidColor();
+  name = "Invader/" + name; // prepend Invader.
+  addAnimationFrame( 0, HUGEF );
 }
+
 
 Invader::~Invader() {
   game->changeScore( scoreValue );

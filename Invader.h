@@ -8,4 +8,5 @@ public:
   // Must specify where/size of Invader to construct
   Invader( const RectF& rectangle );
   ~Invader();
+  
 };

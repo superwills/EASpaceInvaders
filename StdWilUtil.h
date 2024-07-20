@@ -1,5 +1,4 @@
-#ifndef STDWILUTIL_H
-#define STDWILUTIL_H
+#pragma once
 
 #include <math.h>
 #include <string.h>
@@ -14,50 +13,62 @@ using namespace std;
 typedef unsigned int UInt32;
 typedef unsigned char Byte;
 
+#define HUGEF 1e10f
+
 #define every(intVal,cycle) (intVal%cycle==0)
 #define YesOrNo(x) (x?"Yes":"No")
 
-// skip is a synonym for "skipping" a loop iteration
-#define skip continue
-
 template<typename T>
-bool contains( const list<T>& container, const T& elt )
-{
+inline bool contains( const list<T>& container, const T& elt ) {
 	return find( container.begin(), container.end(), elt ) != container.end() ;
 }
 
 template<typename T>
-bool contains( const vector<T>& container, const T& elt )
-{
+inline bool contains( const vector<T>& container, const T& elt ) {
 	return find( container.begin(), container.end(), elt ) != container.end() ;
 }
 
 template<typename T,typename S>
-bool contains( const map<T,S>& container, const T& elt )
-{
+inline bool contains( const map<T,S>& container, const T& elt ) {
 	return container.find( elt ) != container.end() ;
 }
 
-template <typename T> inline T& clamp( T& x, T minVal, T maxVal ) {
-	if( x < minVal ) x = minVal ;
-	else if( x > maxVal ) x = maxVal ;
-	return x ;
+template <typename T>
+inline T& clamp( T& x, T minVal, T maxVal ) {
+  if( x < minVal ) {
+    x = minVal;
+  }
+	else if( x > maxVal ) {
+    x = maxVal;
+  }
+	return x;
 }
 
-template <typename T> inline T clampCopy( T x, T minVal, T maxVal ) {
-	if( x < minVal ) return minVal ;
-	else if( x > maxVal ) return maxVal ;
-	else return x ;
+template <typename T>
+inline T clampCopy( T x, T minVal, T maxVal ) {
+	if( x < minVal ) {
+    return minVal;
+  }
+	else if( x > maxVal ) {
+    return maxVal;
+  }
+	else return x;
 }
 
-template <typename T> inline T& clampBelow( T& x, T minVal ) {
-	if( x < minVal ) x = minVal ;
-	return x ;
+template <typename T>
+inline T& clampBelow( T& x, T minVal ) {
+	if( x < minVal ) {
+    x = minVal;
+  }
+	return x;
 }
 
-template <typename T> inline T clampBelowCopy( T x, T minVal ) {
-	if( x < minVal ) x = minVal ;
-	return x ;
+template <typename T>
+inline T clampBelowCopy( T x, T minVal ) {
+	if( x < minVal ) {
+    x = minVal;
+  }
+	return x;
 }
 
 // for when x is an r-value
@@ -66,33 +77,41 @@ template <typename T> inline T clampBelowCopy( T x, T minVal ) {
 //  return x ;
 //}
 template <typename T> inline T& clampAbove( T& x, T maxVal ) {
-	if( x > maxVal ) x = maxVal ;
-	return x ;
+	if( x > maxVal ) {
+    x = maxVal;
+  }
+	return x;
 }
 
 template <typename T> inline T clampAboveCopy( T x, T maxVal ) {
-	if( x > maxVal ) x = maxVal ;
-	return x ;
+	if( x > maxVal ) {
+    x = maxVal;
+  }
+	return x;
 }
 
 // clamp below by 0
 inline float clamp_0( float x ) {
-	if( x < 0.0f ) return 0.0f ;
-	else return x ;
+	if( x < 0 ) {
+    return 0;
+  }
+	else {
+    return x;
+  }
 }
 
 // clamp below by 0 and above by 1
 inline float clamp_01( float x ) {
-	if( x < 0.0f ) return 0.0f ;
-	else if( x > 1.0f ) return 1.0f ;
-	else return x ;
+	if( x < 0 )  return 0;
+	else if( x > 1 ) return 1;
+	else return x;
 }
 
 // clamp below by -1 and above by +1
 inline float clamp_11( float x ) {
-	if( x < -1.0f ) return -1.0f ;
-	else if( x > 1.0f ) return 1.0f ;
-	else return x ;
+	if( x < -1 ) return -1;
+	else if( x > 1 ) return 1;
+	else return x;
 }
 
 // It's hard to decide what happens at 0.  Here i made it so
@@ -128,7 +147,7 @@ inline bool signDiffers( float a, float b, float c ){
 // Here i'm assuming that you already checked `signDiffers` so at one has
 // a different sign.
 // 0 means a was different, 1 means b was, and 2 means c was
-inline int whichDifferent( float a, float b, float c ){
+inline int whichDifferent( float a, float b, float c ) {
 	if( sameSign(b, c) )  return 0 ;
 	else if( sameSign(a, c) )  return 1 ;
 	else //if( sameSign(a, b) )  
@@ -136,15 +155,13 @@ inline int whichDifferent( float a, float b, float c ){
 }
 
 // to avoid nans/infs
-inline float ratio( float wins, float losses )
-{
+inline float ratio( float wins, float losses ) {
 	if( !wins ) return 0.f ; // avoid nan/infs.
 	return wins / (wins+losses);
 }
 
 //#define cycleFlag( val, MINVAL, MAXVAL ) ( ++val>(MAXVAL)?val=(MINVAL):val )
-inline int cycleFlag( int &val, int minVal, int maxVal )
-{
+inline int cycleFlag( int &val, int minVal, int maxVal ) {
 	if( ++val > maxVal )
 		val = minVal;
 
@@ -152,8 +169,7 @@ inline int cycleFlag( int &val, int minVal, int maxVal )
 }
 
 //#define decycleFlag( val, MINVAL, MAXVAL ) ( --((int)val)<(MINVAL)?val=(MAXVAL):val )
-inline int decycleFlag( int &val, int minVal, int maxVal )
-{
+inline int decycleFlag( int &val, int minVal, int maxVal ) {
 	if( --val < minVal )
 		val = maxVal;
 
@@ -167,4 +183,3 @@ string makeString( const char *fmt, va_list args ) ;
 string makeTime( double s ) ;
 
 
-#endif

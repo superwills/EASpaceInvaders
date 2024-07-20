@@ -16,29 +16,6 @@ Game::Game() {
 
 	bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
   
-  // Lay the invaders out
-  const int rowsOfInvaders = 5;
-  const int invadersPerRow = 11; // 11 across in the original game.
-  float boardSize = windowSize.x * .8;
-  float invaderSize = boardSize / invadersPerRow;
-  
-  for( int row = 0; row < rowsOfInvaders; row++ ) {
-    for( int i = 0; i < invadersPerRow; i++ ) {
-      RectF box;
-      box.y = (rowsOfInvaders - row) * ( invaderSize + 5 );
-      box.x = i*( invaderSize + 5 );
-      
-      box.w = box.h = invaderSize;
-      invaders.push_back( new Invader( box ) );
-    }
-  }
-  
-	player = new Player( windowSize );
-	
-	// Set initial positions for player paddles
-	float centerH = windowSize.y/2.f - player->box.h/2;
-	player->setPos( Vector2f( windowSize.x - player->box.w, centerH ) );
-	
 	// Create the ball
 	ball = new Ball( 32 );
 	resetBall();
@@ -74,8 +51,15 @@ void Game::setState( GameState newState ) {
 		sdl->playMusic( Music::Background0 );
 	 	break;
 	
-  case GameState::Running:
+  case GameState::Running: {
+      if( prevState == GameState::Title ) {
+        initGameBoard();
+      }
+    }
+    break;
+      
   case GameState::Won:
+  case GameState::Lost:
 		// game song
 		// if prevstate was Running, don't restart the music
 		if( prevState == GameState::Paused ) {
@@ -105,6 +89,31 @@ void Game::togglePause() {
 	}
 }
 
+void Game::initGameBoard() {
+  player = new Player( sdl->getWindowSize() );
+  
+  populateInvaders();
+}
+
+void Game::populateInvaders() {
+  // Lay the invaders out
+  const int rowsOfInvaders = 5;
+  const int invadersPerRow = 11; // 11 across in the original game.
+  float boardSize = sdl->getWindowSize().x * .8;
+  float invaderSize = boardSize / invadersPerRow;
+  
+  for( int row = 0; row < rowsOfInvaders; row++ ) {
+    for( int i = 0; i < invadersPerRow; i++ ) {
+      RectF box;
+      box.y = (rowsOfInvaders - row) * ( invaderSize + 5 );
+      box.x = i*( invaderSize + 5 );
+      
+      box.w = box.h = invaderSize;
+      invaders.push_back( new Invader( box ) );
+    }
+  }
+}
+
 void Game::changeScore( int byScoreValue ) {
   score += byScoreValue;
   
@@ -120,8 +129,6 @@ void Game::changeScore( int byScoreValue ) {
 
 void Game::resetBall() {
 	ball->setCenter( sdl->getWindowSize()/2 );
-	ball->vel = Vector2f::random(-1, 1);
-	ball->vel.setLen( ball->lastStartSpeed * 2.f );
 }
 
 void Game::checkForCollisions() {
@@ -135,14 +142,13 @@ void Game::checkForCollisions() {
 		
 		float y = player->box.centroid().y - ball->box.centroid().y;
 		float a = M_PI + M_PI/2.f * y/player->box.h;
-		ball->vel.setAngle( a );
 		
 		ballHit = true;
 	}
 
 	// when the ball is hit the ball bounces and speeds up a bit
 	if( ballHit )	{
-		ball->vel *= 1.2f;
+		
 	}
 }
 
