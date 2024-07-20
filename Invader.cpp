@@ -5,7 +5,7 @@
 void Invader::clearDead() {
   allInvaders.erase( std::remove_if( allInvaders.begin(), allInvaders.end(), []( Invader *invader ) {
     return invader->dead;
-  } ) );
+  } ), allInvaders.end() );
 }
 
 Invader::Invader( const RectF& rectangle ) : Sprite( rectangle ) {

@@ -11,7 +11,8 @@ void Game::init() {
 
   bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
   
-  title = new TitleScreen( "space invaders!" );
+  title = std::make_shared<TitleScreen>( "space invaders!" );
+  Sprite::allSharedSprites.push_back( title );
   
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
   
@@ -88,7 +89,7 @@ void Game::togglePause() {
 }
 
 void Game::initGameBoard() {
-  player = new Player( sdl->getWindowSize() );
+  player = std::make_shared<Player>( sdl->getWindowSize() );
   
   populateInvaders();
 }
@@ -116,10 +117,12 @@ void Game::populateInvaders() {
 void Game::changeScore( int byScoreValue ) {
   score += byScoreValue;
   
-  // Unfortunately not efficient due to not using tex atlases..
+  // kill the old score
   if( scoreSprite ) {
-    delete scoreSprite;
+    scoreSprite->die();
   }
+  
+  // Unfortunately not efficient due to not using tex atlases..
   scoreSprite = Sprite::Text( makeString( "%d", score ), White );
   scoreSprite->scale( 0.48f );
   scoreSprite->setCenter( sdl->getWindowSize().x/2, scoreSprite->box.h/2 );
@@ -131,16 +134,13 @@ void Game::checkForCollisions() {
     for( Invader *invader : Invader::allInvaders ) {
       if( bullet->box.hit( invader->box ) ) {
         puts( "Hit invader" );
+        //sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
         invader->die();
       }
     }
   } 
  
-  // check
   
-  // invader->box.hit( player->box )  
-	
-  //sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
 	
 }
 
@@ -183,7 +183,7 @@ void Game::update() {
 		runGame();
 	}
  
-  for( Sprite* sprite : Sprite::allSprites ) {
+  for( shared_ptr<Sprite> sprite : Sprite::allSharedSprites ) {
     sprite->update();
   }
   

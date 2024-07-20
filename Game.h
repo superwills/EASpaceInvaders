@@ -17,15 +17,15 @@ public:
 	enum class GameState { Title, Running, Paused, Won, Lost, Exiting };
 	 
 private:
-  TitleScreen *title;
-	Sprite *pausedText;
+  shared_ptr<TitleScreen> title;
+	shared_ptr<Sprite> pausedText;
 	
-  Player *player;
+  shared_ptr<Player> player;
   
 	SDL_Color bkgColor;	// the current background color
   
 	int score = 0;
-  Sprite *scoreSprite = 0;
+  shared_ptr<Sprite> scoreSprite = 0;
 	
 	GameState prevState = GameState::Title;
   GameState gameState = GameState::Title;

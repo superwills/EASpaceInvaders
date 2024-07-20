@@ -5,7 +5,7 @@
 void Bullet::clearDead() {
   allBullets.erase( std::remove_if( allBullets.begin(), allBullets.end(), []( Bullet *bullet ) {
     return bullet->dead;
-  } ) );
+  } ), allBullets.end() );
 }
 
 Bullet::Bullet( const RectF &playerBox ) {

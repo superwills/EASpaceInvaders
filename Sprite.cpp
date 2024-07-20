@@ -3,14 +3,15 @@
 #include "Colors.h"
 
 void Sprite::clearDead() {
-  allSprites.erase( std::remove_if( allSprites.begin(), allSprites.end(), []( Sprite *sprite ) {
-    return sprite->dead;
-  } ) );
-  
+  info( "There are %zu shared sprites", allSharedSprites.size() );
   allSharedSprites.erase(
     std::remove_if( allSharedSprites.begin(), allSharedSprites.end(), []( shared_ptr<Sprite> sprite ) {
+    
+      if( sprite->dead ) {
+        info( "Sprite `%s` dead", sprite->name.c_str() );
+      }
       return sprite->dead;
-    } )
+    } ), allSharedSprites.end()
   );
 }
 
@@ -20,17 +21,13 @@ Sprite::Sprite() {
   // Here i'm initializing the size to a non-zero values, so there aren't surprises :)
   box.w = box.h = 64;
   
-  allSprites.push_back( this );
-  
-  allSharedSprites.emplace_back( shared_from_this() );
+  //allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
   name = makeString( "Sprite %d", spriteId );
 
-  allSprites.push_back( this );
-  
-  allSharedSprites.emplace_back( shared_from_this() );
+  //allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::Sprite( SDL_Texture *iTex ) {
@@ -38,9 +35,7 @@ Sprite::Sprite( SDL_Texture *iTex ) {
 	addAnimationFrame( iTex, White, 1 );
 	retrieveTexSize();
  
-  allSprites.push_back( this ); 
-  
-  allSharedSprites.emplace_back( shared_from_this() );
+  //allSharedSprites.emplace_back( shared_from_this() );
 }
 
 Sprite::~Sprite() {
@@ -55,15 +50,14 @@ void Sprite::addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duratio
   animation.addFrame( Animation::Frame( tex, color, duration ) );
 }
 
-Sprite* Sprite::Text( const string &text, SDL_Color iColor ) {
+shared_ptr<Sprite> Sprite::Text( const string &text, SDL_Color iColor ) {
   SDL_Texture* tex = sdl->makeTextTexture( text, iColor );
   if( !tex ) {
     error( "Sprite::Text couldn't make text texture for `%s`", text.c_str() );
     return 0;
   }
   
-	Sprite *sprite = new Sprite( tex );
-  return sprite;
+	return std::make_shared<Sprite>( tex );
 }
 
 Vector2f Sprite::getPos() {

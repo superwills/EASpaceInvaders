@@ -21,8 +21,6 @@ protected:
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   
 public:
-  inline static vector< Sprite* > allSprites;
-  
   inline static vector< shared_ptr<Sprite> > allSharedSprites;
   
   static void clearDead();
@@ -41,7 +39,7 @@ public:
   void addAnimationFrame( SDL_Texture *tex, SDL_Color color, float duration ); 
 	
   // Makes a text sprite in the default font
-	static Sprite* Text( const string &text, SDL_Color iColor );
+	static shared_ptr<Sprite> Text( const string &text, SDL_Color iColor );
 	Vector2f getPos();
 	Vector2f getCenter();
 	void setPos( const Vector2f &pos );
