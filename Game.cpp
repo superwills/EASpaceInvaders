@@ -1,10 +1,11 @@
 #include "Game.h"
-#include "Colors.h"
 
+#include "Bullet.h"
+#include "Colors.h"
 #include "Invader.h"
 #include "Player.h"
 
-Game* game = 0;
+Game *game = 0;
 
 Game::Game() {
 	gameState = GameState::Title;
@@ -149,7 +150,14 @@ void Game::runGame() {
   }
   if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
     player->move( 1 );
-  } 
+  }
+  
+  //printf( "isp=%d, justp=%d, justR=%d\n", controller.isPressed( SDL_SCANCODE_SPACE ),
+  //  controller.justPressed( SDL_SCANCODE_SPACE ),
+  //  controller.justReleased( SDL_SCANCODE_SPACE ) );
+  if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
+    player->shoot();
+  }
 	
 	// Check for collisions after each object moves
 	checkForCollisions();
@@ -166,6 +174,7 @@ void Game::update() {
     sprite->update();
   }
   
+  controller.clearEventKeys();
 }
 
 void Game::draw() {
@@ -180,11 +189,14 @@ void Game::draw() {
 	  break;
     
 	case GameState::Running:
-    for( Invader* invader : Invader::allInvaders ) {
+    for( Invader *invader : Invader::allInvaders ) {
       invader->draw();
     } 
 		player->draw();
 		scoreSprite->draw();
+    for( Bullet *bullet : Bullet::allBullets ) {
+      bullet->draw();
+    }  
 	  break;
 	
   case GameState::Paused: 

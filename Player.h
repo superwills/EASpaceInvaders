@@ -9,4 +9,6 @@ public:
   
   // Player restricted to moving in x.
 	void move( float x );
+ 
+  void shoot(); 
 };

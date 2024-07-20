@@ -18,7 +18,8 @@ protected:
   int spriteId = NextSpriteId++;
   string name;    // takes space but helps in debug
   bool hidden = 0;
-
+  bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
+  
 public:
   inline static vector< Sprite* > allSprites;
   Animation animation; // Single frame if static.
@@ -55,7 +56,8 @@ public:
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update();
 	virtual void draw();
-	
+	virtual void die();
+  
 private:
 	void retrieveTexSize();
 };

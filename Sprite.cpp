@@ -98,11 +98,11 @@ void Sprite::enforceWorldLimits() {
 }
 
 void Sprite::show() {
-	hidden = false;
+	hidden = 0;
 }
 
 void Sprite::hide() {
-	hidden = true;
+	hidden = 1;
 }
 
 void Sprite::update() {
@@ -124,6 +124,10 @@ void Sprite::draw() {
 	else {
 		sdl->drawTexture( box, animFrame.tex );
 	}
+}
+
+void Sprite::die() {
+  dead = 1;
 }
 
 void Sprite::retrieveTexSize() {

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Ball.h"
 #include "Controller.h"
 #include "SDLWindow.h"
 #include "Sprite.h"
@@ -29,11 +28,11 @@ private:
   Sprite *scoreSprite = 0;
 	
 	GameState prevState, gameState;
-	
-	Controller controller;
 
 public:
-	Game();
+  Controller controller;
+
+ 	Game();
   ~Game() { }
 	
   void init(); 
@@ -51,4 +50,4 @@ public:
 	void draw();
 };
 
-extern Game* game;
+extern Game *game;

@@ -52,6 +52,8 @@ int main(int argc, char* args[]) {
         game->setState( Game::GameState::Exiting );  // the game will exit on the next frame
 			}
       else if( e.type == SDL_KEYDOWN ) {
+        game->controller.setKeyJustPressed( e.key.keysym.scancode );
+        
         if( game->isState( Game::GameState::Title ) ) {
           // any key down at title starts the game.
           game->setState( Game::GameState::Running );

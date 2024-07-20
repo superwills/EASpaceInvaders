@@ -8,7 +8,11 @@
 
 // handles user input
 class Controller {
-  const Uint8 *keystate = 0;
+  const Uint8 *keystates = 0;
+  
+  // One-touch key presses are sent by SDL_PollEvent
+  Uint8 keysJustPressed[ SDL_NUM_SCANCODES ] = { 0 };
+  Uint8 keysJustReleased[ SDL_NUM_SCANCODES ] = { 0 };
   
 public:
 	int mouseX = 0, mouseY = 0;
@@ -16,5 +20,12 @@ public:
   Controller();
 	void update();
  
+  void setKeyJustPressed( uint16_t key );
+  void setKeyJustReleased( uint16_t key ); 
+  
   bool isPressed( uint16_t key );
+  bool justPressed( uint16_t key );
+  bool justReleased( uint16_t key );
+  
+  void clearEventKeys();
 };

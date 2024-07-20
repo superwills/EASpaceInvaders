@@ -1,5 +1,8 @@
 #include "Player.h"
 
+#include "Bullet.h"
+#include "SDLWindow.h"
+
 Player::Player( const Vector2f &windowSize ) {
   name = "Player/" + name;
   
@@ -21,3 +24,7 @@ void Player::move( float x ) {
 	enforceWorldLimits();
 }
 
+void Player::shoot() {
+  info( "Shooting" );
+  new Bullet( box );
+}
