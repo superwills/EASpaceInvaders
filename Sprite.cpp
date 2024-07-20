@@ -2,6 +2,12 @@
 #include "Game.h"
 #include "Colors.h"
 
+void Sprite::clearDead() {
+  allSprites.erase( std::remove_if( allSprites.begin(), allSprites.end(), []( Sprite *sprite ) {
+    return sprite->dead;
+  } ) );
+}
+
 Sprite::Sprite() {
   name = makeString( "Sprite %d", spriteId );
   
@@ -127,6 +133,9 @@ void Sprite::draw() {
 }
 
 void Sprite::die() {
+  // mark for removal at end of frame.
+  // The reason for doing this is it is awkward to remove from collections while iterating
+  // (which is often when we discover the object died)
   dead = 1;
 }
 

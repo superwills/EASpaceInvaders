@@ -25,6 +25,5 @@ void Player::move( float x ) {
 }
 
 void Player::shoot() {
-  info( "Shooting" );
   new Bullet( box );
 }

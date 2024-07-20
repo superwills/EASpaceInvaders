@@ -46,6 +46,7 @@ public:
   void populateInvaders();
   void changeScore( int byScoreValue );
 	void checkForCollisions();
+  void clearDead(); 
 	void runGame();
 	void update();
 	void draw();

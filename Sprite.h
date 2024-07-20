@@ -22,6 +22,8 @@ protected:
   
 public:
   inline static vector< Sprite* > allSprites;
+  static void clearDead();
+  
   Animation animation; // Single frame if static.
   
 	// This member represents the position & the size of the sprite combined

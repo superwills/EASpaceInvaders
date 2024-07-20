@@ -2,6 +2,12 @@
 
 #include "SDLWindow.h"
 
+void Bullet::clearDead() {
+  allBullets.erase( std::remove_if( allBullets.begin(), allBullets.end(), []( Bullet *bullet ) {
+    return bullet->dead;
+  } ) );
+}
+
 Bullet::Bullet( const RectF &playerBox ) {
 	name = "Bullet/" + name;
   
@@ -27,7 +33,7 @@ void Bullet::update() {
   //Sprite::update();
   animation.update( 1./60 ); // Only update the animation, but don't enforce world limits like for other sprites.
   
-	box.y--;
+	box.y -= 5;
 	
 	if( box.y < 0 ) {
     die();

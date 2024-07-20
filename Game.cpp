@@ -127,6 +127,14 @@ void Game::changeScore( int byScoreValue ) {
 
 void Game::checkForCollisions() {
 	// check bullets against invaders
+  for( Bullet *bullet : Bullet::allBullets ) {
+    for( Invader *invader : Invader::allInvaders ) {
+      if( bullet->box.hit( invader->box ) ) {
+        puts( "Hit invader" );
+        invader->die();
+      }
+    }
+  } 
  
   // check
   
@@ -136,11 +144,16 @@ void Game::checkForCollisions() {
 	
 }
 
+void Game::clearDead() {
+  Sprite::clearDead();
+  Bullet::clearDead();
+  Invader::clearDead();
+}
+
 void Game::runGame() {
-  
 	// Use the controller state to change gamestate
 	player->move( controller.mouseX );
- 
+  
   if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
     player->move( -1 );
   }
@@ -148,15 +161,14 @@ void Game::runGame() {
     player->move( 1 );
   }
   
-  //printf( "isp=%d, justp=%d, justR=%d\n", controller.isPressed( SDL_SCANCODE_SPACE ),
-  //  controller.justPressed( SDL_SCANCODE_SPACE ),
-  //  controller.justReleased( SDL_SCANCODE_SPACE ) );
   if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
     player->shoot();
   }
 	
 	// Check for collisions after each object moves
 	checkForCollisions();
+ 
+  clearDead(); 
 }
 
 void Game::update() {
