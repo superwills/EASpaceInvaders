@@ -58,12 +58,6 @@ int main(int argc, char* args[]) {
           // any key down at title starts the game.
           game->setState( Game::GameState::Running );
         }
-        else {
-          // p during play pauses the game.
-          if( e.key.keysym.scancode == SDL_SCANCODE_P ) {
-            game->togglePause();
-          }
-        }
       }
 		}
 		

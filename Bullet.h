@@ -9,5 +9,5 @@ public:
   
 	Bullet( const RectF &playerBox );
   ~Bullet(); 
-	virtual void update();
+	void update() override;
 };

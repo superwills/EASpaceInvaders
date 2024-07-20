@@ -7,11 +7,6 @@
 
 Game *game = 0;
 
-Game::Game() {
-	gameState = GameState::Title;
-  
-}
-
 void Game::init() {
 
   bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
@@ -113,7 +108,7 @@ void Game::populateInvaders() {
       
       box.w = box.h = invaderSize;
       
-      Invader *invader = new Invader( box );
+      new Invader( box );
     }
   }
 }
@@ -142,6 +137,7 @@ void Game::checkForCollisions() {
 }
 
 void Game::runGame() {
+  
 	// Use the controller state to change gamestate
 	player->move( controller.mouseX );
  
@@ -165,7 +161,12 @@ void Game::runGame() {
 
 void Game::update() {
 	controller.update();
- 
+  
+  // p during play pauses the game.
+  if( controller.justPressed( SDL_SCANCODE_P ) ) {
+    game->togglePause();
+  }
+  
   if( gameState == GameState::Running ) {
 		runGame();
 	}

@@ -27,12 +27,13 @@ private:
 	int score = 0;
   Sprite *scoreSprite = 0;
 	
-	GameState prevState, gameState;
+	GameState prevState = GameState::Title;
+  GameState gameState = GameState::Title;
 
 public:
   Controller controller;
 
- 	Game();
+ 	Game() { }
   ~Game() { }
 	
   void init(); 

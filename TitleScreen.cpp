@@ -16,6 +16,8 @@ TitleScreen::TitleScreen( const string &titleText ) :
 }
 
 void TitleScreen::update() {
+  // Overrides Sprite::update().
+  
   // Use a random color
   Animation::Frame &animFrame = animation.getCurrentFrame();
   animFrame.color = SDL_RandomSolidColor();
