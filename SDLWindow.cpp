@@ -82,30 +82,22 @@ void SDLWindow::line( int startX, int startY, int endX, int endY, SDL_Color colo
 	SDL_RenderDrawLine( renderer, startX, startY, endX, endY );
 }
 
-void SDLWindow::rect( int x, int y, int w, int h, SDL_Color color ) {
-	SDL_Rect rect = { x, y, w, h };
+void SDLWindow::outlineRect( const RectF &rect, SDL_Color color ) {
+	SDL_Rect sdlRect = rect.toSDLRect();
 	setColor( color );
-	SDL_RenderDrawRect( renderer, &rect );
+	SDL_RenderDrawRect( renderer, &sdlRect );
 }
 
 void SDLWindow::fillRect( const RectF &rect, SDL_Color color ) {
-  fillRect( rect.x, rect.y, rect.w, rect.h, color );
-}
-
-void SDLWindow::fillRect( int x, int y, int w, int h, SDL_Color color ) {
-	SDL_Rect rect = { x, y, w, h };
+  SDL_Rect sdlRect = rect.toSDLRect();
 	setColor( color );
-	SDL_RenderFillRect( renderer, &rect );
+	SDL_RenderFillRect( renderer, &sdlRect );
 }
 
 void SDLWindow::drawTexture( const RectF &rect, SDL_Texture *tex ) {
  // Convert our floating pt rect to an int-based rect
-  SDL_Rect r = { (int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h };
-	SDL_RenderCopy( renderer, tex, NULL, &r );
-}
-
-void SDLWindow::drawTexture( const SDL_Rect &rect, SDL_Texture *tex ) {
-	SDL_RenderCopy( renderer, tex, NULL, &rect );
+  SDL_Rect sdlRect = rect.toSDLRect();
+	SDL_RenderCopy( renderer, tex, NULL, &sdlRect );
 }
 
 SDL_Surface* SDLWindow::loadSurface( const string &filename ) {

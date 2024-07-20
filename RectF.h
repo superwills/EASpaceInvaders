@@ -358,6 +358,10 @@ struct RectF {
     subrectsTlTrBrBl[2] = sub( halfW,     0, halfW, halfH ) ; //br
     subrectsTlTrBrBl[3] = sub(     0,     0, halfW, halfH ) ; //bl
   }
+  
+  SDL_Rect toSDLRect() const {
+    return { (int)x, (int)y, (int)w, (int)h };
+  }
   void println( const char* msg ) const {
     //printf( "%s: x=%.2f y=%.2f w=%.2f h=%.2f\n", msg,x,y,w,h ) ;
     printf( "%s: l=%.2f r=%.2f b=%.2f t=%.2f (w=%.2f, h=%.2f)\n", msg,left(),right(),bottom(),top(),w,h ) ;

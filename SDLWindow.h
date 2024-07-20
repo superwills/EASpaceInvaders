@@ -49,12 +49,10 @@ public:
 
 	// SDL supplied graphics primitives functionality
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
-	void rect( int x, int y, int w, int h, SDL_Color color );
-  void fillRect( const RectF &rect, SDL_Color color );
-	void fillRect( int x, int y, int w, int h, SDL_Color color );
+	void outlineRect( const RectF &rect, SDL_Color color );
+	void fillRect( const RectF &rect, SDL_Color color );
 	void drawTexture( const RectF &rect, SDL_Texture *tex );
-	void drawTexture( const SDL_Rect &rect, SDL_Texture *tex );
-  void draw( const RectF &rect, const Animation::Frame &animationFrame ); 
+	void draw( const RectF &rect, const Animation::Frame &animationFrame ); 
 	
 	SDL_Surface* loadSurface( const string &filename );
 	SDL_Texture* loadTexture( const string &filename );
