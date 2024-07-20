@@ -136,8 +136,8 @@ void Game::checkForCollisions() {
   for( shared_ptr<Bullet> bullet : allBullets ) {
     for( shared_ptr<Invader> invader : allInvaders ) {
       if( bullet->box.hit( invader->box ) ) {
-        puts( "Hit invader" );
-        //sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
+        bullet->die();
+        sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
         
         changeScore( invader->scoreValue );
         invader->die();
