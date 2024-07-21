@@ -19,7 +19,11 @@ void Game::init() {
   
   Vector2f windowSize = sdl->getWindowSize();
   pausedText->setCenter( windowSize/2 );
-
+  
+  // Load sprite animations
+  sdl->loadSpritesheetAnimation( AnimationId::A,  "assets/ims/A.png", 4, Vector2f( 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::E,  "assets/ims/E.png", 4, Vector2f( 16 ) );
+  
 	// load the sfx. These sfx were created with SFXR
 	// http://www.drpetter.se/project_sfxr.html
 	sdl->loadWavSound( SFXId::Ping0, "assets/sounds/ping0.wav" );
@@ -110,7 +114,7 @@ void Game::populateInvaders() {
       
       box.w = box.h = invaderSize;
       
-      shared_ptr<Invader> invader = std::make_shared<Invader>( box );
+      shared_ptr<Invader> invader = std::make_shared<Invader>( box, rand<AnimationId>( AnimationId::A, AnimationId::E ) );
       allSharedSprites.push_back( invader );
       allInvaders.push_back( invader );
     }
@@ -137,7 +141,7 @@ void Game::checkForCollisions() {
     for( shared_ptr<Invader> invader : allInvaders ) {
       if( bullet->box.hit( invader->box ) ) {
         bullet->die();
-        sdl->playSound( randSound( SFXId::Ping0, SFXId::Ping3 ) );
+        sdl->playSound( rand<SFXId>( SFXId::Ping0, SFXId::Ping3 ) );
         
         changeScore( invader->scoreValue );
         invader->die();

@@ -66,3 +66,9 @@ inline int randSign() {
   return -1 + 2*randInt(0, 2) ; // -1+0 or -1+2=+1
 }
 
+// Gives random from an enum between low -> high (inclusive)
+template <typename Enum>
+Enum rand( Enum low, Enum high ) {
+  int randomValue = randIntIn( (int)low, (int)high );
+  return (Enum)randomValue;
+}

@@ -22,6 +22,13 @@ Sprite::Sprite( shared_ptr<Texture> iTex ) {
 	box.w = box.h = 64;
 }
 
+Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
+    box( rectangle ) {
+  
+  name = makeString( "Sprite %d animation %d", spriteId, animationId );
+  animation = sdl->getAnimation( animationId );
+}
+
 void Sprite::addBlankAnimationFrame() {
   animation.addFrame( Animation::Frame( 0, White, 1 ) );
 }

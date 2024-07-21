@@ -8,6 +8,6 @@ public:
   int scoreValue = 1;
   
   // Must specify where/size of Invader to construct
-  Invader( const RectF& rectangle );
+  Invader( const RectF& rectangle, AnimationId animationId );
   
 };

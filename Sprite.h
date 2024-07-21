@@ -29,6 +29,7 @@ public:
 	Sprite();
   Sprite( const RectF& rectangle );
 	Sprite( shared_ptr<Texture> iTex );
+  Sprite( const RectF& rectangle, AnimationId animationId ); 
   virtual ~Sprite() { }
   
   void addBlankAnimationFrame();
