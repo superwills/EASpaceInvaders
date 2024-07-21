@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Controller.h"
+#include "InvaderGroup.h"
 #include "SDLWindow.h"
 #include "Sprite.h"
 #include "TitleScreen.h"
@@ -11,6 +12,7 @@ using std::shared_ptr;
 
 class Bullet;
 class Invader;
+class InvaderGroup;
 class Player;
 
 class Game {
@@ -22,12 +24,9 @@ private:
 	shared_ptr<Sprite> pausedText;
   shared_ptr<Player> player;
   
-  // Main collections for easy iteration on objects of a type.
-  // Objects may appear in more than one list (eg Invaders appear in
-  // both allInvaders and allSprites).
-  vector< shared_ptr<Sprite> > allSprites;
-  
   vector< shared_ptr<Bullet> > allBullets;
+  
+  InvaderGroup invaderGroup;
   vector< shared_ptr<Invader> > allInvaders;
   
 	SDL_Color bkgColor;	// the current background color

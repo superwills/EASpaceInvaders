@@ -12,10 +12,8 @@ void Game::init() {
   bkgColor = Indigo;
   
   title = std::make_shared<TitleScreen>( "space invaders!" );
-  allSprites.push_back( title );
   
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
-  allSprites.push_back( pausedText );
   pausedText->setCenter( sdl->getWindowSize()/2 );
   
   // Load sprite animations
@@ -113,7 +111,7 @@ void Game::populateInvaders() {
       box.w = box.h = invaderSize;
       
       shared_ptr<Invader> invader = std::make_shared<Invader>( box, rand<AnimationId>( AnimationId::A, AnimationId::E ) );
-      allSprites.push_back( invader );
+      //allSprites.push_back( invader );
       allInvaders.push_back( invader );
     }
   }
@@ -149,11 +147,6 @@ void Game::checkForCollisions() {
 }
 
 void Game::clearDead() {
-  allSprites.erase(
-    std::remove_if( allSprites.begin(), allSprites.end(), []( shared_ptr<Sprite> sprite ) {
-      return sprite->dead;
-    } ), allSprites.end()
-  );
   
   allBullets.erase( std::remove_if( allBullets.begin(), allBullets.end(), []( shared_ptr<Bullet> bullet ) {
     return bullet->dead;
@@ -165,8 +158,6 @@ void Game::clearDead() {
 }
 
 void Game::runGame() {
-  
-  
   for( shared_ptr<Invader> invader : allInvaders ) {
     invader->update();
   } 
@@ -205,7 +196,6 @@ void Game::controllerUpdate() {
     
     if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
       shared_ptr<Bullet> bullet = player->shoot();
-      allSprites.push_back( bullet );
       allBullets.push_back( bullet );
     }
   }
