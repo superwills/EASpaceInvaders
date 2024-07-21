@@ -161,7 +161,7 @@ shared_ptr<Texture> SDLWindow::makeTextTexture( const string &text, SDL_Color co
 	return std::make_shared<Texture>( textSurface, renderer );
 }
 
-void SDLWindow::loadMusic( Music musicId, const string &filename ) {
+void SDLWindow::loadMusic( MusicId musicId, const string &filename ) {
 	auto it = musics.find( musicId );
 	if( it != musics.end() ) {
 		warning( "Music `%s` already loaded", filename.c_str() );
@@ -177,7 +177,7 @@ void SDLWindow::loadMusic( Music musicId, const string &filename ) {
   } 
 }
 
-void SDLWindow::playMusic( Music musicId ) {
+void SDLWindow::playMusic( MusicId musicId ) {
   auto it = musics.find( musicId );
   if( it == musics.end() )   {
     warning( "no music %d", musicId );
@@ -188,9 +188,9 @@ void SDLWindow::playMusic( Music musicId ) {
   Mix_PlayMusic( it->second, -1 );
 }
 
-void SDLWindow::loadWavSound( SFX sfxId, const string &waveFilename ) {
-	auto iter = sfx.find( sfxId );
-  if( iter != sfx.end() ) {
+void SDLWindow::loadWavSound( SFXId sfxId, const string &waveFilename ) {
+	auto it = sfx.find( sfxId );
+  if( it != sfx.end() ) {
 		warning( "Sound `%s` already loaded", waveFilename.c_str() );
 		return;
 	}
@@ -204,7 +204,7 @@ void SDLWindow::loadWavSound( SFX sfxId, const string &waveFilename ) {
   } 
 }
 
-void SDLWindow::playSound( SFX sfxId ) {
+void SDLWindow::playSound( SFXId sfxId ) {
   auto it = sfx.find( sfxId );
   if( it == sfx.end() ) {
     warning( "No sound %d", sfxId );

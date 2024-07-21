@@ -22,14 +22,14 @@ void Game::init() {
 
 	// load the sfx. These sfx were created with SFXR
 	// http://www.drpetter.se/project_sfxr.html
-	sdl->loadWavSound( SFX::Ping0, "assets/sounds/ping0.wav" );
-	sdl->loadWavSound( SFX::Ping1, "assets/sounds/ping1.wav" );
-	sdl->loadWavSound( SFX::Ping2, "assets/sounds/ping2.wav" );
-	sdl->loadWavSound( SFX::Ping3, "assets/sounds/ping3.wav" );
-	sdl->loadWavSound( SFX::Win, "assets/sounds/win.wav" );
+	sdl->loadWavSound( SFXId::Ping0, "assets/sounds/ping0.wav" );
+	sdl->loadWavSound( SFXId::Ping1, "assets/sounds/ping1.wav" );
+	sdl->loadWavSound( SFXId::Ping2, "assets/sounds/ping2.wav" );
+	sdl->loadWavSound( SFXId::Ping3, "assets/sounds/ping3.wav" );
+	sdl->loadWavSound( SFXId::Win, "assets/sounds/win.wav" );
   
   // https://www.stef.be/bassoontracker
-  sdl->loadMusic( Music::Background0, "assets/sounds/1721341344111_2337.mod.mp3" );
+  sdl->loadMusic( MusicId::Background0, "assets/sounds/1721341344111_2337.mod.mp3" );
 	
 	setState( GameState::Title );
   changeScore( 0 ); // Create the scoresprite for the 1st time
@@ -48,7 +48,7 @@ void Game::setState( GameState newState ) {
 	
 	switch( newState ) {
   case GameState::Title:
-		sdl->playMusic( Music::Background0 );
+		sdl->playMusic( MusicId::Background0 );
 	 	break;
 	
   case GameState::Running: {
@@ -137,7 +137,7 @@ void Game::checkForCollisions() {
     for( shared_ptr<Invader> invader : allInvaders ) {
       if( bullet->box.hit( invader->box ) ) {
         bullet->die();
-        sdl->playSound( randSound( SFX::Ping0, SFX::Ping3 ) );
+        sdl->playSound( randSound( SFXId::Ping0, SFXId::Ping3 ) );
         
         changeScore( invader->scoreValue );
         invader->die();

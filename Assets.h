@@ -1,7 +1,7 @@
 #pragma once
 
 // Unique identifiers for each sound effect. Not using strings to avoid typos.
-enum class SFX {
+enum class SFXId {
   Ping0,
   Ping1,
   Ping2,
@@ -10,10 +10,10 @@ enum class SFX {
 };
 
 // Gives SFX between low -> high (inclusive)
-SFX randSound( SFX low, SFX high );
+SFXId randSound( SFXId low, SFXId high );
 
 // Ids for music files.
-enum class Music {
+enum class MusicId {
   Background0,
   Background1,
 };

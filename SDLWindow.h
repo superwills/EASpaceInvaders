@@ -25,8 +25,8 @@ using namespace std;
 class SDLWindow {
 	// asset maps: filename=>SDL_* objects
 	map<string, shared_ptr<Texture> > texes;
-	map<Music, Mix_Music*> musics;
-	map<SFX, Mix_Chunk*> sfx;
+	map<MusicId, Mix_Music*> musics;
+	map<SFXId, Mix_Chunk*> sfx;
   map<AnimationId, Animation> animations;
    
   SDL_Window *window = 0;
@@ -69,11 +69,11 @@ public:
   // Music/SFX
 	// SDLWindow is kind of a god-class with lots of abilities,
   // but the amount of code needed is really small with SDL
-  void loadMusic( Music musicId, const string &filename );
-  void playMusic( Music musicId );
+  void loadMusic( MusicId musicId, const string &filename );
+  void playMusic( MusicId musicId );
   
-  void loadWavSound( SFX sfxId, const string &waveFilename );
-  void playSound( SFX sfxId );
+  void loadWavSound( SFXId sfxId, const string &waveFilename );
+  void playSound( SFXId sfxId );
 };
 
 // Give access to the SDL object using this extern.

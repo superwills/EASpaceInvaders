@@ -3,7 +3,7 @@
 #include "randomUtil.h"
 
 
-SFX randSound( SFX low, SFX high ) {
+SFXId randSound( SFXId low, SFXId high ) {
   int sfxId = randIntIn( (int)low, (int)high );
-  return (SFX)sfxId;
+  return (SFXId)sfxId;
 }
