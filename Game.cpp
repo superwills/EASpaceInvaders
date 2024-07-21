@@ -9,16 +9,14 @@ Game *game = 0;
 
 void Game::init() {
 
-  bkgColor = SDL_ColorMake( 0, 0, 40, 255 );
+  bkgColor = Indigo;
   
   title = std::make_shared<TitleScreen>( "space invaders!" );
   allSharedSprites.push_back( title );
   
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
   allSharedSprites.push_back( pausedText );
-  
-  Vector2f windowSize = sdl->getWindowSize();
-  pausedText->setCenter( windowSize/2 );
+  pausedText->setCenter( sdl->getWindowSize()/2 );
   
   // Load sprite animations
   sdl->loadSpritesheetAnimation( AnimationId::A,  "assets/ims/A.png", 4, Vector2f( 16 ) );

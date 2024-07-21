@@ -6,7 +6,8 @@
 #include <sdl.h>
 #endif
 
-extern SDL_Color White, Black, Red, Green, Blue, Yellow, Magenta, Cyan;
+extern SDL_Color White, Black, Red, Green, Blue, Yellow, Magenta, Cyan,
+  Indigo;
 
 inline SDL_Color SDL_ColorMake( Uint8 r, Uint8 g, Uint8 b, Uint8 a ) {
 	SDL_Color color = { r, g, b, a };
