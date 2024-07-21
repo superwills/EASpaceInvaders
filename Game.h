@@ -54,6 +54,7 @@ public:
 	void togglePause();
   
   void initGameBoard();
+  void particleSplash( const Vector2f &pos, int numParticles );
   void changeScore( int byScoreValue );
 	void checkForCollisions();
   void clearDead(); 

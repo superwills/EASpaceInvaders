@@ -56,6 +56,9 @@ public:
 	void hide();
   void move( float x, float y );
   
+  // usually just the box itself. But when the sprite .pos is the CENTER of the sprite, we have to compute this.
+  virtual RectF getDrawBox() const;
+  
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update( float t );
 	virtual void draw() const;

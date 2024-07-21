@@ -105,6 +105,14 @@ void Game::initGameBoard() {
   invaderGroup.populate( gameBoard );
 }
 
+void Game::particleSplash( const Vector2f &pos, int numParticles ) {
+  for( int i = 0; i < numParticles; i++ ) {
+    Vector2f size = Vector2f::random( 4, 12 );
+    shared_ptr<Particle> p = std::make_shared<Particle>( RectF( pos, Vector2f( size ) ) );
+    allParticles.push_back( p );
+  }
+}
+
 void Game::changeScore( int byScoreValue ) {
   score += byScoreValue;
   
@@ -130,10 +138,7 @@ void Game::checkForCollisions() {
         changeScore( invader->scoreValue );
         invader->die();
         
-        for( int i = 0; i < 25; i++ ) {
-          shared_ptr<Particle> p = std::make_shared<Particle>( RectF( invader->box.centroid(), Vector2f( 8 ) ) );
-          allParticles.push_back( p );
-        }
+        particleSplash( invader->box.centroid(), randInt( 5, 8 ) );
         
       }
     }

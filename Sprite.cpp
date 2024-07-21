@@ -107,6 +107,10 @@ void Sprite::move( float x, float y ) {
   box.x += x, box.y += y;
 }
 
+RectF Sprite::getDrawBox() const {
+  return box;
+}
+
 void Sprite::update( float t ) {
   animation.update( t );
 }
@@ -119,11 +123,11 @@ void Sprite::draw() const {
   const Animation::Frame &animFrame = animation.getCurrentFrame();
   if( !animFrame.tex ) {
 		// no texture, so draw a solid rect
-		sdl->fillRect( box, animFrame.color );
+		sdl->fillRect( getDrawBox(), animFrame.color );
 	}
 	else {
 		//sdl->drawTexture( box, animFrame.tex );
-    sdl->draw( box, animFrame );  
+    sdl->draw( getDrawBox(), animFrame );  
 	}
 }
 
