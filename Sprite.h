@@ -57,7 +57,7 @@ public:
   void move( float x, float y );
   
   // Every sprite can override update / draw, to act/appear differently.
-	virtual void update();
+	virtual void update( float t );
 	virtual void draw() const;
 	virtual void die();
   

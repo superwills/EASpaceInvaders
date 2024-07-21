@@ -9,5 +9,5 @@ public:
   
   // Must specify where/size of Invader to construct
   Invader( const RectF& rectangle, AnimationId animationId );
-  
+  void update( float t ) override;
 };

@@ -7,4 +7,8 @@ Invader::Invader( const RectF& rectangle, AnimationId animationId ) : Sprite( re
   animation = sdl->getAnimation( animationId );
 }
 
+void Invader::update( float t ) {
 
+  animation.update( t );
+
+}

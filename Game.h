@@ -4,6 +4,7 @@
 #include "InvaderGroup.h"
 #include "SDLWindow.h"
 #include "Sprite.h"
+#include "StopWatch.h"
 #include "TitleScreen.h"
 
 #include <memory>
@@ -18,7 +19,9 @@ class Player;
 class Game {
 public:
 	enum class GameState { Title, Running, Paused, Won, Lost, Exiting };
-	 
+  float clockThisFrame = 0, dt = 0;
+  StopWatch clock;
+  
 private:
   shared_ptr<TitleScreen> title;
 	shared_ptr<Sprite> pausedText;

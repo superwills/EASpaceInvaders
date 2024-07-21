@@ -181,10 +181,10 @@ struct Vector2f {
 	}
   
 	// Exact equality
-	inline bool operator==( const Vector2f& o ) const{
+	inline bool operator==( const Vector2f& o ) const {
 		return x==o.x && y==o.y ;
 	}
-	inline bool operator!=( const Vector2f& o ) const{
+	inline bool operator!=( const Vector2f& o ) const {
 		return x!=o.x || y!=o.y ;
 	}
 
@@ -192,7 +192,7 @@ struct Vector2f {
 
 	// Returns TRUE if "this" is closer to A
 	// than B
-	inline bool isCloserTo( const Vector2f& a, const Vector2f& thanB ){
+	inline bool isCloserTo( const Vector2f& a, const Vector2f& thanB ) {
 		return ( *this-a ).len2() < ( *this-thanB ).len2() ;
 	}
 
@@ -200,8 +200,7 @@ struct Vector2f {
 	// f MUST BE NORMALIZED.
 	// It gives you the component of this along fN.
 	// If that's negative, THEN THIS IS MORE THAN 90 DEG FROM FN.
-	inline float parallelPerpX( const Vector2f& fN, Vector2f &vParallel, Vector2f &vPerp ) const
-	{
+	inline float parallelPerpX( const Vector2f& fN, Vector2f &vParallel, Vector2f &vPerp ) const {
 		// assuming fN is normalized
 		float compParallel = fN.dot( *this ) ;
 		vParallel = fN * compParallel ;
@@ -210,8 +209,7 @@ struct Vector2f {
 	}
 
 	// The perpendicular vector is 
-	inline void parallelPerpComponents( const Vector2f& fN, float &compParallel, float &compPerp ) const
-	{
+	inline void parallelPerpComponents( const Vector2f& fN, float &compParallel, float &compPerp ) const {
 		// assuming fN is normalized
 		compParallel = fN.dot( *this ) ;
 		compPerp = fN.cross( *this ) ;
@@ -230,7 +228,7 @@ struct Vector2f {
 
 
 	//NON-CONST
-	inline Vector2f& normalize(){
+	inline Vector2f& normalize() {
 		float length = len() ;
 
 		// I added this debug check man, never take it out.
@@ -241,39 +239,39 @@ struct Vector2f {
 
 		return (*this)/=length ;
 	}
-	inline float safeNormalize(){
+	inline float safeNormalize() {
 		float length = len() ;
 		if( length )  (*this)/=length ;
 		return length ;
 	}
-	inline Vector2f& operator+=( const Vector2f& o ){
+	inline Vector2f& operator+=( const Vector2f& o ) {
 		x+=o.x,y+=o.y;
 		return *this ;
 	}
-	inline Vector2f& operator-=( const Vector2f& o ){
+	inline Vector2f& operator-=( const Vector2f& o ) {
 		x-=o.x,y-=o.y;
 		return *this ;
 	}
-	inline Vector2f& operator*=( const Vector2f& o ){
+	inline Vector2f& operator*=( const Vector2f& o ) {
 		x*=o.x,y*=o.y;
 		return *this ;
 	}
-	inline Vector2f& operator*=( float s ){
+	inline Vector2f& operator*=( float s ) {
 		x*=s,y*=s;
 		return *this ;
 	}
-	inline Vector2f& operator/=( const Vector2f& o ){
+	inline Vector2f& operator/=( const Vector2f& o ) {
 		x/=o.x,y/=o.y;
 		return checkNaN() ;
 	}
-	inline Vector2f& operator/=( float s ){
+	inline Vector2f& operator/=( float s ) {
 		x/=s,y/=s;
 		return checkNaN() ;
 	}
 #ifdef NAN_MOD_SAFETY
 	// its highly unlikely you'll ask to mod by 0, since
 	// modding is usually rare and deliberate.
-	inline Vector2f& operator%=( float s ){
+	inline Vector2f& operator%=( float s ) {
 		if( !s ) {
 			error( "mod by 0" ) ;
 			return *this ;
@@ -281,7 +279,7 @@ struct Vector2f {
 		x=fmodf( x,s );  y=fmodf( y,s );
 		return *this ;
 	}
-	inline Vector2f& operator%=( const Vector2f &o ){
+	inline Vector2f& operator%=( const Vector2f &o ) {
 		if( !o.x )  error( "mod by 0 (x)" ) ;
 		else x=fmodf( x,o.x );
 		if( !o.y )  error( "mod by 0 (y)" ) ;  
@@ -289,73 +287,69 @@ struct Vector2f {
 		return *this ;
 	}
 #else
-	inline Vector2f& operator%=( float s ){
+	inline Vector2f& operator%=( float s ) {
 		x=fmodf( x,s );  y=fmodf( y,s );
 		return *this ;
 	}
-	inline Vector2f& operator%=( const Vector2f &o ){
+	inline Vector2f& operator%=( const Vector2f &o ) {
 		x=fmodf( x,o.x );  y=fmodf( y,o.y );
 		return *this ;
 	}
 #endif
 	// This may be faster, but it requires you use the +octant
 	// (0,0,0)->(worldSize,worldSize,worldSize)
-	inline Vector2f& wrap( const Vector2f& worldSize ){
+	inline Vector2f& wrap( const Vector2f& worldSize ) {
 		*this += worldSize ;
 		return *this %= worldSize ;
 	}
-	inline Vector2f& clampLen( float maxLen ){
+	inline Vector2f& clampLen( float maxLen ) {
 		float length = len() ;
 		if( length > maxLen ) // also means length > 0, hopefully
 			return normalize()*=maxLen ;
 
 		return *this ;
 	}
-	inline Vector2f& clampComponent( float minVal, float maxVal )
-	{
+	inline Vector2f& clampComponent( float minVal, float maxVal ) {
 		::clamp( x,minVal,maxVal ) ;
 		::clamp( y,minVal,maxVal ) ;
 		return *this ;
 	}
-	inline Vector2f& clampComponentBelow( float below )
-	{
+	inline Vector2f& clampComponentBelow( float below ) {
 		if( x < below ) x=below ;
 		if( y < below ) y=below ;
 		return *this ;
 	}
-	inline Vector2f& clampComponentAbove( float above )
-	{
+	inline Vector2f& clampComponentAbove( float above ) {
 		if( x > above ) x=above ;
 		if( y > above ) y=above ;
 		return *this ;
 	}
-	inline Vector2f& clampBelow( const Vector2f& below )
-	{
+	inline Vector2f& clampBelow( const Vector2f& below ) {
 		if( x < below.x ) x=below.x ;
 		if( y < below.y ) y=below.y ;
 		return *this ;
 	}
-	inline Vector2f& clampAbove( const Vector2f& above )
-	{
+	inline Vector2f& clampAbove( const Vector2f& above ) {
 		if( x > above.x ) x=above.x ;
 		if( y > above.y ) y=above.y ;
 		return *this ;
 	}
 
-	inline Vector2f& fabs()
-	{
+	inline Vector2f& fabs() {
 		x=fabsf(x) ;  y=fabsf(y);
 		return *this ;
 	}
+ 
+  string toString() {
+    return makeString( "%.2f, %.2f", x, y );
+  } 
 } ;
 
-inline Vector2f operator-( const Vector2f& v, float s )
-{
+inline Vector2f operator-( const Vector2f& v, float s ) {
 	return Vector2f(v.x-s,v.y-s);
 }
 
-inline Vector2f operator-( float s, const Vector2f& v )
-{
+inline Vector2f operator-( float s, const Vector2f& v ) {
 	return Vector2f(s-v.x,s-v.y);
 }
 

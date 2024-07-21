@@ -110,14 +110,12 @@ struct RectF {
   }
   
   // Default considers origin BOTTOM LEFT.
-  inline float left() const { return x ; }
-  inline float right() const { return x+w ; }
+  inline float left() const { return x; }
+  inline float right() const { return x + w; }
   
-  //!! The GL coordinate system is ALWAYS origin in lowerleft.
-  // so if you want to work in upside down coordinates for textboxes,
-  // you still have to invert it back at EOD
-  inline float bottom() const { return y + h; }
+  // The top left corner is the origin.
   inline float top() const { return y; } 
+  inline float bottom() const { return y + h; }
   
   inline float midX() const { return x + w/2; }
   inline float midY() const { return y + h/2; }
@@ -135,7 +133,7 @@ struct RectF {
     return Vector2f( right(), top() ) ;
   }
   
-  // BL corner
+  // TL corner
   inline Vector2f pos() const {
     return Vector2f( x, y );
   }
@@ -362,11 +360,8 @@ struct RectF {
   SDL_Rect toSDLRect() const {
     return { (int)x, (int)y, (int)w, (int)h };
   }
-  void println( const char* msg ) const {
-    //printf( "%s: x=%.2f y=%.2f w=%.2f h=%.2f\n", msg,x,y,w,h ) ;
-    printf( "%s: l=%.2f r=%.2f b=%.2f t=%.2f (w=%.2f, h=%.2f)\n", msg,left(),right(),bottom(),top(),w,h ) ;
+  
+  string toString() const {
+    return makeString( "l=%.2f r=%.2f b=%.2f t=%.2f (w=%.2f, h=%.2f)", left(),right(),bottom(),top(),w,h ) ;
   }
-  void println() const {
-    this->println( "" ) ;
-  }
-} ;
+};

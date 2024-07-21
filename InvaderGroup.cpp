@@ -21,21 +21,34 @@ void InvaderGroup::populate( const RectF &invaderBounds ) {
   }
 }
 
-void InvaderGroup::update() {
+void InvaderGroup::update( float t ) {
+  if( invaderReachedBottom ) {
+    // invaders stop moving once they have won.
+    return;
+  }
   // Step right, until someone hits the edge.
   float disp = movingRight ? +1 : -1;
+  Vector2f windowSize = sdl->getWindowSize();
   
   for( auto invader : invaders ) {
     invader->move( disp, 0 );
-    invader->update();
+    invader->update( t );
+    
+    // Check lose condition: any invader reaches the bottom of the screen
+    if( invader->box.bottom() >= windowSize.y ) {
+      invaderReachedBottom = 1; //pick message up outside
+      return; // abort processing.
+    }
   }
   
   // If an invader would breaks the left/right limits, the direction reverses on the next turn
   bool invaderHitSide = 0;
   for( auto invader : invaders ) {
-    RectF window( Vector2f( 0 ), sdl->getWindowSize() );
+    RectF window( Vector2f( 0 ), windowSize );
     
     RectF next = invader->box + disp;
+    
+    // Have to check left/right bounds only.
     if( !window.contains( next ) ) {
       invaderHitSide = 1;
       break;

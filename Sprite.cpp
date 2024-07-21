@@ -107,9 +107,8 @@ void Sprite::move( float x, float y ) {
   box.x += x, box.y += y;
 }
 
-void Sprite::update() {
-  animation.update( 1./60 );
-  enforceWorldLimits();
+void Sprite::update( float t ) {
+  animation.update( t );
 }
 
 void Sprite::draw() const {

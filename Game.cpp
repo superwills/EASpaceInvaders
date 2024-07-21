@@ -139,16 +139,22 @@ void Game::clearDead() {
 }
 
 void Game::runGame() {
-  invaderGroup.update();
-  player->update();
-  scoreSprite->update();
+  invaderGroup.update( dt );
+  player->update( dt );
+  scoreSprite->update( dt );
 
   for( shared_ptr<Bullet> bullet : allBullets ) {
-    bullet->update();
+    bullet->update( dt );
   }
 	
 	// Check for collisions after each object moves
 	checkForCollisions();
+ 
+  // See if the invaders won by reaching the bottom
+  if( invaderGroup.didInvadersWin() ) {
+    info( "Invaders won by reaching the bottom" );
+    gameState = GameState::Lost;
+  } 
  
   clearDead(); 
 }
@@ -182,6 +188,10 @@ void Game::controllerUpdate() {
 }
 
 void Game::update() {
+  // FrameTime is the difference between current clock time and 
+  dt = clock.sec() - clockThisFrame;
+  clockThisFrame = clock.sec();
+
   controllerUpdate();
   
   // State-specific update
@@ -190,7 +200,7 @@ void Game::update() {
   case GameState::Won:
   case GameState::Lost:
   case GameState::Exiting:
-		title->update();
+		title->update( dt );
 	  break;
     
 	case GameState::Running:
@@ -198,7 +208,7 @@ void Game::update() {
 	  break;
 	
   case GameState::Paused: 
-		pausedText->update();
+		pausedText->update( dt );
 	  break;
   }
   

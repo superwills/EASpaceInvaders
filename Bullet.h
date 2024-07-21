@@ -5,5 +5,5 @@
 class Bullet : public Sprite {
 public:
   Bullet( const RectF &playerBox );
-  void update() override;
+  void update( float t ) override;
 };

@@ -18,9 +18,9 @@ Bullet::Bullet( const RectF &playerBox ) {
   addAnimationFrame( 0, Red, .2 );
 }
 
-void Bullet::update() {
+void Bullet::update( float t ) {
   //Sprite::update();
-  animation.update( 1./60 ); // Only update the animation, but don't enforce world limits like for other sprites.
+  animation.update( t ); // Only update the animation, but don't enforce world limits like for other sprites.
   
 	box.y -= 5;
 	
