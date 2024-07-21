@@ -144,7 +144,7 @@ Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const st
   // construct the animation frames
   Animation animation;
   for( int i = 0; i < numFrames; i++ ) {
-    animation.addFrame( Animation::Frame( tex, srcRect, White, 1./10 ) );
+    animation.addFrame( Animation::Frame( tex, srcRect, White ) );
     srcRect.x += frameSize.x; // Move right.
   }
   

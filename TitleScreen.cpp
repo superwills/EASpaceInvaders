@@ -14,6 +14,6 @@ TitleScreen::TitleScreen( const string &titleText ) :
   
   // create a random color cycle animation
   for( int i = 0; i < 255; i++ ) {
-    addAnimationFrame( tex, SDL_RandomSolidColor(), .1 );
+    addAnimationFrame( tex, SDL_RandomSolidColor(), .05 );
   }
 }

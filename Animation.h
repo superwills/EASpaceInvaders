@@ -17,10 +17,11 @@ struct Animation {
     std::optional<SDL_Rect> subRect; // The subportion of the texture to draw. if not set, then draw the whole texture
     SDL_Color color = White;
     float duration = 0;
+    inline static float DefaultFrameTime = .1f;
     
     Frame() { }
-    Frame( shared_ptr<Texture> iTex, SDL_Color iColor, float iDuration );
-    Frame( shared_ptr<Texture> iTex, const RectF &subRectangle, SDL_Color iColor, float iDuration );
+    Frame( shared_ptr<Texture> iTex, SDL_Color iColor, float iDuration = DefaultFrameTime );
+    Frame( shared_ptr<Texture> iTex, const RectF &subRectangle, SDL_Color iColor, float iDuration = DefaultFrameTime );
   };
   
   Frame ErrFrame; // You get this frame back if you have no animation frames set up.

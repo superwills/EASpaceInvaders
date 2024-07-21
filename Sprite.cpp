@@ -30,7 +30,7 @@ Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
 }
 
 void Sprite::addBlankAnimationFrame() {
-  animation.addFrame( Animation::Frame( 0, White, 1 ) );
+  animation.addFrame( Animation::Frame( 0, White ) );
 }
 
 void Sprite::addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float duration ) {
