@@ -2,11 +2,33 @@
 
 #include "Invader.h"
 
+void InvaderGroup::addRow( AnimationId character ) {
+  for( int i = 0; i < invadersPerRow; i++ ) {
+    RectF box;
+    box.y = row * ( invaderSize + 5 );
+    box.x = i*( invaderSize + 5 );
+    
+    box.w = box.h = invaderSize;
+    
+    shared_ptr<Invader> invader = std::make_shared<Invader>( box, character );
+    invaders.push_back( invader );
+  }
+  
+  row++; // increment row when done adding the row
+}
+
 void InvaderGroup::populate( const RectF &invaderBounds ) {
   // Lay the invaders out
   float boardSize = invaderBounds.w;
   invaderSize = boardSize / invadersPerRow;
   
+  addRow( AnimationId::E );
+  addRow( AnimationId::A );
+  addRow( AnimationId::Invader2 );
+  addRow( AnimationId::Invader1 );
+  addRow( AnimationId::Invader1 );
+  
+  /*
   for( int row = 0; row < rowsOfInvaders; row++ ) {
     for( int i = 0; i < invadersPerRow; i++ ) {
       RectF box;
@@ -19,6 +41,7 @@ void InvaderGroup::populate( const RectF &invaderBounds ) {
       invaders.push_back( invader );
     }
   }
+  */
 }
 
 void InvaderGroup::update( float t ) {
