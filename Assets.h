@@ -5,6 +5,9 @@
 
 // This lightweight header can be included anywhere you need to refer to assets by id.
 
+#include <map>
+using std::map;
+
 enum class SFXId {
   Ping0,
   Ping1,
@@ -19,6 +22,7 @@ enum class MusicId {
 };
 
 enum class AnimationId {
+  None,
   Invader1,
   Invader2,
   A,
@@ -26,4 +30,7 @@ enum class AnimationId {
   Explode,
   UFO,
 };
+
+// This could have been added to class Sprite, but it seemed to crowd it a little.
+extern map<AnimationId, int> ScoreForCharacter;
 

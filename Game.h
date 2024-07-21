@@ -16,6 +16,7 @@ class Invader;
 class InvaderGroup;
 class Particle;
 class Player;
+class UFO;
 
 class Game {
 public:
@@ -30,6 +31,7 @@ private:
   
   vector< shared_ptr<Bullet> > allBullets;
   vector< shared_ptr<Particle> > allParticles;
+  vector< shared_ptr<UFO> > allUFOs;
   
   InvaderGroup invaderGroup;
   

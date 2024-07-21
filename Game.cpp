@@ -5,6 +5,7 @@
 #include "Invader.h"
 #include "Particle.h"
 #include "Player.h"
+#include "UFO.h"
 
 Game *game = 0;
 
@@ -143,7 +144,7 @@ void Game::checkForCollisions() {
         bullet->die();
         sdl->playSound( rand<SFXId>( SFXId::Ping0, SFXId::Ping3 ) );
         
-        changeScore( invader->scoreValue );
+        changeScore( invader->getScore() );
         invader->die();
         
         particleSplash( invader->box.centroid(), randInt( 5, 8 ) );
@@ -164,6 +165,7 @@ template <typename T> void clearDeadOnes( vector<T> &v ) {
 void Game::clearDead() {
   clearDeadOnes( allBullets );
   clearDeadOnes( allParticles );
+  clearDeadOnes( allUFOs );
   
   invaderGroup.clearDead();
 }
@@ -181,7 +183,10 @@ void Game::runGame() {
   for( auto particle : allParticles ) {
     particle->update( dt );
   }
-	 
+  
+  for( auto ufo : allUFOs ) {
+    ufo->update( dt );
+  }
 	// Check for collisions after each object moves
 	checkForCollisions();
  
@@ -223,6 +228,9 @@ void Game::controllerUpdate() {
 }
 
 void Game::update() {
+  
+  
+
   // FrameTime is the difference between current clock time and 
   dt = clock.sec() - clockThisFrame;
   clockThisFrame = clock.sec();
@@ -271,6 +279,10 @@ void Game::draw() {
     }
     for( auto particle : allParticles ) {
       particle->draw();
+    }
+    
+    for( auto ufo : allUFOs ) {
+      ufo->draw();
     }
 	  break;
 	

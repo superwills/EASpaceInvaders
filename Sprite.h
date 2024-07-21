@@ -23,6 +23,9 @@ public:
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   Animation animation; // Single frame if static.
   
+  // Besides the class type, this tells you precisely what kind of thing this is (so you can get the score for it)
+  AnimationId character = AnimationId::None;
+  
 	// This member represents the position & the size of the sprite combined
   RectF box;
 	
@@ -58,6 +61,8 @@ public:
 	virtual void update( float t );
 	virtual void draw() const;
 	virtual void die();
+ 
+  int getScore() const; 
   
 };
 

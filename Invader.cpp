@@ -8,14 +8,3 @@ Invader::Invader( const RectF& rectangle, AnimationId animationId ) : Sprite( re
   animation = sdl->getAnimation( animationId );
 }
 
-int Invader::getScore() const {
-  auto it = scoreForCharacter.find( character );
-  
-  if( it == scoreForCharacter.end() ) {
-    error( "Character %d has no score assigned to it", character );
-    return 0;
-  }
-  
-  return it->second;
-}
-

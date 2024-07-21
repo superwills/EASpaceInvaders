@@ -21,7 +21,7 @@ Sprite::Sprite( const RectF& rectangle, shared_ptr<Texture> iTex ) :
 }
 
 Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
-    box( rectangle ) {
+    box( rectangle ), character( animationId ) {
   
   name = makeString( "Sprite %d animation %d", spriteId, animationId );
   animation = sdl->getAnimation( animationId );
@@ -135,4 +135,15 @@ void Sprite::die() {
   // The reason for doing this is it is awkward to remove from collections while iterating
   // (which is often when we discover the object died)
   dead = 1;
+}
+
+int Sprite::getScore() const {
+  auto it = ScoreForCharacter.find( character );
+  
+  if( it == ScoreForCharacter.end() ) {
+    error( "Character %d has no score assigned to it", character );
+    return 0;
+  }
+  
+  return it->second;
 }
