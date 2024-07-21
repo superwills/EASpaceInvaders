@@ -7,12 +7,12 @@ Player::Player( const Vector2f &windowSize ) {
   name = "Player/" + name;
   
   float playerWidth = windowSize.x * .05; // 5% of worldWidth
-  box.w = box.h = playerWidth;
+  box.size = playerWidth;
   
-  // Set initial positions for player paddles
-  float hCenter = windowSize.y/2;
-  
-  setCenter( hCenter, windowSize.y - box.h/2 );
+  // Set initial positions for player
+  float hCenter = windowSize.x/2;
+  box.pos.x = hCenter - box.size.x/2;
+  box.pos.y = windowSize.y - box.size.y;
   
   //addBlankAnimationFrame();
   addAnimationFrame( 0, Red, 1 );

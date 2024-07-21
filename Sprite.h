@@ -42,13 +42,8 @@ public:
   Vector2f getPos();
 	Vector2f getCenter();
 	void setPos( const Vector2f &pos );
-	inline void setPos( float x, float y ) {
-		setCenter( Vector2f( x, y ) );
-	}
-	void setCenter( const Vector2f &pos );
-	inline void setCenter( float x, float y ) {
-		setCenter( Vector2f( x, y ) );
-	}
+  // Set position of sprite so it's center is @pos (accounting for current size of sprite) 
+  void setCenter( const Vector2f &pos ); 
 	void setSize( const Vector2f &size );
 	void scale( float s );
 	void enforceWorldLimits();

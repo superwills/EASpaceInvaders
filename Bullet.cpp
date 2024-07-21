@@ -8,11 +8,10 @@ Bullet::Bullet( const RectF &playerBox ) {
   
   float windowHeight = sdl->getWindowSize().y;
   
-  box.w = windowHeight * .01;
-  box.h = windowHeight * .05;
+  box.size = Vector2f( windowHeight * .01, windowHeight * .05 );
   
-  box.x = playerBox.midX() - box.w/2;
-  box.y = playerBox.top();
+  box.pos.x = playerBox.midX() - box.size.x/2;
+  box.pos.y = playerBox.top();
   
   addAnimationFrame( 0, Yellow, .2 );
   addAnimationFrame( 0, Red, .2 );
@@ -22,9 +21,9 @@ void Bullet::update( float t ) {
   //Sprite::update();
   animation.update( t ); // Only update the animation, but don't enforce world limits like for other sprites.
   
-	box.y -= 5;
+	box.pos.y -= 5;
 	
-	if( box.y < 0 ) {
+	if( box.pos.y < 0 ) {
     die();
   } 
 }

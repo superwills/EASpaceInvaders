@@ -15,7 +15,7 @@ void Game::init() {
   title = std::make_shared<TitleScreen>( "space invaders!" );
   
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
-  pausedText->setCenter( sdl->getWindowSize()/2 );
+  pausedText->box.setCenter( sdl->getWindowSize()/2 );
   
   // Load sprite animations
   sdl->loadSpritesheetAnimation( AnimationId::Invader1, "assets/ims/invader-1.png", 2, Vector2f( 16, 16 ) );
@@ -100,8 +100,8 @@ void Game::initGameBoard() {
   
   // The board is 80% of the window size.
   RectF gameBoard( Vector2f( 0 ), windowSize );
-  gameBoard.y += gameBoard.h/5; // Move down 1/5 screen
-  gameBoard.size() *= .5;
+  gameBoard.pos.y += gameBoard.size.y/5; // Move down 1/5 screen
+  gameBoard.size *= .5;
   
   invaderGroup.populate( gameBoard );
 }

@@ -5,10 +5,10 @@
 void InvaderGroup::addRow( AnimationId character ) {
   for( int i = 0; i < invadersPerRow; i++ ) {
     RectF box;
-    box.y = row * ( invaderSize + 5 );
-    box.x = i*( invaderSize + 5 );
+    box.pos.y = row * ( invaderSize + 5 );
+    box.pos.x = i*( invaderSize + 5 );
     
-    box.w = box.h = invaderSize;
+    box.size = invaderSize;
     
     shared_ptr<Invader> invader = std::make_shared<Invader>( box, character );
     invaders.push_back( invader );
@@ -19,7 +19,7 @@ void InvaderGroup::addRow( AnimationId character ) {
 
 void InvaderGroup::populate( const RectF &invaderBounds ) {
   // Lay the invaders out
-  float boardSize = invaderBounds.w;
+  float boardSize = invaderBounds.size.x;
   invaderSize = boardSize / invadersPerRow;
   
   addRow( AnimationId::E );

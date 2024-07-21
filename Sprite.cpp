@@ -8,7 +8,7 @@ Sprite::Sprite() {
   name = makeString( "Sprite %d", spriteId );
   
   // Here i'm initializing the size to a non-zero values, so there aren't surprises :)
-  box.w = box.h = 64;
+  box.size = 64;
 }
 
 Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
@@ -19,7 +19,7 @@ Sprite::Sprite( shared_ptr<Texture> iTex ) {
 	name = makeString( "Sprite %d from texture", spriteId );
 	addAnimationFrame( iTex, White, 1 );
   
-	box.w = box.h = 64;
+	box.size = 64;
 }
 
 Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
@@ -47,51 +47,51 @@ shared_ptr<Sprite> Sprite::Text( const string &text, SDL_Color iColor ) {
 }
 
 Vector2f Sprite::getPos() {
-	return box.xy();
+	return box.pos;
 }
 
 void Sprite::setPos( const Vector2f &pos ) {
-  box.xy() = pos;
-}
-
-Vector2f Sprite::getCenter() {
-	return box.centroid();
+  box.pos = pos;
 }
 
 void Sprite::setCenter( const Vector2f &pos ) {
   box.setCenter( pos );
 }
 
+Vector2f Sprite::getCenter() {
+	return box.centroid();
+}
+
 void Sprite::setSize( const Vector2f &size ) {
-  box.size() = size;
+  box.size = size;
 }
 
 void Sprite::scale( float s ) {
-  box.size() *= s;
+  box.size *= s;
 }
 
 void Sprite::enforceWorldLimits() {
 	if( box.top() < 0 ) {
 		float overshot = 0 - box.top();
-    box.y += overshot;
+    box.pos.y += overshot;
 	}
   
   Vector2f windowSize = sdl->getWindowSize();
 	if( box.bottom() > windowSize.y ) {
 		float overshot = windowSize.y - box.bottom();
-    box.y += overshot;
+    box.pos.y += overshot;
 	}
   
 	// ensure stays within bounds of world
 	// two of these can happen simultaneously, which is why no else is used
 	if( box.left() < 0 ) {
 		float overshot = - box.left();
-    box.x += overshot;
+    box.pos.x += overshot;
 	}
   
 	if( box.right() > windowSize.x ) {
 		float overshot = windowSize.x - box.right();
-    box.x += overshot;
+    box.pos.x += overshot;
 	}
 }
 
@@ -104,7 +104,8 @@ void Sprite::hide() {
 }
 
 void Sprite::move( float x, float y ) {
-  box.x += x, box.y += y;
+  box.pos.x += x;
+  box.pos.y += y;
 }
 
 RectF Sprite::getDrawBox() const {

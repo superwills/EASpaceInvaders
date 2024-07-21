@@ -139,13 +139,13 @@ Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const st
   // All frames use the same tex.
   shared_ptr<Texture> tex = sdl->loadTexture( filename );
   RectF srcRect;
-  srcRect.size() = frameSize;
+  srcRect.size = frameSize;
   
   // construct the animation frames
   Animation animation;
   for( int i = 0; i < numFrames; i++ ) {
     animation.addFrame( Animation::Frame( tex, srcRect, White ) );
-    srcRect.x += frameSize.x; // Move right.
+    srcRect.pos.x += frameSize.x; // Move right.
   }
   
   animations[ animationId ] = animation;

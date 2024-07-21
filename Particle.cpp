@@ -19,14 +19,14 @@ RectF Particle::getDrawBox() const {
   // +---+
   // 
   RectF drawBox = box;
-  drawBox.xy() -= drawBox.size() / 2;
+  drawBox.pos -= drawBox.size / 2;
   return drawBox;
 }
 
 void Particle::update( float t ) {
   Sprite::update( t );
   
-  box.xy() += vel * t;
+  box.pos += vel * t;
   lifeRemaining -= t;
   
   pulseTime += t;
@@ -47,7 +47,7 @@ void Particle::update( float t ) {
     frame.color.a = percentLife * 255;
     
     // Grow/shrink the particle.
-    box.size() += growing * growthFactor;
+    box.size += growing * growthFactor;
   }
   
   
