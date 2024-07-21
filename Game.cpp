@@ -95,12 +95,13 @@ void Game::togglePause() {
 }
 
 void Game::initGameBoard() {
-  player = std::make_shared<Player>( sdl->getWindowSize() );
+  Vector2f windowSize = sdl->getWindowSize();
+  player = std::make_shared<Player>( windowSize );
   
   // The board is 80% of the window size.
-  RectF gameBoard( Vector2f( 0 ), sdl->getWindowSize() );
+  RectF gameBoard( Vector2f( 0 ), windowSize );
   gameBoard.y += gameBoard.h/5; // Move down 1/5 screen
-  gameBoard.size() *= .8; // 80% of screen
+  gameBoard.size() *= .5;
   
   invaderGroup.populate( gameBoard );
 }
