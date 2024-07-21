@@ -25,7 +25,7 @@ private:
   // Main collections for easy iteration on objects of a type.
   // Objects may appear in more than one list (eg Invaders appear in
   // both allInvaders and allSprites).
-  vector< shared_ptr<Sprite> > allSharedSprites;
+  vector< shared_ptr<Sprite> > allSprites;
   
   vector< shared_ptr<Bullet> > allBullets;
   vector< shared_ptr<Invader> > allInvaders;
@@ -56,6 +56,8 @@ public:
 	void checkForCollisions();
   void clearDead(); 
 	void runGame();
+ 
+  void controllerUpdate(); 
 	void update();
 	void draw();
 };

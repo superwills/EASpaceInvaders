@@ -12,15 +12,15 @@ void Game::init() {
   bkgColor = Indigo;
   
   title = std::make_shared<TitleScreen>( "space invaders!" );
-  allSharedSprites.push_back( title );
+  allSprites.push_back( title );
   
   pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
-  allSharedSprites.push_back( pausedText );
+  allSprites.push_back( pausedText );
   pausedText->setCenter( sdl->getWindowSize()/2 );
   
   // Load sprite animations
-  sdl->loadSpritesheetAnimation( AnimationId::A,  "assets/ims/A.png", 4, Vector2f( 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::E,  "assets/ims/E.png", 4, Vector2f( 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::A, "assets/ims/A.png", 4, Vector2f( 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::E, "assets/ims/E.png", 4, Vector2f( 16 ) );
   
 	// load the sfx. These sfx were created with SFXR
 	// http://www.drpetter.se/project_sfxr.html
@@ -113,7 +113,7 @@ void Game::populateInvaders() {
       box.w = box.h = invaderSize;
       
       shared_ptr<Invader> invader = std::make_shared<Invader>( box, rand<AnimationId>( AnimationId::A, AnimationId::E ) );
-      allSharedSprites.push_back( invader );
+      allSprites.push_back( invader );
       allInvaders.push_back( invader );
     }
   }
@@ -149,10 +149,10 @@ void Game::checkForCollisions() {
 }
 
 void Game::clearDead() {
-  allSharedSprites.erase(
-    std::remove_if( allSharedSprites.begin(), allSharedSprites.end(), []( shared_ptr<Sprite> sprite ) {
+  allSprites.erase(
+    std::remove_if( allSprites.begin(), allSprites.end(), []( shared_ptr<Sprite> sprite ) {
       return sprite->dead;
-    } ), allSharedSprites.end()
+    } ), allSprites.end()
   );
   
   allBullets.erase( std::remove_if( allBullets.begin(), allBullets.end(), []( shared_ptr<Bullet> bullet ) {
@@ -165,20 +165,16 @@ void Game::clearDead() {
 }
 
 void Game::runGame() {
-	// Use the controller state to change gamestate
-	player->move( controller.mouseX );
   
-  if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
-    player->move( -1 );
-  }
-  if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
-    player->move( 1 );
-  }
   
-  if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
-    shared_ptr<Bullet> bullet = player->shoot();
-    allSharedSprites.push_back( bullet );
-    allBullets.push_back( bullet );
+  for( shared_ptr<Invader> invader : allInvaders ) {
+    invader->update();
+  } 
+  player->update();
+  scoreSprite->update();
+
+  for( shared_ptr<Bullet> bullet : allBullets ) {
+    bullet->update();
   }
 	
 	// Check for collisions after each object moves
@@ -187,20 +183,53 @@ void Game::runGame() {
   clearDead(); 
 }
 
-void Game::update() {
+void Game::controllerUpdate() {
+  // All states do these:
 	controller.update();
-  
+   
   // p during play pauses the game.
   if( controller.justPressed( SDL_SCANCODE_P ) ) {
     game->togglePause();
   }
   
   if( gameState == GameState::Running ) {
-		runGame();
-	}
- 
-  for( shared_ptr<Sprite> sprite : allSharedSprites ) {
-    sprite->update();
+    // Use the controller state to change gamestate
+    player->move( controller.mouseX );
+    
+    if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
+      player->move( -1 );
+    }
+    if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
+      player->move( 1 );
+    }
+    
+    if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
+      shared_ptr<Bullet> bullet = player->shoot();
+      allSprites.push_back( bullet );
+      allBullets.push_back( bullet );
+    }
+  }
+}
+
+void Game::update() {
+  controllerUpdate();
+  
+  // State-specific update
+  switch( gameState ) {
+  case GameState::Title:
+  case GameState::Won:
+  case GameState::Lost:
+  case GameState::Exiting:
+		title->update();
+	  break;
+    
+	case GameState::Running:
+    runGame();
+	  break;
+	
+  case GameState::Paused: 
+		pausedText->update();
+	  break;
   }
   
   controller.clearEventKeys();

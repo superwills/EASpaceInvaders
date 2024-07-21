@@ -39,9 +39,6 @@ public:
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, SDL_Color iColor );
  
-  // I did not want to parse the json for spritesheet loading, so you have to specify params manually
-  // Limitations: frameSize must be the same for all the spritesheet frames. 
-  void loadSpritesheet( const string &filename, int numFrames, const Vector2f &frameSize );
   Vector2f getPos();
 	Vector2f getCenter();
 	void setPos( const Vector2f &pos );

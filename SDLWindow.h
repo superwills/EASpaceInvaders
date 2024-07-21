@@ -59,7 +59,10 @@ public:
   // Texture loading.
 	shared_ptr<Texture> loadTexture( const string &filename );
  
-  Animation getAnimation( AnimationId animationId ); 
+  Animation getAnimation( AnimationId animationId );
+  
+  // I did not want to parse the json for spritesheet loading, so you have to specify params manually
+  // Limitations: frameSize must be the same for all the spritesheet frames.
   Animation loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize );
   
   // Makes a texture containing `text`, in `color` specified

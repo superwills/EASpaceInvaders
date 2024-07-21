@@ -46,19 +46,6 @@ shared_ptr<Sprite> Sprite::Text( const string &text, SDL_Color iColor ) {
   return std::make_shared<Sprite>( tex );
 }
 
-void Sprite::loadSpritesheet( const string &filename, int numFrames, const Vector2f &frameSize ) {
-  // All frames use the same tex.
-  shared_ptr<Texture> tex = sdl->loadTexture( filename );
-  
-  RectF srcRect;
-  srcRect.size() = frameSize;
-  // construct the animation frames
-  for( int i = 0; i < numFrames; i++ ) {
-    addAnimationFrame( tex, srcRect, White, 1./10 );
-    srcRect.x += frameSize.x; // Move right.
-  }
-}
-
 Vector2f Sprite::getPos() {
 	return box.xy();
 }
