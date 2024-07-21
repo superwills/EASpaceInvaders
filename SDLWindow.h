@@ -21,12 +21,14 @@ using namespace std;
 #include "RectF.h"
 #include "Vectorf.h"
 
-// Stores everything to do with SDL, and game assets
+// C++ interface to SDL functionality.
 class SDLWindow {
 	// asset maps: filename=>SDL_* objects
 	map<string, shared_ptr<Texture> > texes;
 	map<Music, Mix_Music*> musics;
 	map<SFX, Mix_Chunk*> sfx;
+  map<AnimationId, Animation> animations;
+   
   SDL_Window *window = 0;
 	SDL_Renderer *renderer = 0;
   inline static TTF_Font *defaultFont = 0; // default rendering font.
@@ -51,17 +53,22 @@ public:
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
 	void outlineRect( const RectF &rect, SDL_Color color );
 	void fillRect( const RectF &rect, SDL_Color color );
- 
-  void draw( const RectF &whereToDraw, const Animation::Frame &frame ); 
+  // Drawing textures is always done using an Animation::Frame.
+  void draw( const RectF &whereToDraw, const Animation::Frame &frame );
+  
+  // Texture loading.
 	shared_ptr<Texture> loadTexture( const string &filename );
+ 
+  Animation getAnimation( AnimationId animationId ); 
+  Animation loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize );
   
   // Makes a texture containing `text`, in `color` specified
   // A lot less efficient than texture atlasing, but good for prototype
 	shared_ptr<Texture> makeTextTexture( const string &text, SDL_Color color );
   
-	// Knowing SDLWindow is slowly becoming a god-class, in the interests of
-  // simplicity we add on sound playing functionality here. SDL makes the code simple,
-  // so it isn't a lot of code.
+  // Music/SFX
+	// SDLWindow is kind of a god-class with lots of abilities,
+  // but the amount of code needed is really small with SDL
   void loadMusic( Music musicId, const string &filename );
   void playMusic( Music musicId );
   

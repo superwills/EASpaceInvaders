@@ -50,8 +50,6 @@ void Sprite::loadSpritesheet( const string &filename, int numFrames, const Vecto
     addAnimationFrame( tex, srcRect, White, 1./10 );
     srcRect.x += frameSize.x; // Move right.
   }
-  
-  
 }
 
 Vector2f Sprite::getPos() {

@@ -18,3 +18,7 @@ enum class Music {
   Background1,
 };
 
+enum class AnimationId {
+  E,
+  A
+};

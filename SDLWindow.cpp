@@ -124,6 +124,33 @@ shared_ptr<Texture> SDLWindow::loadTexture( const string &filename ) {
 	return tex;
 }
 
+Animation SDLWindow::getAnimation( AnimationId animationId ) {
+  auto it = animations.find( animationId );
+  if( it == animations.end() ) {
+    error( "No animation %d", animationId );
+    return Animation();
+  }
+  
+  return it->second;
+}
+
+Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize ) {
+  // All frames use the same tex.
+  shared_ptr<Texture> tex = sdl->loadTexture( filename );
+  RectF srcRect;
+  srcRect.size() = frameSize;
+  
+  // construct the animation frames
+  Animation animation;
+  for( int i = 0; i < numFrames; i++ ) {
+    animation.addFrame( Animation::Frame( tex, srcRect, White, 1./10 ) );
+    srcRect.x += frameSize.x; // Move right.
+  }
+  
+  animations[ animationId ] = animation;
+  return animation;
+}
+
 shared_ptr<Texture> SDLWindow::makeTextTexture( const string &text, SDL_Color color ) {
 	SDL_Surface *textSurface = TTF_RenderText_Solid( defaultFont, text.c_str(), color );
   if( !textSurface ) {
@@ -135,8 +162,8 @@ shared_ptr<Texture> SDLWindow::makeTextTexture( const string &text, SDL_Color co
 }
 
 void SDLWindow::loadMusic( Music musicId, const string &filename ) {
-	auto iter = musics.find( musicId );
-	if( iter != musics.end() ) {
+	auto it = musics.find( musicId );
+	if( it != musics.end() ) {
 		warning( "Music `%s` already loaded", filename.c_str() );
     return;
 	}
@@ -145,7 +172,9 @@ void SDLWindow::loadMusic( Music musicId, const string &filename ) {
   if( !music ) {
     error( "Couldn't load music `%s`!", filename.c_str() );
   }
-	musics[ musicId ] = music;
+  else {
+	  musics[ musicId ] = music;
+  } 
 }
 
 void SDLWindow::playMusic( Music musicId ) {
@@ -170,7 +199,9 @@ void SDLWindow::loadWavSound( SFX sfxId, const string &waveFilename ) {
   if( !sound ) {
     error( "Couldn't load sound `%s`!", waveFilename.c_str() );
   }
-	sfx[ sfxId ] = sound;
+  else {
+	  sfx[ sfxId ] = sound;
+  } 
 }
 
 void SDLWindow::playSound( SFX sfxId ) {
