@@ -7,11 +7,12 @@
 TitleScreen::TitleScreen( const string &titleText ) {
   
   titleSprite = Sprite::Text( titleText, sdl->getWindowRectangle(), White ); 
+  
   // Need the title texture to add anim frames using it
   shared_ptr<Texture> titleTexture = titleSprite->animation.getCurrentFrame().tex;
   
   // create a random color cycle animation
-  for( int i = 0; i < 255; i++ ) {
+  for( int i = 0; i < 15; i++ ) {
     titleSprite->addAnimationFrame( titleTexture, SDL_RandomSolidColor(), .05 );
   }
   
@@ -23,7 +24,11 @@ TitleScreen::TitleScreen( const string &titleText ) {
 }
 
 void TitleScreen::update( float t ) {
-
+  titleSprite->update( t );
+  for( auto menuItem : menuItems ) {
+    menuItem->update( t );
+  }
+  pointer->update( t );
 }
 
 void TitleScreen::draw() {

@@ -162,7 +162,13 @@ void Game::checkForCollisions() {
         invader->die();
         
         particleSplash( invader->box.centroid(), randInt( 5, 8 ) );
+        break;
       }
+    }
+    
+    if( bullet->dead ) {
+      // If the bullet was consumed, skip the ufo check
+      continue;
     }
     
     for( auto ufo : allUFOs ) {

@@ -22,8 +22,11 @@ void InvaderGroup::populate( const RectF &invaderBounds ) {
   float boardSize = invaderBounds.size.x;
   invaderSize = boardSize / invadersPerRow;
   
-  addRow( AnimationId::E );
-  addRow( AnimationId::A );
+  //addRow( AnimationId::E );
+  //addRow( AnimationId::A );
+  addRow( AnimationId::Invader2 );
+  addRow( AnimationId::Invader2 );
+  
   addRow( AnimationId::Invader2 );
   addRow( AnimationId::Invader1 );
   addRow( AnimationId::Invader1 );

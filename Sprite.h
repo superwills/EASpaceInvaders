@@ -36,6 +36,7 @@ public:
   virtual ~Sprite() { }
   
   void addBlankAnimationFrame();
+  void addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color ); 
   void addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float duration ); 
   void addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, SDL_Color color, float duration );
   

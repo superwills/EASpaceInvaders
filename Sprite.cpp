@@ -17,7 +17,9 @@ Sprite::Sprite( const RectF& rectangle ) :
 Sprite::Sprite( const RectF& rectangle, shared_ptr<Texture> iTex ) :
     box( rectangle ) {
 	name = makeString( "Sprite %d from texture", spriteId );
-	addAnimationFrame( iTex, White, 1 );
+ 
+  // We need at least 1 animation frame to represent the static tex. 
+	addAnimationFrame( iTex, White );
 }
 
 Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
@@ -29,6 +31,10 @@ Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
 
 void Sprite::addBlankAnimationFrame() {
   animation.addFrame( Animation::Frame( 0, White ) );
+}
+
+void Sprite::addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color ) {
+  animation.addFrame( Animation::Frame( tex, color ) );
 }
 
 void Sprite::addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float duration ) {
