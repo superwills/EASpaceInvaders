@@ -51,8 +51,10 @@ public:
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
 	void outlineRect( const RectF &rect, SDL_Color color );
 	void fillRect( const RectF &rect, SDL_Color color );
-	void drawTexture( const RectF &rect, shared_ptr<Texture> tex );
-	void draw( const RectF &rect, const Animation::Frame &animationFrame ); 
+ 
+  void draw( const RectF &whereToDraw, const Animation::Frame &frame ); 
+	void drawTexture( const RectF &whereToDraw, shared_ptr<Texture> tex );
+	void drawTextureP( const RectF &whereToDraw, const RectF &srcRect, shared_ptr<Texture> tex );
 	shared_ptr<Texture> loadTexture( const string &filename );
   
   // Makes a texture containing `text`, in `color` specified

@@ -33,6 +33,7 @@ public:
   
   void addBlankAnimationFrame();
   void addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float duration ); 
+  void addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, SDL_Color color, float duration );
   
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, SDL_Color iColor );

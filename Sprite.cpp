@@ -30,6 +30,10 @@ void Sprite::addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float 
   animation.addFrame( Animation::Frame( tex, color, duration ) );
 }
 
+void Sprite::addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, SDL_Color color, float duration ) {
+  animation.addFrame( Animation::Frame( tex, subRect, color, duration ) );
+}
+
 shared_ptr<Sprite> Sprite::Text( const string &text, SDL_Color iColor ) {
   shared_ptr<Texture> tex = sdl->makeTextTexture( text, iColor );
   return std::make_shared<Sprite>( tex );
@@ -40,6 +44,9 @@ void Sprite::loadSpritesheet( const string &filename, int numFrames, const RectF
   shared_ptr<Texture> tex = sdl->loadTexture( filename );
   // need to use shared_ptr, building Texture class now..
   
+  
+  // construct the animation frames
+  addAnimationFrame( tex, White, 1./10 );
 }
 
 Vector2f Sprite::getPos() {
@@ -116,7 +123,8 @@ void Sprite::draw() {
 		sdl->fillRect( box, animFrame.color );
 	}
 	else {
-		sdl->drawTexture( box, animFrame.tex );
+		//sdl->drawTexture( box, animFrame.tex );
+    sdl->draw( box, animFrame );  
 	}
 }
 

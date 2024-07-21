@@ -8,15 +8,19 @@ struct Texture;
 #include <vector>
 using std::vector;
 
+struct RectF;
+
 // Really basic animation cycler
 struct Animation {
   struct Frame {
     shared_ptr<Texture> tex;
+    std::optional<SDL_Rect> subRect; // The subportion of the texture to draw. if not set, then draw the whole texture
     SDL_Color color = White;
     float duration = 0;
     
     Frame() { }
     Frame( shared_ptr<Texture> iTex, SDL_Color iColor, float iDuration );
+    Frame( shared_ptr<Texture> iTex, const RectF &subRectangle, SDL_Color iColor, float iDuration );
   };
   
   Frame ErrFrame; // You get this frame back if you have no animation frames set up.
