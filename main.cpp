@@ -7,17 +7,22 @@ using namespace std;
 #include "Sprite.h"
 #include <time.h>
 
-// Coding features.
-// I'm influenced by the Mojang standard from working on Minecraft
+// I'm influenced by the Mojang standard from working on Minecraft.
+// Here are some of the coding features, influenced by that std, that I worked in:
 // - Init all vars
-// - Array bounds access & ptrs are always checked when they can be null
-//   - May catch ~90%? of bugs
+// - ptrs are always checked when they can be null
+// - all array bounds accesses checked, unless "sure"
+//   - (the above 2 might catch quite a few potential bugs)
 // - Exit program at some large failure points (eg renderer won't start)
 // - Code tries to be brief while still being clear
 // - Try to add helpful errors msgs
 // - Some comments for any surprising things
+// - preferring shared_ptr to raw pointers where possible
+// - encapsulation
 
+// Use events?
 
+// invaders have to shoot at you.
 
 // Powerups? Laser? Spread gun?
 

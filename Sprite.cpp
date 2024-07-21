@@ -103,6 +103,10 @@ void Sprite::hide() {
 	hidden = 1;
 }
 
+void Sprite::move( float x, float y ) {
+  box.x += x, box.y += y;
+}
+
 void Sprite::update() {
   animation.update( 1./60 );
   enforceWorldLimits();

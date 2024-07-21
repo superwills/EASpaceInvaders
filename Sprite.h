@@ -54,6 +54,7 @@ public:
 	void enforceWorldLimits();
 	void show();
 	void hide();
+  void move( float x, float y );
   
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update();

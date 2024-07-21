@@ -92,28 +92,12 @@ void Game::togglePause() {
 void Game::initGameBoard() {
   player = std::make_shared<Player>( sdl->getWindowSize() );
   
-  populateInvaders();
-}
-
-void Game::populateInvaders() {
-  // Lay the invaders out
-  const int rowsOfInvaders = 5;
-  const int invadersPerRow = 11; // 11 across in the original game.
-  float boardSize = sdl->getWindowSize().x * .8;
-  float invaderSize = boardSize / invadersPerRow;
+  // The board is 80% of the window size.
+  RectF gameBoard( Vector2f( 0 ), sdl->getWindowSize() );
+  gameBoard.y += gameBoard.h/5; // Move down 1/5 screen
+  gameBoard.size() *= .8; // 80% of screen
   
-  for( int row = 0; row < rowsOfInvaders; row++ ) {
-    for( int i = 0; i < invadersPerRow; i++ ) {
-      RectF box;
-      box.y = (rowsOfInvaders - row) * ( invaderSize + 5 );
-      box.x = i*( invaderSize + 5 );
-      
-      box.w = box.h = invaderSize;
-      
-      shared_ptr<Invader> invader = std::make_shared<Invader>( box, rand<AnimationId>( AnimationId::A, AnimationId::E ) );
-      invaderGroup.invaders.push_back( invader );
-    }
-  }
+  invaderGroup.populate( gameBoard );
 }
 
 void Game::changeScore( int byScoreValue ) {
@@ -155,9 +139,7 @@ void Game::clearDead() {
 }
 
 void Game::runGame() {
-  for( shared_ptr<Invader> invader : invaderGroup.invaders ) {
-    invader->update();
-  } 
+  invaderGroup.update();
   player->update();
   scoreSprite->update();
 
@@ -182,14 +164,15 @@ void Game::controllerUpdate() {
   
   if( gameState == GameState::Running ) {
     // Use the controller state to change gamestate
-    player->move( controller.mouseX );
+    player->move( controller.mouseX, 0 );
     
     if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
-      player->move( -1 );
+      player->move( -1, 0 );
     }
     if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
-      player->move( 1 );
+      player->move( 1, 0 );
     }
+    player->enforceWorldLimits();
     
     if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
       shared_ptr<Bullet> bullet = player->shoot();

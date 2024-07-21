@@ -19,12 +19,6 @@ Player::Player( const Vector2f &windowSize ) {
   addAnimationFrame( 0, Green, 1 );
 }
 
-void Player::move( float x ) {
-  box.x += x;
-	enforceWorldLimits();
-}
-
-
 shared_ptr<Bullet> Player::shoot() {
   return std::make_shared<Bullet>( box );
 }

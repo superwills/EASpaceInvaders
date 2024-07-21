@@ -49,7 +49,6 @@ public:
 	void togglePause();
   
   void initGameBoard();
-  void populateInvaders();
   void changeScore( int byScoreValue );
 	void checkForCollisions();
   void clearDead(); 

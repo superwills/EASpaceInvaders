@@ -3,6 +3,8 @@
 #include "randomUtil.h"
 #include "Vectorf.h"
 
+#include <SDL2/SDL.h>
+
 struct RectF {
   // x,y is TOP LEFT corner of the rectangle
   float x,y,w,h; // Probably use .pos and .size
@@ -49,6 +51,10 @@ struct RectF {
     //if( hitted )      puts( "HIT" ) ;
     //else       puts( "MISS" ) ;
     return hitted ;
+  }
+  
+  inline bool contains( const RectF& r ) const {
+    return hit( r.bottomLeft() ) && hit( r.topRight() );
   }
   
   // WHAT IS THE OUTSIDE WALLS DISTANCE BETWEEN THE 2?

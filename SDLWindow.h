@@ -9,6 +9,7 @@ using namespace std;
 #include <SDL2_mixer/SDL_mixer.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #else
+// If compiling on Windows, you don't need the SDL2/ subfoldering
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
