@@ -14,8 +14,11 @@ void Game::init() {
   
   title = std::make_shared<TitleScreen>( "space invaders!" );
   
-  pausedText = Sprite::Text( "pause", SDL_ColorMake( 200, 200, 0, 200 ) );
-  pausedText->box.setCenter( sdl->getWindowSize()/2 );
+  RectF pausedTextBox = sdl->getWindowRectangle();
+  pausedTextBox.size /= 3;
+  pausedTextBox.setCenter( sdl->getWindowSize() / 2 );
+  
+  pausedText = Sprite::Text( "pause", pausedTextBox, SDL_ColorMake( 200, 200, 0, 200 ) );
   
   // Load sprite animations
   sdl->loadSpritesheetAnimation( AnimationId::Invader1, "assets/ims/invader-1.png", 2, Vector2f( 16, 16 ) );
@@ -122,10 +125,14 @@ void Game::changeScore( int byScoreValue ) {
     scoreSprite->die();
   }
   
-  // Unfortunately not efficient due to not using tex atlases..
-  scoreSprite = Sprite::Text( makeString( "%d", score ), White );
-  scoreSprite->scale( 0.48f );
-  scoreSprite->setCenter( sdl->getWindowSize().x/2, scoreSprite->box.h/2 );
+  // Top center.
+  Vector2f windowSize = sdl->getWindowSize();
+  RectF scoreSpriteBox;
+  scoreSpriteBox.size = windowSize / 10;
+  scoreSpriteBox.pos.x = windowSize.x/2 - scoreSpriteBox.size.x/2;
+  scoreSpriteBox.pos.y = 0; // top.
+  
+  scoreSprite = Sprite::Text( makeString( "%d", score ), scoreSpriteBox, White );
 }
 
 void Game::checkForCollisions() {

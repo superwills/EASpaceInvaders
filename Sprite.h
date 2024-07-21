@@ -16,10 +16,10 @@ class Sprite : public std::enable_shared_from_this<Sprite> {
   
 protected:
   int spriteId = NextSpriteId++;
-  string name;    // takes space but helps in debug
   bool hidden = 0;
   
 public:
+  string name;    // takes space but helps in debug
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   Animation animation; // Single frame if static.
   
@@ -27,9 +27,9 @@ public:
   RectF box;
 	
 	Sprite();
-  Sprite( const RectF& rectangle );
-	Sprite( shared_ptr<Texture> iTex );
-  Sprite( const RectF& rectangle, AnimationId animationId ); 
+  Sprite( const RectF &rectangle );
+	Sprite( const RectF &rectangle, shared_ptr<Texture> iTex );
+  Sprite( const RectF &rectangle, AnimationId animationId ); 
   virtual ~Sprite() { }
   
   void addBlankAnimationFrame();
@@ -37,7 +37,7 @@ public:
   void addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, SDL_Color color, float duration );
   
   // Makes a text sprite in the default font
-	static shared_ptr<Sprite> Text( const string &text, SDL_Color iColor );
+	static shared_ptr<Sprite> Text( const string &text, const RectF &box, SDL_Color iColor );
  
   Vector2f getPos();
 	Vector2f getCenter();

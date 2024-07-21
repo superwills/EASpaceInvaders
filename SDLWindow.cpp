@@ -67,6 +67,10 @@ Vector2f SDLWindow::getWindowSize() {
   return Vector2f( w, h );
 }
 
+RectF SDLWindow::getWindowRectangle() {
+  return RectF( Vector2f( 0, 0 ), getWindowSize() );
+}
+
 void SDLWindow::clear( SDL_Color color ) {
   setColor( color );
   SDL_RenderClear( sdl->renderer );

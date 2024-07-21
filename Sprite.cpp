@@ -6,20 +6,18 @@
 
 Sprite::Sprite() {
   name = makeString( "Sprite %d", spriteId );
-  
-  // Here i'm initializing the size to a non-zero values, so there aren't surprises :)
-  box.size = 64;
+  box.size = 64;  // init nonzero, so there aren't surprises
 }
 
-Sprite::Sprite( const RectF& rectangle ) : box( rectangle ) {
+Sprite::Sprite( const RectF& rectangle ) :
+    box( rectangle ) {
   name = makeString( "Sprite %d", spriteId );
 }
 
-Sprite::Sprite( shared_ptr<Texture> iTex ) {
+Sprite::Sprite( const RectF& rectangle, shared_ptr<Texture> iTex ) :
+    box( rectangle ) {
 	name = makeString( "Sprite %d from texture", spriteId );
 	addAnimationFrame( iTex, White, 1 );
-  
-	box.size = 64;
 }
 
 Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
@@ -41,9 +39,9 @@ void Sprite::addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, S
   animation.addFrame( Animation::Frame( tex, subRect, color, duration ) );
 }
 
-shared_ptr<Sprite> Sprite::Text( const string &text, SDL_Color iColor ) {
+shared_ptr<Sprite> Sprite::Text( const string &text, const RectF &box, SDL_Color iColor ) {
   shared_ptr<Texture> tex = sdl->makeTextTexture( text, iColor );
-  return std::make_shared<Sprite>( tex );
+  return std::make_shared<Sprite>( box, tex );
 }
 
 Vector2f Sprite::getPos() {

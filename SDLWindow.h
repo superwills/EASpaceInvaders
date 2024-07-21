@@ -45,6 +45,7 @@ public:
 	
   // Not cached, get it from the physical window
   Vector2f getWindowSize();
+  RectF getWindowRectangle();
   void clear( SDL_Color color );
 	void setColor( SDL_Color color );
   // Finished rendering the frame 
