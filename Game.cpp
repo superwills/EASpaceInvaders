@@ -229,7 +229,14 @@ void Game::controllerUpdate() {
 
 void Game::update() {
   
-  
+  if( randInt( 100 ) > 95 ) {
+    RectF ufoBox;
+    ufoBox.size = Vector2f( 64, 32 );
+    ufoBox.pos.x = sdl->getWindowSize().x; // start offscreen right.
+    ufoBox.pos.y = ufoBox.size.y / 2;
+    shared_ptr<UFO> ufo = std::make_shared<UFO>( ufoBox );
+    allUFOs.push_back( ufo );
+  }
 
   // FrameTime is the difference between current clock time and 
   dt = clock.sec() - clockThisFrame;
