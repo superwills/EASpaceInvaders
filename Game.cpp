@@ -129,6 +129,12 @@ void Game::checkForCollisions() {
         
         changeScore( invader->scoreValue );
         invader->die();
+        
+        for( int i = 0; i < 25; i++ ) {
+          shared_ptr<Particle> p = std::make_shared<Particle>( RectF( invader->box.centroid(), Vector2f( 8 ) ) );
+          allParticles.push_back( p );
+        }
+        
       }
     }
   }
@@ -151,9 +157,6 @@ void Game::clearDead() {
 
 void Game::runGame() {
   
-  shared_ptr<Particle> p = std::make_shared<Particle>( RectF( 256, 256, 16, 16 ) );
-  allParticles.push_back( p );
-
   invaderGroup.update( dt );
   player->update( dt );
   scoreSprite->update( dt );

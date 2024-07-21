@@ -4,7 +4,7 @@
 #include "Vectorf.h"
 class Particle : public Sprite {
 public:
-  inline static float DefaultLifetime = 5;
+  inline static float DefaultLifetime = 1;
   
   float initialLife = DefaultLifetime;
   float lifeRemaining = DefaultLifetime;

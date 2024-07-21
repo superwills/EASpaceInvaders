@@ -18,3 +18,4 @@ int Invader::getScore() const {
   
   return it->second;
 }
+
