@@ -13,6 +13,7 @@ public:
   shared_ptr<Sprite> titleSprite;
   vector< shared_ptr<Sprite> > menuItems;
   shared_ptr<Sprite> pointer;
+  Vector2f menuItemSize, nextMenuItemPos;
   
 	TitleScreen( const string &titleText );
   void update( float t );

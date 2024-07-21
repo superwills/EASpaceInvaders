@@ -13,6 +13,17 @@ void Game::init() {
 
   bkgColor = Indigo;
   
+  // Load sprite animations
+  sdl->loadSpritesheetAnimation( AnimationId::Invader1, "assets/ims/invader-1.png", 2, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::Invader2, "assets/ims/invader-2.png", 2, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet1, "assets/ims/invaderBullet1.png", 2, Vector2f( 8, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::A, "assets/ims/A.png", 4, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::E, "assets/ims/E.png", 4, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::UFO, "assets/ims/ufo.png", 2, Vector2f( 32, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::MenuPointer, "assets/ims/menu-pointer.png", 2, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::Explode, "assets/ims/explode.png", 5, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 16 ) );
+  
   title = std::make_shared<TitleScreen>( "space invaders!" );
   
   RectF pausedTextBox = sdl->getWindowRectangle();
@@ -20,14 +31,6 @@ void Game::init() {
   pausedTextBox.setCenter( sdl->getWindowSize() / 2 );
   
   pausedText = Sprite::Text( "pause", pausedTextBox, SDL_ColorMake( 200, 200, 0, 200 ) );
-  
-  // Load sprite animations
-  sdl->loadSpritesheetAnimation( AnimationId::Invader1, "assets/ims/invader-1.png", 2, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::Invader2, "assets/ims/invader-2.png", 2, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::A, "assets/ims/A.png", 4, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::E, "assets/ims/E.png", 4, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::UFO, "assets/ims/ufo.png", 2, Vector2f( 32, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::Explode, "assets/ims/explode.png", 5, Vector2f( 16, 16 ) );
   
 	// load the sfx. These sfx were created with SFXR
 	// http://www.drpetter.se/project_sfxr.html
@@ -100,10 +103,16 @@ void Game::togglePause() {
 
 void Game::initGameBoard() {
   Vector2f windowSize = sdl->getWindowSize();
-  player = std::make_shared<Player>( windowSize );
+  
+  RectF playerBox;
+  playerBox.size = windowSize.x * .08;  // % of world size.
+  playerBox.pos.x = windowSize.x/2 - playerBox.size.x/2;
+  playerBox.pos.y = windowSize.y - playerBox.size.y;
+  
+  player = std::make_shared<Player>( playerBox );
   
   // The board is 80% of the window size.
-  RectF gameBoard( Vector2f( 0 ), windowSize );
+  RectF gameBoard = sdl->getWindowRectangle();
   gameBoard.pos.y += gameBoard.size.y/5; // Move down 1/5 screen
   gameBoard.size *= .5;
   
@@ -122,6 +131,12 @@ void Game::genUFO() {
     shared_ptr<UFO> ufo = std::make_shared<UFO>( ufoBox );
     allUFOs.push_back( ufo );
   }
+}
+
+void Game::shootBullet( const RectF &source, bool fromInvader, const Vector2f &vel ) {
+  shared_ptr<Bullet> bullet = std::make_shared<Bullet>( source, fromInvader );
+  bullet->vel = vel;
+  allBullets.push_back( bullet );
 }
 
 void Game::particleSplash( const Vector2f &pos, int numParticles ) {
@@ -153,6 +168,16 @@ void Game::changeScore( int byScoreValue ) {
 void Game::checkForCollisions() {
 	// check bullets against invaders, ufo's, bunkers.
   for( auto bullet : allBullets ) {
+  
+    if( bullet->fromInvader ) {
+      // bullets from invaders can't hit other invaders or the ufos.
+      // check against the player and that's all it does
+      if( bullet->box.hit( player->box ) ) {
+        player->die();
+      } 
+      continue;
+    }
+    
     for( auto invader : invaderGroup.invaders ) {
       if( bullet->box.hit( invader->box ) ) {
         bullet->die();
@@ -253,8 +278,7 @@ void Game::controllerUpdate() {
     player->enforceWorldLimits();
     
     if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
-      shared_ptr<Bullet> bullet = player->shoot();
-      allBullets.push_back( bullet );
+      shootBullet( player->box, 0, Vector2f( 0, -100 ) );
     }
   }
 }

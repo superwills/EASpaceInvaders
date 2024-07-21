@@ -25,10 +25,15 @@ enum class AnimationId {
   None,
   Invader1,
   Invader2,
+  InvaderBullet1,
+  InvaderBullet2,
   A,
   E,
   Explode,
+  MenuPointer,
   UFO,
+  Player,
+  
 };
 
 // This could have been added to class Sprite, but it seemed to crowd it a little.

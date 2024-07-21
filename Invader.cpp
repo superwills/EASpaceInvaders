@@ -8,3 +8,10 @@ Invader::Invader( const RectF& rectangle, AnimationId animationId ) : Sprite( re
   animation = sdl->getAnimation( animationId );
 }
 
+void Invader::update( float t ) {
+  // shoot with chance.
+  if( randFloat() < .0001 ) {
+    game->shootBullet( box, 1, Vector2f( 0, 100 ) );
+  }
+}
+

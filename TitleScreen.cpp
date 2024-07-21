@@ -6,7 +6,16 @@
 
 TitleScreen::TitleScreen( const string &titleText ) {
   
-  titleSprite = Sprite::Text( titleText, sdl->getWindowRectangle(), White ); 
+  RectF titleBox = sdl->getWindowRectangle();
+  titleBox.size.x *= .75;
+  titleBox.size.y *= .33;
+  Vector2f titleCenter = sdl->getWindowSize() * Vector2f( .5, .25 );
+  titleBox.setCenter( titleCenter );
+  titleSprite = Sprite::Text( titleText, titleBox, White ); 
+  
+  menuItemSize = sdl->getWindowSize() * Vector2f( .25, .25 );
+  nextMenuItemPos = titleCenter;
+  nextMenuItemPos.y += titleBox.size.y / 2;
   
   // Need the title texture to add anim frames using it
   shared_ptr<Texture> titleTexture = titleSprite->animation.getCurrentFrame().tex;
@@ -16,11 +25,12 @@ TitleScreen::TitleScreen( const string &titleText ) {
     titleSprite->addAnimationFrame( titleTexture, SDL_RandomSolidColor(), .05 );
   }
   
-  pointer = std::make_shared<Sprite>( RectF( 0, 0, 12, 12 ) );
-  pointer->addAnimationFrame( 0, White, 1 );
-  
+  Vector2f startMenuItemPos = nextMenuItemPos;
   addMenuItem( "Play" );
   addMenuItem( "Test" );
+  
+  startMenuItemPos.x -= menuItemSize.x;
+  pointer = std::make_shared<Sprite>( RectF( startMenuItemPos, Vector2f( menuItemSize.y ) ), AnimationId::MenuPointer );
 }
 
 void TitleScreen::update( float t ) {
@@ -41,9 +51,10 @@ void TitleScreen::draw() {
 
 void TitleScreen::addMenuItem( const string &menuItemText ) {
   
-  shared_ptr<Texture> menuItemTexture = sdl->makeTextTexture( menuItemText, White );
+  RectF menuItemBox( nextMenuItemPos, menuItemSize );
+  shared_ptr<Sprite> menuItemSprite = Sprite::Text( menuItemText, menuItemBox, White );
+  nextMenuItemPos.y += menuItemSize.y;
   
-  RectF menuItemPos( 0, 0, 200, 50 );
-  shared_ptr<Sprite> sprite = std::make_shared<Sprite>( menuItemPos, menuItemTexture );
+  menuItems.push_back( menuItemSprite );
   
 }

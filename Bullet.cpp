@@ -3,25 +3,29 @@
 #include "SDLWindow.h"
 
 
-Bullet::Bullet( const RectF &playerBox ) {
+Bullet::Bullet( const RectF &shooterBounds, bool shotFromInvader ) : fromInvader( shotFromInvader ) {
 	name = "Bullet/" + name;
   
   float windowHeight = sdl->getWindowSize().y;
-  
   box.size = Vector2f( windowHeight * .01, windowHeight * .05 );
   
-  box.pos.x = playerBox.midX() - box.size.x/2;
-  box.pos.y = playerBox.top();
+  box.pos.x = shooterBounds.midX() - box.size.x/2;
+  if( fromInvader ) {
+    // invader shoots from bottom
+    box.pos.y = shooterBounds.bottom();
+  }
+  else {
+    // Player shoots from top
+    box.pos.y = shooterBounds.top(); 
+  }
   
-  addAnimationFrame( 0, Yellow, .2 );
-  addAnimationFrame( 0, Red, .2 );
+  animation = sdl->getAnimation( AnimationId::InvaderBullet1 );
 }
 
 void Bullet::update( float t ) {
-  //Sprite::update();
-  animation.update( t ); // Only update the animation, but don't enforce world limits like for other sprites.
+  Sprite::update( t );
   
-	box.pos.y -= 5;
+	box.pos += vel * t;
 	
 	if( box.pos.y < 0 ) {
     die();

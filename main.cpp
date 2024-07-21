@@ -21,6 +21,7 @@ using namespace std;
 // - preferring shared_ptr to raw pointers where possible
 // - use auto where type is not ambiguous from line of code
 // - encapsulation
+// - Most things are done programmatically. I find that easier. Object sizes are found as % of window size.
 
 // Use events?
 
