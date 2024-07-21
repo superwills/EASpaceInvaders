@@ -14,6 +14,7 @@ using std::shared_ptr;
 class Bullet;
 class Invader;
 class InvaderGroup;
+class Particle;
 class Player;
 
 class Game {
@@ -28,6 +29,7 @@ private:
   shared_ptr<Player> player;
   
   vector< shared_ptr<Bullet> > allBullets;
+  vector< shared_ptr<Particle> > allParticles;
   
   InvaderGroup invaderGroup;
   

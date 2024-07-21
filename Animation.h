@@ -29,9 +29,10 @@ struct Animation {
 private:
   float time = 0; // Amount of time we've spent on current frame
   int frameIndex = 0;
-  vector<Frame> frames;
   
-public:  
+public:
+  vector<Frame> frames;
+    
   Animation() {
   }
   

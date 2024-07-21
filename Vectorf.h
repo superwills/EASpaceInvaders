@@ -36,8 +36,8 @@ struct Vector2f {
 
 	static inline Vector2f random() { return Vector2f( randFloat(), randFloat() ) ;  }
 
-	static inline Vector2f random(float min, float max) {
-		return Vector2f( randFloat(min,max), randFloat(min,max) ) ;
+	static inline Vector2f random( float min, float max ) {
+		return Vector2f( randFloat( min, max ), randFloat( min, max ) ) ;
 	}
 
 	//CONST

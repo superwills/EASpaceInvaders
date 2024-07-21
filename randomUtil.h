@@ -10,11 +10,6 @@ void randSeed( uint32_t seed );
 void randSeedTime();
 void randSeedMemoryAddress();
 
-// rand integer between 0 and UINT_MAX
-inline uint32_t randInt() {
-  return MTRandom32();
-}
-
 // between 0 -> (highEx - 1)
 inline uint32_t randInt( int highEx ) {
   if( !highEx ) {
@@ -50,7 +45,7 @@ inline uint32_t randIntInRange( int low, int range ) {
 
 // random on [0, 1]
 inline float randFloat() {
-  return (float)MTRandom32() / UINT32_MAX;
+  return (float)MTRandom32() / MTRandom32.max();
 }
 
 inline float randFloat( float low, float high ) {

@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "Colors.h"
 #include "Invader.h"
+#include "Particle.h"
 #include "Player.h"
 
 Game *game = 0;
@@ -133,24 +134,38 @@ void Game::checkForCollisions() {
   }
 }
 
+// A helper template to avoid repeating this code formula for each collection
+// Works on Sprite class derivatives (must have T.dead member)
+template <typename T> void clearDeadOnes( vector<T> &v ) {
+  v.erase( std::remove_if( v.begin(), v.end(), []( T o ) {
+    return o->dead;
+  } ), v.end() );
+}
+
 void Game::clearDead() {
-  
-  allBullets.erase( std::remove_if( allBullets.begin(), allBullets.end(), []( shared_ptr<Bullet> bullet ) {
-    return bullet->dead;
-  } ), allBullets.end() );
+  clearDeadOnes( allBullets );
+  clearDeadOnes( allParticles );
   
   invaderGroup.clearDead();
 }
 
 void Game::runGame() {
+  
+  shared_ptr<Particle> p = std::make_shared<Particle>( RectF( 256, 256, 16, 16 ) );
+  allParticles.push_back( p );
+
   invaderGroup.update( dt );
   player->update( dt );
   scoreSprite->update( dt );
 
-  for( shared_ptr<Bullet> bullet : allBullets ) {
+  for( auto bullet : allBullets ) {
     bullet->update( dt );
   }
 	
+  for( auto particle : allParticles ) {
+    particle->update( dt );
+  }
+	 
 	// Check for collisions after each object moves
 	checkForCollisions();
  
@@ -235,8 +250,11 @@ void Game::draw() {
 		player->draw();
 		scoreSprite->draw();
   
-    for( shared_ptr<Bullet> bullet : allBullets ) {
+    for( auto bullet : allBullets ) {
       bullet->draw();
+    }
+    for( auto particle : allParticles ) {
+      particle->draw();
     }
 	  break;
 	
