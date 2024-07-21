@@ -19,7 +19,7 @@ Bullet::Bullet( const RectF &shooterBounds, bool shotFromInvader ) : fromInvader
     box.pos.y = shooterBounds.top(); 
   }
   
-  animation = sdl->getAnimation( AnimationId::InvaderBullet1 );
+  animation = sdl->getAnimation( rand<AnimationId>( AnimationId::InvaderBullet1, AnimationId::InvaderBullet2 ) );
 }
 
 void Bullet::update( float t ) {
