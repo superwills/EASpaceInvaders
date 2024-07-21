@@ -18,7 +18,11 @@ enum class MusicId {
 };
 
 enum class AnimationId {
+  Invader1,
+  Invader2,
   A,
   E,
+  Explode,
+  UFO,
 };
 

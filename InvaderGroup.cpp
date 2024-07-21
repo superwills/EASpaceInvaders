@@ -15,7 +15,7 @@ void InvaderGroup::populate( const RectF &invaderBounds ) {
       
       box.w = box.h = invaderSize;
       
-      shared_ptr<Invader> invader = std::make_shared<Invader>( box, rand<AnimationId>( AnimationId::A, AnimationId::E ) );
+      shared_ptr<Invader> invader = std::make_shared<Invader>( box, rand<AnimationId>( AnimationId::Invader1, AnimationId::E ) );
       invaders.push_back( invader );
     }
   }
