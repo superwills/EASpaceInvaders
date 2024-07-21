@@ -53,8 +53,6 @@ public:
 	void fillRect( const RectF &rect, SDL_Color color );
  
   void draw( const RectF &whereToDraw, const Animation::Frame &frame ); 
-	void drawTexture( const RectF &whereToDraw, shared_ptr<Texture> tex );
-	void drawTextureP( const RectF &whereToDraw, const RectF &srcRect, shared_ptr<Texture> tex );
 	shared_ptr<Texture> loadTexture( const string &filename );
   
   // Makes a texture containing `text`, in `color` specified

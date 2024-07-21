@@ -98,6 +98,8 @@ void SDLWindow::fillRect( const RectF &rect, SDL_Color color ) {
 }
 
 void SDLWindow::draw( const RectF &whereToDraw, const Animation::Frame &frame ) {
+  assert( frame.tex->sdlTex && "sdlTex must be set" );
+  
   SDL_Rect sub, *pSub = 0;
   if( frame.subRect.has_value() ) {
     // You only want a sub portion of the tex.
@@ -107,20 +109,7 @@ void SDLWindow::draw( const RectF &whereToDraw, const Animation::Frame &frame ) 
   
   SDL_Rect sdlRect = whereToDraw.toSDLRect();
   SDL_RenderCopy( renderer, frame.tex->sdlTex, pSub, &sdlRect );
-}
-
-void SDLWindow::drawTexture( const RectF &whereToDraw, shared_ptr<Texture> tex ) {
-  assert( tex->sdlTex && "sdlTex must be set" );
-  
-  // Convert our floating pt rect to an int-based rect
-  SDL_Rect sdlRect = whereToDraw.toSDLRect();
-  SDL_RenderCopy( renderer, tex->sdlTex, 0, &sdlRect );
-}
-
-void SDLWindow::drawTextureP( const RectF &whereToDraw, const RectF &srcRect, shared_ptr<Texture> tex ) {
-  SDL_Rect where = whereToDraw.toSDLRect(); 
-  SDL_Rect sdlSrcRect = srcRect.toSDLRect();
-  SDL_RenderCopyEx( renderer, tex->sdlTex, &sdlSrcRect, &where, 0, 0, SDL_FLIP_NONE );
+  // rotation could be done using SDL_RenderCopyEx
 }
 
 shared_ptr<Texture> SDLWindow::loadTexture( const string &filename ) {

@@ -5,7 +5,8 @@
 
 struct RectF {
   // x,y is TOP LEFT corner of the rectangle
-  float x,y,w,h ;
+  float x,y,w,h; // Probably use .pos and .size
+  //Vector2f pos, size;
   
   RectF():x(0),y(0),w(0),h(0){}
   RectF( float ixPts, float iyPts, float iwPts, float ihPts ):x(ixPts),y(iyPts),w(iwPts),h(ihPts){}
@@ -109,19 +110,12 @@ struct RectF {
   //!! The GL coordinate system is ALWAYS origin in lowerleft.
   // so if you want to work in upside down coordinates for textboxes,
   // you still have to invert it back at EOD
-  inline float bottom() const { return y + h ; }
-  inline float top() const { return y ; } 
+  inline float bottom() const { return y + h; }
+  inline float top() const { return y; } 
   
-  inline float midX() const { return x + w/2 ; }
-  inline float midY() const { return y + h/2 ; }
+  inline float midX() const { return x + w/2; }
+  inline float midY() const { return y + h/2; }
   
-  inline bool isCanonical() const { 
-    return -1.f <= x && x <= 1.f && 
-           -1.f <= y && y <= 1.f && 
-              0 <= w && w <= 2.f && 
-              0 <= h && h <= 2.f ;
-  }
-  // Considers origin @ bottom left.
   inline Vector2f bottomLeft() const {
     return Vector2f( left(), bottom() ) ;
   }
@@ -137,13 +131,13 @@ struct RectF {
   
   // BL corner
   inline Vector2f pos() const {
-    return Vector2f( x,y ) ;
+    return Vector2f( x, y );
   }
   inline Vector2f& xy() {
-    return (Vector2f&)x ;
+    return (Vector2f&)x;
   }
   inline Vector2f& size() {
-    return (Vector2f&)w ;
+    return (Vector2f&)w;
   }
   inline Vector2f centroid() const {
     return Vector2f( midX(), midY() ) ;
