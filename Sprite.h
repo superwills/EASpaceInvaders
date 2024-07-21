@@ -57,7 +57,7 @@ public:
   
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update();
-	virtual void draw();
+	virtual void draw() const;
 	virtual void die();
   
 };

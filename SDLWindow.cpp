@@ -81,7 +81,7 @@ void SDLWindow::present() {
 }
 
 void SDLWindow::line( int startX, int startY, int endX, int endY, SDL_Color color ) {
-	SDL_SetRenderDrawColor( renderer, color.r, color.g, color.b, color.a );
+	setColor( color );
 	SDL_RenderDrawLine( renderer, startX, startY, endX, endY );
 }
 
@@ -107,6 +107,7 @@ void SDLWindow::draw( const RectF &whereToDraw, const Animation::Frame &frame ) 
     pSub = &sub;
   }
   
+  SDL_SetTextureColorMod( frame.tex->sdlTex, frame.color.r, frame.color.g, frame.color.b );
   SDL_Rect sdlRect = whereToDraw.toSDLRect();
   SDL_RenderCopy( renderer, frame.tex->sdlTex, pSub, &sdlRect );
   // rotation could be done using SDL_RenderCopyEx

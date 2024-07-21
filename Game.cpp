@@ -111,8 +111,7 @@ void Game::populateInvaders() {
       box.w = box.h = invaderSize;
       
       shared_ptr<Invader> invader = std::make_shared<Invader>( box, rand<AnimationId>( AnimationId::A, AnimationId::E ) );
-      //allSprites.push_back( invader );
-      allInvaders.push_back( invader );
+      invaderGroup.invaders.push_back( invader );
     }
   }
 }
@@ -134,7 +133,7 @@ void Game::changeScore( int byScoreValue ) {
 void Game::checkForCollisions() {
 	// check bullets against invaders
   for( shared_ptr<Bullet> bullet : allBullets ) {
-    for( shared_ptr<Invader> invader : allInvaders ) {
+    for( shared_ptr<Invader> invader : invaderGroup.invaders ) {
       if( bullet->box.hit( invader->box ) ) {
         bullet->die();
         sdl->playSound( rand<SFXId>( SFXId::Ping0, SFXId::Ping3 ) );
@@ -152,13 +151,11 @@ void Game::clearDead() {
     return bullet->dead;
   } ), allBullets.end() );
   
-  allInvaders.erase( std::remove_if( allInvaders.begin(), allInvaders.end(), []( shared_ptr<Invader> invader ) {
-    return invader->dead;
-  } ), allInvaders.end() );
+  invaderGroup.clearDead();
 }
 
 void Game::runGame() {
-  for( shared_ptr<Invader> invader : allInvaders ) {
+  for( shared_ptr<Invader> invader : invaderGroup.invaders ) {
     invader->update();
   } 
   player->update();
@@ -237,9 +234,7 @@ void Game::draw() {
 	  break;
     
 	case GameState::Running:
-    for( shared_ptr<Invader> invader : allInvaders ) {
-      invader->draw();
-    } 
+    invaderGroup.draw();
 		player->draw();
 		scoreSprite->draw();
   

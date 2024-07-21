@@ -27,7 +27,6 @@ private:
   vector< shared_ptr<Bullet> > allBullets;
   
   InvaderGroup invaderGroup;
-  vector< shared_ptr<Invader> > allInvaders;
   
 	SDL_Color bkgColor;	// the current background color
   

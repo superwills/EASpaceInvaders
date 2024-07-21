@@ -108,14 +108,13 @@ void Sprite::update() {
   enforceWorldLimits();
 }
 
-void Sprite::draw() {
+void Sprite::draw() const {
   if( hidden ) {
     return; // just don't draw
   }
   
-  Animation::Frame &animFrame = animation.getCurrentFrame();
-  sdl->setColor( animFrame.color );
-	if( !animFrame.tex ) {
+  const Animation::Frame &animFrame = animation.getCurrentFrame();
+  if( !animFrame.tex ) {
 		// no texture, so draw a solid rect
 		sdl->fillRect( box, animFrame.color );
 	}

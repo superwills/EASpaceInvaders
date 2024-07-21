@@ -8,6 +8,9 @@ class Invader;
 
 // Represents a group/wave of invaders.
 class InvaderGroup {
+public:
   vector< shared_ptr<Invader> > invaders;
   void move();
+  void draw() const;
+  void clearDead();
 };

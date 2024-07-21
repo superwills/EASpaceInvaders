@@ -38,7 +38,7 @@ public:
     frames.emplace_back( frame );
   }
   
-  Frame& getCurrentFrame() {
+  const Frame& getCurrentFrame() const {
     if( !isValidIndex( frameIndex, frames ) ) {
       error( "Index %d OOB frames, %zu, set up an animation!", frameIndex, frames.size() );
       return ErrFrame;
@@ -49,7 +49,7 @@ public:
   
   void update( float t ) {
     time += t;
-    Frame& frame = getCurrentFrame();
+    const Frame& frame = getCurrentFrame();
     
     if( time > frame.duration ) {
       cycleArrayIndex( frameIndex, frames.size() );
