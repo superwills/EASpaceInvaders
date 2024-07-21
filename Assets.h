@@ -1,8 +1,10 @@
 #pragma once
 
-#include "randomUtil.h"
+// This file defines unique ID's for each loaded asset. This makes it easy to avoid
+// double-loading assets. Ids instead of strings to avoid issues from typos
 
-// Unique identifiers for each sound effect. Not using strings to avoid typos.
+// This lightweight header can be included anywhere you need to refer to assets by id.
+
 enum class SFXId {
   Ping0,
   Ping1,
@@ -11,7 +13,6 @@ enum class SFXId {
   Win,
 };
 
-// Ids for music files.
 enum class MusicId {
   Background0,
   Background1,

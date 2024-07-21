@@ -14,6 +14,7 @@ using namespace std;
 // - all array bounds accesses checked, unless "sure"
 //   - (the above 2 might catch quite a few potential bugs)
 // - Exit program at some large failure points (eg renderer won't start)
+// - const as much as possible
 // - Code tries to be brief while still being clear
 // - Try to add helpful errors msgs
 // - Some comments for any surprising things
