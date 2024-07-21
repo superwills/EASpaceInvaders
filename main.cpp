@@ -19,6 +19,7 @@ using namespace std;
 // - Try to add helpful errors msgs
 // - Some comments for any surprising things
 // - preferring shared_ptr to raw pointers where possible
+// - use auto where type is not ambiguous from line of code
 // - encapsulation
 
 // Use events?

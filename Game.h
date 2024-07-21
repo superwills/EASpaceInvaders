@@ -39,6 +39,10 @@ private:
   
 	int score = 0;
   shared_ptr<Sprite> scoreSprite;
+  
+  // You get a UFO every (interval) sec.
+  inline static float UFOInterval = 10;
+  float nextUFO = UFOInterval;
 	
 	GameState prevState = GameState::Title;
   GameState gameState = GameState::Title;
@@ -56,6 +60,7 @@ public:
 	void togglePause();
   
   void initGameBoard();
+  void genUFO();
   void particleSplash( const Vector2f &pos, int numParticles );
   void changeScore( int byScoreValue );
 	void checkForCollisions();

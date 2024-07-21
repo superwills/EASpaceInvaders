@@ -110,6 +110,20 @@ void Game::initGameBoard() {
   invaderGroup.populate( gameBoard );
 }
 
+void Game::genUFO() {
+  nextUFO -= dt;
+  if( nextUFO < 0 ) {
+    nextUFO = UFOInterval;
+    
+    RectF ufoBox;
+    ufoBox.size = Vector2f( 64, 32 );
+    ufoBox.pos.x = sdl->getWindowSize().x; // start offscreen right.
+    ufoBox.pos.y = ufoBox.size.y / 2;
+    shared_ptr<UFO> ufo = std::make_shared<UFO>( ufoBox );
+    allUFOs.push_back( ufo );
+  }
+}
+
 void Game::particleSplash( const Vector2f &pos, int numParticles ) {
   for( int i = 0; i < numParticles; i++ ) {
     Vector2f size = Vector2f::random( 4, 12 );
@@ -137,9 +151,9 @@ void Game::changeScore( int byScoreValue ) {
 }
 
 void Game::checkForCollisions() {
-	// check bullets against invaders
-  for( shared_ptr<Bullet> bullet : allBullets ) {
-    for( shared_ptr<Invader> invader : invaderGroup.invaders ) {
+	// check bullets against invaders, ufo's, bunkers.
+  for( auto bullet : allBullets ) {
+    for( auto invader : invaderGroup.invaders ) {
       if( bullet->box.hit( invader->box ) ) {
         bullet->die();
         sdl->playSound( rand<SFXId>( SFXId::Ping0, SFXId::Ping3 ) );
@@ -148,7 +162,18 @@ void Game::checkForCollisions() {
         invader->die();
         
         particleSplash( invader->box.centroid(), randInt( 5, 8 ) );
+      }
+    }
+    
+    for( auto ufo : allUFOs ) {
+      if( bullet->box.hit( ufo->box ) ) {
+        bullet->die();
+        sdl->playSound( rand<SFXId>( SFXId::Ping0, SFXId::Ping3 ) );
         
+        changeScore( ufo->getScore() );
+        ufo->die();
+        
+        particleSplash( ufo->box.centroid(), randInt( 8, 12 ) );
       }
     }
   }
@@ -175,6 +200,7 @@ void Game::runGame() {
   invaderGroup.update( dt );
   player->update( dt );
   scoreSprite->update( dt );
+  genUFO();
 
   for( auto bullet : allBullets ) {
     bullet->update( dt );
@@ -187,8 +213,8 @@ void Game::runGame() {
   for( auto ufo : allUFOs ) {
     ufo->update( dt );
   }
-	// Check for collisions after each object moves
-	checkForCollisions();
+	
+  checkForCollisions();
  
   // See if the invaders won by reaching the bottom
   if( invaderGroup.didInvadersWin() ) {
@@ -229,15 +255,6 @@ void Game::controllerUpdate() {
 
 void Game::update() {
   
-  if( randInt( 100 ) > 95 ) {
-    RectF ufoBox;
-    ufoBox.size = Vector2f( 64, 32 );
-    ufoBox.pos.x = sdl->getWindowSize().x; // start offscreen right.
-    ufoBox.pos.y = ufoBox.size.y / 2;
-    shared_ptr<UFO> ufo = std::make_shared<UFO>( ufoBox );
-    allUFOs.push_back( ufo );
-  }
-
   // FrameTime is the difference between current clock time and 
   dt = clock.sec() - clockThisFrame;
   clockThisFrame = clock.sec();
