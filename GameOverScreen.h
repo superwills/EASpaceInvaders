@@ -16,7 +16,7 @@ public:
   vector< shared_ptr<Invader> > invaders;
   GameOverScreen();
   
-  void addInvaders( AnimationId character );
+  void addInvaders( AnimationId character1, AnimationId character2 );
   void update( float t );
   void draw();
   void win();
