@@ -3,9 +3,11 @@
 #include "Bullet.h"
 #include "Bunker.h"
 #include "Colors.h"
+#include "GameOverScreen.h"
 #include "Invader.h"
 #include "Particle.h"
 #include "Player.h"
+#include "TitleScreen.h"
 #include "UFO.h"
 
 Game *game = 0;
@@ -27,6 +29,7 @@ void Game::init() {
   sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 16 ) );
   
   title = std::make_shared<TitleScreen>( "space invaders!" );
+  gameOverScreen = std::make_shared<GameOverScreen>();
   
   RectF pausedTextBox = sdl->getWindowRectangle();
   pausedTextBox.size /= 3;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D228A552C4D9F1D005B9684 /* UFO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D228A532C4D9F1D005B9684 /* UFO.cpp */; };
+		3D228A582C4E7537005B9684 /* GameOverScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D228A562C4E7537005B9684 /* GameOverScreen.cpp */; };
 		3D667CC82C4ADA370014BCD0 /* Invader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CC62C4ADA370014BCD0 /* Invader.cpp */; };
 		3D667CCC2C4BDC330014BCD0 /* Animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CCA2C4BDC330014BCD0 /* Animation.cpp */; };
 		3D667CE22C4C316E0014BCD0 /* Bunker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CE02C4C316E0014BCD0 /* Bunker.cpp */; };
@@ -60,6 +61,8 @@
 /* Begin PBXFileReference section */
 		3D228A532C4D9F1D005B9684 /* UFO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UFO.cpp; sourceTree = "<group>"; };
 		3D228A542C4D9F1D005B9684 /* UFO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UFO.h; sourceTree = "<group>"; };
+		3D228A562C4E7537005B9684 /* GameOverScreen.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverScreen.cpp; sourceTree = "<group>"; };
+		3D228A572C4E7537005B9684 /* GameOverScreen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GameOverScreen.h; sourceTree = "<group>"; };
 		3D667CC62C4ADA370014BCD0 /* Invader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Invader.cpp; sourceTree = "<group>"; };
 		3D667CC72C4ADA370014BCD0 /* Invader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Invader.h; sourceTree = "<group>"; };
 		3D667CCA2C4BDC330014BCD0 /* Animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
@@ -207,6 +210,8 @@
 				3D667CE02C4C316E0014BCD0 /* Bunker.cpp */,
 				9FC715C21A152805004FDDD1 /* Game.h */,
 				9FC715D01A152805004FDDD1 /* Game.cpp */,
+				3D228A572C4E7537005B9684 /* GameOverScreen.h */,
+				3D228A562C4E7537005B9684 /* GameOverScreen.cpp */,
 				3D667CC72C4ADA370014BCD0 /* Invader.h */,
 				3D667CC62C4ADA370014BCD0 /* Invader.cpp */,
 				3D667CE72C4D4F410014BCD0 /* InvaderGroup.h */,
@@ -277,6 +282,7 @@
 			files = (
 				9FC715DB1A152805004FDDD1 /* Log.cpp in Sources */,
 				9FC715D81A152805004FDDD1 /* Colors.cpp in Sources */,
+				3D228A582C4E7537005B9684 /* GameOverScreen.cpp in Sources */,
 				9FC715D71A152805004FDDD1 /* Bullet.cpp in Sources */,
 				3D667CE52C4C796C0014BCD0 /* Texture.cpp in Sources */,
 				9FC715DD1A152805004FDDD1 /* SDLWindow.cpp in Sources */,

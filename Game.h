@@ -5,7 +5,6 @@
 #include "SDLWindow.h"
 #include "Sprite.h"
 #include "StopWatch.h"
-#include "TitleScreen.h"
 
 #include <memory>
 #include <vector>
@@ -13,10 +12,12 @@ using std::shared_ptr;
 
 class Bullet;
 class Bunker;
+class GameOverScreen;
 class Invader;
 class InvaderGroup;
 class Particle;
 class Player;
+class TitleScreen;
 class UFO;
 
 class Game {
@@ -27,6 +28,8 @@ public:
   
 private:
   shared_ptr<TitleScreen> title;
+  shared_ptr<GameOverScreen> gameOverScreen;
+  
 	shared_ptr<Sprite> pausedText;
   shared_ptr<Player> player;
   
