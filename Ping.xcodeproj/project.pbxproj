@@ -29,7 +29,7 @@
 		9FC715DC1A152805004FDDD1 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D21A152805004FDDD1 /* Player.cpp */; };
 		9FC715DD1A152805004FDDD1 /* SDLWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D31A152805004FDDD1 /* SDLWindow.cpp */; };
 		9FC715DE1A152805004FDDD1 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D41A152805004FDDD1 /* Sprite.cpp */; };
-		9FC715DF1A152805004FDDD1 /* StdWilUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D51A152805004FDDD1 /* StdWilUtil.cpp */; };
+		9FC715DF1A152805004FDDD1 /* StlUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D51A152805004FDDD1 /* StlUtil.cpp */; };
 		9FC715E01A152805004FDDD1 /* TitleScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D61A152805004FDDD1 /* TitleScreen.cpp */; };
 		9FC7161C1A15292E004FDDD1 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC7161B1A15292E004FDDD1 /* SDL2.framework */; };
 		9FC7161D1A152940004FDDD1 /* SDL2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9FC7161B1A15292E004FDDD1 /* SDL2.framework */; };
@@ -105,13 +105,13 @@
 		9FC715D21A152805004FDDD1 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		9FC715D31A152805004FDDD1 /* SDLWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLWindow.cpp; sourceTree = "<group>"; };
 		9FC715D41A152805004FDDD1 /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Sprite.cpp; sourceTree = "<group>"; };
-		9FC715D51A152805004FDDD1 /* StdWilUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StdWilUtil.cpp; sourceTree = "<group>"; };
+		9FC715D51A152805004FDDD1 /* StlUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StlUtil.cpp; sourceTree = "<group>"; };
 		9FC715D61A152805004FDDD1 /* TitleScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TitleScreen.cpp; sourceTree = "<group>"; };
 		9FC7161B1A15292E004FDDD1 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
 		9FC7161E1A152A10004FDDD1 /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_image.framework; sourceTree = "<group>"; };
 		9FC7161F1A152A10004FDDD1 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = "<group>"; };
 		9FC716201A152A10004FDDD1 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_ttf.framework; sourceTree = "<group>"; };
-		9FC716271A152AA8004FDDD1 /* StdWilUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StdWilUtil.h; sourceTree = "<group>"; };
+		9FC716271A152AA8004FDDD1 /* StlUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StlUtil.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,8 +218,8 @@
 				9FC715D11A152805004FDDD1 /* Log.cpp */,
 				3D92006E2C4AB561001198CA /* randomUtil.h */,
 				3D92006D2C4AB561001198CA /* randomUtil.cpp */,
-				9FC716271A152AA8004FDDD1 /* StdWilUtil.h */,
-				9FC715D51A152805004FDDD1 /* StdWilUtil.cpp */,
+				9FC716271A152AA8004FDDD1 /* StlUtil.h */,
+				9FC715D51A152805004FDDD1 /* StlUtil.cpp */,
 				3D667CEA2C4D701F0014BCD0 /* StopWatch.h */,
 				3D667CE92C4D701F0014BCD0 /* StopWatch.cpp */,
 			);
@@ -314,7 +314,7 @@
 				3D667CEB2C4D701F0014BCD0 /* StopWatch.cpp in Sources */,
 				9FC715DA1A152805004FDDD1 /* Game.cpp in Sources */,
 				9FC715DC1A152805004FDDD1 /* Player.cpp in Sources */,
-				9FC715DF1A152805004FDDD1 /* StdWilUtil.cpp in Sources */,
+				9FC715DF1A152805004FDDD1 /* StlUtil.cpp in Sources */,
 				9FC715DE1A152805004FDDD1 /* Sprite.cpp in Sources */,
 				3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */,
 				3D667CCC2C4BDC330014BCD0 /* Animation.cpp in Sources */,

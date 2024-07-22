@@ -2,7 +2,7 @@
 
 #include "Colors.h"
 #include "Game.h"
-#include "StdWilUtil.h"
+#include "StlUtil.h"
 #include "Texture.h"
 
 TitleScreen::TitleScreen( const string &titleText ) {
