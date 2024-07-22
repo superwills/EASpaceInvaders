@@ -70,12 +70,12 @@ void TitleScreen::draw() {
   }
 }
 
-void TitleScreen::hitReturn() {
+GameState TitleScreen::getLaunchState() {
   if( !pointerIndex ) {
-    game->setState( Game::GameState::Running );
+    return GameState::Running;
   }
   else {
-    game->setState( Game::GameState::Test );
+    return GameState::Test;
   }
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Controller.h"
+#include "GameState.h"
 #include "InvaderGroup.h"
 #include "SDLWindow.h"
 #include "Sprite.h"
@@ -22,12 +23,13 @@ class TitleScreen;
 class UFO;
 
 class Game {
-public:
-	enum class GameState { Title, Running, Paused, Won, Lost, Exiting, Test };
   float clockThisFrame = 0, dt = 0;
   float speedMultiplier = 1;
   StopWatch clock;
   
+  
+public:
+	
 private:
   shared_ptr<TitleScreen> titleScreen;
   shared_ptr<GameOverScreen> gameOverScreen;

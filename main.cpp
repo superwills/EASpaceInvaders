@@ -42,14 +42,14 @@ int main(int argc, char* args[]) {
   game = std::make_shared<Game>();
   game->init();
 
-	while( !game->isState( Game::GameState::Exiting ) ) {
+	while( !game->isState( GameState::Exiting ) ) {
 		// Read controller input
 		SDL_Event e;
 
 		// SDL_PollEvent returns nonzero while there are more events
 		while( SDL_PollEvent( &e ) ) {
 			if( e.type == SDL_QUIT || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE ) {
-        game->setState( Game::GameState::Exiting );  // the game will exit on the next frame
+        game->setState( GameState::Exiting );  // the game will exit on the next frame
 			}
       
       // Fork over the signal to the Controller object

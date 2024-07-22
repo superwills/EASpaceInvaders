@@ -64,7 +64,7 @@ bool Game::isState( GameState state ) {
   return gameState == state;
 }
 
-Game::GameState Game::getState() {
+GameState Game::getState() {
 	return gameState;
 }
 
@@ -333,7 +333,7 @@ void Game::runGame() {
 void Game::controllerUpdateTitle() {
   // any key down at title starts the game.
   if( controller.justPressedAny( startKeys ) ) {
-    titleScreen->hitReturn();
+    setState( titleScreen->getLaunchState() );
   }
   
   if( controller.justPressed( SDL_SCANCODE_UP ) ) {

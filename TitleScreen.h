@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Sprite.h"
-
 #include <vector>
 #include <memory>
 using std::shared_ptr, std::vector;
+
+#include "Sprite.h"
+#include "GameState.h"
 
 class Sprite;
 
@@ -22,7 +23,7 @@ public:
   void update( float t );
   void draw();
   
-  void hitReturn();
+  GameState getLaunchState();
   void addMenuItem( const string &menuItemText );
   
   // Code the formulas for getting these
