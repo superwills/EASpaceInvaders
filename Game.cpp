@@ -37,13 +37,19 @@ void Game::init() {
   
   pausedText = Sprite::Text( "pause", pausedTextBox, SDL_ColorMake( 200, 200, 0, 200 ) );
   
-	// load the sfx. These sfx were created with SFXR
-	// http://www.drpetter.se/project_sfxr.html
-	sdl->loadWavSound( SFXId::Ping0, "assets/sounds/ping0.wav" );
-	sdl->loadWavSound( SFXId::Ping1, "assets/sounds/ping1.wav" );
-	sdl->loadWavSound( SFXId::Ping2, "assets/sounds/ping2.wav" );
-	sdl->loadWavSound( SFXId::Ping3, "assets/sounds/ping3.wav" );
-	sdl->loadWavSound( SFXId::Win, "assets/sounds/win.wav" );
+	// created with jsfxr https://sfxr.me/
+	sdl->loadWavSound( SFXId::Blip, "assets/sounds/blip-5.wav" );
+  sdl->loadWavSound( SFXId::Explode2, "assets/sounds/expl-2.wav" );
+  sdl->loadWavSound( SFXId::ExplodeEnemy, "assets/sounds/expl-enemy.wav" );
+  sdl->loadWavSound( SFXId::ExplodePlayer, "assets/sounds/expl-player.wav" );
+  sdl->loadWavSound( SFXId::ExplodeBunker, "assets/sounds/expl-hit-bunker.wav" );
+  sdl->loadWavSound( SFXId::GameStart, "assets/sounds/gameStart.wav" );
+  sdl->loadWavSound( SFXId::Select1, "assets/sounds/select-1.wav" );
+  sdl->loadWavSound( SFXId::Shik, "assets/sounds/shik.wav" );
+  sdl->loadWavSound( SFXId::Shoot1, "assets/sounds/shoot-1.wav" );
+  sdl->loadWavSound( SFXId::Shoot2, "assets/sounds/shoot-2.wav" );
+  sdl->loadWavSound( SFXId::Shoot3, "assets/sounds/shoot-3.wav" );
+  sdl->loadWavSound( SFXId::Jump, "assets/sounds/jump.wav" ); 
   
   // https://www.stef.be/bassoontracker
   sdl->loadMusic( MusicId::Background0, "assets/sounds/1721341344111_2337.mod.mp3" );
@@ -195,6 +201,7 @@ void Game::checkForCollisions() {
     // First check against bunkers.
     for( auto bunker : allBunkers ) {
       if( bunker->hit( bullet ) ) {
+        sdl->playSound( SFXId::ExplodeBunker );
         bullet->die();
         break;
       }
@@ -208,6 +215,7 @@ void Game::checkForCollisions() {
       // bullets from invaders can't hit other invaders or the ufos.
       // check against the player and that's all it does
       if( bullet->box.hit( player->box ) ) {
+        sdl->playSound( SFXId::ExplodePlayer );
         player->die();
       } 
       continue;
@@ -216,7 +224,7 @@ void Game::checkForCollisions() {
     for( auto invader : invaderGroup.invaders ) {
       if( bullet->box.hit( invader->box ) ) {
         bullet->die();
-        sdl->playSound( rand<SFXId>( SFXId::Ping0, SFXId::Ping3 ) );
+        sdl->playSound( SFXId::ExplodeEnemy );
         
         changeScore( invader->getScore() );
         invader->die();
@@ -234,7 +242,7 @@ void Game::checkForCollisions() {
     for( auto ufo : allUFOs ) {
       if( bullet->box.hit( ufo->box ) ) {
         bullet->die();
-        sdl->playSound( rand<SFXId>( SFXId::Ping0, SFXId::Ping3 ) );
+        sdl->playSound( SFXId::ExplodeEnemy );
         
         changeScore( ufo->getScore() );
         ufo->die();

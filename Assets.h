@@ -9,11 +9,21 @@
 using std::map;
 
 enum class SFXId {
-  Ping0,
-  Ping1,
-  Ping2,
-  Ping3,
-  Win,
+  Blip,
+  
+  Explode2,
+  ExplodeEnemy,
+  ExplodePlayer,
+  ExplodeBunker,
+  
+  GameStart,
+  Select1,
+  Shik,
+  Shoot1,
+  Shoot2,
+  Shoot3,
+  
+  Jump,
 };
 
 enum class MusicId {
