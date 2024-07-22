@@ -66,7 +66,7 @@ public:
   
   // I did not want to parse the json for spritesheet loading, so you have to specify params manually
   // Limitations: frameSize must be the same for all the spritesheet frames.
-  Animation loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize, bool cycles = 1 );
+  Animation loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize, SDL_Color color = White, bool cycles = 1 );
   
   // Makes a texture containing `text`, in `color` specified
   // A lot less efficient than texture atlasing, but good for prototype
