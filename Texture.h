@@ -15,5 +15,6 @@ struct Texture {
   Texture( const string &filename, SDL_Renderer *renderer );
   Texture( SDL_Surface *surface, SDL_Renderer *renderer );
   ~Texture();
+  bool isValid() const;
   void loadTextureFromSurface( SDL_Surface *surface, SDL_Renderer *renderer );
 };

@@ -189,6 +189,18 @@ void Game::checkForCollisions() {
 	// check bullets against invaders, ufo's, bunkers.
   for( auto bullet : allBullets ) {
   
+    // First check against bunkers.
+    for( auto bunker : allBunkers ) {
+      if( bunker->hit( bullet ) ) {
+        bullet->die();
+        break;
+      }
+    }
+    
+    if( bullet->dead ) {
+      continue;
+    }
+  
     if( bullet->fromInvader ) {
       // bullets from invaders can't hit other invaders or the ufos.
       // check against the player and that's all it does
@@ -230,18 +242,13 @@ void Game::checkForCollisions() {
   }
 }
 
-// A helper template to avoid repeating this code formula for each collection
-// Works on Sprite class derivatives (must have T.dead member)
-template <typename T> void clearDeadOnes( vector<T> &v ) {
-  v.erase( std::remove_if( v.begin(), v.end(), []( T o ) {
-    return o->dead;
-  } ), v.end() );
-}
-
 void Game::clearDead() {
   clearDeadOnes( allBullets );
   clearDeadOnes( allParticles );
   clearDeadOnes( allUFOs );
+  for( auto bunker : allBunkers ) {
+    bunker->clearDead();
+  }
   
   invaderGroup.clearDead();
 }

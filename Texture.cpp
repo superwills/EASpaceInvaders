@@ -24,6 +24,10 @@ Texture::~Texture() {
   }
 }
 
+bool Texture::isValid() const {
+  return (bool)sdlTex;
+}
+
 void Texture::loadTextureFromSurface( SDL_Surface *surface, SDL_Renderer *renderer ) {
   // convert the surface to a texture
   sdlTex = SDL_CreateTextureFromSurface( renderer, surface );

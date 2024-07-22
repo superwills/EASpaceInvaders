@@ -104,6 +104,12 @@ void SDLWindow::fillRect( const RectF &rect, SDL_Color color ) {
 void SDLWindow::draw( const RectF &whereToDraw, const Animation::Frame &frame ) {
   assert( frame.tex->sdlTex && "sdlTex must be set" );
   
+  // "assert is not error checking", so we also return here when tex not set
+  if( !frame.tex->isValid() ) {
+    error( "texture not valid" );
+    return;
+  }
+  
   SDL_Rect sub, *pSub = 0;
   if( frame.subRect.has_value() ) {
     // You only want a sub portion of the tex.

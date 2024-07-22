@@ -2,6 +2,7 @@
 
 #include "Assets.h"
 #include "Sprite.h"
+#include "StdWilUtil.h"
 
 Bunker::Bunker( const RectF &bounds ) {
   
@@ -36,4 +37,21 @@ void Bunker::draw() {
   for( auto bunkerPiece : pieces ) {
     bunkerPiece->draw();
   }
+}
+
+bool Bunker::hit( shared_ptr<Sprite> other ) {
+  for( auto bunkerPiece : pieces ) {
+    if( bunkerPiece->hit( other ) ) {
+      bunkerPiece->die();
+      return 1;
+    }
+  }
+  
+  return 0;
+}
+
+void Bunker::clearDead() {
+  
+  clearDeadOnes( pieces );
+  
 }

@@ -97,7 +97,5 @@ void InvaderGroup::draw() const {
 }
 
 void InvaderGroup::clearDead() {
-  invaders.erase( std::remove_if( invaders.begin(), invaders.end(), []( shared_ptr<Invader> invader ) {
-    return invader->dead;
-  } ), invaders.end() );
+  clearDeadOnes( invaders );
 }

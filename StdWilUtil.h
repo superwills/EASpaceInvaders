@@ -40,6 +40,14 @@ inline T& clamp( T& x, T minVal, T maxVal ) {
 	return x;
 }
 
+// A helper template to avoid repeating this code formula for each collection
+// Works on Sprite class derivatives (must have T.dead member)
+template <typename T> void clearDeadOnes( vector<T> &v ) {
+  v.erase( std::remove_if( v.begin(), v.end(), []( T o ) {
+    return o->dead;
+  } ), v.end() );
+}
+
 template<typename T>
 inline bool isValidIndex( int index, const vector<T>& container ) {
   return index >= 0 && index < container.size();

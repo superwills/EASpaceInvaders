@@ -119,6 +119,10 @@ void Sprite::move( float x, float y ) {
   box.pos.y += y;
 }
 
+bool Sprite::hit( shared_ptr<Sprite> other ) {
+  return box.hit( other->box );
+}
+
 RectF Sprite::getDrawBox() const {
   return box;
 }
@@ -144,6 +148,10 @@ void Sprite::draw() const {
 }
 
 void Sprite::die() {
+  if( dead ) {
+    error( "double die call" );
+  }
+  
   // mark for removal at end of frame.
   // The reason for doing this is it is awkward to remove from collections while iterating
   // (which is often when we discover the object died)

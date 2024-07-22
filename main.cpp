@@ -11,6 +11,7 @@ using namespace std;
 // Here are some of the coding features, influenced by that std, that I worked in:
 // - Init all vars
 // - ptrs are always checked when they can be null
+// - asserts, but "assert is not error checking"
 // - all array bounds accesses checked, unless "sure"
 //   - (the above 2 might catch quite a few potential bugs)
 // - Exit program at some large failure points (eg renderer won't start)
@@ -22,6 +23,7 @@ using namespace std;
 // - use auto where type is not ambiguous from line of code
 // - encapsulation
 // - Most things are done programmatically. I find that easier. Object sizes are found as % of window size.
+// - Errors in the log mean something should be fixed
 
 // Use events?
 
