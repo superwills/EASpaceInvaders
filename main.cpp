@@ -25,6 +25,11 @@ using namespace std;
 // - Code tries to be brief while still being clear
 // - Errors in the log mean something should be fixed
 
+
+// TODO:
+// cleanup lib stuff
+// promote to PRIVATES
+// 
 // Use events?
 // Powerups? Laser? Spread gun?
 // A very big J enemy

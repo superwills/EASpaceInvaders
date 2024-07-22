@@ -37,6 +37,7 @@ enum class AnimationId {
   Invader2,
   InvaderBullet1,
   InvaderBullet2,
+  PlayerBullet,
   A,
   E,
   Explode,

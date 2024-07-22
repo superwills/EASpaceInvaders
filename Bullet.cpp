@@ -22,7 +22,14 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
     box.pos.y = shooterBounds.top(); 
   }
   
-  animation = sdl->getAnimation( rand<AnimationId>( AnimationId::InvaderBullet1, AnimationId::InvaderBullet2 ) );
+  if( shotFromInvader ) {
+    animation = sdl->getAnimation( rand<AnimationId>( AnimationId::InvaderBullet1, AnimationId::InvaderBullet2 ) );
+  }
+  else {
+    // player bullet is solid
+    addSolidColorAnimationFrame( Yellow );
+    addSolidColorAnimationFrame( Red );
+  }
 }
 
 void Bullet::update( float t ) {

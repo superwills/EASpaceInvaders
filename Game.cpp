@@ -19,8 +19,8 @@ void Game::init() {
   // Load sprite animations
   sdl->loadSpritesheetAnimation( AnimationId::Invader1, "assets/ims/invader-1.png", 2, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Invader2, "assets/ims/invader-2.png", 2, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet1, "assets/ims/invaderBullet1.png", 2, Vector2f( 8, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet2, "assets/ims/invaderBullet2.png", 2, Vector2f( 8, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet1, "assets/ims/bullet-4.png", 2, Vector2f( 8, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet2, "assets/ims/bullet-5.png", 2, Vector2f( 8, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::A, "assets/ims/A.png", 4, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::E, "assets/ims/E.png", 4, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::UFO, "assets/ims/ufo.png", 2, Vector2f( 32, 16 ) );
