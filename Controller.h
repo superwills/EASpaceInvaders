@@ -6,8 +6,11 @@
 #include <sdl.h>
 #endif
 
+#include "Vectorf.h"
+
+#include <map>
 #include <vector>
-using std::vector;
+using std::map, std::vector;
 
 // handles user input
 class Controller {
@@ -16,16 +19,25 @@ class Controller {
   // One-touch key presses are sent by SDL_PollEvent
   Uint8 keysJustPressed[ SDL_NUM_SCANCODES ] = { 0 };
   Uint8 keysJustReleased[ SDL_NUM_SCANCODES ] = { 0 };
+  map< uint16_t, bool > mouseButtonsJustPressed;
   
 public:
-	int mouseX = 0, mouseY = 0;
+  int xMouse = 0, yMouse = 0;   //abs mouse x,y
+	int dxMouse = 0, dyMouse = 0; //Difference mouse x,y
   
   Controller();
 	void update();
  
+  inline float getMouseDX() { return dxMouse; }
+  inline float getMouseDY() { return dyMouse; }
+  inline Vector2f getMousePos() { return Vector2f( xMouse, yMouse ); } 
+ 
   void setKeyJustPressed( uint16_t key );
+  void setMouseJustClicked( uint16_t mouseButton );
+  
   void setKeyJustReleased( uint16_t key ); 
   
+  bool mouseJustPressed( uint16_t mouseButton );
   bool isPressed( uint16_t key );
   bool justPressed( uint16_t key );
   bool justPressedAny( const vector<uint16_t>& keys );

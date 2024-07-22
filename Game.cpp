@@ -71,7 +71,7 @@ Game::GameState Game::getState() {
 void Game::setState( GameState newState ) {
 	prevState = gameState;
 	
-	switch( newState ) {
+  switch( newState ) {
   case GameState::Title:
 		sdl->playMusic( rand<MusicId>( MusicId::Background0, MusicId::Background1 ) );
 	 	break;
@@ -82,22 +82,19 @@ void Game::setState( GameState newState ) {
       }
     }
     break;
+    
+  case GameState::Paused:
+		break;
       
   case GameState::Won:
   case GameState::Lost:
-		// game song
-		// if prevstate was Running, don't restart the music
-		if( prevState == GameState::Paused ) {
-			Mix_ResumeMusic(); // unpause the music
-		}
-		break;
-	
-  case GameState::Paused:
-		Mix_PauseMusic();
 		break;
 	
   case GameState::Exiting:
 		break;
+  
+  case GameState::Test:
+    break;  
 	}
 
 	gameState = newState;
@@ -107,10 +104,12 @@ void Game::togglePause() {
 	if( gameState == GameState::Paused ) {
 		setState( prevState ); //go back to the previous state
 		pausedText->hide();
+    Mix_ResumeMusic(); // unpause the music  
 	}
 	else {
 		setState( GameState::Paused );
 		pausedText->show();
+    Mix_PauseMusic();  
 	}
 }
 
@@ -334,7 +333,7 @@ void Game::controllerUpdateRunning() {
   }
 
   // Use the controller state to change gamestate
-  player->move( controller.mouseX, 0 );
+  player->move( controller.dxMouse, 0 );
   
   float mX = 2;
   if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
@@ -385,8 +384,15 @@ void Game::controllerUpdate() {
     
   case GameState::Exiting:
     break;
-  case GameState::Test:
-    
+  case GameState::Test: {
+      if( controller.mouseJustPressed( SDL_BUTTON_LEFT ) ) {
+        info( "LEFt button" );
+      }
+      if( controller.mouseJustPressed( SDL_BUTTON_RIGHT ) ) {
+        info( "Right button" );
+      }
+      test.testMouseHit( controller.getMousePos() );
+    }
     break;
   }
 }
@@ -399,27 +405,28 @@ void Game::update() {
 
   controllerUpdate();
   
-  // State-specific update
   switch( gameState ) {
   case GameState::Title:
     titleScreen->update( dt );
     break;
-  case GameState::Won:
-  case GameState::Lost:
-    gameOverScreen->update( dt );
-    break;
-  case GameState::Exiting:
-	  break;
-    
-	case GameState::Running:
+  
+  case GameState::Running:
     runGame();
 	  break;
 	
   case GameState::Paused: 
 		pausedText->update( dt );
 	  break;
-   
+  
+  case GameState::Won:
+  case GameState::Lost:
+    gameOverScreen->update( dt );
+    break;
+  case GameState::Exiting:
+	  break;
+	
   case GameState::Test:
+    test.update( dt );
     break;
   }
   
@@ -433,14 +440,8 @@ void Game::draw() {
   case GameState::Title:
     titleScreen->draw();
     break;
-  case GameState::Won:
-  case GameState::Lost:
-    gameOverScreen->draw();
-    break;
-  case GameState::Exiting:
-	  break;
     
-	case GameState::Running:
+  case GameState::Running:
     invaderGroup.draw();
 		player->draw();
 		scoreSprite->draw();
@@ -460,12 +461,19 @@ void Game::draw() {
       bunker->draw();
     }
 	  break;
-	
+  
   case GameState::Paused: 
 		pausedText->draw();
 	  break;
+  case GameState::Won:
+  case GameState::Lost:
+    gameOverScreen->draw();
+    break;
+  case GameState::Exiting:
+	  break;
    
   case GameState::Test:
+    test.draw();
     break;  
   }
 	

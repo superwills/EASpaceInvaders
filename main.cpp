@@ -66,6 +66,10 @@ int main(int argc, char* args[]) {
       if( e.type == SDL_KEYDOWN ) {
         game->controller.setKeyJustPressed( e.key.keysym.scancode );
       }
+      
+      if( e.type == SDL_MOUSEBUTTONDOWN ) {
+        game->controller.setMouseJustClicked( e.button.button );
+      }
 		}
 		
 		game->update();

@@ -121,6 +121,10 @@ void Sprite::move( float x, float y ) {
   box.pos.y += y;
 }
 
+bool Sprite::hit( const Vector2f &p ) {
+  return box.hit( p );
+}
+
 bool Sprite::hit( shared_ptr<Sprite> other ) {
   return box.hit( other->box );
 }

@@ -5,6 +5,7 @@
 #include "SDLWindow.h"
 #include "Sprite.h"
 #include "StopWatch.h"
+#include "Test.h"
 
 #include <memory>
 #include <vector>
@@ -39,6 +40,7 @@ private:
   vector< shared_ptr<Bunker> > allBunkers;
   
   InvaderGroup invaderGroup;
+  Test test;
   
 	SDL_Color bkgColor;	// the current background color
   

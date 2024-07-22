@@ -340,7 +340,7 @@ struct Vector2f {
 		return *this ;
 	}
  
-  string toString() {
+  string toString() const {
     return makeString( "%.2f, %.2f", x, y );
   } 
 } ;

@@ -3,12 +3,14 @@
 #include "Log.h"
 
 Controller::Controller() {
-	mouseX = mouseY = 0;
 	keystates = SDL_GetKeyboardState( 0 );
 }
 
 void Controller::update() {
-	SDL_GetRelativeMouseState( &mouseX, &mouseY );
+  // We can poll for the change to the mouse position here.
+  SDL_GetMouseState( &xMouse, &yMouse );  //Abs pos of mouse
+  SDL_GetRelativeMouseState( &dxMouse, &dyMouse );  //rel changes
+   
  
   // keep a copy of the prev keystates to be able to tell if a key was just pressed/just released
   //memcpy( prevKeystates, keystates, SDL_NUM_SCANCODES ); // this does NOT work since it's a pointer.
@@ -24,6 +26,12 @@ void Controller::setKeyJustPressed( uint16_t key ) {
   keysJustPressed[ key ] = 1;
 }
 
+void Controller::setMouseJustClicked( uint16_t mouseButton ) {
+
+  mouseButtonsJustPressed[ mouseButton ] = 1;
+  
+}
+
 void Controller::setKeyJustReleased( uint16_t key ) {
   if( key > SDL_NUM_SCANCODES ) {
     error( "Invalid key index %hu", key );
@@ -31,6 +39,17 @@ void Controller::setKeyJustReleased( uint16_t key ) {
   }
   
   keysJustReleased[ key ] = 1; 
+}
+
+bool Controller::mouseJustPressed( uint16_t mouseButton ) {
+  auto it = mouseButtonsJustPressed.find( mouseButton );
+  
+  if( it == mouseButtonsJustPressed.end() ) {
+    // hasn't been pushed before or doesn't exist
+    return 0;
+  }
+  
+  return it->second;
 }
 
 bool Controller::isPressed( uint16_t key ) {
@@ -70,4 +89,9 @@ bool Controller::justReleased( uint16_t key ) {
 void Controller::clearEventKeys() {
   memset( keysJustPressed, 0, SDL_NUM_SCANCODES );
   memset( keysJustReleased, 0, SDL_NUM_SCANCODES );
+  
+  // Clear these to off
+  for( auto& p : mouseButtonsJustPressed ) {
+    p.second = 0;
+  }
 }

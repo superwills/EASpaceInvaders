@@ -60,6 +60,7 @@ public:
 	void hide();
   void move( float x, float y );
   
+  bool hit( const Vector2f &p );
   bool hit( shared_ptr<Sprite> other );
   
   // usually just the box itself. But when the sprite .pos is the CENTER of the sprite, we have to compute this.

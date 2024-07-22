@@ -1,18 +1,48 @@
 #include "Test.h"
 
 #include "randomUtil.h"
+#include "Sprite.h"
 
-void Test::unitRandom() {
-  // about 50% of numbers from randFloat() should be > .5
-  // Test inspired by a bug where I was dividing by UINT32_MAX
+Test::Test() {
+  RectF windowRectangle = sdl->getWindowRectangle();
   
+  RectF largeSpriteRectangle;
+  largeSpriteRectangle.size = windowRectangle.size * .33;
+  largeSpriteRectangle.setCenter( windowRectangle.size / 2 );
+  largeSprite = std::make_shared<Sprite>( largeSpriteRectangle, Yellow );
+  sprites.push_back( largeSprite );
   
+  for( int i = 0; i < 500; i++ ) {
+    RectF r( windowRectangle.randomPoint(), Vector2f( 16 ) );
+    
+    auto smallSprite = std::make_shared<Sprite>( r, White );
+    if( largeSprite->hit( smallSprite ) ) {
+      smallSprite->animation.frames[ 0 ].color = Blue;
+    }
+  
+    sprites.push_back( smallSprite );
+  }
 }
 
-void Test::fnTestShooting() {
-
+void Test::testMouseHit( const Vector2f &p ) {
+  if( largeSprite->hit( p ) ) {
+    largeSprite->animation.frames[ 0 ].color = Red;
+  }
+  else {
+    largeSprite->animation.frames[ 0 ].color = Yellow;
+  }
 }
 
-void Test::fnHitTest() {
+void Test::update( float t ) {
+  for( auto sprite : sprites ) {
+    sprite->update( t );
+  }
+}
+
+void Test::draw() {
+
+  for( auto sprite : sprites ) {
+    sprite->draw();
+  }
 
 }
