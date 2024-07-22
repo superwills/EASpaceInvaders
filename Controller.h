@@ -6,6 +6,9 @@
 #include <sdl.h>
 #endif
 
+#include <vector>
+using std::vector;
+
 // handles user input
 class Controller {
   const Uint8 *keystates = 0;
@@ -25,6 +28,7 @@ public:
   
   bool isPressed( uint16_t key );
   bool justPressed( uint16_t key );
+  bool justPressedAny( const vector<uint16_t>& keys );
   bool justReleased( uint16_t key );
   
   void clearEventKeys();

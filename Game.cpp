@@ -312,7 +312,7 @@ void Game::runGame() {
 }
 
 void Game::controllerUpdate() {
-  // All states do these:
+  
 	controller.update();
    
   // p during play pauses the game.
@@ -320,7 +320,23 @@ void Game::controllerUpdate() {
     game->togglePause();
   }
   
-  if( gameState == GameState::Running ) {
+  if( gameState == GameState::Title ) {
+    // any key down at title starts the game.
+    vector<uint16_t> startKeys = { SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
+    if( controller.justPressedAny( startKeys ) ) {
+      game->setState( Game::GameState::Running );
+    }
+    
+    if( controller.justPressed( SDL_SCANCODE_UP ) ) {
+      title->pointerUp();
+    }
+    
+    if( controller.justPressed( SDL_SCANCODE_DOWN ) ) {
+      title->pointerDown();
+    }
+  }
+  
+  else if( gameState == GameState::Running ) {
     // Player can only move if not dead.
     if( !player->dead ) {
   

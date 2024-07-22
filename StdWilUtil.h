@@ -83,6 +83,14 @@ inline int cycleArrayIndex( int &index, size_t arraySize ) {
   return index;
 }
 
+inline int decycleArrayIndex( int &index, size_t arraySize ) {
+  if( --index < 0 ) {
+    index = arraySize - 1;  // reset
+  }
+  
+  return index;
+}
+
 string makeString( const char *fmt, ... );
 
 string makeString( const char *fmt, va_list args ) ;

@@ -50,6 +50,15 @@ bool Controller::justPressed( uint16_t key ) {
   return keysJustPressed[ key ];
 }
 
+bool Controller::justPressedAny( const vector<uint16_t>& keys ) {
+  for( uint16_t key : keys ) {
+    if( justPressed( key ) ) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
 bool Controller::justReleased( uint16_t key ) {
   if( key > SDL_NUM_SCANCODES ) {
     error( "Invalid key index %hu", key );

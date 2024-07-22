@@ -61,13 +61,10 @@ int main(int argc, char* args[]) {
 			if( e.type == SDL_QUIT || e.key.keysym.scancode == SDL_SCANCODE_ESCAPE ) {
         game->setState( Game::GameState::Exiting );  // the game will exit on the next frame
 			}
-      else if( e.type == SDL_KEYDOWN ) {
+      
+      // Fork over the signal to the Controller object
+      if( e.type == SDL_KEYDOWN ) {
         game->controller.setKeyJustPressed( e.key.keysym.scancode );
-        
-        if( game->isState( Game::GameState::Title ) ) {
-          // any key down at title starts the game.
-          game->setState( Game::GameState::Running );
-        }
       }
 		}
 		
