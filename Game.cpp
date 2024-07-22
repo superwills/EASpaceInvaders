@@ -303,11 +303,12 @@ void Game::controllerUpdate() {
     // Use the controller state to change gamestate
     player->move( controller.mouseX, 0 );
     
+    float mX = 2;
     if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
-      player->move( -1, 0 );
+      player->move( -mX, 0 );
     }
     if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
-      player->move( 1, 0 );
+      player->move( mX, 0 );
     }
     player->enforceWorldLimits();
     
@@ -328,10 +329,13 @@ void Game::update() {
   // State-specific update
   switch( gameState ) {
   case GameState::Title:
+    title->update( dt );
+    break;
   case GameState::Won:
   case GameState::Lost:
+    gameOverScreen->update( dt );
+    break;
   case GameState::Exiting:
-		title->update( dt );
 	  break;
     
 	case GameState::Running:
@@ -351,10 +355,13 @@ void Game::draw() {
 
 	switch( gameState ) {
   case GameState::Title:
+    title->draw();
+    break;
   case GameState::Won:
   case GameState::Lost:
+    gameOverScreen->draw();
+    break;
   case GameState::Exiting:
-		title->draw();
 	  break;
     
 	case GameState::Running:
