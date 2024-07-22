@@ -4,41 +4,80 @@
 #include "Invader.h"
 
 GameOverScreen::GameOverScreen() {
-  shared_ptr<Sprite> gameOver = Sprite::Text( "Game over!", RectF( 0, 0, 256, 256 ), Green );
+  Vector2f windowSize = sdl->getWindowSize();
   
-  textSprites.push_back( gameOver );
+  RectF gameOverBox;
+  gameOverBox.size = windowSize;
+  gameOverBox.size *= .5;
+  gameOverBox.setCenter( windowSize * Vector2f( .5, .25 ) );
+  gameOverSprite = Sprite::Text( "Game over!", gameOverBox, Green );
+}
+
+void GameOverScreen::addInvaders( AnimationId character ) {
+  Vector2f windowSize = sdl->getWindowSize();
   
-  for( int i = 0; i < 5; i++ ) {
-    shared_ptr<Invader> invader = std::make_shared<Invader>( RectF(0,0,15,15), AnimationId::Invader1 );
+  // fit 11 across, but only fill every other one
+  //           1
+  // 01234567890
+  // _I_I_I_I_I_
+  Vector2f invaderSize( windowSize.x / 11 );
+  
+  for( int i = 1; i <= 9; i+=2 ) {
+    Vector2f invaderPos;
+    invaderPos.x = i*invaderSize.x;
+    invaderPos.y = windowSize.y / 2;
+    RectF invaderBox( invaderPos, invaderSize );
+    invaderBox.pos.y -= invaderSize.y / 2;
+    shared_ptr<Invader> invader = std::make_shared<Invader>( invaderBox, character );
     invaders.push_back( invader );
   }
 }
 
 void GameOverScreen::update( float t ) {
-  // bounce the invaders
-  for( auto sprite : textSprites ) {
-    sprite->update( t );
+  
+  gameOverSprite->update( t );
+  message->update( t );
+  
+  // bounce the invaders?
+  for( auto invader : invaders ) {
+    invader->update( t );  // they may shoot but that's ok
   }
 }
 
 void GameOverScreen::draw() {
-  for( auto sprite : textSprites ) {
-    sprite->draw();
+  gameOverSprite->draw();
+  message->draw();
+  for( auto invader : invaders ) {
+    invader->draw();
   }
 }
 
 void GameOverScreen::win() {
-  shared_ptr<Sprite> winSprite = Sprite::Text( "You win!", RectF( 0, 0, 256, 256 ), Green );
+  invaders.clear();
+  addInvaders( AnimationId::Invader2 );
+  Vector2f windowSize = sdl->getWindowSize();
   
-  textSprites.push_back( winSprite );
+  RectF winBox;
+  winBox.size = windowSize;
+  winBox.size *= .5;
+  winBox.setCenter( windowSize * Vector2f( .5, .75 ) );
+  message = Sprite::Text( "You won!", winBox, White );
   
-  
+  shared_ptr<Texture> tex = message->animation.getCurrentFrame().tex;
+  message->addAnimationFrame( tex, SDL_ColorMake( 20, 200, 255, 255 ), .25 );
 }
 
 void GameOverScreen::lose() {
-  shared_ptr<Sprite> loseSprite = Sprite::Text( "You lost!", RectF( 0, 0, 256, 256 ), Green );
+  invaders.clear();
+  addInvaders( AnimationId::Invader1 );
+  Vector2f windowSize = sdl->getWindowSize();
   
-  textSprites.push_back( loseSprite );
+  RectF loseBox;
+  loseBox.size = windowSize;
+  loseBox.size *= .5;
+  loseBox.setCenter( windowSize * Vector2f( .5, .75 ) );
+  message = Sprite::Text( "You lost!", loseBox, Yellow );
   
-  
+  shared_ptr<Texture> tex = message->animation.getCurrentFrame().tex;
+  message->addAnimationFrame( tex, Red, .25 );
 }

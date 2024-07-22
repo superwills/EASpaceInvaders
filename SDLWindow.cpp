@@ -163,8 +163,9 @@ Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const st
   return animation;
 }
 
-shared_ptr<Texture> SDLWindow::makeTextTexture( const string &text, SDL_Color color ) {
-	SDL_Surface *textSurface = TTF_RenderText_Solid( defaultFont, text.c_str(), color );
+shared_ptr<Texture> SDLWindow::makeTextTexture( const string &text ) {
+  // All text is rendered white first, then you can modulate the color after.
+	SDL_Surface *textSurface = TTF_RenderText_Solid( defaultFont, text.c_str(), White );
   if( !textSurface ) {
     error( "TTF_RenderText_Solid failed %s", text.c_str() );
     return 0;

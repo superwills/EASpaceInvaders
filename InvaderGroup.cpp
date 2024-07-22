@@ -96,6 +96,12 @@ void InvaderGroup::draw() const {
   }
 }
 
+void InvaderGroup::killAll() {
+  for( auto invader : invaders ) {
+    invader->die();
+  }
+}
+
 void InvaderGroup::clearDead() {
   clearDeadOnes( invaders );
 }

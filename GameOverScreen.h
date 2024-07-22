@@ -7,12 +7,16 @@ class Sprite;
 #include <vector>
 using std::shared_ptr, std::vector;
 
+#include "Assets.h"
+
 class GameOverScreen {
 public:
-  vector< shared_ptr<Sprite> > textSprites;
+  shared_ptr<Sprite> gameOverSprite;
+  shared_ptr<Sprite> message;
   vector< shared_ptr<Invader> > invaders;
   GameOverScreen();
   
+  void addInvaders( AnimationId character );
   void update( float t );
   void draw();
   void win();

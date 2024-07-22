@@ -32,7 +32,7 @@ public:
 	Sprite();
   Sprite( const RectF &rectangle ); 
   Sprite( const RectF &rectangle, SDL_Color color );
-	Sprite( const RectF &rectangle, shared_ptr<Texture> iTex );
+	Sprite( const RectF &rectangle, shared_ptr<Texture> iTex, SDL_Color color );
   Sprite( const RectF &rectangle, AnimationId animationId ); 
   virtual ~Sprite() { }
   

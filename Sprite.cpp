@@ -21,12 +21,12 @@ Sprite::Sprite( const RectF& rectangle, SDL_Color color ) :
   addSolidColorAnimationFrame( color );
 }
 
-Sprite::Sprite( const RectF& rectangle, shared_ptr<Texture> iTex ) :
+Sprite::Sprite( const RectF& rectangle, shared_ptr<Texture> iTex, SDL_Color color ) :
     box( rectangle ) {
 	name = makeString( "Sprite %d from texture", spriteId );
  
   // We need at least 1 animation frame to represent the static tex. 
-	addAnimationFrame( iTex, White );
+	addAnimationFrame( iTex, color );
 }
 
 Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
@@ -53,8 +53,10 @@ void Sprite::addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, S
 }
 
 shared_ptr<Sprite> Sprite::Text( const string &text, const RectF &box, SDL_Color iColor ) {
-  shared_ptr<Texture> tex = sdl->makeTextTexture( text, iColor );
-  return std::make_shared<Sprite>( box, tex );
+  shared_ptr<Texture> tex = sdl->makeTextTexture( text );
+  shared_ptr<Sprite> textSprite = std::make_shared<Sprite>( box, tex, iColor );
+  
+  return textSprite;
 }
 
 Vector2f Sprite::getPos() {

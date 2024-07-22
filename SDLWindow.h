@@ -69,7 +69,7 @@ public:
   
   // Makes a texture containing `text`, in `color` specified
   // A lot less efficient than texture atlasing, but good for prototype
-	shared_ptr<Texture> makeTextTexture( const string &text, SDL_Color color );
+	shared_ptr<Texture> makeTextTexture( const string &text );
   
   // Music/SFX
 	// SDLWindow is kind of a god-class with lots of abilities,

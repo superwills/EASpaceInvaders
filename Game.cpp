@@ -136,10 +136,8 @@ void Game::initGameBoard() {
   bunkerSize.x = windowSize.x / 9;
   bunkerSize.y = bunkerSize.x * .6;
   
-  for( int i = 0; i < 9; i++ ) {
-    if( i % 2 == 0 ) {
-      continue; // skip every other one.
-    }
+  // odds, 1,3,5,7
+  for( int i = 1; i <= 7; i += 2 ) {
     Vector2f bunkerPos;
     bunkerPos.x = bunkerSize.x * i;
     bunkerPos.y = windowSize.y - 2*bunkerSize.y;
@@ -338,10 +336,13 @@ void Game::controllerUpdate() {
       if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
         player->move( mX, 0 );
       }
+      if( controller.justPressed( SDL_SCANCODE_8 ) ) {
+        invaderGroup.killAll();
+      }
       player->enforceWorldLimits();
       
       if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
-        shootBullet( player->box, 0, Vector2f( 0, -100 ) );
+        shootBullet( player->box, 0, Vector2f( 0, -500 ) );
       }
     
     }

@@ -32,5 +32,7 @@ public:
   void populate( const RectF &invaderBounds );
   void update( float t );
   void draw() const;
+  // debug fn
+  void killAll();
   void clearDead();
 };
