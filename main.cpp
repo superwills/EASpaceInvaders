@@ -37,7 +37,6 @@ using namespace std;
 
 int main(int argc, char* args[]) {
   SDLWindow::SDLInit();
-	srand( (uint32_t)time( 0 ) );
 	
   sdl = std::make_shared<SDLWindow>( "Space Invaders", 800, 600 );
   game = std::make_shared<Game>();

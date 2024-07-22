@@ -18,7 +18,6 @@
 		3D667CEB2C4D701F0014BCD0 /* StopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CE92C4D701F0014BCD0 /* StopWatch.cpp */; };
 		3D667CEE2C4D82590014BCD0 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CEC2C4D82590014BCD0 /* Particle.cpp */; };
 		3D9200672C4AA657001198CA /* assets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D9200662C4AA5DB001198CA /* assets */; };
-		3D92006A2C4AB27A001198CA /* math_ext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D9200692C4AB27A001198CA /* math_ext.cpp */; };
 		3D92006C2C4AB501001198CA /* Assets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D92006B2C4AB501001198CA /* Assets.cpp */; };
 		3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D92006D2C4AB561001198CA /* randomUtil.cpp */; };
 		9FC715BE1A1527C4004FDDD1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715BD1A1527C4004FDDD1 /* main.cpp */; };
@@ -82,7 +81,6 @@
 		3D667CED2C4D82590014BCD0 /* Particle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		3D9200662C4AA5DB001198CA /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		3D9200682C4AACFF001198CA /* Assets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Assets.h; sourceTree = "<group>"; };
-		3D9200692C4AB27A001198CA /* math_ext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = math_ext.cpp; sourceTree = "<group>"; };
 		3D92006B2C4AB501001198CA /* Assets.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Assets.cpp; sourceTree = "<group>"; };
 		3D92006D2C4AB561001198CA /* randomUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = randomUtil.cpp; sourceTree = "<group>"; };
 		3D92006E2C4AB561001198CA /* randomUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = randomUtil.h; sourceTree = "<group>"; };
@@ -114,7 +112,6 @@
 		9FC7161F1A152A10004FDDD1 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = "<group>"; };
 		9FC716201A152A10004FDDD1 /* SDL2_ttf.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_ttf.framework; sourceTree = "<group>"; };
 		9FC716271A152AA8004FDDD1 /* StdWilUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StdWilUtil.h; sourceTree = "<group>"; };
-		9FC716281A152B68004FDDD1 /* math_ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math_ext.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,8 +216,6 @@
 				9FC715C71A152805004FDDD1 /* RectF.h */,
 				9FC715C31A152805004FDDD1 /* Log.h */,
 				9FC715D11A152805004FDDD1 /* Log.cpp */,
-				9FC716281A152B68004FDDD1 /* math_ext.h */,
-				3D9200692C4AB27A001198CA /* math_ext.cpp */,
 				3D92006E2C4AB561001198CA /* randomUtil.h */,
 				3D92006D2C4AB561001198CA /* randomUtil.cpp */,
 				9FC716271A152AA8004FDDD1 /* StdWilUtil.h */,
@@ -322,7 +317,6 @@
 				9FC715DF1A152805004FDDD1 /* StdWilUtil.cpp in Sources */,
 				9FC715DE1A152805004FDDD1 /* Sprite.cpp in Sources */,
 				3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */,
-				3D92006A2C4AB27A001198CA /* math_ext.cpp in Sources */,
 				3D667CCC2C4BDC330014BCD0 /* Animation.cpp in Sources */,
 				3D667CC82C4ADA370014BCD0 /* Invader.cpp in Sources */,
 			);

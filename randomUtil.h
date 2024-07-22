@@ -5,11 +5,6 @@
 // bigger range than rand()
 extern std::default_random_engine MTRandom32;
 
-// Provide global functions for quick randoms from a default object.
-void randSeed( uint32_t seed );
-void randSeedTime();
-void randSeedMemoryAddress();
-
 // between 0 -> (highEx - 1)
 inline uint32_t randInt( int highEx ) {
   if( !highEx ) {

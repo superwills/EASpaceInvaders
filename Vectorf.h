@@ -4,11 +4,11 @@
 #include <float.h>
 #include <math.h>
 #include "StdWilUtil.h"
-#include "math_ext.h"
 
 #include "randomUtil.h"
 
 struct Vector2f {
+  inline static float EPS_MIN = 1e-6f; // distance to be considered ~=
 	float x, y;
 	
 	Vector2f() : x(0.f),y(0.f){}
