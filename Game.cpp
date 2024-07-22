@@ -10,7 +10,7 @@
 #include "TitleScreen.h"
 #include "UFO.h"
 
-Game *game = 0;
+shared_ptr<Game> game;
 
 void Game::init() {
 

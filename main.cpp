@@ -13,7 +13,7 @@ using namespace std;
 // - asserts, but "assert is not error checking"
 // - all array bounds accesses checked, unless "sure"
 //   - (the above few may catch quite a few bugs)
-//
+// - avoid new/delete and use shared_ptr when possible
 // - const as much as possible
 // - Exit program at some large failure points (eg renderer won't start)
 // - Try to add helpful errors msgs
@@ -35,7 +35,7 @@ int main(int argc, char* args[]) {
 	srand( (uint32_t)time( 0 ) );
 	
   sdl = std::make_shared<SDLWindow>( "Space Invaders", 800, 600 );
-  game = new Game;
+  game = std::make_shared<Game>();
   game->init();
 
 	while( !game->isState( Game::GameState::Exiting ) ) {
@@ -62,7 +62,7 @@ int main(int argc, char* args[]) {
     game->draw();
 	}
   
-  delete game;
+  game.reset();
   sdl.reset();
 	
 	return 0;

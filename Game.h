@@ -91,4 +91,4 @@ public:
 	void draw();
 };
 
-extern Game *game;
+extern shared_ptr<Game> game;
