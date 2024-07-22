@@ -1,6 +1,7 @@
 #include "InvaderGroup.h"
 
 #include "Invader.h"
+#include <cmath>
 
 void InvaderGroup::addRow( AnimationId character ) {
   for( int i = 0; i < invadersPerRow; i++ ) {
@@ -24,27 +25,9 @@ void InvaderGroup::populate( const RectF &invaderBounds ) {
   
   addRow( AnimationId::E );
   addRow( AnimationId::A );
-  //addRow( AnimationId::Invader2 );
-  //addRow( AnimationId::Invader2 );
-  
   addRow( AnimationId::Invader2 );
   addRow( AnimationId::Invader1 );
   addRow( AnimationId::Invader1 );
-  
-  /*
-  for( int row = 0; row < rowsOfInvaders; row++ ) {
-    for( int i = 0; i < invadersPerRow; i++ ) {
-      RectF box;
-      box.y = (rowsOfInvaders - row) * ( invaderSize + 5 );
-      box.x = i*( invaderSize + 5 );
-      
-      box.w = box.h = invaderSize;
-      
-      shared_ptr<Invader> invader = std::make_shared<Invader>( box, rand<AnimationId>( AnimationId::Invader1, AnimationId::E ) );
-      invaders.push_back( invader );
-    }
-  }
-  */
 }
 
 void InvaderGroup::update( float t ) {
@@ -56,6 +39,14 @@ void InvaderGroup::update( float t ) {
   
   // Step right, until someone hits the edge.
   float invaderVelocity = movingRight ? +100 : -100;
+  
+  // multiply velocity increasingly starting when there are 10 invaders left.
+  if( invaders.size() < 10 ) {
+    float t = invaders.size() / 10.;
+    float speedBoost = lerp( 4, 1, t );
+    invaderVelocity *= speedBoost;
+  }
+  
   Vector2f windowSize = sdl->getWindowSize();
   
   for( auto invader : invaders ) {
