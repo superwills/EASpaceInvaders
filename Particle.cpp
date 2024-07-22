@@ -3,7 +3,8 @@
 Particle::Particle( const RectF &rectangle, float lifetime ) :
     Sprite( rectangle ), initialLife( lifetime ), lifeRemaining( lifetime ) {
   
-  vel = Vector2f::random( -100, 100 );
+  name = "Particle/" + name;
+  velocity = Vector2f::random( -100, 100 );
   
   // create a random color cycle animation
   for( int i = 0; i < 15; i++ ) {
@@ -26,15 +27,13 @@ RectF Particle::getDrawBox() const {
 void Particle::update( float t ) {
   Sprite::update( t );
   
-  box.pos += vel * t;
-  lifeRemaining -= t;
-  
   pulseTime += t;
   if( pulseTime > pulsePeriod ) {
     pulseTime = 0;
     growing = -growing;
   }
   
+  lifeRemaining -= t;
   if( lifeRemaining < 0 ) {
     die();
   }
@@ -53,7 +52,7 @@ void Particle::update( float t ) {
 
 void Particle::die() {
   if( dead ) {
-    error( "double die call" );
+    error( "%s double die call", name.c_str() );
   }
   
   // mark for removal at end of frame.

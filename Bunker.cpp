@@ -22,6 +22,7 @@ Bunker::Bunker( const RectF &bounds ) {
       RectF bunkerRectangle( bunkerPiecePos, bunkerPieceSize );
       
       shared_ptr<Sprite> sprite = std::make_shared<Sprite>( bunkerRectangle, Green );
+      sprite->name = "BunkerPiece/" + sprite->name;
       pieces.push_back( sprite );
     }
   }
@@ -39,10 +40,18 @@ void Bunker::draw() {
   }
 }
 
-bool Bunker::hit( shared_ptr<Sprite> other ) {
+bool Bunker::killHit( shared_ptr<Sprite> other ) {
+
   for( auto bunkerPiece : pieces ) {
+    if( bunkerPiece->dead ) {
+      // if the piece is dead it's as if it isn't there.
+      // Need this check because removal from collections is done only after a frame is complete
+      continue;
+    }
+    
     if( bunkerPiece->hit( other ) ) {
       bunkerPiece->die();
+      sdl->playSound( SFXId::ExplodeBunker );
       return 1;
     }
   }

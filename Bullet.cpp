@@ -3,9 +3,12 @@
 #include "SDLWindow.h"
 
 
-Bullet::Bullet( const RectF &shooterBounds, bool shotFromInvader ) : fromInvader( shotFromInvader ) {
-	name = "Bullet/" + name;
+Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, bool shotFromInvader ) :
+    fromInvader( shotFromInvader ) {
   
+  name = "Bullet/" + name;
+  velocity = initialVelocity;
+	
   float windowHeight = sdl->getWindowSize().y;
   box.size = Vector2f( windowHeight * .01, windowHeight * .05 );
   
@@ -25,8 +28,6 @@ Bullet::Bullet( const RectF &shooterBounds, bool shotFromInvader ) : fromInvader
 void Bullet::update( float t ) {
   Sprite::update( t );
   
-	box.pos += vel * t;
-	
 	if( box.pos.y < 0 ) {
     die();
   } 

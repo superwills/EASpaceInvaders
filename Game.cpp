@@ -88,7 +88,9 @@ void Game::setState( GameState newState ) {
       
   case GameState::Won:
   case GameState::Lost:
-		break;
+    // Clear the old game board.
+    invaderGroup.killAll( 0 );
+    break;
 	
   case GameState::Exiting:
 		break;
@@ -162,8 +164,7 @@ void Game::genUFO() {
 }
 
 void Game::shootBullet( const RectF &source, bool fromInvader, const Vector2f &vel ) {
-  shared_ptr<Bullet> bullet = std::make_shared<Bullet>( source, fromInvader );
-  bullet->vel = vel;
+  shared_ptr<Bullet> bullet = std::make_shared<Bullet>( source, vel, fromInvader );
   allBullets.push_back( bullet );
 }
 
@@ -197,14 +198,14 @@ void Game::checkWinConditions() {
   // player won if all invaders are gone
   if( invaderGroup.empty() ) {
     info( "Player won" );
-    gameState = GameState::Won;
+    setState( GameState::Won );
     gameOverScreen->win();
   }
   
   // See if the invaders won by reaching the bottom, or player dead and death animation finished.
   if( invaderGroup.didInvadersWin() || ( player->dead && player->animation.isEnded() ) ) {
     info( "Invaders won by reaching the bottom" );
-    gameState = GameState::Lost;
+    setState( GameState::Lost );
     gameOverScreen->lose();
   } 
 }
@@ -215,8 +216,7 @@ void Game::checkForCollisions() {
   
     // First check against bunkers.
     for( auto bunker : allBunkers ) {
-      if( bunker->hit( bullet ) ) {
-        sdl->playSound( SFXId::ExplodeBunker );
+      if( bunker->killHit( bullet ) ) {
         bullet->die();
         break;
       }
@@ -232,9 +232,6 @@ void Game::checkForCollisions() {
         
         sdl->playSound( SFXId::ExplodePlayer );
         player->die();
-        
-        // swap out the player death sprite.
-        player->animation = sdl->getAnimation( AnimationId::PlayerDie );
       }
       
       // If it missed the player, we should skip the checks for other invaders + ufos below
@@ -242,7 +239,10 @@ void Game::checkForCollisions() {
     }
     
     for( auto invader : invaderGroup.invaders ) {
-      if( bullet->box.hit( invader->box ) ) {
+      if( invader->dead ) {
+        continue; // 2 player bullets right behind each other
+      }
+      if( bullet->hit( invader ) ) {
         bullet->die();
         sdl->playSound( SFXId::ExplodeEnemy );
         
@@ -264,6 +264,18 @@ void Game::checkForCollisions() {
         
         changeScore( ufo->getScore() );
         ufo->die();
+      }
+    }
+  }
+  
+  // Check invaders against player itself, bunkers
+  for( auto invader : invaderGroup.invaders ) {
+    if( !player->dead && invader->hit( player ) ) {
+      player->die();
+    }
+    for( auto bunker : allBunkers ) {
+      if( bunker->killHit( invader ) ) {
+        // you lose the bunker piece
       }
     }
   }
@@ -312,7 +324,6 @@ void Game::runGame() {
 
 void Game::controllerUpdateTitle() {
   // any key down at title starts the game.
-  vector<uint16_t> startKeys = { SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
   if( controller.justPressedAny( startKeys ) ) {
     titleScreen->hitReturn();
   }
@@ -343,7 +354,7 @@ void Game::controllerUpdateRunning() {
     player->move( mX, 0 );
   }
   if( controller.justPressed( SDL_SCANCODE_8 ) ) {
-    invaderGroup.killAll();
+    invaderGroup.killAll( 1 );
   }
   player->enforceWorldLimits();
   
@@ -361,6 +372,13 @@ void Game::controllerUpdate() {
     game->togglePause();
   }
   
+  if( controller.isPressed( SDL_SCANCODE_K ) ) {
+    speedMultiplier = 10;
+  }
+  else {
+    speedMultiplier = 1;
+  }
+  
   switch( gameState ) {
   case GameState::Title:
     controllerUpdateTitle();
@@ -375,7 +393,6 @@ void Game::controllerUpdate() {
   case GameState::Won:
   case GameState::Lost:
     {
-      vector<uint16_t> startKeys = { SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
       if( controller.justPressedAny( startKeys ) ) {
         setState( GameState::Title );
       }
@@ -385,13 +402,11 @@ void Game::controllerUpdate() {
   case GameState::Exiting:
     break;
   case GameState::Test: {
-      if( controller.mouseJustPressed( SDL_BUTTON_LEFT ) ) {
-        info( "LEFt button" );
-      }
-      if( controller.mouseJustPressed( SDL_BUTTON_RIGHT ) ) {
-        info( "Right button" );
-      }
       test.testMouseHit( controller.getMousePos() );
+      
+      if( controller.justPressedAny( startKeys ) ) {
+        setState( GameState::Title );
+      }
     }
     break;
   }
@@ -399,8 +414,10 @@ void Game::controllerUpdate() {
 
 void Game::update() {
   
-  // FrameTime is the difference between current clock time and 
+  // difference in time between (now) and prev frame's time 
   dt = clock.sec() - clockThisFrame;
+  dt *= speedMultiplier;  // Speedup multiplier increases the size of the time step.
+  // Velocities are multiplied by dt, so things move faster when dt is bigger.
   clockThisFrame = clock.sec();
 
   controllerUpdate();

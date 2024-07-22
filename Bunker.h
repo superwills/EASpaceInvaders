@@ -15,9 +15,10 @@ class Bunker {
 public:
   vector< shared_ptr<Sprite> > pieces;
   Bunker( const RectF &bounds );
-  
   void update( float t );
   void draw();
-  bool hit( shared_ptr<Sprite> other );
+  
+  // Kills any pieces of the bunker hit by Sprite.
+  bool killHit( shared_ptr<Sprite> other );
   void clearDead();
 };

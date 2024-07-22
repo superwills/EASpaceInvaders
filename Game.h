@@ -25,6 +25,7 @@ class Game {
 public:
 	enum class GameState { Title, Running, Paused, Won, Lost, Exiting, Test };
   float clockThisFrame = 0, dt = 0;
+  float speedMultiplier = 1;
   StopWatch clock;
   
 private:
@@ -54,6 +55,8 @@ private:
 	GameState prevState = GameState::Title;
   GameState gameState = GameState::Title;
 
+  vector<uint16_t> startKeys = { SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
+  
 public:
   Controller controller;
 

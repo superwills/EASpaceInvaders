@@ -3,13 +3,6 @@
 #include "Assets.h"
 
 UFO::UFO( const RectF &rectangle ) : Sprite( rectangle, AnimationId::UFO ) {
-
-}
-
-void UFO::update( float t ) {
-  Sprite::update( t );
-  
-  box.pos.x -= 5;
-  
-  
+  name = "UFO/" + name;
+  velocity.x = -500;
 }

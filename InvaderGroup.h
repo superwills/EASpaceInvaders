@@ -33,6 +33,6 @@ public:
   void update( float t );
   void draw() const;
   // debug fn
-  void killAll();
+  void killAll( bool display );
   void clearDead();
 };

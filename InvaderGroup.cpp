@@ -48,16 +48,18 @@ void InvaderGroup::populate( const RectF &invaderBounds ) {
 }
 
 void InvaderGroup::update( float t ) {
+  
   if( invaderReachedBottom ) {
     // invaders stop moving once they have won.
     return;
   }
+  
   // Step right, until someone hits the edge.
-  float disp = movingRight ? +1 : -1;
+  float invaderVelocity = movingRight ? +100 : -100;
   Vector2f windowSize = sdl->getWindowSize();
   
   for( auto invader : invaders ) {
-    invader->move( disp, 0 );
+    invader->velocity = Vector2f( invaderVelocity, 0 );
     invader->update( t );
     
     // Check lose condition: any invader reaches the bottom of the screen
@@ -72,7 +74,7 @@ void InvaderGroup::update( float t ) {
   for( auto invader : invaders ) {
     RectF window( Vector2f( 0 ), windowSize );
     
-    RectF next = invader->box + disp;
+    RectF next = invader->box + invader->velocity*t;
     
     // Have to check left/right bounds only.
     if( !window.contains( next ) ) {
@@ -96,10 +98,16 @@ void InvaderGroup::draw() const {
   }
 }
 
-void InvaderGroup::killAll() {
-  for( auto invader : invaders ) {
-    invader->die();
+void InvaderGroup::killAll( bool display ) {
+  if( display ) {
+    for( auto invader : invaders ) {
+      invader->die();
+    }
   }
+  invaders.clear();
+  
+  invaderReachedBottom = 0;
+  row = 0;
 }
 
 void InvaderGroup::clearDead() {

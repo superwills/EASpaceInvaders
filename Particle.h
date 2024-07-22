@@ -9,7 +9,6 @@ public:
   
   float initialLife = DefaultLifetime;
   float lifeRemaining = DefaultLifetime;
-  Vector2f vel;
   int growing = 1;        // when growing=1, shrinking=-1
   float growthFactor = .2;
   float pulsePeriod = .1; // Grow/shrink cycle every (this) seconds.

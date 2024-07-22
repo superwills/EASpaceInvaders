@@ -31,6 +31,9 @@ public:
   
 	// This member represents the position & the size of the sprite combined
   RectF box;
+  
+  // Moves the sprite each frame.
+  Vector2f velocity;
 	
 	Sprite();
   Sprite( const RectF &rectangle ); 

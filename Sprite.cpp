@@ -23,7 +23,7 @@ Sprite::Sprite( const RectF& rectangle, SDL_Color color ) :
 
 Sprite::Sprite( const RectF& rectangle, shared_ptr<Texture> iTex, SDL_Color color ) :
     box( rectangle ) {
-	name = makeString( "Sprite %d from texture", spriteId );
+	name = makeString( "Sprite %d", spriteId );
  
   // We need at least 1 animation frame to represent the static tex. 
 	addAnimationFrame( iTex, color );
@@ -135,6 +135,8 @@ RectF Sprite::getDrawBox() const {
 
 void Sprite::update( float t ) {
   animation.update( t );
+  
+  box.pos += velocity*t; // Multiply by t allows timescale
 }
 
 void Sprite::draw() const {
@@ -155,7 +157,7 @@ void Sprite::draw() const {
 
 void Sprite::die() {
   if( dead ) {
-    error( "double die call" );
+    error( "%s double die call", name.c_str() );
   }
   
   // mark for removal at end of frame.

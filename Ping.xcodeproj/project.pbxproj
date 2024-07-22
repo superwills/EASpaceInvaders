@@ -132,11 +132,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3D667CC92C4ADAE50014BCD0 /* base */ = {
+		3D228A5C2C4EF103005B9684 /* sprites */ = {
 			isa = PBXGroup;
 			children = (
 				9FC715C91A152805004FDDD1 /* Sprite.h */,
 				9FC715D41A152805004FDDD1 /* Sprite.cpp */,
+				9FC715BF1A152805004FDDD1 /* Bullet.h */,
+				9FC715CD1A152805004FDDD1 /* Bullet.cpp */,
+				3D667CC72C4ADA370014BCD0 /* Invader.h */,
+				3D667CC62C4ADA370014BCD0 /* Invader.cpp */,
+				3D667CED2C4D82590014BCD0 /* Particle.h */,
+				3D667CEC2C4D82590014BCD0 /* Particle.cpp */,
+				9FC715C51A152805004FDDD1 /* Player.h */,
+				9FC715D21A152805004FDDD1 /* Player.cpp */,
+				3D228A542C4D9F1D005B9684 /* UFO.h */,
+				3D228A532C4D9F1D005B9684 /* UFO.cpp */,
+			);
+			name = sprites;
+			sourceTree = "<group>";
+		};
+		3D667CC92C4ADAE50014BCD0 /* base */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			name = base;
 			sourceTree = "<group>";
@@ -202,31 +219,22 @@
 		9FC715E31A152813004FDDD1 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				3D228A5C2C4EF103005B9684 /* sprites */,
 				3D667CC92C4ADAE50014BCD0 /* base */,
 				3D667CCB2C4BDC330014BCD0 /* Animation.h */,
 				3D667CCA2C4BDC330014BCD0 /* Animation.cpp */,
 				3D9200682C4AACFF001198CA /* Assets.h */,
 				3D92006B2C4AB501001198CA /* Assets.cpp */,
-				9FC715BF1A152805004FDDD1 /* Bullet.h */,
-				9FC715CD1A152805004FDDD1 /* Bullet.cpp */,
 				3D667CE12C4C316E0014BCD0 /* Bunker.h */,
 				3D667CE02C4C316E0014BCD0 /* Bunker.cpp */,
 				9FC715C21A152805004FDDD1 /* Game.h */,
 				9FC715D01A152805004FDDD1 /* Game.cpp */,
 				3D228A572C4E7537005B9684 /* GameOverScreen.h */,
 				3D228A562C4E7537005B9684 /* GameOverScreen.cpp */,
-				3D667CC72C4ADA370014BCD0 /* Invader.h */,
-				3D667CC62C4ADA370014BCD0 /* Invader.cpp */,
 				3D667CE72C4D4F410014BCD0 /* InvaderGroup.h */,
 				3D667CE62C4D4F410014BCD0 /* InvaderGroup.cpp */,
-				3D667CED2C4D82590014BCD0 /* Particle.h */,
-				3D667CEC2C4D82590014BCD0 /* Particle.cpp */,
-				9FC715C51A152805004FDDD1 /* Player.h */,
-				9FC715D21A152805004FDDD1 /* Player.cpp */,
 				9FC715CB1A152805004FDDD1 /* TitleScreen.h */,
 				9FC715D61A152805004FDDD1 /* TitleScreen.cpp */,
-				3D228A542C4D9F1D005B9684 /* UFO.h */,
-				3D228A532C4D9F1D005B9684 /* UFO.cpp */,
 				3D228A5A2C4ECA06005B9684 /* Test.h */,
 				3D228A592C4ECA06005B9684 /* Test.cpp */,
 			);
