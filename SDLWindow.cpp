@@ -5,7 +5,7 @@
 
 #include <assert.h>
 
-SDLWindow *sdl = 0;
+shared_ptr<SDLWindow> sdl;
 
 void SDLWindow::SDLInit() {
   if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {

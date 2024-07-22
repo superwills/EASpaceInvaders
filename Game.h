@@ -36,9 +36,9 @@ private:
   shared_ptr<Player> player;
   
   vector< shared_ptr<Bullet> > allBullets;
+  vector< shared_ptr<Bunker> > allBunkers;
   vector< shared_ptr<Particle> > allParticles;
   vector< shared_ptr<UFO> > allUFOs;
-  vector< shared_ptr<Bunker> > allBunkers;
   
   InvaderGroup invaderGroup;
   Test test;
@@ -70,11 +70,13 @@ public:
 	void togglePause();
   
   void initGameBoard();
+  void clearGameBoard();
   void genUFO();
   
   // Player shoots from top, invaders from their bottom.
   void shootBullet( const RectF &source, bool fromInvader, const Vector2f &vel );
   void particleSplash( const Vector2f &pos, int numParticles );
+  void setScore( int newScore );
   void changeScore( int byScoreValue );
   
   void checkWinConditions();

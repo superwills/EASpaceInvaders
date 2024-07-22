@@ -1,7 +1,8 @@
 #pragma once
 
 #include <map>
-using namespace std;
+#include <memory>
+using std::map, std::shared_ptr;
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
@@ -83,4 +84,4 @@ public:
 
 // Give access to the SDL object using this extern.
 // Alternatively could have used SDLWindow::instance()
-extern SDLWindow *sdl;
+extern shared_ptr<SDLWindow> sdl;

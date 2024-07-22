@@ -7,48 +7,34 @@ using namespace std;
 #include "Sprite.h"
 #include <time.h>
 
-// I'm influenced by the Mojang standard from working on Minecraft.
-// Here are some of the coding features, influenced by that std, that I worked in:
+// coding features (influenced by mojang )
 // - Init all vars
 // - ptrs are always checked when they can be null
 // - asserts, but "assert is not error checking"
 // - all array bounds accesses checked, unless "sure"
-//   - (the above 2 might catch quite a few potential bugs)
-// - Exit program at some large failure points (eg renderer won't start)
+//   - (the above few may catch quite a few bugs)
+//
 // - const as much as possible
-// - Code tries to be brief while still being clear
+// - Exit program at some large failure points (eg renderer won't start)
 // - Try to add helpful errors msgs
 // - Some comments for any surprising things
 // - preferring shared_ptr to raw pointers where possible
 // - use auto where type is not ambiguous from line of code
 // - encapsulation
 // - Most things are done programmatically. I find that easier. Object sizes are found as % of window size.
+// - Code tries to be brief while still being clear
 // - Errors in the log mean something should be fixed
 
 // Use events?
-
-// invaders have to shoot at you.
-
 // Powerups? Laser? Spread gun?
+// A very big J enemy
 
-// procedural aliens?
-/*
- A very big J enemy
-
- flying saucer's that fly by that say UFO on them.
-
- Particle effects. Can we do a geometry shader?
-
- GLEW is here:
-
- /usr/local/Cellar/glew/2.2.0_1/include
-*/
 
 int main(int argc, char* args[]) {
   SDLWindow::SDLInit();
 	srand( (uint32_t)time( 0 ) );
 	
-  sdl = new SDLWindow( "Space Invaders", 800, 600 );
+  sdl = std::make_shared<SDLWindow>( "Space Invaders", 800, 600 );
   game = new Game;
   game->init();
 
@@ -77,7 +63,7 @@ int main(int argc, char* args[]) {
 	}
   
   delete game;
-  delete sdl;
+  sdl.reset();
 	
 	return 0;
 }

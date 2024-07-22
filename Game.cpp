@@ -57,7 +57,7 @@ void Game::init() {
   sdl->loadMusic( MusicId::Background1, "assets/sounds/1721341431075_1911.mod.mp3" );
   
 	setState( GameState::Title );
-  changeScore( 0 ); // Create the scoresprite for the 1st time
+  setScore( 0 );
 }
 
 bool Game::isState( GameState state ) {
@@ -88,8 +88,7 @@ void Game::setState( GameState newState ) {
       
   case GameState::Won:
   case GameState::Lost:
-    // Clear the old game board.
-    invaderGroup.killAll( 0 );
+    clearGameBoard();
     break;
 	
   case GameState::Exiting:
@@ -149,6 +148,16 @@ void Game::initGameBoard() {
   }
 }
 
+void Game::clearGameBoard() {
+  invaderGroup.killAll( 0 );
+  allBullets.clear();
+  allBunkers.clear();
+  allParticles.clear();
+  allUFOs.clear();
+  
+  setScore( 0 );
+}
+
 void Game::genUFO() {
   nextUFO -= dt;
   if( nextUFO < 0 ) {
@@ -176,13 +185,8 @@ void Game::particleSplash( const Vector2f &pos, int numParticles ) {
   }
 }
 
-void Game::changeScore( int byScoreValue ) {
-  score += byScoreValue;
-  
-  // kill the old score
-  if( scoreSprite ) {
-    scoreSprite->die();
-  }
+void Game::setScore( int newScore ) {
+  score = newScore;
   
   // Top center.
   Vector2f windowSize = sdl->getWindowSize();
@@ -192,6 +196,10 @@ void Game::changeScore( int byScoreValue ) {
   scoreSpriteBox.pos.y = 0; // top.
   
   scoreSprite = Sprite::Text( makeString( "%d", score ), scoreSpriteBox, White );
+}
+
+void Game::changeScore( int byScoreValue ) {
+  setScore( score + byScoreValue );
 }
 
 void Game::checkWinConditions() {
