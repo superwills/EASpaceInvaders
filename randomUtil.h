@@ -31,25 +31,18 @@ inline uint32_t randIntIn( int lowIn, int highIn ) {
   return lowIn + MTRandom32() % ( highIn + 1 - lowIn );
 }
 
-inline uint32_t randIntInRange( int low, int range ) {
-  if( !range ) {
-    return low;
-  }
-  return low + MTRandom32() % (range + 1);
-}
-
 // random on [0, 1]
 inline float randFloat() {
   return (float)MTRandom32() / MTRandom32.max();
 }
 
-inline float randFloat( float low, float high ) {
-  return low + ( high - low )*randFloat();
-}
-
 // low of 0
 inline float randFloat( float high ) {
   return high*randFloat() ;
+}
+
+inline float randFloat( float low, float high ) {
+  return low + ( high - low )*randFloat();
 }
 
 inline int randSign() {

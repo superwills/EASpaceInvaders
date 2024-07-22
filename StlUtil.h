@@ -35,8 +35,6 @@ inline int decycleArrayIndex( int &index, size_t arraySize ) {
 
 string makeString( const char *fmt, ... );
 
-string makeString( const char *fmt, va_list args ) ;
-
-string makeTime( double s ) ;
+string makeTimeString( double s ) ;
 
 

@@ -1,14 +1,6 @@
 #include "StlUtil.h"
 
-// THESE ARE ABOUT CONVENIENCE, NOT EFFICIENCY.
-// There are A LOT of allocations that go on here:
-//  - the 4096 chr buffer
-//  - the copy of the 4096 chr buffer (which is truncated at
-//    exactly the right len)
-// If we let msgBuffer be static, it will perform better but
-// then won't be threadsafe.
-string makeString( const char *fmt, ... )
-{
+string makeString( const char *fmt, ... ) {
   va_list args ;
   va_start( args, fmt ) ;
   const int Size = 4096;
@@ -17,20 +9,9 @@ string makeString( const char *fmt, ... )
   return string( msgBuffer ) ; // ALWAYS COPIES WHAT'S IN MSGBUFFER.
 }
 
-// Makes std c++ string from fmt and args.
-string makeString( const char *fmt, va_list args )
-{
-  const int Size = 4096;
-  char msgBuffer[ Size ];
-  vsnprintf( msgBuffer, Size, fmt, args ) ;
-  return string( msgBuffer ) ; // wrap it up
-}
-
-string makeTime( double s )
-{
-  unsigned long long floorSec = s ;
-  
-  unsigned long long hours = floorSec / (60 * 60) ;
+string makeTimeString( double s ) {
+  uint64_t floorSec = s ;
+  uint64_t hours = floorSec / (60 * 60) ;
   int minutes = (floorSec / 60) % 60 ;
   int seconds = floorSec % 60 ;
 
