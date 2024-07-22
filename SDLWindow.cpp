@@ -145,7 +145,7 @@ Animation SDLWindow::getAnimation( AnimationId animationId ) {
   return it->second;
 }
 
-Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize ) {
+Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize, bool cycles ) {
   // All frames use the same tex.
   shared_ptr<Texture> tex = sdl->loadTexture( filename );
   RectF srcRect;
@@ -153,6 +153,7 @@ Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const st
   
   // construct the animation frames
   Animation animation;
+  animation.cycles = cycles;
   for( int i = 0; i < numFrames; i++ ) {
     animation.addFrame( Animation::Frame( tex, srcRect, White ) );
     srcRect.pos.x += frameSize.x; // Move right.

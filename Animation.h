@@ -29,13 +29,18 @@ struct Animation {
   Frame ErrFrame; // You get this frame back if you have no animation frames set up.
   
 private:
-  float time = 0; // Amount of time we've spent on current frame
+  float time = 0;  // Amount of time we've spent on current frame
   int frameIndex = 0;
   
 public:
+  bool cycles = 1; // animation cycles or plays thru once.
   vector<Frame> frames;
-    
+  
   Animation() {
+  }
+  
+  inline bool isEnded() const {
+    return frameIndex >= (int)frames.size() - 1;
   }
   
   void addFrame( const Frame& frame ) {
@@ -56,7 +61,18 @@ public:
     const Frame& frame = getCurrentFrame();
     
     if( time > frame.duration ) {
-      cycleArrayIndex( frameIndex, frames.size() );
+      ++frameIndex;
+      
+      // don't let the index go OOB.
+      if( frameIndex >= frames.size() ) {
+        if( cycles ) {
+          frameIndex = 0;
+        }
+        else {
+          // stay on the last frame.
+          frameIndex = (int)frames.size() - 1;
+        }
+      }
       time = 0;
     }
   }

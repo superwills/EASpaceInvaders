@@ -71,6 +71,8 @@ public:
   void shootBullet( const RectF &source, bool fromInvader, const Vector2f &vel );
   void particleSplash( const Vector2f &pos, int numParticles );
   void changeScore( int byScoreValue );
+  
+  void checkWinConditions();
 	void checkForCollisions();
   void clearDead(); 
 	void runGame();

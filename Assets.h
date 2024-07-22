@@ -43,6 +43,7 @@ enum class AnimationId {
   MenuPointer,
   UFO,
   Player,
+  PlayerDie,
 };
 
 // This could have been added to class Sprite, but it seemed to crowd it a little.

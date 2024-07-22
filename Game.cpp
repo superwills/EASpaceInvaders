@@ -26,7 +26,8 @@ void Game::init() {
   sdl->loadSpritesheetAnimation( AnimationId::UFO, "assets/ims/ufo.png", 2, Vector2f( 32, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::MenuPointer, "assets/ims/menu-pointer.png", 2, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Explode, "assets/ims/explode.png", 5, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 8 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::PlayerDie, "assets/ims/player-die.png", 6, Vector2f( 20, 12 ) );
   
   title = std::make_shared<TitleScreen>( "space invaders!" );
   gameOverScreen = std::make_shared<GameOverScreen>();
@@ -195,6 +196,22 @@ void Game::changeScore( int byScoreValue ) {
   scoreSprite = Sprite::Text( makeString( "%d", score ), scoreSpriteBox, White );
 }
 
+void Game::checkWinConditions() {
+  // player won if all invaders are gone
+  if( invaderGroup.empty() ) {
+    info( "Player won" );
+    gameState = GameState::Won;
+    gameOverScreen->win();
+  }
+  
+  // See if the invaders won by reaching the bottom, or player dead and death animation finished.
+  if( invaderGroup.didInvadersWin() || ( player->dead && player->animation.isEnded() ) ) {
+    info( "Invaders won by reaching the bottom" );
+    gameState = GameState::Lost;
+    gameOverScreen->lose();
+  } 
+}
+
 void Game::checkForCollisions() {
 	// check bullets against invaders, ufo's, bunkers.
   for( auto bullet : allBullets ) {
@@ -218,6 +235,9 @@ void Game::checkForCollisions() {
       if( bullet->box.hit( player->box ) ) {
         sdl->playSound( SFXId::ExplodePlayer );
         player->die();
+        
+        // put in the player death sprite.
+        player->animation = sdl->getAnimation( AnimationId::PlayerDie );
       } 
       continue;
     }
@@ -290,11 +310,7 @@ void Game::runGame() {
 	
   checkForCollisions();
  
-  // See if the invaders won by reaching the bottom
-  if( invaderGroup.didInvadersWin() ) {
-    info( "Invaders won by reaching the bottom" );
-    gameState = GameState::Lost;
-  } 
+  checkWinConditions();
  
   clearDead(); 
 }
@@ -309,20 +325,25 @@ void Game::controllerUpdate() {
   }
   
   if( gameState == GameState::Running ) {
-    // Use the controller state to change gamestate
-    player->move( controller.mouseX, 0 );
+    // Player can only move if not dead.
+    if( !player->dead ) {
+  
+      // Use the controller state to change gamestate
+      player->move( controller.mouseX, 0 );
+      
+      float mX = 2;
+      if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
+        player->move( -mX, 0 );
+      }
+      if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
+        player->move( mX, 0 );
+      }
+      player->enforceWorldLimits();
+      
+      if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
+        shootBullet( player->box, 0, Vector2f( 0, -100 ) );
+      }
     
-    float mX = 2;
-    if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
-      player->move( -mX, 0 );
-    }
-    if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
-      player->move( mX, 0 );
-    }
-    player->enforceWorldLimits();
-    
-    if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
-      shootBullet( player->box, 0, Vector2f( 0, -100 ) );
     }
   }
 }

@@ -26,6 +26,7 @@ public:
   vector< shared_ptr<Invader> > invaders;
   
   inline bool didInvadersWin() { return invaderReachedBottom; }
+  inline bool empty() { return invaders.empty(); }
   
   void addRow( AnimationId character );
   void populate( const RectF &invaderBounds );
