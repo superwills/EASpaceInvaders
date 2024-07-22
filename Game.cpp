@@ -351,15 +351,13 @@ void Game::controllerUpdateRunning() {
     return;
   }
 
-  // Use the controller state to change gamestate
   player->move( controller.dxMouse, 0 );
   
-  float mX = 2;
   if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
-    player->move( -mX, 0 );
+    player->setMovingLeft();
   }
   if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
-    player->move( mX, 0 );
+    player->setMovingRight();
   }
   if( controller.justPressed( SDL_SCANCODE_8 ) ) {
     invaderGroup.killAll( 1 );

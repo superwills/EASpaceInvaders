@@ -7,6 +7,13 @@ Player::Player( const RectF &rectangle ) : Sprite( rectangle, AnimationId::Playe
   name = "Player/" + name;
 }
 
+void Player::update( float t ) {
+  Sprite::update( t );
+
+  // player kill vel each frame
+  velocity.x = 0;
+}
+
 void Player::die() {
   Sprite::die();
   //if( dead ) {
@@ -14,4 +21,12 @@ void Player::die() {
   //}
   // swap out the player death sprite.
   animation = sdl->getAnimation( AnimationId::PlayerDie );
+}
+
+void Player::setMovingLeft() {
+  velocity.x = -PlayerSpeed;
+}
+
+void Player::setMovingRight() {
+  velocity.x = +PlayerSpeed;
 }
