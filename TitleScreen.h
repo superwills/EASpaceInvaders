@@ -11,6 +11,7 @@ class Sprite;
 class TitleScreen {
 public:
   shared_ptr<Sprite> titleShadow, titleSprite;
+  vector< shared_ptr<Sprite> > invaders;
   vector< shared_ptr<Sprite> > menuItems;
   shared_ptr<Sprite> pointer;
   int pointerIndex = 0;

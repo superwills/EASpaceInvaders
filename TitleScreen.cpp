@@ -1,9 +1,11 @@
 #include "TitleScreen.h"
 
-#include "SDLColors.h"
 #include "Game.h"
+#include "Invader.h"
+#include "SDLColors.h"
 #include "StlUtil.h"
 #include "Texture.h"
+
 
 TitleScreen::TitleScreen( const string &titleText ) {
   
@@ -35,6 +37,10 @@ TitleScreen::TitleScreen( const string &titleText ) {
   Vector2f pointerPos = startMenuPos;
   pointerPos.x = getMenuPointerX();
   pointer = std::make_shared<Sprite>( RectF( pointerPos, Vector2f( getMenuPointerSize() ) ), AnimationId::MenuPointer );
+  
+  // Bonus:
+  invaders.push_back( std::make_shared<Invader>( RectF( 0, 0, 64, 64 ), AnimationId::E ) );
+  invaders.push_back( std::make_shared<Invader>( RectF( 64, 0, 64, 64 ), AnimationId::A ) );
 }
 
 void TitleScreen::update( float t ) {
@@ -44,6 +50,11 @@ void TitleScreen::update( float t ) {
     menuItem->update( t );
   }
   pointer->update( t );
+  
+  for( auto invader : invaders ) {
+    invader->update( t );
+  }
+  
 }
 
 void TitleScreen::draw() {
@@ -53,6 +64,10 @@ void TitleScreen::draw() {
     menuItem->draw();
   }
   pointer->draw();
+  
+  for( auto invader : invaders ) {
+    invader->draw();
+  }
 }
 
 void TitleScreen::hitReturn() {
