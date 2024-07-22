@@ -6,7 +6,7 @@
 struct Texture;
 
 #include <vector>
-using std::vector;
+using std::shared_ptr, std::vector;
 
 struct RectF;
 
@@ -43,37 +43,9 @@ public:
     return frameIndex >= (int)frames.size() - 1;
   }
   
-  void addFrame( const Frame& frame ) {
-    frames.emplace_back( frame );
-  }
+  void addFrame( const Frame& frame );
   
-  const Frame& getCurrentFrame() const {
-    if( !isValidIndex( frameIndex, frames ) ) {
-      error( "Index %d OOB frames, %zu, set up an animation!", frameIndex, frames.size() );
-      return ErrFrame;
-    }
-    
-    return frames[ frameIndex ];
-  }
+  const Frame& getCurrentFrame() const;
   
-  void update( float t ) {
-    time += t;
-    const Frame& frame = getCurrentFrame();
-    
-    if( time > frame.duration ) {
-      ++frameIndex;
-      
-      // don't let the index go OOB.
-      if( frameIndex >= frames.size() ) {
-        if( cycles ) {
-          frameIndex = 0;
-        }
-        else {
-          // stay on the last frame.
-          frameIndex = (int)frames.size() - 1;
-        }
-      }
-      time = 0;
-    }
-  }
+  void update( float t );
 };

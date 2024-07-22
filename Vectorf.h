@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include <float.h>
 #include <math.h>
-#include "StlUtil.h"
 
+#include "Log.h"
 #include "randomUtil.h"
+#include "StlUtil.h"
 
 struct Vector2f {
   inline static float EPS_MIN = 1e-6f; // distance to be considered ~=

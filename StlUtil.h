@@ -1,9 +1,8 @@
 #pragma once
 
 #include <vector>
-using namespace std;
-
-#include "Log.h"
+#include <string>
+using std::string, std::vector;
 
 // A helper template to avoid repeating this code formula for each collection
 // Works on Sprite class derivatives (must have T.dead member)
