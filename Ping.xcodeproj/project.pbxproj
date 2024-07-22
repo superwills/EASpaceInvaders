@@ -132,8 +132,7 @@
 		3D228A5C2C4EF103005B9684 /* sprites */ = {
 			isa = PBXGroup;
 			children = (
-				9FC715C91A152805004FDDD1 /* Sprite.h */,
-				9FC715D41A152805004FDDD1 /* Sprite.cpp */,
+				3D228A5F2C4F180B005B9684 /* base */,
 				9FC715BF1A152805004FDDD1 /* Bullet.h */,
 				9FC715CD1A152805004FDDD1 /* Bullet.cpp */,
 				3D667CC72C4ADA370014BCD0 /* Invader.h */,
@@ -159,13 +158,31 @@
 			name = "object-managers";
 			sourceTree = "<group>";
 		};
+		3D228A5E2C4F17D4005B9684 /* geometry */ = {
+			isa = PBXGroup;
+			children = (
+				9FC715C71A152805004FDDD1 /* RectF.h */,
+				9FC715CC1A152805004FDDD1 /* Vectorf.h */,
+			);
+			name = geometry;
+			sourceTree = "<group>";
+		};
+		3D228A5F2C4F180B005B9684 /* base */ = {
+			isa = PBXGroup;
+			children = (
+				9FC715C91A152805004FDDD1 /* Sprite.h */,
+				9FC715D41A152805004FDDD1 /* Sprite.cpp */,
+			);
+			name = base;
+			sourceTree = "<group>";
+		};
 		3D667CC92C4ADAE50014BCD0 /* screens */ = {
 			isa = PBXGroup;
 			children = (
-				9FC715CB1A152805004FDDD1 /* TitleScreen.h */,
-				9FC715D61A152805004FDDD1 /* TitleScreen.cpp */,
 				3D228A572C4E7537005B9684 /* GameOverScreen.h */,
 				3D228A562C4E7537005B9684 /* GameOverScreen.cpp */,
+				9FC715CB1A152805004FDDD1 /* TitleScreen.h */,
+				9FC715D61A152805004FDDD1 /* TitleScreen.cpp */,
 			);
 			name = screens;
 			sourceTree = "<group>";
@@ -197,10 +214,10 @@
 		9FC715E11A15280B004FDDD1 /* SDL */ = {
 			isa = PBXGroup;
 			children = (
-				9FC715C01A152805004FDDD1 /* SDLColors.h */,
-				9FC715CE1A152805004FDDD1 /* SDLColors.cpp */,
 				9FC715C11A152805004FDDD1 /* Controller.h */,
 				9FC715CF1A152805004FDDD1 /* Controller.cpp */,
+				9FC715C01A152805004FDDD1 /* SDLColors.h */,
+				9FC715CE1A152805004FDDD1 /* SDLColors.cpp */,
 				9FC715C81A152805004FDDD1 /* SDLWindow.h */,
 				9FC715D31A152805004FDDD1 /* SDLWindow.cpp */,
 				3D667CE42C4C796C0014BCD0 /* Texture.h */,
@@ -212,10 +229,9 @@
 		9FC715E21A152810004FDDD1 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				3D228A5E2C4F17D4005B9684 /* geometry */,
 				3D667CCB2C4BDC330014BCD0 /* Animation.h */,
 				3D667CCA2C4BDC330014BCD0 /* Animation.cpp */,
-				9FC715CC1A152805004FDDD1 /* Vectorf.h */,
-				9FC715C71A152805004FDDD1 /* RectF.h */,
 				9FC715C31A152805004FDDD1 /* Log.h */,
 				9FC715D11A152805004FDDD1 /* Log.cpp */,
 				3D92006E2C4AB561001198CA /* randomUtil.h */,
