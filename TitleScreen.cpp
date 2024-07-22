@@ -1,6 +1,7 @@
 #include "TitleScreen.h"
 
 #include "Colors.h"
+#include "Game.h"
 #include "StdWilUtil.h"
 #include "Texture.h"
 
@@ -52,6 +53,15 @@ void TitleScreen::draw() {
     menuItem->draw();
   }
   pointer->draw();
+}
+
+void TitleScreen::hitReturn() {
+  if( !pointerIndex ) {
+    game->setState( Game::GameState::Running );
+  }
+  else {
+    game->setState( Game::GameState::Test );
+  }
 }
 
 void TitleScreen::addMenuItem( const string &menuItemText ) {

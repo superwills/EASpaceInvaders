@@ -21,6 +21,7 @@ public:
   void update( float t );
   void draw();
   
+  void hitReturn();
   void addMenuItem( const string &menuItemText );
   
   // Code the formulas for getting these

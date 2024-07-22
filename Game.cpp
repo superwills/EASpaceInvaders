@@ -29,7 +29,7 @@ void Game::init() {
   sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 8 ) );
   sdl->loadSpritesheetAnimation( AnimationId::PlayerDie, "assets/ims/player-die.png", 6, Vector2f( 20, 12 ) );
   
-  title = std::make_shared<TitleScreen>( "space invaders!" );
+  titleScreen = std::make_shared<TitleScreen>( "space invaders!" );
   gameOverScreen = std::make_shared<GameOverScreen>();
   
   RectF pausedTextBox = sdl->getWindowRectangle();
@@ -311,6 +311,48 @@ void Game::runGame() {
   clearDead(); 
 }
 
+void Game::controllerUpdateTitle() {
+  // any key down at title starts the game.
+  vector<uint16_t> startKeys = { SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
+  if( controller.justPressedAny( startKeys ) ) {
+    titleScreen->hitReturn();
+  }
+  
+  if( controller.justPressed( SDL_SCANCODE_UP ) ) {
+    titleScreen->pointerUp();
+  }
+  
+  if( controller.justPressed( SDL_SCANCODE_DOWN ) ) {
+    titleScreen->pointerDown();
+  }
+}
+
+void Game::controllerUpdateRunning() {
+  // Player can only move if not dead.
+  if( player->dead ) {
+    return;
+  }
+
+  // Use the controller state to change gamestate
+  player->move( controller.mouseX, 0 );
+  
+  float mX = 2;
+  if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
+    player->move( -mX, 0 );
+  }
+  if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
+    player->move( mX, 0 );
+  }
+  if( controller.justPressed( SDL_SCANCODE_8 ) ) {
+    invaderGroup.killAll();
+  }
+  player->enforceWorldLimits();
+  
+  if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
+    shootBullet( player->box, 0, Vector2f( 0, -500 ) );
+  }
+}
+
 void Game::controllerUpdate() {
   
 	controller.update();
@@ -320,46 +362,32 @@ void Game::controllerUpdate() {
     game->togglePause();
   }
   
-  if( gameState == GameState::Title ) {
-    // any key down at title starts the game.
-    vector<uint16_t> startKeys = { SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
-    if( controller.justPressedAny( startKeys ) ) {
-      game->setState( Game::GameState::Running );
-    }
-    
-    if( controller.justPressed( SDL_SCANCODE_UP ) ) {
-      title->pointerUp();
-    }
-    
-    if( controller.justPressed( SDL_SCANCODE_DOWN ) ) {
-      title->pointerDown();
-    }
-  }
+  switch( gameState ) {
+  case GameState::Title:
+    controllerUpdateTitle();
+    break;
   
-  else if( gameState == GameState::Running ) {
-    // Player can only move if not dead.
-    if( !player->dead ) {
-  
-      // Use the controller state to change gamestate
-      player->move( controller.mouseX, 0 );
-      
-      float mX = 2;
-      if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
-        player->move( -mX, 0 );
-      }
-      if( controller.isPressed( SDL_SCANCODE_RIGHT ) ) {
-        player->move( mX, 0 );
-      }
-      if( controller.justPressed( SDL_SCANCODE_8 ) ) {
-        invaderGroup.killAll();
-      }
-      player->enforceWorldLimits();
-      
-      if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
-        shootBullet( player->box, 0, Vector2f( 0, -500 ) );
-      }
+  case GameState::Running:
+    controllerUpdateRunning();
+    break;
     
-    }
+  case GameState::Paused:
+    break;
+  case GameState::Won:
+  case GameState::Lost:
+    {
+      vector<uint16_t> startKeys = { SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
+      if( controller.justPressedAny( startKeys ) ) {
+        setState( GameState::Title );
+      }
+    } 
+    break;
+    
+  case GameState::Exiting:
+    break;
+  case GameState::Test:
+    
+    break;
   }
 }
 
@@ -374,7 +402,7 @@ void Game::update() {
   // State-specific update
   switch( gameState ) {
   case GameState::Title:
-    title->update( dt );
+    titleScreen->update( dt );
     break;
   case GameState::Won:
   case GameState::Lost:
@@ -390,6 +418,9 @@ void Game::update() {
   case GameState::Paused: 
 		pausedText->update( dt );
 	  break;
+   
+  case GameState::Test:
+    break;
   }
   
   controller.clearEventKeys();
@@ -400,7 +431,7 @@ void Game::draw() {
 
 	switch( gameState ) {
   case GameState::Title:
-    title->draw();
+    titleScreen->draw();
     break;
   case GameState::Won:
   case GameState::Lost:
@@ -433,6 +464,9 @@ void Game::draw() {
   case GameState::Paused: 
 		pausedText->draw();
 	  break;
+   
+  case GameState::Test:
+    break;  
   }
 	
 	sdl->present();

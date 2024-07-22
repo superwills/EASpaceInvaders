@@ -22,12 +22,12 @@ class UFO;
 
 class Game {
 public:
-	enum class GameState { Title, Running, Paused, Won, Lost, Exiting };
+	enum class GameState { Title, Running, Paused, Won, Lost, Exiting, Test };
   float clockThisFrame = 0, dt = 0;
   StopWatch clock;
   
 private:
-  shared_ptr<TitleScreen> title;
+  shared_ptr<TitleScreen> titleScreen;
   shared_ptr<GameOverScreen> gameOverScreen;
   
 	shared_ptr<Sprite> pausedText;
@@ -77,6 +77,8 @@ public:
   void clearDead(); 
 	void runGame();
  
+  void controllerUpdateTitle();
+  void controllerUpdateRunning();
   void controllerUpdate(); 
 	void update();
 	void draw();
