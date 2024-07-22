@@ -146,6 +146,8 @@ void Game::initGameBoard() {
     shared_ptr<Bunker> bunker = std::make_shared<Bunker>( bunkerRectangle );
     allBunkers.push_back( bunker );
   }
+  
+  setScore( 0 );
 }
 
 void Game::clearGameBoard() {
@@ -154,8 +156,6 @@ void Game::clearGameBoard() {
   allBunkers.clear();
   allParticles.clear();
   allUFOs.clear();
-  
-  setScore( 0 );
 }
 
 void Game::genUFO() {
@@ -460,7 +460,7 @@ void Game::update() {
 
 void Game::draw() {
 	sdl->clear( bkgColor );
-
+  
 	switch( gameState ) {
   case GameState::Title:
     titleScreen->draw();
@@ -469,8 +469,7 @@ void Game::draw() {
   case GameState::Running:
     invaderGroup.draw();
 		player->draw();
-		scoreSprite->draw();
-  
+		
     for( auto bullet : allBullets ) {
       bullet->draw();
     }
@@ -502,6 +501,9 @@ void Game::draw() {
     break;  
   }
 	
+  if( gameState != GameState::Test ) { 
+    scoreSprite->draw();  //always draw the score on top of everything else, except in test mode
+  }
 	sdl->present();
 }
 
