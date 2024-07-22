@@ -53,7 +53,8 @@ void Game::init() {
   
   // https://www.stef.be/bassoontracker
   sdl->loadMusic( MusicId::Background0, "assets/sounds/1721341344111_2337.mod.mp3" );
-	
+  sdl->loadMusic( MusicId::Background1, "assets/sounds/1721341431075_1911.mod.mp3" );
+  
 	setState( GameState::Title );
   changeScore( 0 ); // Create the scoresprite for the 1st time
 }
@@ -71,7 +72,7 @@ void Game::setState( GameState newState ) {
 	
 	switch( newState ) {
   case GameState::Title:
-		sdl->playMusic( MusicId::Background0 );
+		sdl->playMusic( rand<MusicId>( MusicId::Background0, MusicId::Background1 ) );
 	 	break;
 	
   case GameState::Running: {
