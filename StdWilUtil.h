@@ -85,7 +85,7 @@ inline int cycleArrayIndex( int &index, size_t arraySize ) {
 
 inline int decycleArrayIndex( int &index, size_t arraySize ) {
   if( --index < 0 ) {
-    index = arraySize - 1;  // reset
+    index = (int)arraySize - 1;  // reset
   }
   
   return index;

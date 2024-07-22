@@ -31,8 +31,6 @@ char* getCurrentTimeString();
 // decorates the log message with [appname][thread][error level][current time]:  message
 void logDecorate( int logLevel, short color, const char *fmt, va_list args );
 
-string logDecorateGetString( int logLevel, const char *fmt, va_list args ) ;
-
 void error( const char *fmt, ... );
 
 void warning( const char *fmt, ... );

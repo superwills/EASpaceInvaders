@@ -40,40 +40,21 @@ char* getCurrentTimeString()
 // decorates the log message with [appname][thread][error level][current time]:  message
 void logDecorate( int logLevel, short color, const char *fmt, va_list args )
 {
-	// to be threadsafe, reupdate()d static
-	char msgBuffer[ 4096 ] ;  // oops. Had a 623 char error (from shader) and it err-d out.
-	vsprintf( msgBuffer, fmt, args ) ;
+	const int Size = 4096;
+	char msgBuffer[ Size ] ;  // oops. Had a 623 char error (from shader) and it err-d out.
+	vsnprintf( msgBuffer, Size, fmt, args ) ;
 
 	// write time into timeBuff. Should be about 8 chars hh:mm:ss
 	char timeBuf[ 32 ] ;
 	strftime( timeBuf, 255, "%X", getCurrentTime() ) ;
 
 	// Put it all together
-	char buf[ 4096 ] ;
+	char buf[ Size ] ;
 
-	sprintf( buf, "[ %s ][ %s ][ %s ]:  %s", progname, ErrorLevelName[ logLevel ], timeBuf, msgBuffer ) ;
+	snprintf( buf, Size, "[ %s ][ %s ][ %s ]:  %s", progname, ErrorLevelName[ logLevel ], timeBuf, msgBuffer ) ;
 
 	//printf( "%s\n", buf ) ; // don't want inserted.
 	puts( buf ) ;
-}
-
-string logDecorateGetString( int logLevel, const char *fmt, va_list args )
-{
-	// to be threadsafe, reupdate()d static
-	char msgBuffer[ 4096 ] ;  // oops. Had a 623 char error (from shader) and it err-d out.
-	vsprintf( msgBuffer, fmt, args ) ;
-
-	// write time into timeBuff. Should be about 8 chars hh:mm:ss
-	char timeBuf[ 32 ] ;
-	strftime( timeBuf, 255, "%X", getCurrentTime() ) ;
-
-	// Put it all together
-	char buf[ 4096 ] ;
-
-	sprintf( buf, "[ %s ][ %s ][ %s ]:  %s", progname, ErrorLevelName[ logLevel ], timeBuf, msgBuffer ) ;
-
-	//printf( "%s\n", buf ) ; // don't want inserted.
-	return string( buf ) ;
 }
 
 void error( const char *fmt, ... )

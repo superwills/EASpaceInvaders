@@ -11,16 +11,18 @@ string makeString( const char *fmt, ... )
 {
   va_list args ;
   va_start( args, fmt ) ;
-  char msgBuffer[ 4096 ] ; // max len.  Can also use a strlen call to avoid over alloc
-  vsprintf( msgBuffer, fmt, args ) ;
+  const int Size = 4096;
+  char msgBuffer[ Size ] ; // max len.  Can also use a strlen call to avoid over alloc
+  vsnprintf( msgBuffer, Size, fmt, args ) ;
   return string( msgBuffer ) ; // ALWAYS COPIES WHAT'S IN MSGBUFFER.
 }
 
 // Makes std c++ string from fmt and args.
 string makeString( const char *fmt, va_list args )
 {
-  char msgBuffer[ 4096 ] ;  // oops. Had a 623 char error (from shader) and it err-d out.
-  vsprintf( msgBuffer, fmt, args ) ;
+  const int Size = 4096;
+  char msgBuffer[ Size ];
+  vsnprintf( msgBuffer, Size, fmt, args ) ;
   return string( msgBuffer ) ; // wrap it up
 }
 

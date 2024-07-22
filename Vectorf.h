@@ -8,24 +8,10 @@
 
 #include "randomUtil.h"
 
-// NAN is the worst thing that can happen to a computation.
-// NAN fails any comparison test ( 0 < nan is false, 0 > nan is false, 0 == nan is false )
-// NAN is toxic (0*nan=nan, 0+nan=nan), the basic result of nan is to mess EVERYTHING UP.
-// If NAN_SAFETY is defined, all divisions which result in NAN
-// are given +inf instead.
-#define NAN_MOD_SAFETY
-#define DEBUG_STOP_ON_NAN
-
-// If x and y are BOTH 0, put HUGE in the place of division.
-#define NAN_DIV(x,y) ( (!x && !y) ? HUGE : x/y )
-
-// See https://gist.github.com/superwills/6159033
-// for the matrix characters
-
 struct Vector2f {
 	float x, y;
 	
-	Vector2f():x(0.f),y(0.f){}
+	Vector2f() : x(0.f),y(0.f){}
 	Vector2f( float ix, float iy ):x(ix),y(iy){}
 	Vector2f( float iv ):x(iv),y(iv){}
 
@@ -40,45 +26,10 @@ struct Vector2f {
 		return Vector2f( randFloat( min, max ), randFloat( min, max ) ) ;
 	}
 
-	//CONST
-	inline void print() const {
-		printf( "(%.2f %.2f) ",x,y ) ;
-	}
-	inline void print( const char* msg ) const {
-		printf( "%s (%.2f %.2f)",msg,x,y ) ;
-	}
-	inline void println() const {
-		printf( "(%.2f %.2f)\n",x,y ) ;
-	}
-	inline void println( const char* msg ) const {
-		printf( "%s (%.2f %.2f)\n",msg,x,y ) ;
-	}
-
-	inline float max() const { return ::max( x,y ) ; }
-	inline float min() const { return ::min( x,y ) ; }
-	inline int minIndex() const { 
-		if( x <= y )  return 0 ;
-		else return 1 ;
-	}
-	inline int maxIndex() const { 
-		if( x >= y )  return 0 ;
-		else  return 1 ;
-	}
-	inline int fabsMinIndex() const { 
-		Vector2f c = fabsCopy() ;
-		if( c.x <= c.y )  return 0 ;
-		else return 1 ;
-	}
-	inline int fabsMaxIndex() const { 
-		Vector2f c = fabsCopy() ;
-		if( c.x >= c.y ) return 0 ;
-		else  return 1 ;
-	}
-
-	inline float getAvg() const { return (x+y)/2.f ; }
-	inline float sum() const { return x+y ; }
-
-	inline Vector2f operator+( const Vector2f& o ) const {
+	inline float max() const { return std::max( x,y ) ; }
+	inline float min() const { return std::min( x,y ) ; }
+	
+  inline Vector2f operator+( const Vector2f& o ) const {
 		return Vector2f(x+o.x,y+o.y);
 	}
 	inline Vector2f operator-() const {
@@ -115,8 +66,7 @@ struct Vector2f {
 		return x*x+y*y ;
 	}
 	inline Vector2f& setLen( float iLen ){
-		if( float length = len() )
-		{
+		if( float length = len() ) {
 			*this *= iLen / length;
 		}
 		return *this;
@@ -165,14 +115,9 @@ struct Vector2f {
 	inline bool isNaN() const {
 		return _isnan(x) || _isnan(y) ;
 	}
-	// You have to figure out what to do with nan.  nan
-	// only results from 0.f/0.f, so USUALLY it should mean inf.
-	inline Vector2f& checkNaN() {
-		// Getting NAN is extremely bad.  it poisons other operations, fails every comparison test,
-		// and generally messes your program up.  because nan is toxic, the effect could perculate and
-		// eventually bubble into some really far place, you won't notice the bug was 0.f/0.f until about
-		// 2 hours later.  so here we prevent NAN perculation, and in the event off odd program behavior,
-		// its a good idea to set breakpoints here.
+	
+  inline Vector2f& checkNaN() {
+		// nan is toxic, avoid program corruption by overwriting NaN with HUGE
 		if( _isnan( x ) )
 			x = HUGE ;
 		if( _isnan( y ) )
@@ -180,54 +125,13 @@ struct Vector2f {
 		return *this ;
 	}
   
-	// Exact equality
 	inline bool operator==( const Vector2f& o ) const {
 		return x==o.x && y==o.y ;
 	}
 	inline bool operator!=( const Vector2f& o ) const {
 		return x!=o.x || y!=o.y ;
 	}
-
-
-
-	// Returns TRUE if "this" is closer to A
-	// than B
-	inline bool isCloserTo( const Vector2f& a, const Vector2f& thanB ) {
-		return ( *this-a ).len2() < ( *this-thanB ).len2() ;
-	}
-
-	// gets the tangential and normal components of THIS along fN
-	// f MUST BE NORMALIZED.
-	// It gives you the component of this along fN.
-	// If that's negative, THEN THIS IS MORE THAN 90 DEG FROM FN.
-	inline float parallelPerpX( const Vector2f& fN, Vector2f &vParallel, Vector2f &vPerp ) const {
-		// assuming fN is normalized
-		float compParallel = fN.dot( *this ) ;
-		vParallel = fN * compParallel ;
-		vPerp = (*this) - vParallel ;
-		return compParallel ;
-	}
-
-	// The perpendicular vector is 
-	inline void parallelPerpComponents( const Vector2f& fN, float &compParallel, float &compPerp ) const {
-		// assuming fN is normalized
-		compParallel = fN.dot( *this ) ;
-		compPerp = fN.cross( *this ) ;
-	}
-
-	// This is the CCW 90 deg rotated perp. ( y,-x ) is CW rotated.
-	inline Vector2f getPerpendicular() const {
-		return Vector2f( -y,x ) ;
-	}
-
-	inline Vector2f fabsCopy() const {
-		return Vector2f( fabsf(x), fabsf(y) ) ;
-	}
-
-
-
-
-	//NON-CONST
+  
 	inline Vector2f& normalize() {
 		float length = len() ;
 
@@ -268,9 +172,7 @@ struct Vector2f {
 		x/=s,y/=s;
 		return checkNaN() ;
 	}
-#ifdef NAN_MOD_SAFETY
-	// its highly unlikely you'll ask to mod by 0, since
-	// modding is usually rare and deliberate.
+
 	inline Vector2f& operator%=( float s ) {
 		if( !s ) {
 			error( "mod by 0" ) ;
@@ -286,22 +188,7 @@ struct Vector2f {
 		else y=fmodf( y,o.y );
 		return *this ;
 	}
-#else
-	inline Vector2f& operator%=( float s ) {
-		x=fmodf( x,s );  y=fmodf( y,s );
-		return *this ;
-	}
-	inline Vector2f& operator%=( const Vector2f &o ) {
-		x=fmodf( x,o.x );  y=fmodf( y,o.y );
-		return *this ;
-	}
-#endif
-	// This may be faster, but it requires you use the +octant
-	// (0,0,0)->(worldSize,worldSize,worldSize)
-	inline Vector2f& wrap( const Vector2f& worldSize ) {
-		*this += worldSize ;
-		return *this %= worldSize ;
-	}
+
 	inline Vector2f& clampLen( float maxLen ) {
 		float length = len() ;
 		if( length > maxLen ) // also means length > 0, hopefully
@@ -314,27 +201,6 @@ struct Vector2f {
 		::clamp( y,minVal,maxVal ) ;
 		return *this ;
 	}
-	inline Vector2f& clampComponentBelow( float below ) {
-		if( x < below ) x=below ;
-		if( y < below ) y=below ;
-		return *this ;
-	}
-	inline Vector2f& clampComponentAbove( float above ) {
-		if( x > above ) x=above ;
-		if( y > above ) y=above ;
-		return *this ;
-	}
-	inline Vector2f& clampBelow( const Vector2f& below ) {
-		if( x < below.x ) x=below.x ;
-		if( y < below.y ) y=below.y ;
-		return *this ;
-	}
-	inline Vector2f& clampAbove( const Vector2f& above ) {
-		if( x > above.x ) x=above.x ;
-		if( y > above.y ) y=above.y ;
-		return *this ;
-	}
-
 	inline Vector2f& fabs() {
 		x=fabsf(x) ;  y=fabsf(y);
 		return *this ;
