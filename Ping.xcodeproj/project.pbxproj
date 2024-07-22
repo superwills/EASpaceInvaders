@@ -22,7 +22,7 @@
 		3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D92006D2C4AB561001198CA /* randomUtil.cpp */; };
 		9FC715BE1A1527C4004FDDD1 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715BD1A1527C4004FDDD1 /* main.cpp */; };
 		9FC715D71A152805004FDDD1 /* Bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CD1A152805004FDDD1 /* Bullet.cpp */; };
-		9FC715D81A152805004FDDD1 /* Colors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CE1A152805004FDDD1 /* Colors.cpp */; };
+		9FC715D81A152805004FDDD1 /* SDLColors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CE1A152805004FDDD1 /* SDLColors.cpp */; };
 		9FC715D91A152805004FDDD1 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715CF1A152805004FDDD1 /* Controller.cpp */; };
 		9FC715DA1A152805004FDDD1 /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D01A152805004FDDD1 /* Game.cpp */; };
 		9FC715DB1A152805004FDDD1 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9FC715D11A152805004FDDD1 /* Log.cpp */; };
@@ -87,7 +87,7 @@
 		9FC7159C1A152601004FDDD1 /* Ping */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ping; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FC715BD1A1527C4004FDDD1 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9FC715BF1A152805004FDDD1 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
-		9FC715C01A152805004FDDD1 /* Colors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colors.h; sourceTree = "<group>"; };
+		9FC715C01A152805004FDDD1 /* SDLColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLColors.h; sourceTree = "<group>"; };
 		9FC715C11A152805004FDDD1 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		9FC715C21A152805004FDDD1 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		9FC715C31A152805004FDDD1 /* Log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 		9FC715CB1A152805004FDDD1 /* TitleScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleScreen.h; sourceTree = "<group>"; };
 		9FC715CC1A152805004FDDD1 /* Vectorf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vectorf.h; sourceTree = "<group>"; };
 		9FC715CD1A152805004FDDD1 /* Bullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bullet.cpp; sourceTree = "<group>"; };
-		9FC715CE1A152805004FDDD1 /* Colors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Colors.cpp; sourceTree = "<group>"; };
+		9FC715CE1A152805004FDDD1 /* SDLColors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SDLColors.cpp; sourceTree = "<group>"; };
 		9FC715CF1A152805004FDDD1 /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Controller.cpp; sourceTree = "<group>"; };
 		9FC715D01A152805004FDDD1 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
 		9FC715D11A152805004FDDD1 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
@@ -197,6 +197,8 @@
 		9FC715E11A15280B004FDDD1 /* SDL */ = {
 			isa = PBXGroup;
 			children = (
+				9FC715C01A152805004FDDD1 /* SDLColors.h */,
+				9FC715CE1A152805004FDDD1 /* SDLColors.cpp */,
 				9FC715C11A152805004FDDD1 /* Controller.h */,
 				9FC715CF1A152805004FDDD1 /* Controller.cpp */,
 				9FC715C81A152805004FDDD1 /* SDLWindow.h */,
@@ -210,8 +212,8 @@
 		9FC715E21A152810004FDDD1 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				9FC715C01A152805004FDDD1 /* Colors.h */,
-				9FC715CE1A152805004FDDD1 /* Colors.cpp */,
+				3D667CCB2C4BDC330014BCD0 /* Animation.h */,
+				3D667CCA2C4BDC330014BCD0 /* Animation.cpp */,
 				9FC715CC1A152805004FDDD1 /* Vectorf.h */,
 				9FC715C71A152805004FDDD1 /* RectF.h */,
 				9FC715C31A152805004FDDD1 /* Log.h */,
@@ -232,8 +234,6 @@
 				3D228A5D2C4EFACB005B9684 /* object-managers */,
 				3D228A5C2C4EF103005B9684 /* sprites */,
 				3D667CC92C4ADAE50014BCD0 /* screens */,
-				3D667CCB2C4BDC330014BCD0 /* Animation.h */,
-				3D667CCA2C4BDC330014BCD0 /* Animation.cpp */,
 				3D9200682C4AACFF001198CA /* Assets.h */,
 				3D92006B2C4AB501001198CA /* Assets.cpp */,
 				9FC715C21A152805004FDDD1 /* Game.h */,
@@ -297,7 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FC715DB1A152805004FDDD1 /* Log.cpp in Sources */,
-				9FC715D81A152805004FDDD1 /* Colors.cpp in Sources */,
+				9FC715D81A152805004FDDD1 /* SDLColors.cpp in Sources */,
 				3D228A582C4E7537005B9684 /* GameOverScreen.cpp in Sources */,
 				9FC715D71A152805004FDDD1 /* Bullet.cpp in Sources */,
 				3D667CE52C4C796C0014BCD0 /* Texture.cpp in Sources */,

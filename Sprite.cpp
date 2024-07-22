@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-#include "Colors.h"
+#include "SDLColors.h"
 #include "Game.h"
 #include "Texture.h"
 

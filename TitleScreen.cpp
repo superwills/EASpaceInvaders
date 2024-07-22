@@ -1,6 +1,6 @@
 #include "TitleScreen.h"
 
-#include "Colors.h"
+#include "SDLColors.h"
 #include "Game.h"
 #include "StlUtil.h"
 #include "Texture.h"

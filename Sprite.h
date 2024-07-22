@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Animation.h"
-#include "Colors.h"
+#include "SDLColors.h"
 #include "RectF.h"
 #include "SDLWindow.h"
 #include "Vectorf.h"
