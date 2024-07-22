@@ -10,7 +10,7 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
   velocity = initialVelocity;
 	
   float windowHeight = sdl->getWindowSize().y;
-  box.size = Vector2f( windowHeight * .01, windowHeight * .05 );
+  box.size = Vector2f( windowHeight ) * bulletScale;
   
   box.pos.x = shooterBounds.midX() - box.size.x/2;
   if( fromInvader ) {

@@ -4,10 +4,12 @@
 #include <cmath>
 
 void InvaderGroup::addRow( AnimationId character ) {
+  
+
   for( int i = 0; i < invadersPerRow; i++ ) {
     RectF box;
-    box.pos.y = row * ( invaderSize + 5 );
-    box.pos.x = i*( invaderSize + 5 );
+    box.pos.y = row * ( invaderSize.y + interInvaderSpacing.y );
+    box.pos.x = i*( invaderSize.x + interInvaderSpacing.x );
     
     box.size = invaderSize;
     
@@ -19,9 +21,12 @@ void InvaderGroup::addRow( AnimationId character ) {
 }
 
 void InvaderGroup::populate( const RectF &invaderBounds ) {
+  
   // Lay the invaders out
-  float boardSize = invaderBounds.size.x;
-  invaderSize = boardSize / invadersPerRow;
+  float boardWidth = invaderBounds.size.x;
+  interInvaderSpacing = Vector2f( boardWidth ) * Vector2f( .05, .01 );
+  
+  invaderSize = boardWidth / invadersPerRow;
   
   addRow( AnimationId::E );
   addRow( AnimationId::A );
@@ -38,7 +43,7 @@ void InvaderGroup::update( float t ) {
   }
   
   // Step right, until someone hits the edge.
-  float invaderVelocity = movingRight ? +100 : -100;
+  float invaderVelocity = movingRight ? +DefaultSpeed : -DefaultSpeed;
   
   // multiply velocity increasingly starting when there are 10 invaders left.
   if( invaders.size() < 10 ) {
@@ -76,9 +81,10 @@ void InvaderGroup::update( float t ) {
   
   if( invaderHitSide ) {
     movingRight = !movingRight;
+    
     // move down by size of invader.
     for( auto invader : invaders ) {
-      invader->move( 0, invaderSize );
+      invader->move( 0, invaderSize.y + interInvaderSpacing.y );
     }
   }
 }
