@@ -1,7 +1,21 @@
 #pragma once
 
-#include "Sprite.h"
+#include <memory>
+using std::shared_ptr;
 
-class Bunker : public Sprite {
+#include "RectF.h"
+
+class Sprite;
+
+// A bunker contains 8 sprites in this shape:
+// *** 
+// ***
+// * *
+class Bunker {
+public:
+  vector< shared_ptr<Sprite> > pieces;
+  Bunker( const RectF &bounds );
   
+  void update( float t );
+  void draw();
 };

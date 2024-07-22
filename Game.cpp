@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include "Bullet.h"
+#include "Bunker.h"
 #include "Colors.h"
 #include "Invader.h"
 #include "Particle.h"
@@ -118,6 +119,24 @@ void Game::initGameBoard() {
   gameBoard.size *= .5;
   
   invaderGroup.populate( gameBoard );
+  
+  // Bunker size is so 9 can fit across, but only every other one is filled in with a bunker
+  Vector2f bunkerSize;
+  bunkerSize.x = windowSize.x / 9;
+  bunkerSize.y = bunkerSize.x * .6;
+  
+  for( int i = 0; i < 9; i++ ) {
+    if( i % 2 == 0 ) {
+      continue; // skip every other one.
+    }
+    Vector2f bunkerPos;
+    bunkerPos.x = bunkerSize.x * i;
+    bunkerPos.y = windowSize.y - 2*bunkerSize.y;
+    RectF bunkerRectangle( bunkerPos, bunkerSize );
+    
+    shared_ptr<Bunker> bunker = std::make_shared<Bunker>( bunkerRectangle );
+    allBunkers.push_back( bunker );
+  }
 }
 
 void Game::genUFO() {
@@ -245,6 +264,10 @@ void Game::runGame() {
   for( auto ufo : allUFOs ) {
     ufo->update( dt );
   }
+  
+  for( auto bunker : allBunkers ) {
+    bunker->update( dt );
+  }
 	
   checkForCollisions();
  
@@ -338,6 +361,10 @@ void Game::draw() {
     
     for( auto ufo : allUFOs ) {
       ufo->draw();
+    }
+    
+    for( auto bunker : allBunkers ) {
+      bunker->draw();
     }
 	  break;
 	

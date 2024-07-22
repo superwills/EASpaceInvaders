@@ -30,12 +30,14 @@ public:
   RectF box;
 	
 	Sprite();
-  Sprite( const RectF &rectangle );
+  Sprite( const RectF &rectangle ); 
+  Sprite( const RectF &rectangle, SDL_Color color );
 	Sprite( const RectF &rectangle, shared_ptr<Texture> iTex );
   Sprite( const RectF &rectangle, AnimationId animationId ); 
   virtual ~Sprite() { }
   
-  void addBlankAnimationFrame();
+  // add an animation frame where the object is a solid color
+  void addSolidColorAnimationFrame( SDL_Color color );
   void addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color ); 
   void addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float duration ); 
   void addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, SDL_Color color, float duration );

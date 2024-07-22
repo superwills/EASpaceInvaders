@@ -14,6 +14,13 @@ Sprite::Sprite( const RectF& rectangle ) :
   name = makeString( "Sprite %d", spriteId );
 }
 
+Sprite::Sprite( const RectF& rectangle, SDL_Color color ) :
+    box( rectangle ) {
+  name = makeString( "Sprite %d", spriteId );
+  
+  addSolidColorAnimationFrame( color );
+}
+
 Sprite::Sprite( const RectF& rectangle, shared_ptr<Texture> iTex ) :
     box( rectangle ) {
 	name = makeString( "Sprite %d from texture", spriteId );
@@ -29,8 +36,8 @@ Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
   animation = sdl->getAnimation( animationId );
 }
 
-void Sprite::addBlankAnimationFrame() {
-  animation.addFrame( Animation::Frame( 0, White ) );
+void Sprite::addSolidColorAnimationFrame( SDL_Color color ) {
+  animation.addFrame( Animation::Frame( 0, color ) );
 }
 
 void Sprite::addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color ) {

@@ -20,6 +20,8 @@ struct Animation {
     inline static float DefaultFrameTime = .1f;
     
     Frame() { }
+    // Frame with no tex, just a solid color.
+    Frame( SDL_Color iColor, float iDuration = DefaultFrameTime );
     Frame( shared_ptr<Texture> iTex, SDL_Color iColor, float iDuration = DefaultFrameTime );
     Frame( shared_ptr<Texture> iTex, const RectF &subRectangle, SDL_Color iColor, float iDuration = DefaultFrameTime );
   };
