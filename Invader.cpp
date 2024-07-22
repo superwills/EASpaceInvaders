@@ -15,4 +15,3 @@ void Invader::update( float t ) {
     game->shootBullet( box, 1, Vector2f( 0, 100 ) );
   }
 }
-

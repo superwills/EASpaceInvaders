@@ -117,11 +117,11 @@ void Game::togglePause() {
 void Game::initGameBoard() {
   Vector2f windowSize = sdl->getWindowSize();
   
+  // re/create the player
   RectF playerBox;
   playerBox.size = windowSize.x * .08;  // % of world size.
   playerBox.pos.x = windowSize.x/2 - playerBox.size.x/2;
   playerBox.pos.y = windowSize.y - playerBox.size.y;
-  
   player = std::make_shared<Player>( playerBox );
   
   // The board is 80% of the window size.
@@ -140,7 +140,7 @@ void Game::initGameBoard() {
   for( int i = 1; i <= 7; i += 2 ) {
     Vector2f bunkerPos;
     bunkerPos.x = bunkerSize.x * i;
-    bunkerPos.y = windowSize.y - 2*bunkerSize.y;
+    bunkerPos.y = windowSize.y - 3*bunkerSize.y;
     RectF bunkerRectangle( bunkerPos, bunkerSize );
     
     shared_ptr<Bunker> bunker = std::make_shared<Bunker>( bunkerRectangle );
@@ -228,16 +228,18 @@ void Game::checkForCollisions() {
     }
   
     if( bullet->fromInvader ) {
-      // bullets from invaders can't hit other invaders or the ufos.
-      // check against the player and that's all it does
       if( bullet->box.hit( player->box ) ) {
+        bullet->die();
+        
         sdl->playSound( SFXId::ExplodePlayer );
         player->die();
         
-        // put in the player death sprite.
+        // swap out the player death sprite.
         player->animation = sdl->getAnimation( AnimationId::PlayerDie );
-      } 
-      continue;
+      }
+      
+      // If it missed the player, we should skip the checks for other invaders + ufos below
+      continue;  // there's nothing else for an invader bullet to do
     }
     
     for( auto invader : invaderGroup.invaders ) {
@@ -247,14 +249,12 @@ void Game::checkForCollisions() {
         
         changeScore( invader->getScore() );
         invader->die();
-        
-        particleSplash( invader->box.centroid(), randInt( 5, 8 ) );
         break;
       }
     }
     
     if( bullet->dead ) {
-      // If the bullet was consumed, skip the ufo check
+      // If the bullet was consumed by an invader, skip the ufo check that would happen below
       continue;
     }
     
@@ -265,8 +265,6 @@ void Game::checkForCollisions() {
         
         changeScore( ufo->getScore() );
         ufo->die();
-        
-        particleSplash( ufo->box.centroid(), randInt( 8, 12 ) );
       }
     }
   }

@@ -49,8 +49,15 @@ void Particle::update( float t ) {
     // Grow/shrink the particle.
     box.size += growing * growthFactor;
   }
+}
+
+void Particle::die() {
+  if( dead ) {
+    error( "double die call" );
+  }
   
-  
-  
-  
+  // mark for removal at end of frame.
+  // The reason for doing this is it is awkward to remove from collections while iterating
+  // (which is often when we discover the object died)
+  dead = 1;
 }

@@ -55,7 +55,7 @@ void Sprite::addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, S
 shared_ptr<Sprite> Sprite::Text( const string &text, const RectF &box, SDL_Color iColor ) {
   shared_ptr<Texture> tex = sdl->makeTextTexture( text );
   shared_ptr<Sprite> textSprite = std::make_shared<Sprite>( box, tex, iColor );
-  
+  textSprite->minParticles = textSprite->maxParticles = 0;
   return textSprite;
 }
 
@@ -158,6 +158,12 @@ void Sprite::die() {
   // The reason for doing this is it is awkward to remove from collections while iterating
   // (which is often when we discover the object died)
   dead = 1;
+  
+  // ask for a particle splash from the Game. 
+  // No particles if vars set to 0.
+  if( minParticles && maxParticles ) {
+    game->particleSplash( box.centroid(), randInt( minParticles, maxParticles ) );
+  }
 }
 
 int Sprite::getScore() const {

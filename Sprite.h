@@ -23,6 +23,9 @@ public:
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   Animation animation; // Single frame if static.
   
+  // When object dies, # particles it displays
+  int minParticles = 8, maxParticles = 12;
+  
   // Besides the class type, this tells you precisely what kind of thing this is (so you can get the score for it)
   AnimationId character = AnimationId::None;
   
