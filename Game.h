@@ -37,6 +37,7 @@ class Game {
   vector< shared_ptr<Bunker> > allBunkers;
   vector< shared_ptr<Particle> > allParticles;
   vector< shared_ptr<UFO> > allUFOs;
+  vector< shared_ptr<Sprite> > playerLives;
   
   InvaderGroup invaderGroup;
   Test test;
@@ -68,7 +69,9 @@ class Game {
 	void checkForCollisions();
   void clearDead(); 
 	void runGame();
- 
+  void killPlayer();
+  void updateNumberOfPlayerLives();
+  
   void controllerUpdateTitle();
   void controllerUpdateRunning();
   void controllerUpdate(); 

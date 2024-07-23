@@ -17,6 +17,7 @@ void Game::initGameBoard() {
   
   // re/create the player
   player = std::make_shared<Player>();
+  updateNumberOfPlayerLives();
   
   invaderGroup.populate();
   
@@ -45,6 +46,7 @@ void Game::clearGameBoard() {
   allBunkers.clear();
   allParticles.clear();
   allUFOs.clear();
+  playerLives.clear();
 }
 
 void Game::togglePause() {
@@ -92,8 +94,9 @@ void Game::checkWinConditions() {
   }
   
   // See if the invaders won by reaching the bottom, or player dead and death animation finished.
-  if( invaderGroup.didInvadersWin() || ( player->dead && player->animation.isEnded() ) ) {
-    info( "Invaders won by reaching the bottom" );
+  ///if( invaderGroup.didInvadersWin() || (player->dead && !player->canPlayerRespawn() ) ) {
+  if( invaderGroup.didInvadersWin() || (player->dead && player->animation.isEnded() && player->isOutOfLives() ) ) {
+    info( "Invaders won" );
     setState( GameState::Lost );
     gameOverScreen->lose();
   } 
@@ -118,7 +121,7 @@ void Game::checkForCollisions() {
     if( bullet->isFromInvader ) {
       if( !player->dead && bullet->hit( player ) ) {
         bullet->die();
-        player->die();
+        killPlayer();
       }
       
       // If it missed the player, we should skip the checks for other invaders + ufos below
@@ -153,7 +156,7 @@ void Game::checkForCollisions() {
   // Check invaders against player itself, bunkers
   for( auto invader : invaderGroup.invaders ) {
     if( !player->dead && invader->hit( player ) ) {
-      player->die();
+      killPlayer();
     }
     for( auto bunker : allBunkers ) {
       // kill bunker pieces hit by this invader
@@ -175,6 +178,7 @@ void Game::clearDead() {
 
 void Game::runGame() {
   invaderGroup.update( dt );
+  
   player->update( dt );
   scoreSprite->update( dt );
   genUFO();
@@ -195,11 +199,31 @@ void Game::runGame() {
     bunker->update( dt );
   }
 	
+  for( auto playerLife : playerLives ) {
+    playerLife->update( dt );
+  } 
   checkForCollisions();
  
   checkWinConditions();
  
   clearDead(); 
+}
+
+void Game::killPlayer() {
+  // call the player to die.
+  player->die();
+  updateNumberOfPlayerLives();
+}
+
+void Game::updateNumberOfPlayerLives() {
+  playerLives.clear();
+  
+  float lifeBoxSize = sdl->getWindowSize().x * .02;
+  RectF nextLifeBox( 0, 0, lifeBoxSize, lifeBoxSize );
+  for( int i = 0; i < player->getNumLivesRemaining(); i++ ) {
+    nextLifeBox.pos.x += lifeBoxSize;
+    playerLives.push_back( std::make_shared<Sprite>( nextLifeBox, AnimationId::Player ) );
+  }
 }
 
 void Game::controllerUpdateTitle() {
@@ -484,6 +508,10 @@ void Game::draw() {
     
     for( auto bunker : allBunkers ) {
       bunker->draw();
+    }
+    
+    for( auto playerLife : playerLives ) {
+      playerLife->draw();
     }
 	  break;
   

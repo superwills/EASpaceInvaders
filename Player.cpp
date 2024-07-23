@@ -26,12 +26,26 @@ Player::Player() {
 void Player::update( float t ) {
   Sprite::update( t );
   velocity.x = 0;   // player kill vel each frame
+  
+  if( canPlayerRespawn() ) {
+    respawn();
+  }
 }
 
 void Player::die() {
+  lives--;
   Sprite::die();
   // swap out the player death sprite.
-  animation = sdl->getAnimation( AnimationId::PlayerDie );
+  setAnimation( AnimationId::PlayerDie );
+}
+
+bool Player::canPlayerRespawn() {
+  return dead && animation.isEnded() && !isOutOfLives();
+}
+
+void Player::respawn() {
+  setAnimation( AnimationId::Player );
+  dead = 0;
 }
 
 void Player::tryShoot() {
