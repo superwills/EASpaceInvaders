@@ -12,6 +12,60 @@
 
 shared_ptr<Game> game;
 
+void Game::initGameBoard() {
+  Vector2f windowSize = sdl->getWindowSize();
+  
+  // re/create the player
+  RectF playerBox;
+  playerBox.size = windowSize * Player::DefaultPlayerSizePercent;
+  playerBox.pos.x = windowSize.x/2 - playerBox.size.x/2;
+  playerBox.pos.y = windowSize.y - playerBox.size.y;
+  player = std::make_shared<Player>( playerBox );
+  
+  RectF invaderBounds = sdl->getWindowRectangle();
+  invaderBounds.pos.y += windowSize.y/10; // Move down some
+  invaderBounds.size *= DefaultInvaderBoundsSizePercent;
+  
+  invaderGroup.populate( invaderBounds );
+  
+  // Bunker size is so 9 can fit across, but only every other one is filled in with a bunker
+  Vector2f bunkerSize;
+  bunkerSize.x = windowSize.x / 9;
+  bunkerSize.y = bunkerSize.x * .6;
+  
+  // odds, 1,3,5,7
+  for( int i = 1; i <= 7; i += 2 ) {
+    Vector2f bunkerPos;
+    bunkerPos.x = bunkerSize.x * i;
+    bunkerPos.y = windowSize.y - 3*bunkerSize.y;
+    RectF bunkerRectangle( bunkerPos, bunkerSize );
+    
+    shared_ptr<Bunker> bunker = std::make_shared<Bunker>( bunkerRectangle );
+    allBunkers.push_back( bunker );
+  }
+  
+  setScore( 0 );
+}
+
+void Game::clearGameBoard() {
+  invaderGroup.killAll( 0 );
+  allBullets.clear();
+  allBunkers.clear();
+  allParticles.clear();
+  allUFOs.clear();
+}
+
+void Game::togglePause() {
+	if( gameState == GameState::Paused ) {
+		setState( prevState );
+		Mix_ResumeMusic();  
+	}
+	else {
+		setState( GameState::Paused );
+		Mix_PauseMusic();  
+	}
+}
+
 void Game::init() {
 
   bkgColor = Indigo;
@@ -95,66 +149,12 @@ void Game::setState( GameState newState ) {
 	gameState = newState;
 }
 
-void Game::togglePause() {
-	if( gameState == GameState::Paused ) {
-		setState( prevState );
-		Mix_ResumeMusic();  
-	}
-	else {
-		setState( GameState::Paused );
-		Mix_PauseMusic();  
-	}
-}
-
 void Game::setKeyJustPressed( uint16_t key ) {
   controller.setKeyJustPressed( key );
 }
 
 void Game::setMouseJustClicked( uint16_t mouseButton ) {
   controller.setMouseJustClicked( mouseButton );
-}
-
-void Game::initGameBoard() {
-  Vector2f windowSize = sdl->getWindowSize();
-  
-  // re/create the player
-  RectF playerBox;
-  playerBox.size = windowSize * Player::DefaultPlayerSizePercent;
-  playerBox.pos.x = windowSize.x/2 - playerBox.size.x/2;
-  playerBox.pos.y = windowSize.y - playerBox.size.y;
-  player = std::make_shared<Player>( playerBox );
-  
-  RectF invaderBounds = sdl->getWindowRectangle();
-  invaderBounds.pos.y += windowSize.y/10; // Move down some
-  invaderBounds.size *= DefaultInvaderBoundsSizePercent;
-  
-  invaderGroup.populate( invaderBounds );
-  
-  // Bunker size is so 9 can fit across, but only every other one is filled in with a bunker
-  Vector2f bunkerSize;
-  bunkerSize.x = windowSize.x / 9;
-  bunkerSize.y = bunkerSize.x * .6;
-  
-  // odds, 1,3,5,7
-  for( int i = 1; i <= 7; i += 2 ) {
-    Vector2f bunkerPos;
-    bunkerPos.x = bunkerSize.x * i;
-    bunkerPos.y = windowSize.y - 3*bunkerSize.y;
-    RectF bunkerRectangle( bunkerPos, bunkerSize );
-    
-    shared_ptr<Bunker> bunker = std::make_shared<Bunker>( bunkerRectangle );
-    allBunkers.push_back( bunker );
-  }
-  
-  setScore( 0 );
-}
-
-void Game::clearGameBoard() {
-  invaderGroup.killAll( 0 );
-  allBullets.clear();
-  allBunkers.clear();
-  allParticles.clear();
-  allUFOs.clear();
 }
 
 void Game::genUFO() {
@@ -261,8 +261,9 @@ void Game::checkForCollisions() {
     
     for( auto invader : invaderGroup.invaders ) {
       if( invader->dead ) {
-        continue; // 2 player bullets right behind each other
+        continue; // can happen if 2 player bullets try to hit same invader
       }
+      
       if( bullet->hit( invader ) ) {
         bullet->die();
         invader->die();
@@ -289,9 +290,8 @@ void Game::checkForCollisions() {
       player->die();
     }
     for( auto bunker : allBunkers ) {
-      if( bunker->killHit( invader ) ) {
-        // you lose the bunker piece
-      }
+      // kill bunker pieces hit by this invader
+      bunker->killHit( invader );
     }
   }
 }

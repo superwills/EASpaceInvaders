@@ -58,6 +58,11 @@ class Game {
 
   vector<uint16_t> startKeys = { SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
   Controller controller;
+  
+  void initGameBoard();
+  void clearGameBoard();
+  
+  void togglePause();
 
 public:
  	Game() { }
@@ -67,13 +72,10 @@ public:
   
   inline bool isState( GameState state ) { return gameState == state; }
 	void setState( GameState newState );
-	void togglePause();
- 
+	
   void setKeyJustPressed( uint16_t key );
   void setMouseJustClicked( uint16_t mouseButton );
   
-  void initGameBoard();
-  void clearGameBoard();
   void genUFO();
   
   int getNumBullets( bool isFromInvader );

@@ -44,7 +44,7 @@ void Bunker::draw() {
 
 bool Bunker::killHit( shared_ptr<Sprite> other ) {
   
-  // don't bother to check any pieces if sprite misses the whole bounds
+  // don't bother to check any pieces if sprite misses the whole bunker bounds
   if( !other->hit( bounds ) ) {
     return 0;
   }
@@ -52,7 +52,7 @@ bool Bunker::killHit( shared_ptr<Sprite> other ) {
   for( auto bunkerPiece : pieces ) {
     if( bunkerPiece->dead ) {
       // if the piece is dead it's as if it isn't there.
-      // Need this check because removal from collections is done only after a frame is complete
+      // (check b/c removal from collections only happens after a frame is complete)
       continue;
     }
     

@@ -7,30 +7,24 @@ using std::shared_ptr, std::vector;
 #include "Assets.h"
 #include "RectF.h"
 
+class Game;
 class Invader;
 
 // Represents a group/wave of invaders.
 class InvaderGroup {
   bool invaderReachedBottom = 0;
-  
-public:
   inline static Vector2f invaderSize = Vector2f( 100 ); // dummy val, really computed based on window size
   inline static Vector2f interInvaderSpacing = Vector2f( 5, 2 ); // dummy val.
-  
   inline static const int rowsOfInvaders = 5;
   inline static const int invadersPerRow = 11; // 11 across in the original game.
-  
-  // Default speed before speedup due to fewer invaders left
-  inline static const float DefaultSpeed = 25;
   inline static const int DefaultMaxBullets = 2;
   inline static const int DesperationThreshold = 10;
   
   int row = 0; // which row we're on when adding invaders.
-  
   bool movingRight = 1;
-  
   RectF bounds = RectF( 0, 0, 256, 256 );
   
+public:
   vector< shared_ptr<Invader> > invaders;
   
   // Basic AI function. Measure between 0 and 1 of how "desperate" the invader group is.

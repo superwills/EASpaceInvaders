@@ -17,9 +17,7 @@ Player::Player( const RectF &rectangle ) : Sprite( rectangle, AnimationId::Playe
 
 void Player::update( float t ) {
   Sprite::update( t );
-
-  // player kill vel each frame
-  velocity.x = 0;
+  velocity.x = 0;   // player kill vel each frame
 }
 
 void Player::die() {
