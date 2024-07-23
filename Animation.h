@@ -34,8 +34,9 @@ private:
   int frameIndex = 0;
   
 public:
-  bool cycles = 1; // animation cycles or plays thru once.
+  // These are public so you can edit still the frames
   vector<Frame> frames;
+  bool cycles = 1; // animation cycles or plays thru once
   
   Animation() {
   }

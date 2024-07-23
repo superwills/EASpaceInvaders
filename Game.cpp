@@ -276,7 +276,7 @@ void Game::checkForCollisions() {
     }
     
     for( auto ufo : allUFOs ) {
-      if( bullet->box.hit( ufo->box ) ) {
+      if( bullet->hit( ufo ) ) {
         bullet->die();
         ufo->die();
       }
@@ -371,7 +371,7 @@ void Game::controllerUpdateRunning() {
   player->enforceWorldLimits();
   
   if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
-    tryShootBullet( player->box, 0, Vector2f( 0, -500 ) );
+    player->tryShoot();
   }
 }
 

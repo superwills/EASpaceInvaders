@@ -3,8 +3,10 @@
 #include "Sprite.h"
 #include "Assets.h"
 
+class InvaderGroup;
+
 class Invader : public Sprite {
-  
+  friend class InvaderGroup;
 public:
   inline static Vector2f DefaultBulletSpeed = Vector2f( 0, +100 );
   

@@ -51,6 +51,7 @@ TitleScreen::TitleScreen( const string &titleText ) {
   eSpritePos.x -= eaSpriteSize.x;
   
   auto e = std::make_shared<Invader>( RectF( eSpritePos, eaSpriteSize ), AnimationId::InvaderE );
+  // Adjust the tilt of these sprites
   for( auto&& frame : e->animation.frames ) {
     frame.angle = -35;
   }
@@ -137,5 +138,5 @@ void TitleScreen::updatePointerPosition() {
   pointerPos.x = getMenuPointerX();
   pointerPos.y += menuItemSize.y * pointerIndex;
   
-  pointer->box.pos = pointerPos;
+  pointer->setPos( pointerPos );
 }

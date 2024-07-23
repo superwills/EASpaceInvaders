@@ -16,31 +16,24 @@ class Sprite : public std::enable_shared_from_this<Sprite> {
   
 protected:
   int spriteId = NextSpriteId++;
-  
+  Vector2f hitBoxScale = 1;   // < 1 for more forgiving collision checks
+  // This member represents the position & the size of the sprite combined
+  RectF box;
+  Vector2f velocity;
+	
 public:
-  string name;    // takes space but helps in debug
+  string name;    // helps in debug
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
-  Animation animation; // Single frame if static.
+  Animation animation;  // Single frame for non-animated objects
   SFXId deathSound = SFXId::NoSFX;
   
   // When object dies, # particles it displays
   int minParticles = 8, maxParticles = 12;
   float particleSizeMin = 4, particleSizeMax = 12;
   
-  // Sprites often DO NOT put pixels to the edge of their render box.
-  // So the hitbox can be scaled down for a sprite when collision checking,
-  // so it gives more forgiving collisions
-  Vector2f hitBoxScale = 1;
-  
-  // Besides the class type, this tells you precisely what kind of thing this is (so you can get the score for it)
+  // also tells what kind of thing object is (so you can get the score for it)
   AnimationId character = AnimationId::NoAnimation;
   
-	// This member represents the position & the size of the sprite combined
-  RectF box;
-  
-  // Moves the sprite each frame.
-  Vector2f velocity;
-	
 	Sprite();
   Sprite( const RectF &rectangle ); 
   Sprite( const RectF &rectangle, SDL_Color color );
@@ -58,15 +51,15 @@ public:
 	static shared_ptr<Sprite> Text( const string &text, const RectF &box, SDL_Color iColor );
   
   RectF getScaledHitBox() const;
-  // simple fns could be inline
-  inline Vector2f getPos() {  return box.pos;  }
+  
+  inline Vector2f getPos() const {  return box.pos;  }
+  
   void setPos( const Vector2f &pos ) {  box.pos = pos;  }
   // Set position of sprite so it's center is @pos (accounting for current size of sprite) 
   void setCenter( const Vector2f &pos ) { box.setCenter( pos ); }
   Vector2f getCenter() {  return box.centroid();  }
   void setSize( const Vector2f &size ) {  box.size = size;  }
-  void scale( float s ) {  box.size *= s;  }
-
+  
   void enforceWorldLimits();
 	void move( const Vector2f &displacement );
   

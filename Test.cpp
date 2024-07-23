@@ -17,7 +17,7 @@ Test::Test() {
     
     auto smallSprite = std::make_shared<Sprite>( r, White );
     if( largeSprite->hit( smallSprite ) ) {
-      smallSprite->animation.frames[ 0 ].color = Blue;
+      smallSprite->animation.frames.front().color = Blue;
     }
   
     sprites.push_back( smallSprite );
@@ -26,10 +26,10 @@ Test::Test() {
 
 void Test::testMouseHit( const Vector2f &p ) {
   if( largeSprite->hit( p ) ) {
-    largeSprite->animation.frames[ 0 ].color = Red;
+    largeSprite->animation.frames.front().color = Red;
   }
   else {
-    largeSprite->animation.frames[ 0 ].color = Yellow;
+    largeSprite->animation.frames.front().color = Yellow;
   }
 }
 
