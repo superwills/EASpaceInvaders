@@ -62,7 +62,7 @@ int main(int argc, char* args[]) {
       }
 		}
 		
-		game->update();
+    game->update();
     game->draw();
 	}
   

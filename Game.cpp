@@ -399,10 +399,10 @@ void Game::controllerUpdate() {
   }
   
   if( controller.isPressed( SDL_SCANCODE_K ) ) {
-    speedMultiplier = 10;
+    engineIterationPerFrame = 10;
   }
   else {
-    speedMultiplier = 1;
+    engineIterationPerFrame = 1;
   }
   
   switch( gameState ) {
@@ -442,7 +442,7 @@ void Game::update() {
   
   // difference in time between (now) and prev frame's time 
   dt = clock.sec() - clockThisFrame;
-  dt *= speedMultiplier;  // Speedup multiplier increases the size of the time step.
+  //////dt *= speedMultiplier;  // Speedup multiplier increases the size of the time step.
   // Velocities are multiplied by dt, so things move faster when dt is bigger.
   clockThisFrame = clock.sec();
 
@@ -453,8 +453,10 @@ void Game::update() {
     titleScreen->update( dt );
     break;
   
-  case GameState::Running:
-    runGame();
+  case GameState::Running: {
+      for( int i = 0; i < engineIterationPerFrame; i++ )
+        runGame();
+    }
 	  break;
 	
   case GameState::Paused: 

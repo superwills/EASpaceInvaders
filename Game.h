@@ -24,11 +24,13 @@ class UFO;
 
 class Game {
   float clockThisFrame = 0, dt = 0;
-  float speedMultiplier = 1;
   StopWatch clock;
   
   
 public:
+  // game looks faster to player when increase this
+  int engineIterationPerFrame = 1;
+  
 	
 private:
   shared_ptr<TitleScreen> titleScreen;
