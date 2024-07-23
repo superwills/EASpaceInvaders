@@ -168,15 +168,21 @@ void Sprite::die() {
   // ask for a particle splash from the Game. 
   // No particles if vars set to 0.
   if( minParticles && maxParticles ) {
-    game->particleSplash( box.centroid(), randInt( minParticles, maxParticles ) );
+    game->particleSplash( box.centroid(), randInt( minParticles, maxParticles ), particleSizeMin, particleSizeMax );
   }
+  
+  if( deathSound != SFXId::NoSFX ) {
+    sdl->playSound( deathSound );
+  }
+  
+  game->changeScore( getScore() );
 }
 
 int Sprite::getScore() const {
   auto it = ScoreForCharacter.find( character );
   
   if( it == ScoreForCharacter.end() ) {
-    error( "Character %d has no score assigned to it", character );
+    ///error( "Character %d has no score assigned to it", character );
     return 0;
   }
   

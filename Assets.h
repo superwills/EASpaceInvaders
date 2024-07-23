@@ -9,6 +9,7 @@
 using std::map;
 
 enum class SFXId {
+  NoSFX,
   Blip,
   
   Explode2,
@@ -27,24 +28,27 @@ enum class SFXId {
 };
 
 enum class MusicId {
+  NoMusic,
   Background0,
   Background1,
 };
 
 enum class AnimationId {
-  None,
+  NoAnimation,
+  
   Invader1,
   Invader2,
+  InvaderE,
+  InvaderA,
   InvaderBullet1,
   InvaderBullet2,
   PlayerBullet,
-  A,
-  E,
   Explode,
   MenuPointer,
   UFO,
   Player,
   PlayerDie,
+  Boss
 };
 
 // This could have been added to class Sprite, but it seemed to crowd it a little.

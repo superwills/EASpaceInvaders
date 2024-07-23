@@ -59,7 +59,7 @@ private:
 	GameState prevState = GameState::Title;
   GameState gameState = GameState::Title;
 
-  vector<uint16_t> startKeys = { SDL_SCANCODE_SPACE, SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
+  vector<uint16_t> startKeys = { SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
   
 public:
   Controller controller;
@@ -81,7 +81,7 @@ public:
   
   // Player shoots from top, invaders from their bottom.
   void tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel );
-  void particleSplash( const Vector2f &pos, int numParticles );
+  void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax );
   void setScore( int newScore );
   void changeScore( int byScoreValue );
   

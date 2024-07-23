@@ -36,6 +36,7 @@ using namespace std;
 
 
 int main(int argc, char* args[]) {
+  randSeed( (uint32_t)time( 0 ) );
   SDLWindow::SDLInit();
 	
   sdl = std::make_shared<SDLWindow>( "Space Invaders", 800, 600 );

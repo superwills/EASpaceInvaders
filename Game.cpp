@@ -19,15 +19,16 @@ void Game::init() {
   // Load sprite animations
   sdl->loadSpritesheetAnimation( AnimationId::Invader1, "assets/ims/invader-1.png", 2, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Invader2, "assets/ims/invader-2.png", 2, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet1, "assets/ims/bullet-4.png", 2, Vector2f( 8, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet2, "assets/ims/bullet-7.png", 2, Vector2f( 8, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::A, "assets/ims/A.png", 4, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::E, "assets/ims/E.png", 4, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet1, "assets/ims/bullet-arrow.png", 2, Vector2f( 8, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderBullet2, "assets/ims/bullet-lightning.png", 2, Vector2f( 8, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderE, "assets/ims/invader-E.png", 4, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderA, "assets/ims/invader-A.png", 4, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::UFO, "assets/ims/ufo.png", 2, Vector2f( 32, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::MenuPointer, "assets/ims/menu-pointer.png", 2, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Explode, "assets/ims/explode.png", 5, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 8 ) );
   sdl->loadSpritesheetAnimation( AnimationId::PlayerDie, "assets/ims/player-die.png", 6, Vector2f( 20, 12 ), White, 0 );
+  sdl->loadSpritesheetAnimation( AnimationId::Boss, "assets/ims/josh.png", 2, Vector2f( 64, 32 ) );
   
   titleScreen = std::make_shared<TitleScreen>( "space invaders!" );
   gameOverScreen = std::make_shared<GameOverScreen>();
@@ -185,21 +186,17 @@ int Game::getNumBullets( bool isFromInvader ) {
 void Game::tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel ) {
   int numBullets = getNumBullets( isFromInvader );
   int maxBullets = isFromInvader ? invaderGroup.getMaxNumBullets() : Player::DefaultMaxBullets; 
-  
-  string src = isFromInvader?"invader":"Player";
   if( numBullets >= maxBullets ) {
-    info( "%s cannot shoot %d >= %d", src.c_str(), numBullets, maxBullets );
     return;
   }
   
-  info( "%d bullets from %s", numBullets, src.c_str() ) ;
   shared_ptr<Bullet> bullet = std::make_shared<Bullet>( source, vel, isFromInvader );
   allBullets.push_back( bullet );
 }
 
-void Game::particleSplash( const Vector2f &pos, int numParticles ) {
+void Game::particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax ) {
   for( int i = 0; i < numParticles; i++ ) {
-    Vector2f size = Vector2f::random( 4, 12 );
+    Vector2f size = Vector2f::random( sizeMin, sizeMax );
     shared_ptr<Particle> p = std::make_shared<Particle>( RectF( pos, Vector2f( size ) ) );
     allParticles.push_back( p );
   }
@@ -257,8 +254,6 @@ void Game::checkForCollisions() {
     if( bullet->isFromInvader ) {
       if( !player->dead && bullet->hit( player ) ) {
         bullet->die();
-        
-        sdl->playSound( SFXId::ExplodePlayer );
         player->die();
       }
       
@@ -272,9 +267,6 @@ void Game::checkForCollisions() {
       }
       if( bullet->hit( invader ) ) {
         bullet->die();
-        sdl->playSound( SFXId::ExplodeEnemy );
-        
-        changeScore( invader->getScore() );
         invader->die();
         break;
       }
@@ -288,9 +280,6 @@ void Game::checkForCollisions() {
     for( auto ufo : allUFOs ) {
       if( bullet->box.hit( ufo->box ) ) {
         bullet->die();
-        sdl->playSound( SFXId::Explode2 );
-        
-        changeScore( ufo->getScore() );
         ufo->die();
       }
     }
@@ -352,7 +341,7 @@ void Game::runGame() {
 
 void Game::controllerUpdateTitle() {
   // any key down at title starts the game.
-  if( controller.justPressedAny( startKeys ) ) {
+  if( controller.justPressedAny( startKeys ) || controller.justPressed( SDL_SCANCODE_SPACE ) ) {
     setState( titleScreen->getLaunchState() );
   }
   

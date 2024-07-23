@@ -5,6 +5,8 @@
 
 Player::Player( const RectF &rectangle ) : Sprite( rectangle, AnimationId::Player ) {
   name = "Player/" + name;
+  
+  deathSound = SFXId::ExplodePlayer;
 }
 
 void Player::update( float t ) {
@@ -16,9 +18,6 @@ void Player::update( float t ) {
 
 void Player::die() {
   Sprite::die();
-  //if( dead ) {
-  //  error( "Player double die call" );
-  //}
   // swap out the player death sprite.
   animation = sdl->getAnimation( AnimationId::PlayerDie );
 }

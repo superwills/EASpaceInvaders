@@ -23,6 +23,7 @@ Bunker::Bunker( const RectF &bounds ) {
       
       shared_ptr<Sprite> sprite = std::make_shared<Sprite>( bunkerRectangle, Green );
       sprite->name = "BunkerPiece/" + sprite->name;
+      sprite->deathSound = SFXId::ExplodeBunker;
       pieces.push_back( sprite );
     }
   }
@@ -51,7 +52,6 @@ bool Bunker::killHit( shared_ptr<Sprite> other ) {
     
     if( bunkerPiece->hit( other ) ) {
       bunkerPiece->die();
-      sdl->playSound( SFXId::ExplodeBunker );
       return 1;
     }
   }

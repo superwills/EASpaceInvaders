@@ -39,8 +39,8 @@ TitleScreen::TitleScreen( const string &titleText ) {
   pointer = std::make_shared<Sprite>( RectF( pointerPos, Vector2f( getMenuPointerSize() ) ), AnimationId::MenuPointer );
   
   // Bonus:
-  invaders.push_back( std::make_shared<Invader>( RectF( 0, 0, 64, 64 ), AnimationId::E ) );
-  invaders.push_back( std::make_shared<Invader>( RectF( 64, 0, 64, 64 ), AnimationId::A ) );
+  invaders.push_back( std::make_shared<Invader>( RectF( 0, 0, 64, 64 ), AnimationId::InvaderE ) );
+  invaders.push_back( std::make_shared<Invader>( RectF( 64, 0, 64, 64 ), AnimationId::InvaderA ) );
 }
 
 void TitleScreen::update( float t ) {

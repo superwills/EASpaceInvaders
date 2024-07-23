@@ -5,6 +5,10 @@
 // bigger range than rand()
 extern std::default_random_engine MTRandom32;
 
+inline void randSeed( uint32_t seed ) {
+  MTRandom32.seed( seed );
+}
+
 // between 0 -> (highEx - 1)
 inline uint32_t randInt( int highEx ) {
   if( !highEx ) {

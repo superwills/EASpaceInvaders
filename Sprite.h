@@ -22,12 +22,14 @@ public:
   string name;    // takes space but helps in debug
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   Animation animation; // Single frame if static.
+  SFXId deathSound = SFXId::NoSFX;
   
   // When object dies, # particles it displays
   int minParticles = 8, maxParticles = 12;
+  float particleSizeMin = 4, particleSizeMax = 12;
   
   // Besides the class type, this tells you precisely what kind of thing this is (so you can get the score for it)
-  AnimationId character = AnimationId::None;
+  AnimationId character = AnimationId::NoAnimation;
   
 	// This member represents the position & the size of the sprite combined
   RectF box;
