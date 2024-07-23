@@ -15,6 +15,7 @@ class Sprite : public std::enable_shared_from_this<Sprite> {
   inline static int NextSpriteId = 0;
   
 protected:
+  float rotation = 0;
   int spriteId = NextSpriteId++;
   bool hidden = 0;
   
@@ -52,20 +53,23 @@ public:
   
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, const RectF &box, SDL_Color iColor );
- 
-  Vector2f getPos();
-	Vector2f getCenter();
-	void setPos( const Vector2f &pos );
+  
+  // simple fns could be inline
+  inline Vector2f getPos() {  return box.pos;  }
+  void setPos( const Vector2f &pos ) {  box.pos = pos;  }
   // Set position of sprite so it's center is @pos (accounting for current size of sprite) 
-  void setCenter( const Vector2f &pos ); 
-	void setSize( const Vector2f &size );
-	void scale( float s );
-	void enforceWorldLimits();
+  void setCenter( const Vector2f &pos ) { box.setCenter( pos ); }
+  Vector2f getCenter() {  return box.centroid();  }
+  void setSize( const Vector2f &size ) {  box.size = size;  }
+  void scale( float s ) {  box.size *= s;  }
+
+  void enforceWorldLimits();
 	void show();
 	void hide();
-  void move( float x, float y );
+  void move( const Vector2f &displacement );
   
   bool hit( const Vector2f &p );
+  bool hit( const RectF &rect );
   bool hit( shared_ptr<Sprite> other );
   
   // usually just the box itself. But when the sprite .pos is the CENTER of the sprite, we have to compute this.

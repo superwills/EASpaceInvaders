@@ -4,7 +4,8 @@
 #include "Sprite.h"
 #include "StlUtil.h"
 
-Bunker::Bunker( const RectF &bounds ) {
+Bunker::Bunker( const RectF &initialBounds ) :
+    bounds( initialBounds ) {
   
   Vector2f bunkerPieceSize = bounds.size / 3;
   
@@ -42,7 +43,12 @@ void Bunker::draw() {
 }
 
 bool Bunker::killHit( shared_ptr<Sprite> other ) {
-
+  
+  // don't bother to check any pieces if sprite misses the whole bounds
+  if( !other->hit( bounds ) ) {
+    return 0;
+  }
+  
   for( auto bunkerPiece : pieces ) {
     if( bunkerPiece->dead ) {
       // if the piece is dead it's as if it isn't there.

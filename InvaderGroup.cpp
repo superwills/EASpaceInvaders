@@ -117,8 +117,9 @@ void InvaderGroup::update( float t ) {
     movingRight = !movingRight;
     
     // move down by size of invader.
+    Vector2f displacement( 0, invaderSize.y + interInvaderSpacing.y ); 
     for( auto invader : invaders ) {
-      invader->move( 0, invaderSize.y + interInvaderSpacing.y );
+      invader->move( displacement );
     }
   }
 }

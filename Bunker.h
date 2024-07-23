@@ -8,13 +8,15 @@ using std::shared_ptr;
 class Sprite;
 
 // A bunker contains 8 sprites in this shape:
-// *** 
-// ***
-// * *
+//   *** 
+//   ***
+//   * *
 class Bunker {
-public:
+  RectF bounds;
   vector< shared_ptr<Sprite> > pieces;
-  Bunker( const RectF &bounds );
+  
+public:
+  Bunker( const RectF &initialBounds );
   void update( float t );
   void draw();
   

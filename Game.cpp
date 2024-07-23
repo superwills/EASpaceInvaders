@@ -368,7 +368,7 @@ void Game::controllerUpdateRunning() {
     return;
   }
 
-  player->move( controller.getMouseDX(), 0 );
+  player->move( Vector2f( controller.getMouseDX(), 0 ) );
   
   if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
     player->setMovingLeft();

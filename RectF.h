@@ -103,8 +103,12 @@ struct RectF {
     return *this ;
   }
   
-  SDL_Rect toSDLRect() const {
+  inline SDL_Rect toSDLRect() const {
     return { (int)pos.x, (int)pos.y, (int)size.x, (int)size.y };
+  }
+  
+  inline SDL_FRect toSDLFRect() const {
+    return { pos.x, pos.y, size.x, size.y };
   }
   
   string toString() const {

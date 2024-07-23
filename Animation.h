@@ -18,6 +18,7 @@ struct Animation {
     SDL_Color color = White;
     float duration = 0;
     inline static float DefaultFrameTime = .1f;
+    float angle = 0;
     
     Frame() { }
     // Frame with no tex, just a solid color.

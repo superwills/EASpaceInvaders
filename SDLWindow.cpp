@@ -118,9 +118,9 @@ void SDLWindow::draw( const RectF &whereToDraw, const Animation::Frame &frame ) 
   }
   
   SDL_SetTextureColorMod( frame.tex->sdlTex, frame.color.r, frame.color.g, frame.color.b );
-  SDL_Rect sdlRect = whereToDraw.toSDLRect();
-  SDL_RenderCopy( renderer, frame.tex->sdlTex, pSub, &sdlRect );
-  // rotation could be done using SDL_RenderCopyEx
+  SDL_FRect sdlFRect = whereToDraw.toSDLFRect();
+  
+  SDL_RenderCopyExF( renderer, frame.tex->sdlTex, pSub, &sdlFRect, frame.angle, 0, SDL_RendererFlip::SDL_FLIP_NONE );
 }
 
 shared_ptr<Texture> SDLWindow::loadTexture( const string &filename ) {

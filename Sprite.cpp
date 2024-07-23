@@ -59,30 +59,6 @@ shared_ptr<Sprite> Sprite::Text( const string &text, const RectF &box, SDL_Color
   return textSprite;
 }
 
-Vector2f Sprite::getPos() {
-	return box.pos;
-}
-
-void Sprite::setPos( const Vector2f &pos ) {
-  box.pos = pos;
-}
-
-void Sprite::setCenter( const Vector2f &pos ) {
-  box.setCenter( pos );
-}
-
-Vector2f Sprite::getCenter() {
-	return box.centroid();
-}
-
-void Sprite::setSize( const Vector2f &size ) {
-  box.size = size;
-}
-
-void Sprite::scale( float s ) {
-  box.size *= s;
-}
-
 void Sprite::enforceWorldLimits() {
 	if( box.top() < 0 ) {
 		float overshot = 0 - box.top();
@@ -116,13 +92,16 @@ void Sprite::hide() {
 	hidden = 1;
 }
 
-void Sprite::move( float x, float y ) {
-  box.pos.x += x;
-  box.pos.y += y;
+void Sprite::move( const Vector2f &displacement ) {
+  box.pos += displacement;
 }
 
 bool Sprite::hit( const Vector2f &p ) {
   return box.hit( p );
+}
+
+bool Sprite::hit( const RectF &rect ) {
+  return box.hit( rect );
 }
 
 bool Sprite::hit( shared_ptr<Sprite> other ) {
@@ -130,6 +109,7 @@ bool Sprite::hit( shared_ptr<Sprite> other ) {
 }
 
 RectF Sprite::getDrawBox() const {
+  //!! get rid of this.
   return box;
 }
 
@@ -150,8 +130,7 @@ void Sprite::draw() const {
 		sdl->fillRect( getDrawBox(), animFrame.color );
 	}
 	else {
-		//sdl->drawTexture( box, animFrame.tex );
-    sdl->draw( getDrawBox(), animFrame );  
+		sdl->draw( getDrawBox(), animFrame );  
 	}
 }
 
