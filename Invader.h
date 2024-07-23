@@ -11,6 +11,8 @@ public:
   // Starts low, but InvaderGroup increases it's value as invaders die off
   inline static const float DefaultChanceToShoot = .01;
   inline static float ChanceToShoot = DefaultChanceToShoot;
+  inline static float DefaultSpeed = 100;
+  inline static float Speed = DefaultSpeed;
   
   // Must specify where/size of Invader to construct
   Invader( const RectF& rectangle, AnimationId animationId );

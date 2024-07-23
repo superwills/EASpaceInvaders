@@ -3,14 +3,37 @@
 #include "Invader.h"
 #include <cmath>
 
+float InvaderGroup::aiGetDesperation() const {
+  float desperation = 0;
+  
+  // Only start getting desperate when there are 10 invaders or less left.
+  if( invaders.size() <= DesperationThreshold ) {
+    desperation = ( DesperationThreshold - invaders.size() ) / (float)DesperationThreshold;
+    
+    // eg Threshold=10, 3 invaders left,
+    // (10 - 3) / 10
+    // = 7 / 10
+    // = .7 desperation.
+  }
+  
+  return desperation;
+}
+
+void InvaderGroup::aiUpdateDesperation() {
+  // velocity: increases with desperation
+  float boost = lerp( 1, 10, aiGetDesperation() );
+  Invader::Speed = Invader::DefaultSpeed * boost;
+  
+  // Chance to shoot: increases with desperation
+  Invader::ChanceToShoot = Invader::DefaultChanceToShoot * boost;
+}
+
 int InvaderGroup::getMaxNumBullets() const {
   int maxBullets = DefaultMaxBullets;
   
-  if( invaders.size() <= 10 ) {
-    float t = invaders.size() / 10.; // t goes from 1.0 to 0.1, as we go from 10 invaders left to 1.  
-    float boost = lerp( 10, 1, t );   //  
-    maxBullets *= boost;
-  }
+  float bulletMaxBoost = lerp( 1, 10, aiGetDesperation() );  // Use desperation to lerp the param  
+  maxBullets *= bulletMaxBoost;
+  
   return maxBullets;
 }
 
@@ -57,22 +80,19 @@ void InvaderGroup::update( float t ) {
   }
   
   // Step right, until someone hits the edge.
-  float invaderVelocity = movingRight ? +DefaultSpeed : -DefaultSpeed;
+  float invaderSpeed = Invader::Speed;
   
-  // multiply velocity increasingly starting when there are 10 invaders left.
-  // Also multiply chance to shoot by that value.
-  if( invaders.size() < 10 ) {
-    float t = invaders.size() / 10.;
-    float boost = lerp( 10, 1, t );
-    invaderVelocity *= boost;
-    
-    Invader::ChanceToShoot = Invader::DefaultChanceToShoot * boost;
+  // Negate speed if not moving right
+  if( !movingRight ) {
+    invaderSpeed = -invaderSpeed;
   }
+  
+  aiUpdateDesperation();
   
   Vector2f windowSize = sdl->getWindowSize();
   
   for( auto invader : invaders ) {
-    invader->velocity = Vector2f( invaderVelocity, 0 );
+    invader->velocity = Vector2f( invaderSpeed, 0 );
     invader->update( t );
     
     // Check lose condition: any invader reaches the bottom of the screen

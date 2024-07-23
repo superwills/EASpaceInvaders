@@ -23,6 +23,7 @@ public:
   // Default speed before speedup due to fewer invaders left
   inline static const float DefaultSpeed = 25;
   inline static const int DefaultMaxBullets = 2;
+  inline static const int DesperationThreshold = 10;
   
   int row = 0; // which row we're on when adding invaders.
   
@@ -32,6 +33,11 @@ public:
   
   vector< shared_ptr<Invader> > invaders;
   
+  // Basic AI function. Measure between 0 and 1 of how "desperate" the invader group is.
+  // When they get desperate, they move faster, and shoot more bullets
+  float aiGetDesperation() const;
+  // Update how the group behaves based on how "desperate" they are
+  void aiUpdateDesperation();
   inline bool didInvadersWin() { return invaderReachedBottom; }
   inline bool empty() { return invaders.empty(); }
   int getMaxNumBullets() const;
