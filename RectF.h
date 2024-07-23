@@ -52,6 +52,13 @@ struct RectF {
     return *this;
   }
   
+  // +pad grows, -pad shrinks
+  inline RectF& pad( const Vector2f &amount ) {
+    pos -= amount / 2;  // pull pos back by half the pad amount
+    size += amount;     // grow the rectangle by the growth amount
+    return *this ;
+  }
+  
   // Random point within the rectangle.
   Vector2f randomPoint() const {
     return Vector2f( randFloat( pos.x, pos.x + size.x ), randFloat( pos.y, pos.y + size.y ) ) ;

@@ -318,7 +318,6 @@ void Game::clearDead() {
 }
 
 void Game::runGame() {
-  
   invaderGroup.update( dt );
   player->update( dt );
   scoreSprite->update( dt );
@@ -451,7 +450,8 @@ void Game::update() {
     break;
   
   case GameState::Running: {
-      for( int i = 0; i < engineIterationPerFrame; i++ )
+      // The game could end while turboing, so we let the game end if it exits running state
+      for( int i = 0; i < engineIterationPerFrame   &&   gameState == GameState::Running; i++ )
         runGame();
     }
 	  break;

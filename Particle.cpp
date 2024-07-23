@@ -13,25 +13,16 @@ Particle::Particle( const RectF &rectangle, float lifetime ) :
   
 }
 
-RectF Particle::getDrawBox() const {
-  // the pos is the CENTER.
-  // +---+
-  // | * |
-  // +---+
-  // 
-  RectF drawBox = box;
-  drawBox.pos -= drawBox.size / 2;
-  return drawBox;
-}
-
 void Particle::update( float t ) {
   Sprite::update( t );
   
   pulseTime += t;
   if( pulseTime > pulsePeriod ) {
     pulseTime = 0;
-    growing = -growing;
+    growthSign = -growthSign;
   }
+  // Grow/shrink the particle.
+  box.pad( growthSign * growthFactor ); // pulse the size.
   
   lifeRemaining -= t;
   if( lifeRemaining < 0 ) {
@@ -41,12 +32,7 @@ void Particle::update( float t ) {
   // Fade the particles.
   float percentLife = lifeRemaining / initialLife;
   for( Animation::Frame &frame : animation.frames ) {
-    // pulse the size.
-    
     frame.color.a = percentLife * 255;
-    
-    // Grow/shrink the particle.
-    box.size += growing * growthFactor;
   }
 }
 

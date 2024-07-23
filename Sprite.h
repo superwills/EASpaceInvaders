@@ -72,9 +72,6 @@ public:
   bool hit( const RectF &rect );
   bool hit( shared_ptr<Sprite> other );
   
-  // usually just the box itself. But when the sprite .pos is the CENTER of the sprite, we have to compute this.
-  virtual RectF getDrawBox() const;
-  
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update( float t );
 	virtual void draw() const;

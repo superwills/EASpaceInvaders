@@ -108,11 +108,6 @@ bool Sprite::hit( shared_ptr<Sprite> other ) {
   return box.hit( other->box );
 }
 
-RectF Sprite::getDrawBox() const {
-  //!! get rid of this.
-  return box;
-}
-
 void Sprite::update( float t ) {
   animation.update( t );
   
@@ -127,10 +122,10 @@ void Sprite::draw() const {
   const Animation::Frame &animFrame = animation.getCurrentFrame();
   if( !animFrame.tex ) {
 		// no texture, so draw a solid rect
-		sdl->fillRect( getDrawBox(), animFrame.color );
+		sdl->fillRect( box, animFrame.color );
 	}
 	else {
-		sdl->draw( getDrawBox(), animFrame );  
+		sdl->draw( box, animFrame );  
 	}
 }
 
