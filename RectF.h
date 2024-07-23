@@ -15,7 +15,7 @@ struct RectF {
     
   RectF( const Vector2f &position, const Vector2f &theSize ):
     pos( position ), size( theSize ) { }
-    
+  
   // The top left corner is the origin.
   inline float top() const { return pos.y; } 
   inline float bottom() const { return pos.y + size.y; }
@@ -38,7 +38,6 @@ struct RectF {
   inline Vector2f topRight() const {
     return Vector2f( right(), top() ) ;
   }
-  
   inline Vector2f centroid() const {
     return Vector2f( midX(), midY() ) ;
   }
@@ -57,6 +56,16 @@ struct RectF {
     pos -= amount / 2;  // pull pos back by half the pad amount
     size += amount;     // grow the rectangle by the growth amount
     return *this ;
+  }
+  
+  // Scales it from the center.
+  inline RectF scaledCopy( const Vector2f &scale ) const {
+    RectF copy( *this );
+    
+    Vector2f newSize = size*scale;
+    
+    // pad by the difference. If newSize is smaller, box shrinks
+    return copy.pad( newSize - size );
   }
   
   // Random point within the rectangle.

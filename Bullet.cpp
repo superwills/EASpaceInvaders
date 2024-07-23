@@ -8,7 +8,29 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
   
   name = "Bullet/" + name;
   velocity = initialVelocity;
-	
+
+  if( isFromInvader ) {
+    // superbullets are 2x as fast and have a different graphic
+    bool superBullet = 0;
+    if( isFromInvader ) {
+      superBullet = withChance( .5 );
+    }
+    
+    AnimationId anim = AnimationId::BulletInvaderArrow;
+    if( superBullet ) {
+      velocity *= 3;
+      anim = AnimationId::BulletInvaderLightning;
+    }
+    animation = sdl->getAnimation( anim );
+  }
+  else {
+    // player bullet is solid
+    //addSolidColorAnimationFrame( Yellow );
+    //addSolidColorAnimationFrame( Red );
+    
+    animation = sdl->getAnimation( AnimationId::BulletPlayer );
+  }
+  
   float windowHeight = sdl->getWindowSize().y;
   box.size = Vector2f( windowHeight ) * bulletScale;
   
@@ -19,20 +41,14 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
   }
   else {
     // Player shoots from top
-    box.pos.y = shooterBounds.top(); 
-  }
-  
-  if( isFromInvader ) {
-    animation = sdl->getAnimation( rand<AnimationId>( AnimationId::InvaderBullet1, AnimationId::InvaderBullet2 ) );
-  }
-  else {
-    // player bullet is solid
-    addSolidColorAnimationFrame( Yellow );
-    addSolidColorAnimationFrame( Red );
+    box.pos.y = shooterBounds.top();
   }
   
   minParticles = 3, maxParticles = 6;
   particleSizeMin = 2, particleSizeMax = 4;
+  
+  // Hitbox has to be a lot narrower for bullets, so they don't hit as easily but still remain easy visible
+  hitBoxScale.x = .1;
 }
 
 void Bullet::update( float t ) {

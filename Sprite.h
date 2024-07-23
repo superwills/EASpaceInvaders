@@ -29,6 +29,11 @@ public:
   int minParticles = 8, maxParticles = 12;
   float particleSizeMin = 4, particleSizeMax = 12;
   
+  // Sprites often DO NOT put pixels to the edge of their render box.
+  // So the hitbox can be scaled down for a sprite when collision checking,
+  // so it gives more forgiving collisions
+  Vector2f hitBoxScale = 1;
+  
   // Besides the class type, this tells you precisely what kind of thing this is (so you can get the score for it)
   AnimationId character = AnimationId::NoAnimation;
   
@@ -54,6 +59,7 @@ public:
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, const RectF &box, SDL_Color iColor );
   
+  RectF getScaledHitBox() const;
   // simple fns could be inline
   inline Vector2f getPos() {  return box.pos;  }
   void setPos( const Vector2f &pos ) {  box.pos = pos;  }

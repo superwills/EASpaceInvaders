@@ -7,8 +7,11 @@ Player::Player( const RectF &rectangle ) : Sprite( rectangle, AnimationId::Playe
   name = "Player/" + name;
   
   deathSound = SFXId::ExplodePlayer;
-  particleSizeMin = 100;
-  particleSizeMax = 200;
+  
+  minParticles = 25;
+  maxParticles = 50;
+  particleSizeMin = 30;
+  particleSizeMax = 50;
 }
 
 void Player::update( float t ) {

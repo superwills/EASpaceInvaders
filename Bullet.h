@@ -4,7 +4,7 @@
 
 class Bullet : public Sprite {
 public:
-  inline static Vector2f bulletScale = Vector2f( .002, .03 );
+  inline static Vector2f bulletScale = Vector2f( .02, .03 );
   bool isFromInvader = 0;
   
   Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, bool isShotFromInvader );

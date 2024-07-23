@@ -59,6 +59,11 @@ shared_ptr<Sprite> Sprite::Text( const string &text, const RectF &box, SDL_Color
   return textSprite;
 }
 
+RectF Sprite::getScaledHitBox() const {
+  RectF scaled = box.scaledCopy( hitBoxScale );
+  return scaled;
+}
+
 void Sprite::enforceWorldLimits() {
 	if( box.top() < 0 ) {
 		float overshot = 0 - box.top();
@@ -97,21 +102,20 @@ void Sprite::move( const Vector2f &displacement ) {
 }
 
 bool Sprite::hit( const Vector2f &p ) {
-  return box.hit( p );
+  return getScaledHitBox().hit( p );
 }
 
 bool Sprite::hit( const RectF &rect ) {
-  return box.hit( rect );
+  return getScaledHitBox().hit( rect );
 }
 
 bool Sprite::hit( shared_ptr<Sprite> other ) {
-  return box.hit( other->box );
+  return getScaledHitBox().hit( other->getScaledHitBox() );
 }
 
 void Sprite::update( float t ) {
   animation.update( t );
-  
-  box.pos += velocity*t; // Multiply by t allows timescale
+  move( velocity*t );
 }
 
 void Sprite::draw() const {
