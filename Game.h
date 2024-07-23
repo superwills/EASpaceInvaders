@@ -63,7 +63,19 @@ class Game {
   void clearGameBoard();
   
   void togglePause();
-
+  void genUFO();
+  
+  int getNumBullets( bool isFromInvader );
+  
+  void checkWinConditions();
+	void checkForCollisions();
+  void clearDead(); 
+	void runGame();
+ 
+  void controllerUpdateTitle();
+  void controllerUpdateRunning();
+  void controllerUpdate(); 
+  
 public:
  	Game() { }
   ~Game() { }
@@ -75,26 +87,14 @@ public:
 	
   void setKeyJustPressed( uint16_t key );
   void setMouseJustClicked( uint16_t mouseButton );
-  
-  void genUFO();
-  
-  int getNumBullets( bool isFromInvader );
-  
+   
   // Player shoots from top, invaders from their bottom.
   void tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel );
   void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax );
   void setScore( int newScore );
   void changeScore( int byScoreValue );
   
-  void checkWinConditions();
-	void checkForCollisions();
-  void clearDead(); 
-	void runGame();
- 
-  void controllerUpdateTitle();
-  void controllerUpdateRunning();
-  void controllerUpdate(); 
-	void update();
+  void update();
 	void draw();
 };
 
