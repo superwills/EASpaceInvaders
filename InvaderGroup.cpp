@@ -28,6 +28,22 @@ void InvaderGroup::aiUpdateDesperation() {
   Invader::ChanceToShoot = Invader::DefaultChanceToShoot * boost;
 }
 
+void InvaderGroup::addRow( AnimationId character ) {
+  for( int i = 0; i < invadersPerRow; i++ ) {
+    RectF box;
+    box.pos = bounds.pos;
+    box.pos.y += row * ( InvaderSize.y + InterInvaderSpacing.y );
+    box.pos.x += i*( InvaderSize.x + InterInvaderSpacing.x );
+    
+    box.size = InvaderSize;
+    
+    shared_ptr<Invader> invader = std::make_shared<Invader>( box, character );
+    invaders.push_back( invader );
+  }
+  
+  row++; // increment row when done adding the row
+}
+
 int InvaderGroup::getMaxNumBullets() const {
   int maxBullets = DefaultMaxBullets;
   
@@ -37,29 +53,18 @@ int InvaderGroup::getMaxNumBullets() const {
   return maxBullets;
 }
 
-void InvaderGroup::addRow( AnimationId character ) {
-  for( int i = 0; i < invadersPerRow; i++ ) {
-    RectF box;
-    box.pos = bounds.pos;
-    box.pos.y += row * ( invaderSize.y + interInvaderSpacing.y );
-    box.pos.x += i*( invaderSize.x + interInvaderSpacing.x );
-    
-    box.size = invaderSize;
-    
-    shared_ptr<Invader> invader = std::make_shared<Invader>( box, character );
-    invaders.push_back( invader );
-  }
-  
-  row++; // increment row when done adding the row
-}
+void InvaderGroup::populate() {
 
-void InvaderGroup::populate( const RectF &invaderBounds ) {
-  bounds = invaderBounds;
-  // Lay the invaders out
-  float boardWidth = invaderBounds.size.x;
-  interInvaderSpacing = Vector2f( boardWidth ) * Vector2f( .05, .01 );
+  RectF windowRectangle = sdl->getWindowRectangle();
+  bounds = windowRectangle; 
+  bounds.pos.y += windowRectangle.size.y/10; // Move down some
+  bounds.size *= DefaultInvaderBoundsSizePercent;
   
-  invaderSize = boardWidth / invadersPerRow;
+  // Lay the invaders out
+  InterInvaderSpacing = bounds.size * InterInvaderSpacingPercent;
+  
+  InvaderSize = bounds.size / invadersPerRow;
+  InvaderSize -= InterInvaderSpacing;
   
   addRow( AnimationId::InvaderE );
   addRow( AnimationId::InvaderA );
@@ -116,7 +121,7 @@ void InvaderGroup::update( float t ) {
     movingRight = !movingRight;
     
     // move down by size of invader.
-    Vector2f displacement( 0, invaderSize.y + interInvaderSpacing.y ); 
+    Vector2f displacement( 0, InvaderSize.y + InterInvaderSpacing.y ); 
     for( auto invader : invaders ) {
       invader->move( displacement );
     }

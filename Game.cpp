@@ -18,11 +18,7 @@ void Game::initGameBoard() {
   // re/create the player
   player = std::make_shared<Player>();
   
-  RectF invaderBounds = sdl->getWindowRectangle();
-  invaderBounds.pos.y += windowSize.y/10; // Move down some
-  invaderBounds.size *= DefaultInvaderBoundsSizePercent;
-  
-  invaderGroup.populate( invaderBounds );
+  invaderGroup.populate();
   
   // Bunker size is so 9 can fit across, but only every other one is filled in with a bunker
   Vector2f bunkerSize;
