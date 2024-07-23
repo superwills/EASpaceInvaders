@@ -8,12 +8,16 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
   
   name = "Bullet/" + name;
   velocity = initialVelocity;
+  
+  // Hitbox has to be a lot narrower for bullets, so they don't hit as easily but still remain easy visible
+  hitBoxScale.x = .2;
 
   if( isFromInvader ) {
     // superbullets are 2x as fast and have a different graphic
     bool superBullet = 0;
     if( isFromInvader ) {
       superBullet = withChance( .5 );
+      hitBoxScale.x = .5; // lightning has a wide hit box
     }
     
     AnimationId anim = AnimationId::BulletInvaderArrow;
@@ -24,10 +28,6 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
     animation = sdl->getAnimation( anim );
   }
   else {
-    // player bullet is solid
-    //addSolidColorAnimationFrame( Yellow );
-    //addSolidColorAnimationFrame( Red );
-    
     animation = sdl->getAnimation( AnimationId::BulletPlayer );
   }
   
@@ -47,8 +47,7 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
   minParticles = 3, maxParticles = 6;
   particleSizeMin = 2, particleSizeMax = 4;
   
-  // Hitbox has to be a lot narrower for bullets, so they don't hit as easily but still remain easy visible
-  hitBoxScale.x = .1;
+  
 }
 
 void Bullet::update( float t ) {

@@ -19,6 +19,12 @@ TitleScreen::TitleScreen( const string &titleText ) {
   titleBox.pos += titleBox.size * .01;
   titleShadow = Sprite::Text( titleText, titleBox, White );
   
+  RectF pushKeyBox;
+  pushKeyBox.pos = windowRectangle.size * Vector2f( .65, .8 );
+  pushKeyBox.size = windowRectangle.size * Vector2f( .25, .1 );
+  
+  pushKey = Sprite::Text( "Push Enter or Space", pushKeyBox, White ); 
+  
   // Need the title texture to add anim frames using it
   shared_ptr<Texture> titleTexture = titleSprite->animation.getCurrentFrame().tex;
   
@@ -59,6 +65,7 @@ TitleScreen::TitleScreen( const string &titleText ) {
 void TitleScreen::update( float t ) {
   titleShadow->update( t );
   titleSprite->update( t );
+  pushKey->update( t );
   for( auto menuItem : menuItems ) {
     menuItem->update( t );
   }
@@ -73,6 +80,7 @@ void TitleScreen::update( float t ) {
 void TitleScreen::draw() {
   titleShadow->draw();
   titleSprite->draw();
+  pushKey->draw();
   for( auto menuItem : menuItems ) {
     menuItem->draw();
   }

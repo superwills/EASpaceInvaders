@@ -11,6 +11,12 @@ GameOverScreen::GameOverScreen() {
   gameOverBox.size *= .5;
   gameOverBox.setCenter( windowSize * Vector2f( .5, .25 ) );
   gameOverSprite = Sprite::Text( "Game over!", gameOverBox, Green );
+  
+  RectF pushKeyBox;
+  pushKeyBox.pos = windowSize * Vector2f( .8, .9 );
+  pushKeyBox.size = windowSize * Vector2f( .15, .05 );
+  pushKey = Sprite::Text( "Push Enter", pushKeyBox, White ); 
+  
 }
 
 void GameOverScreen::addInvaders( AnimationId character1, AnimationId character2 ) {
@@ -42,7 +48,7 @@ void GameOverScreen::update( float t ) {
   
   gameOverSprite->update( t );
   message->update( t );
-  
+  pushKey->update( t );
   // bounce the invaders?
   for( auto invader : invaders ) {
     invader->update( t );  // they may shoot but that's ok
@@ -52,6 +58,7 @@ void GameOverScreen::update( float t ) {
 void GameOverScreen::draw() {
   gameOverSprite->draw();
   message->draw();
+  pushKey->draw();
   for( auto invader : invaders ) {
     invader->draw();
   }

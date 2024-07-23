@@ -12,6 +12,7 @@ using std::shared_ptr, std::vector;
 class GameOverScreen {
   shared_ptr<Sprite> gameOverSprite;
   shared_ptr<Sprite> message;
+  shared_ptr<Sprite> pushKey;
   vector< shared_ptr<Invader> > invaders;
 
 public:

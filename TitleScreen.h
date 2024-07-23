@@ -10,7 +10,7 @@ using std::shared_ptr, std::vector;
 class Sprite;
 
 class TitleScreen {
-  shared_ptr<Sprite> titleShadow, titleSprite;
+  shared_ptr<Sprite> titleShadow, titleSprite, pushKey;
   vector< shared_ptr<Sprite> > invaders;
   vector< shared_ptr<Sprite> > menuItems;
   shared_ptr<Sprite> pointer;

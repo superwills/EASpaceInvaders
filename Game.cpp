@@ -119,7 +119,7 @@ void Game::initGameBoard() {
   
   // re/create the player
   RectF playerBox;
-  playerBox.size = windowSize.x * .08;  // % of world size.
+  playerBox.size = windowSize * Player::DefaultPlayerSizePercent;
   playerBox.pos.x = windowSize.x/2 - playerBox.size.x/2;
   playerBox.pos.y = windowSize.y - playerBox.size.y;
   player = std::make_shared<Player>( playerBox );
