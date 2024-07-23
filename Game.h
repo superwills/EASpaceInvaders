@@ -52,6 +52,9 @@ class Game {
 	
 	GameState prevState = GameState::Title;
   GameState gameState = GameState::Title;
+  
+  // Invaders fit in a box this% of the original window size.
+  inline static const Vector2f DefaultInvaderBoundsSizePercent = Vector2f( .5 );
 
   vector<uint16_t> startKeys = { SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
   Controller controller;

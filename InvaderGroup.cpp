@@ -38,12 +38,11 @@ int InvaderGroup::getMaxNumBullets() const {
 }
 
 void InvaderGroup::addRow( AnimationId character ) {
-  
-
   for( int i = 0; i < invadersPerRow; i++ ) {
     RectF box;
-    box.pos.y = row * ( invaderSize.y + interInvaderSpacing.y );
-    box.pos.x = i*( invaderSize.x + interInvaderSpacing.x );
+    box.pos = bounds.pos;
+    box.pos.y += row * ( invaderSize.y + interInvaderSpacing.y );
+    box.pos.x += i*( invaderSize.x + interInvaderSpacing.x );
     
     box.size = invaderSize;
     
@@ -55,7 +54,7 @@ void InvaderGroup::addRow( AnimationId character ) {
 }
 
 void InvaderGroup::populate( const RectF &invaderBounds ) {
-  
+  bounds = invaderBounds;
   // Lay the invaders out
   float boardWidth = invaderBounds.size.x;
   interInvaderSpacing = Vector2f( boardWidth ) * Vector2f( .05, .01 );

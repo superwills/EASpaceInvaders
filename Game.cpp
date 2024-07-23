@@ -97,8 +97,8 @@ void Game::setState( GameState newState ) {
 
 void Game::togglePause() {
 	if( gameState == GameState::Paused ) {
-		setState( prevState ); //go back to the previous state
-		Mix_ResumeMusic(); // unpause the music  
+		setState( prevState );
+		Mix_ResumeMusic();  
 	}
 	else {
 		setState( GameState::Paused );
@@ -124,12 +124,11 @@ void Game::initGameBoard() {
   playerBox.pos.y = windowSize.y - playerBox.size.y;
   player = std::make_shared<Player>( playerBox );
   
-  // The board is 80% of the window size.
-  RectF gameBoard = sdl->getWindowRectangle();
-  gameBoard.pos.y += gameBoard.size.y/5; // Move down 1/5 screen
-  gameBoard.size *= .5;
+  RectF invaderBounds = sdl->getWindowRectangle();
+  invaderBounds.pos.y += windowSize.y/10; // Move down some
+  invaderBounds.size *= DefaultInvaderBoundsSizePercent;
   
-  invaderGroup.populate( gameBoard );
+  invaderGroup.populate( invaderBounds );
   
   // Bunker size is so 9 can fit across, but only every other one is filled in with a bunker
   Vector2f bunkerSize;
