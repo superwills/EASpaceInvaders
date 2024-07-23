@@ -61,8 +61,8 @@ public:
   ~Game() { }
 	
   void init(); 
-  bool isState( GameState state );
-	GameState getState();
+  
+  inline bool isState( GameState state ) { return gameState == state; }
 	void setState( GameState newState );
 	void togglePause();
  

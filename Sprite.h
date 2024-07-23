@@ -15,9 +15,7 @@ class Sprite : public std::enable_shared_from_this<Sprite> {
   inline static int NextSpriteId = 0;
   
 protected:
-  float rotation = 0;
   int spriteId = NextSpriteId++;
-  bool hidden = 0;
   
 public:
   string name;    // takes space but helps in debug
@@ -70,9 +68,7 @@ public:
   void scale( float s ) {  box.size *= s;  }
 
   void enforceWorldLimits();
-	void show();
-	void hide();
-  void move( const Vector2f &displacement );
+	void move( const Vector2f &displacement );
   
   bool hit( const Vector2f &p );
   bool hit( const RectF &rect );

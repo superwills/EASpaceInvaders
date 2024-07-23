@@ -89,14 +89,6 @@ void Sprite::enforceWorldLimits() {
 	}
 }
 
-void Sprite::show() {
-	hidden = 0;
-}
-
-void Sprite::hide() {
-	hidden = 1;
-}
-
 void Sprite::move( const Vector2f &displacement ) {
   box.pos += displacement;
 }
@@ -119,10 +111,6 @@ void Sprite::update( float t ) {
 }
 
 void Sprite::draw() const {
-  if( hidden ) {
-    return; // just don't draw
-  }
-  
   const Animation::Frame &animFrame = animation.getCurrentFrame();
   if( !animFrame.tex ) {
 		// no texture, so draw a solid rect

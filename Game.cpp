@@ -62,14 +62,6 @@ void Game::init() {
   setScore( 0 );
 }
 
-bool Game::isState( GameState state ) {
-  return gameState == state;
-}
-
-GameState Game::getState() {
-	return gameState;
-}
-
 void Game::setState( GameState newState ) {
 	prevState = gameState;
 	
@@ -106,13 +98,11 @@ void Game::setState( GameState newState ) {
 void Game::togglePause() {
 	if( gameState == GameState::Paused ) {
 		setState( prevState ); //go back to the previous state
-		pausedText->hide();
-    Mix_ResumeMusic(); // unpause the music  
+		Mix_ResumeMusic(); // unpause the music  
 	}
 	else {
 		setState( GameState::Paused );
-		pausedText->show();
-    Mix_PauseMusic();  
+		Mix_PauseMusic();  
 	}
 }
 
