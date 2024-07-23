@@ -9,7 +9,8 @@
 
 TitleScreen::TitleScreen( const string &titleText ) {
   
-  RectF titleBox = sdl->getWindowRectangle();
+  RectF windowRectangle = sdl->getWindowRectangle();
+  RectF titleBox = windowRectangle;
   titleBox.size *= Vector2f( .75, .33 );
   Vector2f titleCenter = sdl->getWindowSize() * Vector2f( .5, .25 );
   titleBox.setCenter( titleCenter );
@@ -39,8 +40,20 @@ TitleScreen::TitleScreen( const string &titleText ) {
   pointer = std::make_shared<Sprite>( RectF( pointerPos, Vector2f( getMenuPointerSize() ) ), AnimationId::MenuPointer );
   
   // Bonus:
-  invaders.push_back( std::make_shared<Invader>( RectF( 0, 0, 64, 64 ), AnimationId::InvaderE ) );
-  invaders.push_back( std::make_shared<Invader>( RectF( 64, 0, 64, 64 ), AnimationId::InvaderA ) );
+  Vector2f eaSpriteSize = windowRectangle.size.min() * .1;
+  Vector2f eSpritePos = titleBox.pos;
+  eSpritePos.x -= eaSpriteSize.x;
+  
+  auto e = std::make_shared<Invader>( RectF( eSpritePos, eaSpriteSize ), AnimationId::InvaderE );
+  for( auto&& frame : e->animation.frames ) {
+    frame.angle = -35;
+  }
+  auto a = std::make_shared<Invader>( RectF( eSpritePos + Vector2f( 35, -25 ), eaSpriteSize ), AnimationId::InvaderA );
+  for( auto&& frame : a->animation.frames ) {
+    frame.angle = -35;
+  }
+  invaders.push_back( e );
+  invaders.push_back( a );
 }
 
 void TitleScreen::update( float t ) {
