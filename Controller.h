@@ -21,10 +21,10 @@ class Controller {
   Uint8 keysJustReleased[ SDL_NUM_SCANCODES ] = { 0 };
   map< uint16_t, bool > mouseButtonsJustPressed;
   
-public:
   int xMouse = 0, yMouse = 0;   //abs mouse x,y
 	int dxMouse = 0, dyMouse = 0; //Difference mouse x,y
   
+public:
   Controller();
 	void update();
  

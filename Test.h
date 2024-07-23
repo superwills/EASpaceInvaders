@@ -11,10 +11,10 @@ class Sprite;
 // Really basic testing needed verify the code was correct
 // For point-click testing to make sure intersection routines work correctly
 class Test {
-public:
   shared_ptr<Sprite> largeSprite;
   vector< shared_ptr<Sprite> > sprites;
   
+public:
   Test();
   
   // sprites turn red when hit, yellow if not

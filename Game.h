@@ -25,14 +25,8 @@ class UFO;
 class Game {
   float clockThisFrame = 0, dt = 0;
   StopWatch clock;
-  
-  
-public:
-  // game looks faster to player when increase this
-  int engineIterationPerFrame = 1;
-  
+  int engineIterationPerFrame = 1;  // process multiple game steps / display interval
 	
-private:
   shared_ptr<TitleScreen> titleScreen;
   shared_ptr<GameOverScreen> gameOverScreen;
   
@@ -60,10 +54,9 @@ private:
   GameState gameState = GameState::Title;
 
   vector<uint16_t> startKeys = { SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
-  
-public:
   Controller controller;
 
+public:
  	Game() { }
   ~Game() { }
 	
@@ -72,6 +65,9 @@ public:
 	GameState getState();
 	void setState( GameState newState );
 	void togglePause();
+ 
+  void setKeyJustPressed( uint16_t key );
+  void setMouseJustClicked( uint16_t mouseButton );
   
   void initGameBoard();
   void clearGameBoard();

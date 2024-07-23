@@ -55,11 +55,11 @@ int main(int argc, char* args[]) {
       
       // Fork over the signal to the Controller object
       if( e.type == SDL_KEYDOWN ) {
-        game->controller.setKeyJustPressed( e.key.keysym.scancode );
+        game->setKeyJustPressed( e.key.keysym.scancode );
       }
       
       if( e.type == SDL_MOUSEBUTTONDOWN ) {
-        game->controller.setMouseJustClicked( e.button.button );
+        game->setMouseJustClicked( e.button.button );
       }
 		}
 		

@@ -115,6 +115,14 @@ void Game::togglePause() {
 	}
 }
 
+void Game::setKeyJustPressed( uint16_t key ) {
+  controller.setKeyJustPressed( key );
+}
+
+void Game::setMouseJustClicked( uint16_t mouseButton ) {
+  controller.setMouseJustClicked( mouseButton );
+}
+
 void Game::initGameBoard() {
   Vector2f windowSize = sdl->getWindowSize();
   
@@ -360,7 +368,7 @@ void Game::controllerUpdateRunning() {
     return;
   }
 
-  player->move( controller.dxMouse, 0 );
+  player->move( controller.getMouseDX(), 0 );
   
   if( controller.isPressed( SDL_SCANCODE_LEFT ) ) {
     player->setMovingLeft();
