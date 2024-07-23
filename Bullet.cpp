@@ -30,6 +30,9 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
     addSolidColorAnimationFrame( Yellow );
     addSolidColorAnimationFrame( Red );
   }
+  
+  minParticles = 3, maxParticles = 6;
+  particleSizeMin = 2, particleSizeMax = 4;
 }
 
 void Bullet::update( float t ) {

@@ -103,20 +103,20 @@ void InvaderGroup::update( float t ) {
   }
   
   // If an invader would breaks the left/right limits, the direction reverses on the next turn
-  bool invaderHitSide = 0;
+  bool invaderWillHitSide = 0;
   for( auto invader : invaders ) {
-    RectF window( Vector2f( 0 ), windowSize );
+    RectF window = sdl->getWindowRectangle();
     
     RectF next = invader->box + invader->velocity*t;
     
     // Have to check left/right bounds only.
     if( !window.contains( next ) ) {
-      invaderHitSide = 1;
+      invaderWillHitSide = 1;
       break;
     }
   }
   
-  if( invaderHitSide ) {
+  if( invaderWillHitSide ) {
     movingRight = !movingRight;
     
     // move down by size of invader.
