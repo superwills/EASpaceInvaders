@@ -10,12 +10,12 @@ using std::shared_ptr, std::vector;
 #include "Assets.h"
 
 class GameOverScreen {
-public:
   shared_ptr<Sprite> gameOverSprite;
   shared_ptr<Sprite> message;
   vector< shared_ptr<Invader> > invaders;
-  GameOverScreen();
-  
+
+public:
+  GameOverScreen();  
   void addInvaders( AnimationId character1, AnimationId character2 );
   void update( float t );
   void draw();

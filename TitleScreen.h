@@ -10,7 +10,6 @@ using std::shared_ptr, std::vector;
 class Sprite;
 
 class TitleScreen {
-public:
   shared_ptr<Sprite> titleShadow, titleSprite;
   vector< shared_ptr<Sprite> > invaders;
   vector< shared_ptr<Sprite> > menuItems;
@@ -19,6 +18,7 @@ public:
   
   Vector2f startMenuPos, menuItemSize;
   
+public:
 	TitleScreen( const string &titleText );
   void update( float t );
   void draw();
