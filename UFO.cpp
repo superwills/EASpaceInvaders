@@ -4,9 +4,26 @@
 
 UFO::UFO( const RectF &rectangle ) : Sprite( rectangle, AnimationId::UFO ) {
   name = "UFO/" + name;
-  velocity.x = -500;
+  velocity.x = -DefaultUFOSpeed;
   deathSound = SFXId::Explode2;
   
   minParticles = 10, maxParticles = 20;
   particleSizeMin = 14, particleSizeMax = 25;
+  
+  sfxChannel = sdl->loopSound( SFXId::UFO );
+}
+
+UFO::~UFO() {
+  if( sfxChannel != -1 ) {
+    Mix_HaltChannel( sfxChannel );
+  }
+}
+
+void UFO::update( float t ) {
+  Sprite::update( t ) ;
+  
+  if( exitedWorldBounds() ) {
+    // Here we shortcut all the usual in the object dying and just remove it
+    dead = 1;
+  }
 }

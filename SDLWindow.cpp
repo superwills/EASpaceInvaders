@@ -227,3 +227,12 @@ void SDLWindow::playSound( SFXId sfxId ) {
   Mix_PlayChannel( -1, it->second, 0 ) ;
 }
 
+int SDLWindow::loopSound( SFXId sfxId ) {
+  auto it = sfx.find( sfxId );
+  if( it == sfx.end() ) {
+    warning( "No sound %d", sfxId );
+    return -1;
+  }
+  
+  return Mix_PlayChannel( -1, it->second, -1 ) ;
+}

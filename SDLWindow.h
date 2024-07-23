@@ -80,6 +80,7 @@ public:
   
   void loadWavSound( SFXId sfxId, const string &waveFilename );
   void playSound( SFXId sfxId );
+  int loopSound( SFXId sfxId );
 };
 
 // Give access to the SDL object using this extern.

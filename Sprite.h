@@ -61,6 +61,7 @@ public:
   Vector2f getCenter() {  return box.centroid();  }
   void setSize( const Vector2f &size ) {  box.size = size;  }
   
+  bool exitedWorldBounds();
   void enforceWorldLimits();
 	void move( const Vector2f &displacement );
   

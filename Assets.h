@@ -25,6 +25,7 @@ enum class SFXId {
   Shoot3,
   
   Jump,
+  UFO,
 };
 
 enum class MusicId {

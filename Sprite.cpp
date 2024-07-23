@@ -68,6 +68,10 @@ RectF Sprite::getScaledHitBox() const {
   return scaled;
 }
 
+bool Sprite::exitedWorldBounds() {
+  return !sdl->getWindowRectangle().hit( box );
+}
+
 void Sprite::enforceWorldLimits() {
 	if( box.top() < 0 ) {
 		float overshot = 0 - box.top();

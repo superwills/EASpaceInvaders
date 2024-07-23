@@ -69,7 +69,8 @@ void Game::genUFO() {
     
     RectF ufoBox;
     ufoBox.size = Vector2f( 64, 32 );
-    ufoBox.pos.x = sdl->getWindowSize().x; // start offscreen right.
+    ufoBox.pos.x = sdl->getWindowSize().x; // start offscreen right
+    ufoBox.pos.x--; // 1 pixel in to be sure it doesn't immediately die for being offscreen
     ufoBox.pos.y = ufoBox.size.y / 2;
     shared_ptr<UFO> ufo = std::make_shared<UFO>( ufoBox );
     allUFOs.push_back( ufo );
@@ -333,7 +334,8 @@ void Game::init() {
   sdl->loadWavSound( SFXId::Shoot1, "assets/sounds/shoot-1.wav" );
   sdl->loadWavSound( SFXId::Shoot2, "assets/sounds/shoot-2.wav" );
   sdl->loadWavSound( SFXId::Shoot3, "assets/sounds/shoot-3.wav" );
-  sdl->loadWavSound( SFXId::Jump, "assets/sounds/jump.wav" ); 
+  sdl->loadWavSound( SFXId::Jump, "assets/sounds/jump.wav" );
+  sdl->loadWavSound( SFXId::UFO, "assets/sounds/ufo-0.wav" ); 
   
   // https://www.stef.be/bassoontracker
   sdl->loadMusic( MusicId::Background0, "assets/sounds/1721341344111_2337.mod.mp3" );
