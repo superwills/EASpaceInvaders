@@ -10,8 +10,8 @@ Invader::Invader( const RectF& rectangle, AnimationId animationId ) : Sprite( re
 
 void Invader::update( float t ) {
   Sprite::update( t );
-  // shoot with chance.
-  if( randFloat() < .0001 ) {
-    game->shootBullet( box, 1, Vector2f( 0, 100 ) );
+  // shoot with chance. what limits shots is the Game checking how many bullets there are out
+  if( withChance( ChanceToShoot ) ) {
+    game->tryShootBullet( box, 1, DefaultBulletSpeed );
   }
 }

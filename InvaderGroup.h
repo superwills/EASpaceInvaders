@@ -17,11 +17,12 @@ public:
   inline static Vector2f invaderSize = Vector2f( 100 ); // dummy val, really computed based on window size
   inline static Vector2f interInvaderSpacing = Vector2f( 5, 2 ); // dummy val.
   
-  inline const static int rowsOfInvaders = 5;
-  inline const static int invadersPerRow = 11; // 11 across in the original game.
+  inline static const int rowsOfInvaders = 5;
+  inline static const int invadersPerRow = 11; // 11 across in the original game.
   
   // Default speed before speedup due to fewer invaders left
-  inline const static float DefaultSpeed = 25;
+  inline static const float DefaultSpeed = 25;
+  inline static const int DefaultMaxBullets = 2;
   
   int row = 0; // which row we're on when adding invaders.
   
@@ -33,6 +34,7 @@ public:
   
   inline bool didInvadersWin() { return invaderReachedBottom; }
   inline bool empty() { return invaders.empty(); }
+  int getMaxNumBullets() const;
   
   void addRow( AnimationId character );
   void populate( const RectF &invaderBounds );

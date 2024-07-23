@@ -3,6 +3,17 @@
 #include "Invader.h"
 #include <cmath>
 
+int InvaderGroup::getMaxNumBullets() const {
+  int maxBullets = DefaultMaxBullets;
+  
+  if( invaders.size() <= 10 ) {
+    float t = invaders.size() / 10.; // t goes from 1.0 to 0.1, as we go from 10 invaders left to 1.  
+    float boost = lerp( 10, 1, t );   //  
+    maxBullets *= boost;
+  }
+  return maxBullets;
+}
+
 void InvaderGroup::addRow( AnimationId character ) {
   
 
@@ -28,8 +39,11 @@ void InvaderGroup::populate( const RectF &invaderBounds ) {
   
   invaderSize = boardWidth / invadersPerRow;
   
-  addRow( AnimationId::E );
-  addRow( AnimationId::A );
+  //addRow( AnimationId::E );
+  //addRow( AnimationId::A );
+  addRow( AnimationId::Invader2 );
+  addRow( AnimationId::Invader2 );
+  
   addRow( AnimationId::Invader2 );
   addRow( AnimationId::Invader1 );
   addRow( AnimationId::Invader1 );
@@ -46,10 +60,13 @@ void InvaderGroup::update( float t ) {
   float invaderVelocity = movingRight ? +DefaultSpeed : -DefaultSpeed;
   
   // multiply velocity increasingly starting when there are 10 invaders left.
+  // Also multiply chance to shoot by that value.
   if( invaders.size() < 10 ) {
     float t = invaders.size() / 10.;
-    float speedBoost = lerp( 4, 1, t );
-    invaderVelocity *= speedBoost;
+    float boost = lerp( 10, 1, t );
+    invaderVelocity *= boost;
+    
+    Invader::ChanceToShoot = Invader::DefaultChanceToShoot * boost;
   }
   
   Vector2f windowSize = sdl->getWindowSize();
@@ -105,6 +122,8 @@ void InvaderGroup::killAll( bool display ) {
   
   invaderReachedBottom = 0;
   row = 0;
+  
+  Invader::ChanceToShoot = .1;
 }
 
 void InvaderGroup::clearDead() {

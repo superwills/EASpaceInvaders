@@ -75,8 +75,10 @@ public:
   void clearGameBoard();
   void genUFO();
   
+  int getNumBullets( bool isFromInvader );
+  
   // Player shoots from top, invaders from their bottom.
-  void shootBullet( const RectF &source, bool fromInvader, const Vector2f &vel );
+  void tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel );
   void particleSplash( const Vector2f &pos, int numParticles );
   void setScore( int newScore );
   void changeScore( int byScoreValue );

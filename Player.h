@@ -7,6 +7,7 @@ class Bullet;
 class Player : public Sprite {
 public:
   inline static const float PlayerSpeed = 350;
+  inline static const int DefaultMaxBullets = 10;
   Player( const RectF &rectangle );
   void update( float t ) override;
   void die() override;

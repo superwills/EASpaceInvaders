@@ -45,6 +45,12 @@ inline float randFloat( float low, float high ) {
   return low + ( high - low )*randFloat();
 }
 
+// `percentage` between 0 and 1
+// eg percentage=.1 returns true 10% of the time 
+inline bool withChance( float percentage ) {
+  return randFloat() < percentage;
+}
+
 inline int randSign() {
   return -1 + 2*randInt(0, 2) ; // -1+0 or -1+2=+1
 }

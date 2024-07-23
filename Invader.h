@@ -6,6 +6,12 @@
 class Invader : public Sprite {
   
 public:
+  inline static Vector2f DefaultBulletSpeed = Vector2f( 0, +100 );
+  
+  // Starts low, but InvaderGroup increases it's value as invaders die off
+  inline static const float DefaultChanceToShoot = .01;
+  inline static float ChanceToShoot = DefaultChanceToShoot;
+  
   // Must specify where/size of Invader to construct
   Invader( const RectF& rectangle, AnimationId animationId );
   

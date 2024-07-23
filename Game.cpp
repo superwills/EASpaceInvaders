@@ -172,8 +172,28 @@ void Game::genUFO() {
   }
 }
 
-void Game::shootBullet( const RectF &source, bool fromInvader, const Vector2f &vel ) {
-  shared_ptr<Bullet> bullet = std::make_shared<Bullet>( source, vel, fromInvader );
+int Game::getNumBullets( bool isFromInvader ) {
+  int num = 0;
+  for( auto bullet : allBullets ) {
+    if( isFromInvader == bullet->isFromInvader ) {
+      num++;
+    }
+  }
+  return num;
+}
+
+void Game::tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel ) {
+  int numBullets = getNumBullets( isFromInvader );
+  int maxBullets = isFromInvader ? invaderGroup.getMaxNumBullets() : Player::DefaultMaxBullets; 
+  
+  string src = isFromInvader?"invader":"Player";
+  if( numBullets >= maxBullets ) {
+    info( "%s cannot shoot %d >= %d", src.c_str(), numBullets, maxBullets );
+    return;
+  }
+  
+  info( "%d bullets from %s", numBullets, src.c_str() ) ;
+  shared_ptr<Bullet> bullet = std::make_shared<Bullet>( source, vel, isFromInvader );
   allBullets.push_back( bullet );
 }
 
@@ -234,8 +254,8 @@ void Game::checkForCollisions() {
       continue;
     }
   
-    if( bullet->fromInvader ) {
-      if( bullet->box.hit( player->box ) ) {
+    if( bullet->isFromInvader ) {
+      if( !player->dead && bullet->hit( player ) ) {
         bullet->die();
         
         sdl->playSound( SFXId::ExplodePlayer );
@@ -365,7 +385,7 @@ void Game::controllerUpdateRunning() {
   player->enforceWorldLimits();
   
   if( controller.justPressed( SDL_SCANCODE_SPACE ) ) {
-    shootBullet( player->box, 0, Vector2f( 0, -500 ) );
+    tryShootBullet( player->box, 0, Vector2f( 0, -500 ) );
   }
 }
 

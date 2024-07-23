@@ -5,8 +5,8 @@
 class Bullet : public Sprite {
 public:
   inline static Vector2f bulletScale = Vector2f( .002, .03 );
-  bool fromInvader = 0;
+  bool isFromInvader = 0;
   
-  Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, bool shotFromInvader );
+  Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, bool isShotFromInvader );
   void update( float t ) override;
 };

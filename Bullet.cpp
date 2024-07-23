@@ -3,8 +3,8 @@
 #include "SDLWindow.h"
 
 
-Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, bool shotFromInvader ) :
-    fromInvader( shotFromInvader ) {
+Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, bool isShotFromInvader ) :
+    isFromInvader( isShotFromInvader ) {
   
   name = "Bullet/" + name;
   velocity = initialVelocity;
@@ -13,7 +13,7 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
   box.size = Vector2f( windowHeight ) * bulletScale;
   
   box.pos.x = shooterBounds.midX() - box.size.x/2;
-  if( fromInvader ) {
+  if( isFromInvader ) {
     // invader shoots from bottom
     box.pos.y = shooterBounds.bottom();
   }
@@ -22,7 +22,7 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
     box.pos.y = shooterBounds.top(); 
   }
   
-  if( shotFromInvader ) {
+  if( isFromInvader ) {
     animation = sdl->getAnimation( rand<AnimationId>( AnimationId::InvaderBullet1, AnimationId::InvaderBullet2 ) );
   }
   else {
@@ -35,7 +35,8 @@ Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, boo
 void Bullet::update( float t ) {
   Sprite::update( t );
   
-	if( box.pos.y < 0 ) {
+  // Once it leaves the bounds kill the bullet
+	if( !sdl->getWindowRectangle().hit( box ) ) {
     die();
   } 
 }
