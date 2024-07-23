@@ -4,7 +4,6 @@
 #include "Vectorf.h"
 
 class Particle : public Sprite {
-public:
   inline static float DefaultLifetime = 1;
   
   float initialLife = DefaultLifetime;
@@ -14,6 +13,7 @@ public:
   float pulsePeriod = .1; // Grow/shrink cycle every (this) seconds.
   float pulseTime = 0;
   
+public:
   Particle( const RectF &rectangle, float lifetime = DefaultLifetime );
   
   // decay the particle alpha

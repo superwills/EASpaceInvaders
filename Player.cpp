@@ -4,8 +4,16 @@
 #include "Game.h"
 #include "SDLWindow.h"
 
-Player::Player( const RectF &rectangle ) : Sprite( rectangle, AnimationId::Player ) {
+Player::Player() {
   name = "Player/" + name;
+  
+  Vector2f windowSize = sdl->getWindowSize();
+  box.size = windowSize * Player::DefaultPlayerSizePercent;
+  
+  Vector2f playerCenter( windowSize.x/2, windowSize.y - box.size.y/2 );
+  box.setCenter( playerCenter );
+  
+  animation = sdl->getAnimation( AnimationId::Player );
   
   deathSound = SFXId::ExplodePlayer;
   
@@ -31,9 +39,9 @@ void Player::tryShoot() {
 }
 
 void Player::setMovingLeft() {
-  velocity.x = -PlayerSpeed;
+  velocity.x = -DefaultPlayerSpeed;
 }
 
 void Player::setMovingRight() {
-  velocity.x = +PlayerSpeed;
+  velocity.x = +DefaultPlayerSpeed;
 }

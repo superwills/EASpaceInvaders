@@ -7,7 +7,6 @@ class InvaderGroup;
 
 class Invader : public Sprite {
   friend class InvaderGroup;
-public:
   inline static Vector2f DefaultBulletSpeed = Vector2f( 0, +100 );
   
   // Starts low, but InvaderGroup increases it's value as invaders die off
@@ -16,7 +15,7 @@ public:
   inline static float DefaultSpeed = 50;
   inline static float Speed = DefaultSpeed;
   
-  // Must specify where/size of Invader to construct
+public:
   Invader( const RectF& rectangle, AnimationId animationId );
   
   void update( float t ) override;

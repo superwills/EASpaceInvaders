@@ -16,11 +16,7 @@ void Game::initGameBoard() {
   Vector2f windowSize = sdl->getWindowSize();
   
   // re/create the player
-  RectF playerBox;
-  playerBox.size = windowSize * Player::DefaultPlayerSizePercent;
-  playerBox.pos.x = windowSize.x/2 - playerBox.size.x/2;
-  playerBox.pos.y = windowSize.y - playerBox.size.y;
-  player = std::make_shared<Player>( playerBox );
+  player = std::make_shared<Player>();
   
   RectF invaderBounds = sdl->getWindowRectangle();
   invaderBounds.pos.y += windowSize.y/10; // Move down some

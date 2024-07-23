@@ -33,7 +33,7 @@ Sprite::Sprite( const RectF& rectangle, AnimationId animationId ) :
     box( rectangle ), character( animationId ) {
   
   name = makeString( "Sprite %d animation %d", spriteId, animationId );
-  animation = sdl->getAnimation( animationId );
+  setAnimation( animationId );
 }
 
 void Sprite::addSolidColorAnimationFrame( SDL_Color color ) {
@@ -50,6 +50,10 @@ void Sprite::addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float 
 
 void Sprite::addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, SDL_Color color, float duration ) {
   animation.addFrame( Animation::Frame( tex, subRect, color, duration ) );
+}
+
+void Sprite::setAnimation( AnimationId animationId ) {
+  animation = sdl->getAnimation( animationId );
 }
 
 shared_ptr<Sprite> Sprite::Text( const string &text, const RectF &box, SDL_Color iColor ) {

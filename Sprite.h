@@ -46,6 +46,7 @@ public:
   void addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color ); 
   void addAnimationFrame( shared_ptr<Texture> tex, SDL_Color color, float duration ); 
   void addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, SDL_Color color, float duration );
+  void setAnimation( AnimationId animationId );
   
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, const RectF &box, SDL_Color iColor );
@@ -75,5 +76,3 @@ public:
   int getScore() const; 
   
 };
-
-typedef shared_ptr<Sprite> SharedSprite;
