@@ -102,6 +102,7 @@ public:
   // Plays a sprite animation ONCE where you want it
   void playSpriteAnimation( const RectF &where, AnimationId animationId );
   void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax );
+  void particleCloud( const RectF &box, int numParticles, float sizeMin, float sizeMax );
   void createItem( const Vector2f &pos, AnimationId animationId );
   
   void displayScore( int score, const Vector2f &pos, SDL_Color color );

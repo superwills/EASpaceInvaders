@@ -1,5 +1,6 @@
 #include "Bullet.h"
 
+#include "Game.h"
 #include "SDLWindow.h"
 
 bool Bullet::IsBulletTypeFromInvader( BulletType bulletType ) {
@@ -27,6 +28,10 @@ Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :
   
   minParticles = 3, maxParticles = 6;
   particleSizeMin = 2, particleSizeMax = 4;
+  
+  if( type == BulletType::PlayerThickLaser ) {
+    minParticles = maxParticles = 0;
+  }
 }
 
 void Bullet::update( float t ) {
@@ -34,13 +39,14 @@ void Bullet::update( float t ) {
   
   if( type == BulletType::PlayerThickLaser ) {
     // grow the box
-    float laserSpeed = 50;
-    box.size.y += laserSpeed;
-    box.pos.y -= laserSpeed;
+    float laserGrowthSpeed = 50;
+    box.size.y += laserGrowthSpeed;
+    box.pos.y -= laserGrowthSpeed;
     
     // laser dies once it reaches the top
     if( box.top() < 0 ) {
-      // it can spread particles
+      // it can spread particles along it
+      game->particleCloud( box, randInt( 50, 60 ), 24, 36 );
       die();
     }
   }

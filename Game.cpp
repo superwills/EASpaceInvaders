@@ -519,6 +519,15 @@ void Game::particleSplash( const Vector2f &pos, int numParticles, float sizeMin,
   }
 }
 
+void Game::particleCloud( const RectF &box, int numParticles, float sizeMin, float sizeMax ) {
+  for( int i = 0; i < numParticles; i++ ) {
+    Vector2f size = Vector2f::random( sizeMin, sizeMax );
+    shared_ptr<Particle> p = std::make_shared<Particle>( RectF( box.randomPoint(), Vector2f( size ) ) );
+    p->lifeRemaining = .2;
+    allParticles.push_back( p );
+  }
+}
+
 void Game::createItem( const Vector2f &pos, AnimationId animationId ) {
   auto item = std::make_shared<Item>( pos, animationId );
   allItems.push_back( item );
