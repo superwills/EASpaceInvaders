@@ -5,13 +5,11 @@
 
 class Bullet : public Sprite {
   inline static Vector2f DefaultBulletScale = Vector2f( .02, .03 );
-  
-  public://rm
   BulletType type = BulletType::PlayerNormal;
   
   inline static const map<BulletType, float> BulletSpeeds = {
     // Player bullets go UP, so they have a negative speed
-    { BulletType::PlayerNormal, -100 },
+    { BulletType::PlayerNormal, -300 },
     { BulletType::PlayerSpread, -100 },
     { BulletType::PlayerThickLaser, -200 },
     

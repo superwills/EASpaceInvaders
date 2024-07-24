@@ -3,11 +3,7 @@
 #include "SDLWindow.h"
 
 bool Bullet::IsBulletTypeFromInvader( BulletType bulletType ) {
-  bool isInvader = isBetweenIn( bulletType, BulletType::InvaderNormal, BulletType::InvaderSuper );
-  
-  info( "Bullet %d is from %s", bulletType, isInvader?"Invader":"Player" ) ;
-  
-  return isInvader; 
+  return isBetweenIn( bulletType, BulletType::InvaderNormal, BulletType::InvaderSuper );; 
 }
 
 Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :

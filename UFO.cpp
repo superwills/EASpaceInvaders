@@ -11,6 +11,9 @@ UFO::UFO( const RectF &rectangle ) : Sprite( rectangle, AnimationId::UFO ) {
   particleSizeMin = 14, particleSizeMax = 25;
   
   sfxChannel = sdl->loopSound( SFXId::UFO );
+  
+  // UFO's always drop
+  itemDrop = rand<AnimationId>( AnimationId::ItemPlus1, AnimationId::ItemShield );
 }
 
 UFO::~UFO() {

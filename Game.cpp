@@ -132,7 +132,6 @@ void Game::checkBulletCollisions() {
       continue;  // there's nothing else for an invader bullet to do
     }
     else { // is Player bullet
-      info( "Player bullet type=%d", bullet->type );
       // check invaders
       for( auto invader : invaderGroup.invaders ) {
         if( invader->dead ) {
@@ -253,6 +252,11 @@ void Game::killPlayer() {
   // call the player to die.
   player->die();
   updateNumberOfPlayerLives();
+  
+  // Kill all powerups on screen
+  for( auto item : allItems ) {
+    item->die();
+  }
 }
 
 void Game::updateNumberOfPlayerLives() {
