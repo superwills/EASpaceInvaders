@@ -11,7 +11,7 @@ Invader::Invader( const RectF& rectangle, AnimationId animationId ) : Sprite( re
   
   // 20% chance to have a drop
   if( withChance( ChanceToDropItem ) ) {
-    itemDrop = rand<AnimationId>( AnimationId::ItemPlus1, AnimationId::ItemThickLaser );
+    itemDrop = rand<AnimationId>( AnimationId::ItemPlus1, AnimationId::ItemShield );
   }
 }
 

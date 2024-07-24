@@ -16,7 +16,7 @@ class Invader : public Sprite {
   inline static float DefaultSpeed = 50;
   inline static float Speed = DefaultSpeed;
   
-  inline static float ChanceToDropItem = .5;
+  inline static float ChanceToDropItem = .1;
   
 public:
   Invader( const RectF& rectangle, AnimationId animationId );

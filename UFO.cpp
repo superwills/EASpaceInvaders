@@ -12,8 +12,9 @@ UFO::UFO( const RectF &rectangle ) : Sprite( rectangle, AnimationId::UFO ) {
   
   sfxChannel = sdl->loopSound( SFXId::UFO );
   
-  // UFO's always drop a laser
-  itemDrop = AnimationId::ItemThickLaser;
+  if( withChance( .75 ) ) {
+    itemDrop = AnimationId::ItemThickLaser;
+  }
 }
 
 UFO::~UFO() {

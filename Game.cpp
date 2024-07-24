@@ -267,6 +267,11 @@ void Game::killPlayer() {
   for( auto item : allItems ) {
     item->die();
   }
+  
+  // so the player doesn't get hit when respawn
+  for( auto bullet : allBullets ) {
+    bullet->die();
+  }
 }
 
 void Game::updateNumberOfPlayerLives() {
