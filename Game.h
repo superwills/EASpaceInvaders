@@ -38,6 +38,7 @@ class Game {
   vector< shared_ptr<Particle> > allParticles;
   vector< shared_ptr<UFO> > allUFOs;
   vector< shared_ptr<Sprite> > playerLives;
+  vector< shared_ptr<Sprite> > playOnceAnimations;
   
   InvaderGroup invaderGroup;
   Test test;
@@ -90,6 +91,8 @@ public:
    
   // Player shoots from top, invaders from their bottom.
   void tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel );
+  // Plays a sprite animation ONCE where you want it
+  void playSpriteAnimation( const RectF &where, AnimationId animationId );
   void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax );
   void setScore( int newScore );
   void changeScore( int byScoreValue );

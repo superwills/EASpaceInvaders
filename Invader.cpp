@@ -7,6 +7,7 @@ Invader::Invader( const RectF& rectangle, AnimationId animationId ) : Sprite( re
   name = "Invader/" + name; // prepend Invader/
   animation = sdl->getAnimation( animationId );
   deathSound = SFXId::ExplodeEnemy;
+  deathAnimation = AnimationId::Explode;
 }
 
 void Invader::update( float t ) {

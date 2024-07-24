@@ -172,6 +172,7 @@ void Game::clearDead() {
   for( auto bunker : allBunkers ) {
     bunker->clearDead();
   }
+  clearDeadOnes( playOnceAnimations );
   
   invaderGroup.clearDead();
 }
@@ -202,6 +203,14 @@ void Game::runGame() {
   for( auto playerLife : playerLives ) {
     playerLife->update( dt );
   } 
+  
+  for( auto sprite : playOnceAnimations ) {
+    sprite->update( dt );
+    
+    if( sprite->animation.isEnded() ) {
+      sprite->die();
+    }
+  }
   checkForCollisions();
  
   checkWinConditions();
@@ -417,6 +426,12 @@ void Game::tryShootBullet( const RectF &source, bool isFromInvader, const Vector
   allBullets.push_back( bullet );
 }
 
+void Game::playSpriteAnimation( const RectF &where, AnimationId animationId ) {
+  auto spriteAnim = std::make_shared<Sprite>( where, animationId );
+  spriteAnim->animation.cycles = 0;  // DO NOT cycle the anim, so we can remove it when it's done playing thru
+  playOnceAnimations.push_back( spriteAnim );
+}
+
 void Game::particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax ) {
   for( int i = 0; i < numParticles; i++ ) {
     Vector2f size = Vector2f::random( sizeMin, sizeMax );
@@ -512,6 +527,10 @@ void Game::draw() {
     
     for( auto playerLife : playerLives ) {
       playerLife->draw();
+    }
+    
+    for( auto sprite : playOnceAnimations ) {
+      sprite->draw();
     }
 	  break;
   

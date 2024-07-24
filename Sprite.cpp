@@ -150,6 +150,10 @@ void Sprite::die() {
   }
   
   game->changeScore( getScore() );
+  
+  if( deathAnimation != AnimationId::NoAnimation ) {
+    game->playSpriteAnimation( box, deathAnimation );
+  }
 }
 
 int Sprite::getScore() const {

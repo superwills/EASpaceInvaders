@@ -25,14 +25,16 @@ public:
   string name;    // helps in debug
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   Animation animation;  // Single frame for non-animated objects
+  
+  // also tells what kind of thing object is (so you can get the score for it)
+  AnimationId character = AnimationId::NoAnimation;
+  AnimationId deathAnimation = AnimationId::NoAnimation; // replace self with death animation when die
   SFXId deathSound = SFXId::NoSFX;
   
   // When object dies, # particles it displays
   int minParticles = 8, maxParticles = 12;
   float particleSizeMin = 4, particleSizeMax = 12;
   
-  // also tells what kind of thing object is (so you can get the score for it)
-  AnimationId character = AnimationId::NoAnimation;
   
 	Sprite();
   Sprite( const RectF &rectangle ); 
@@ -72,7 +74,7 @@ public:
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update( float t );
 	virtual void draw() const;
-	virtual void die();
+  virtual void die();
  
   int getScore() const; 
   

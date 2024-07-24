@@ -27,9 +27,6 @@ using namespace std;
 
 
 // TODO:
-// cleanup lib stuff
-// promote to PRIVATES
-// 
 // Use events?
 // Powerups? Laser? Spread gun?
 // A very big J enemy
