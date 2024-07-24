@@ -85,7 +85,7 @@
 		3D92006B2C4AB501001198CA /* Assets.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Assets.cpp; sourceTree = "<group>"; };
 		3D92006D2C4AB561001198CA /* randomUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = randomUtil.cpp; sourceTree = "<group>"; };
 		3D92006E2C4AB561001198CA /* randomUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = randomUtil.h; sourceTree = "<group>"; };
-		9FC7159C1A152601004FDDD1 /* Ping */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Ping; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FC7159C1A152601004FDDD1 /* SpaceInvaders */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SpaceInvaders; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FC715BD1A1527C4004FDDD1 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9FC715BF1A152805004FDDD1 /* Bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bullet.h; sourceTree = "<group>"; };
 		9FC715C01A152805004FDDD1 /* SDLColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLColors.h; sourceTree = "<group>"; };
@@ -207,7 +207,7 @@
 		9FC7159D1A152601004FDDD1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9FC7159C1A152601004FDDD1 /* Ping */,
+				9FC7159C1A152601004FDDD1 /* SpaceInvaders */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -265,9 +265,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9FC7159B1A152601004FDDD1 /* Ping */ = {
+		9FC7159B1A152601004FDDD1 /* SpaceInvaders */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9FC715A51A152601004FDDD1 /* Build configuration list for PBXNativeTarget "Ping" */;
+			buildConfigurationList = 9FC715A51A152601004FDDD1 /* Build configuration list for PBXNativeTarget "SpaceInvaders" */;
 			buildPhases = (
 				9FC715981A152601004FDDD1 /* Sources */,
 				9FC715991A152601004FDDD1 /* Frameworks */,
@@ -277,9 +277,9 @@
 			);
 			dependencies = (
 			);
-			name = Ping;
+			name = SpaceInvaders;
 			productName = Ping;
-			productReference = 9FC7159C1A152601004FDDD1 /* Ping */;
+			productReference = 9FC7159C1A152601004FDDD1 /* SpaceInvaders */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -291,7 +291,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "William Sherif";
 			};
-			buildConfigurationList = 9FC715971A152601004FDDD1 /* Build configuration list for PBXProject "Ping" */;
+			buildConfigurationList = 9FC715971A152601004FDDD1 /* Build configuration list for PBXProject "SpaceInvaders" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -304,7 +304,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9FC7159B1A152601004FDDD1 /* Ping */,
+				9FC7159B1A152601004FDDD1 /* SpaceInvaders */,
 			);
 		};
 /* End PBXProject section */
@@ -438,7 +438,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9FC715971A152601004FDDD1 /* Build configuration list for PBXProject "Ping" */ = {
+		9FC715971A152601004FDDD1 /* Build configuration list for PBXProject "SpaceInvaders" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9FC715A31A152601004FDDD1 /* Debug */,
@@ -447,7 +447,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9FC715A51A152601004FDDD1 /* Build configuration list for PBXNativeTarget "Ping" */ = {
+		9FC715A51A152601004FDDD1 /* Build configuration list for PBXNativeTarget "SpaceInvaders" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9FC715A61A152601004FDDD1 /* Debug */,

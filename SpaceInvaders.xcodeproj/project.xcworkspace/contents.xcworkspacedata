@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Ping.xcodeproj">
+      location = "self:/Users/william/code/sdlApp/SpaceInvaders.xcodeproj">
    </FileRef>
 </Workspace>
