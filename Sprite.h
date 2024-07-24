@@ -20,11 +20,13 @@ protected:
   // This member represents the position & the size of the sprite combined
   RectF box;
   Vector2f velocity;
-	
+	AnimationId itemDrop = AnimationId::NoAnimation;
+  
 public:
   string name;    // helps in debug
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   Animation animation;  // Single frame for non-animated objects
+  bool dieOnAnimationEnd = 0;
   
   // also tells what kind of thing object is (so you can get the score for it)
   AnimationId character = AnimationId::NoAnimation;
@@ -76,6 +78,6 @@ public:
 	virtual void draw() const;
   virtual void die();
  
-  int getScore() const; 
+  virtual int getScore() const; 
   
 };

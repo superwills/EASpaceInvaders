@@ -53,6 +53,7 @@ void Sprite::addAnimationFrame( shared_ptr<Texture> tex, const RectF &subRect, S
 }
 
 void Sprite::setAnimation( AnimationId animationId ) {
+  character = animationId;
   animation = sdl->getAnimation( animationId );
 }
 
@@ -116,6 +117,10 @@ bool Sprite::hit( shared_ptr<Sprite> other ) {
 void Sprite::update( float t ) {
   animation.update( t );
   move( velocity*t );
+  
+  if( dieOnAnimationEnd && animation.isEnded() ) {
+    die();
+  }
 }
 
 void Sprite::draw() const {
@@ -149,10 +154,18 @@ void Sprite::die() {
     sdl->playSound( deathSound );
   }
   
-  game->changeScore( getScore() );
+  int score = getScore();
+  if( score > 0 ) {
+    game->displayScore( score, getCenter(), White );
+    game->changeScore( score );
+  }
   
   if( deathAnimation != AnimationId::NoAnimation ) {
     game->playSpriteAnimation( box, deathAnimation );
+  }
+  
+  if( itemDrop != AnimationId::NoAnimation ) {
+    game->createItem( box.centroid(), itemDrop );
   }
 }
 

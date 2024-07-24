@@ -8,6 +8,11 @@ Invader::Invader( const RectF& rectangle, AnimationId animationId ) : Sprite( re
   animation = sdl->getAnimation( animationId );
   deathSound = SFXId::ExplodeEnemy;
   deathAnimation = AnimationId::Explode;
+  
+  // 20% chance to have a drop
+  if( withChance( ChanceToDropItem ) ) {
+    itemDrop = rand<AnimationId>( AnimationId::ItemPlus1, AnimationId::ItemShield );
+  }
 }
 
 void Invader::update( float t ) {

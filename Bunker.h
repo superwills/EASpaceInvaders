@@ -5,6 +5,7 @@ using std::shared_ptr;
 
 #include "RectF.h"
 
+class BunkerPiece;
 class Sprite;
 
 // A bunker contains 8 sprites in this shape:
@@ -13,7 +14,7 @@ class Sprite;
 //   * *
 class Bunker {
   RectF bounds;
-  vector< shared_ptr<Sprite> > pieces;
+  vector< shared_ptr<BunkerPiece> > pieces;
   
 public:
   Bunker( const RectF &initialBounds );

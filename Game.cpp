@@ -5,8 +5,10 @@
 #include "SDLColors.h"
 #include "GameOverScreen.h"
 #include "Invader.h"
+#include "Item.h"
 #include "Particle.h"
 #include "Player.h"
+#include "ScoreDisplay.h"
 #include "TitleScreen.h"
 #include "UFO.h"
 
@@ -47,6 +49,9 @@ void Game::clearGameBoard() {
   allParticles.clear();
   allUFOs.clear();
   playerLives.clear();
+  playOnceAnimations.clear();
+  allItems.clear();
+  allScores.clear();
 }
 
 void Game::togglePause() {
@@ -163,18 +168,27 @@ void Game::checkForCollisions() {
       bunker->killHit( invader );
     }
   }
+  
+  for( auto item : allItems ) {
+    if( player->hit( item ) ) {
+      sdl->playSound( SFXId::Blip );
+      player->giveItem( item );
+      item->die();
+    }
+  }
 }
 
 void Game::clearDead() {
   clearDeadOnes( allBullets );
+  invaderGroup.clearDead();
   clearDeadOnes( allParticles );
   clearDeadOnes( allUFOs );
   for( auto bunker : allBunkers ) {
     bunker->clearDead();
   }
   clearDeadOnes( playOnceAnimations );
-  
-  invaderGroup.clearDead();
+  clearDeadOnes( allItems );
+  clearDeadOnes( allScores );
 }
 
 void Game::runGame() {
@@ -210,6 +224,14 @@ void Game::runGame() {
     if( sprite->animation.isEnded() ) {
       sprite->die();
     }
+  }
+  
+  for( auto item : allItems ) {
+    item->update( dt );
+  }
+  
+  for( auto score : allScores ) {
+    score->update( dt );
   }
   checkForCollisions();
  
@@ -330,17 +352,23 @@ void Game::init() {
   // Load sprite animations
   sdl->loadSpritesheetAnimation( AnimationId::Invader1, "assets/ims/invader-1.png", 2, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Invader2, "assets/ims/invader-2.png", 2, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderE, "assets/ims/invader-E.png", 4, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::InvaderA, "assets/ims/invader-A.png", 4, Vector2f( 16, 16 ) );
+  
   sdl->loadSpritesheetAnimation( AnimationId::BulletInvaderArrow, "assets/ims/bullet-arrow.png", 2, Vector2f( 8, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::BulletInvaderLightning, "assets/ims/bullet-lightning.png", 2, Vector2f( 8, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::BulletPlayer, "assets/ims/bullet-player.png", 2, Vector2f( 8, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::InvaderE, "assets/ims/invader-E.png", 4, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::InvaderA, "assets/ims/invader-A.png", 4, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::UFO, "assets/ims/ufo.png", 2, Vector2f( 32, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::MenuPointer, "assets/ims/menu-pointer.png", 2, Vector2f( 16, 16 ) );
+  
   sdl->loadSpritesheetAnimation( AnimationId::Explode, "assets/ims/explode.png", 5, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::MenuPointer, "assets/ims/menu-pointer.png", 2, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::UFO, "assets/ims/ufo.png", 2, Vector2f( 32, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 8 ) );
   sdl->loadSpritesheetAnimation( AnimationId::PlayerDie, "assets/ims/player-die.png", 6, Vector2f( 20, 12 ), White, 0 );
   sdl->loadSpritesheetAnimation( AnimationId::Boss, "assets/ims/josh.png", 2, Vector2f( 64, 32 ) );
+  
+  sdl->loadSpritesheetAnimation( AnimationId::ItemPlus1, "assets/ims/item+1.png", 6, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::ItemSpread, "assets/ims/item-spread.png", 6, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::ItemShield, "assets/ims/item-shield.png", 6, Vector2f( 16, 16 ) );
   
   titleScreen = std::make_shared<TitleScreen>( "space invaders!" );
   gameOverScreen = std::make_shared<GameOverScreen>();
@@ -417,7 +445,7 @@ void Game::setMouseJustClicked( uint16_t mouseButton ) {
 
 void Game::tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel ) {
   int numBullets = getNumBullets( isFromInvader );
-  int maxBullets = isFromInvader ? invaderGroup.getMaxNumBullets() : Player::DefaultMaxBullets; 
+  int maxBullets = isFromInvader ? invaderGroup.getMaxNumBullets() : player->getMaxBullets(); 
   if( numBullets >= maxBullets ) {
     return;
   }
@@ -438,6 +466,17 @@ void Game::particleSplash( const Vector2f &pos, int numParticles, float sizeMin,
     shared_ptr<Particle> p = std::make_shared<Particle>( RectF( pos, Vector2f( size ) ) );
     allParticles.push_back( p );
   }
+}
+
+void Game::createItem( const Vector2f &pos, AnimationId animationId ) {
+  auto item = std::make_shared<Item>( pos, animationId );
+  allItems.push_back( item );
+}
+
+void Game::displayScore( int score, const Vector2f &pos, SDL_Color color ) {
+  // Create the score sprite
+  auto scoreSprite = std::make_shared<ScoreDisplay>( score, pos, White );
+  allScores.push_back( scoreSprite );
 }
 
 void Game::setScore( int newScore ) {
@@ -531,6 +570,14 @@ void Game::draw() {
     
     for( auto sprite : playOnceAnimations ) {
       sprite->draw();
+    }
+    
+    for( auto item : allItems ) {
+      item->draw();
+    }
+    
+    for( auto score : allScores ) {
+      score->draw();
     }
 	  break;
   

@@ -17,6 +17,9 @@
 		3D667CE82C4D4F410014BCD0 /* InvaderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CE62C4D4F410014BCD0 /* InvaderGroup.cpp */; };
 		3D667CEB2C4D701F0014BCD0 /* StopWatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CE92C4D701F0014BCD0 /* StopWatch.cpp */; };
 		3D667CEE2C4D82590014BCD0 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D667CEC2C4D82590014BCD0 /* Particle.cpp */; };
+		3D8D2FFE2C51367B007B64EE /* Item.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D8D2FFC2C51367B007B64EE /* Item.cpp */; };
+		3D8D30012C51467E007B64EE /* BunkerPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D8D2FFF2C51467E007B64EE /* BunkerPiece.cpp */; };
+		3D8D30042C514A40007B64EE /* ScoreDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D8D30022C514A40007B64EE /* ScoreDisplay.cpp */; };
 		3D9200672C4AA657001198CA /* assets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D9200662C4AA5DB001198CA /* assets */; };
 		3D92006C2C4AB501001198CA /* Assets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D92006B2C4AB501001198CA /* Assets.cpp */; };
 		3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D92006D2C4AB561001198CA /* randomUtil.cpp */; };
@@ -80,6 +83,12 @@
 		3D667CEA2C4D701F0014BCD0 /* StopWatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StopWatch.h; sourceTree = "<group>"; };
 		3D667CEC2C4D82590014BCD0 /* Particle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Particle.cpp; sourceTree = "<group>"; };
 		3D667CED2C4D82590014BCD0 /* Particle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		3D8D2FFC2C51367B007B64EE /* Item.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Item.cpp; sourceTree = "<group>"; };
+		3D8D2FFD2C51367B007B64EE /* Item.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Item.h; sourceTree = "<group>"; };
+		3D8D2FFF2C51467E007B64EE /* BunkerPiece.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BunkerPiece.cpp; sourceTree = "<group>"; };
+		3D8D30002C51467E007B64EE /* BunkerPiece.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BunkerPiece.h; sourceTree = "<group>"; };
+		3D8D30022C514A40007B64EE /* ScoreDisplay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ScoreDisplay.cpp; sourceTree = "<group>"; };
+		3D8D30032C514A40007B64EE /* ScoreDisplay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScoreDisplay.h; sourceTree = "<group>"; };
 		3D9200662C4AA5DB001198CA /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		3D9200682C4AACFF001198CA /* Assets.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Assets.h; sourceTree = "<group>"; };
 		3D92006B2C4AB501001198CA /* Assets.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Assets.cpp; sourceTree = "<group>"; };
@@ -136,12 +145,18 @@
 				3D228A5F2C4F180B005B9684 /* base */,
 				9FC715BF1A152805004FDDD1 /* Bullet.h */,
 				9FC715CD1A152805004FDDD1 /* Bullet.cpp */,
+				3D8D30002C51467E007B64EE /* BunkerPiece.h */,
+				3D8D2FFF2C51467E007B64EE /* BunkerPiece.cpp */,
 				3D667CC72C4ADA370014BCD0 /* Invader.h */,
 				3D667CC62C4ADA370014BCD0 /* Invader.cpp */,
+				3D8D2FFD2C51367B007B64EE /* Item.h */,
+				3D8D2FFC2C51367B007B64EE /* Item.cpp */,
 				3D667CED2C4D82590014BCD0 /* Particle.h */,
 				3D667CEC2C4D82590014BCD0 /* Particle.cpp */,
 				9FC715C51A152805004FDDD1 /* Player.h */,
 				9FC715D21A152805004FDDD1 /* Player.cpp */,
+				3D8D30032C514A40007B64EE /* ScoreDisplay.h */,
+				3D8D30022C514A40007B64EE /* ScoreDisplay.cpp */,
 				3D228A542C4D9F1D005B9684 /* UFO.h */,
 				3D228A532C4D9F1D005B9684 /* UFO.cpp */,
 			);
@@ -314,6 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D8D2FFE2C51367B007B64EE /* Item.cpp in Sources */,
 				9FC715DB1A152805004FDDD1 /* Log.cpp in Sources */,
 				9FC715D81A152805004FDDD1 /* SDLColors.cpp in Sources */,
 				3D228A582C4E7537005B9684 /* GameOverScreen.cpp in Sources */,
@@ -329,10 +345,12 @@
 				9FC715E01A152805004FDDD1 /* TitleScreen.cpp in Sources */,
 				9FC715D91A152805004FDDD1 /* Controller.cpp in Sources */,
 				3D228A552C4D9F1D005B9684 /* UFO.cpp in Sources */,
+				3D8D30012C51467E007B64EE /* BunkerPiece.cpp in Sources */,
 				3D667CEB2C4D701F0014BCD0 /* StopWatch.cpp in Sources */,
 				9FC715DA1A152805004FDDD1 /* Game.cpp in Sources */,
 				9FC715DC1A152805004FDDD1 /* Player.cpp in Sources */,
 				9FC715DF1A152805004FDDD1 /* StlUtil.cpp in Sources */,
+				3D8D30042C514A40007B64EE /* ScoreDisplay.cpp in Sources */,
 				9FC715DE1A152805004FDDD1 /* Sprite.cpp in Sources */,
 				3D92006F2C4AB561001198CA /* randomUtil.cpp in Sources */,
 				3D667CCC2C4BDC330014BCD0 /* Animation.cpp in Sources */,

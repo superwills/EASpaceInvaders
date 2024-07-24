@@ -11,4 +11,5 @@ public:
   ~UFO();
   
   void update( float t ) override;
+  int getScore() const override;
 };

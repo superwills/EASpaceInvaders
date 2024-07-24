@@ -17,8 +17,10 @@ class Bunker;
 class GameOverScreen;
 class Invader;
 class InvaderGroup;
+class Item;
 class Particle;
 class Player;
+class ScoreDisplay;
 class TitleScreen;
 class UFO;
 
@@ -39,6 +41,8 @@ class Game {
   vector< shared_ptr<UFO> > allUFOs;
   vector< shared_ptr<Sprite> > playerLives;
   vector< shared_ptr<Sprite> > playOnceAnimations;
+  vector< shared_ptr<Item> > allItems;
+  vector< shared_ptr<ScoreDisplay> > allScores;
   
   InvaderGroup invaderGroup;
   Test test;
@@ -94,6 +98,9 @@ public:
   // Plays a sprite animation ONCE where you want it
   void playSpriteAnimation( const RectF &where, AnimationId animationId );
   void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax );
+  void createItem( const Vector2f &pos, AnimationId animationId );
+  
+  void displayScore( int score, const Vector2f &pos, SDL_Color color );
   void setScore( int newScore );
   void changeScore( int byScoreValue );
   

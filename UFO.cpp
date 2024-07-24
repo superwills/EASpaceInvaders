@@ -27,3 +27,9 @@ void UFO::update( float t ) {
     dead = 1;
   }
 }
+
+int UFO::getScore() const {
+  int baseScore = Sprite::getScore();
+  
+  return baseScore * randInt( 1, 5 );
+}

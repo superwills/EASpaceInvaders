@@ -34,6 +34,7 @@ enum class MusicId {
   Background1,
 };
 
+// These also uniquely identify object types in the game
 enum class AnimationId {
   NoAnimation,
   
@@ -41,16 +42,21 @@ enum class AnimationId {
   Invader2,
   InvaderE,
   InvaderA,
+  
   BulletInvaderArrow,
   BulletInvaderLightning,
   BulletPlayer,
-  PlayerBullet,
+  
   Explode,
   MenuPointer,
   UFO,
   Player,
   PlayerDie,
-  Boss
+  Boss,
+  
+  ItemPlus1,  //+1 bullet
+  ItemSpread, //spreads bullets
+  ItemShield,
 };
 
 // This could have been added to class Sprite, but it seemed to crowd it a little.

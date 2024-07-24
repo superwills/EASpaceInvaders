@@ -1,6 +1,7 @@
 #include "Bunker.h"
 
 #include "Assets.h"
+#include "BunkerPiece.h"
 #include "Sprite.h"
 #include "StlUtil.h"
 
@@ -22,10 +23,9 @@ Bunker::Bunker( const RectF &initialBounds ) :
       bunkerPiecePos.y += j * bunkerPieceSize.y;
       RectF bunkerRectangle( bunkerPiecePos, bunkerPieceSize );
       
-      shared_ptr<Sprite> sprite = std::make_shared<Sprite>( bunkerRectangle, Green );
-      sprite->name = "BunkerPiece/" + sprite->name;
-      sprite->deathSound = SFXId::ExplodeBunker;
-      pieces.push_back( sprite );
+      BunkerPiece bp(bunkerRectangle, Green );
+      auto bunkerPiece = std::make_shared<BunkerPiece>( bunkerRectangle, Green );
+      pieces.push_back( bunkerPiece );
     }
   }
 }

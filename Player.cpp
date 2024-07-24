@@ -2,6 +2,7 @@
 
 #include "Bullet.h"
 #include "Game.h"
+#include "Item.h"
 #include "SDLWindow.h"
 
 Player::Player() {
@@ -44,8 +45,21 @@ bool Player::canPlayerRespawn() {
 }
 
 void Player::respawn() {
+  maxBullets = DefaultMaxBullets;
   setAnimation( AnimationId::Player );
   dead = 0;
+}
+
+void Player::giveItem( shared_ptr<Item> item ) {
+  switch( item->character ) {
+  case AnimationId::ItemPlus1:
+    maxBullets++;
+    break;
+    
+  case AnimationId::ItemShield:
+  case AnimationId::ItemSpread:
+    break;
+  }
 }
 
 void Player::tryShoot() {
