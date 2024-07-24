@@ -8,7 +8,7 @@ ScoreDisplay::ScoreDisplay( int value, const Vector2f &center, SDL_Color color )
   addAnimationFrame( tex, color );
   
   minParticles = maxParticles = 0;
-  
+  velocity.y = -5;
 }
 
 void ScoreDisplay::update( float t ) {
