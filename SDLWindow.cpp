@@ -153,7 +153,7 @@ Animation SDLWindow::getAnimation( AnimationId animationId ) {
   return it->second;
 }
 
-Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize, SDL_Color color, bool cycles ) {
+Animation& SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize, SDL_Color color, bool cycles ) {
   // All frames use the same tex.
   shared_ptr<Texture> tex = loadTexture( filename );
   RectF srcRect;
@@ -168,7 +168,7 @@ Animation SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const st
   }
   
   animations[ animationId ] = animation;
-  return animation;
+  return animations[ animationId ]; // you get the ref back in case need further editing
 }
 
 shared_ptr<Texture> SDLWindow::makeTextTexture( const string &text ) {

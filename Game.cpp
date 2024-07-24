@@ -382,7 +382,17 @@ void Game::init() {
   sdl->loadSpritesheetAnimation( AnimationId::BulletInvaderLightning, "assets/ims/bullet-lightning.png", 2, Vector2f( 8, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::BulletPlayerArrow, "assets/ims/bullet-player.png", 2, Vector2f( 8, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::BulletPlayerBall, "assets/ims/bullet-ball.png", 2, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::BulletLaser, "assets/ims/bullet-thick-laser.png", 2, Vector2f( 8, 16 ) );
+  Animation& thickLaser = sdl->loadSpritesheetAnimation( AnimationId::BulletLaser, "assets/ims/bullet-laser-no-outline.png", 2, Vector2f( 8, 16 ) );
+  for( auto &frame : thickLaser.frames ) {
+    // add color banded 
+    frame.duration = .02;
+    frame.color = SDL_RandomSolidColor();
+    Animation::Frame frameCopy = frame;
+    frameCopy.color = SDL_RandomSolidColor();
+    for( int i = 0; i < 15; i++ ) {
+      thickLaser.addFrame( frameCopy );
+    }
+  }
   
   sdl->loadSpritesheetAnimation( AnimationId::Explode, "assets/ims/explode.png", 5, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::MenuPointer, "assets/ims/menu-pointer.png", 2, Vector2f( 16, 16 ) );
