@@ -10,3 +10,14 @@ ScoreDisplay::ScoreDisplay( int value, const Vector2f &center, SDL_Color color )
   minParticles = maxParticles = 0;
   
 }
+
+void ScoreDisplay::update( float t ) {
+  Sprite::update( t );
+  
+  timeAlive += t;
+  
+  if( timeAlive >= MaxLifetime ) {
+    die();
+  }
+
+}
