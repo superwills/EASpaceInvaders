@@ -32,6 +32,14 @@ void SDLWindow::ExitApp( const string &msg ) {
   exit( 1 );
 }
 
+bool SDLWindow::Check( int result, const string &msg ) {
+  if( result < 0 ) {
+    error( "SDL fail `%s`: '%s'", msg.c_str(), SDL_GetError() );
+  }
+  
+  return !result; // 0 means OK in SDL
+}
+
 SDLWindow::SDLWindow( const string &title, int windowWidth, int windowHeight ) {
 	window = SDL_CreateWindow( title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     windowWidth, windowHeight, SDL_WINDOW_SHOWN );

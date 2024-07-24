@@ -367,7 +367,7 @@ void Game::init() {
   sdl->loadSpritesheetAnimation( AnimationId::Boss, "assets/ims/josh.png", 2, Vector2f( 64, 32 ) );
   
   sdl->loadSpritesheetAnimation( AnimationId::ItemPlus1, "assets/ims/item+1.png", 6, Vector2f( 16, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::ItemSpread, "assets/ims/item-spread.png", 6, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::ItemSpread, "assets/ims/item-spread.png", 6, Vector2f( 17, 17 ) );
   sdl->loadSpritesheetAnimation( AnimationId::ItemShield, "assets/ims/item-shield.png", 6, Vector2f( 16, 16 ) );
   
   titleScreen = std::make_shared<TitleScreen>( "space invaders!" );

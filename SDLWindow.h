@@ -39,6 +39,7 @@ public:
   
   static void SDLInit();
   static void ExitApp( const string &msg );
+  static bool Check( int result, const string &msg );
 
 	// ctor requires just window width & height
   SDLWindow( const string &title, int windowWidth, int windowHeight );

@@ -1,6 +1,7 @@
 #include "Texture.h"
 
 #include "Log.h"
+#include "SDLWindow.h"
 
 Texture::Texture( const string &filename, SDL_Renderer *renderer ) : name( filename ) {
   // Load first as a "surface"
@@ -39,7 +40,7 @@ void Texture::loadTextureFromSurface( SDL_Surface *surface, SDL_Renderer *render
   }
   
   // default textures to allow alpha blend.
-  SDL_SetTextureBlendMode( sdlTex, SDL_BLENDMODE_BLEND );
+  SDLWindow::Check( SDL_SetTextureBlendMode( sdlTex, SDL_BLENDMODE_BLEND ), "SDL_SetTextureBlendMode" );
   
   SDL_QueryTexture( sdlTex, 0, 0, &w, &h );
 }
