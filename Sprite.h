@@ -19,17 +19,18 @@ protected:
   Vector2f hitBoxScale = 1;   // < 1 for more forgiving collision checks
   // This member represents the position & the size of the sprite combined
   RectF box;
-  Vector2f velocity;
-	AnimationId itemDrop = AnimationId::NoAnimation;
+  AnimationId itemDrop = AnimationId::NoAnimation;
  
   // Child sprites that move with/are drawn with this sprite.
   vector< shared_ptr<Sprite> > children;
+  bool dieOnAnimationEnd = 0;
   
 public:
   string name;    // helps in debug
   bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
+  
   Animation animation;  // Single frame for non-animated objects
-  bool dieOnAnimationEnd = 0;
+  Vector2f velocity;
   
   // also tells what kind of thing object is (so you can get the score for it)
   AnimationId character = AnimationId::NoAnimation;
@@ -39,7 +40,6 @@ public:
   // When object dies, # particles it displays
   int minParticles = 8, maxParticles = 12;
   float particleSizeMin = 4, particleSizeMax = 12;
-  
   
 	Sprite();
   Sprite( const RectF &rectangle ); 

@@ -81,6 +81,11 @@ void Player::giveItem( shared_ptr<Item> item ) {
     break;
     
   case AnimationId::ItemSpread:
+    weapon = BulletType::PlayerSpread;
+    break;
+    
+  case AnimationId::ItemThickLaser:
+    weapon = BulletType::PlayerThickLaser;
     break;
   }
 }

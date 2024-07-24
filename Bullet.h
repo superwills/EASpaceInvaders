@@ -10,8 +10,10 @@ class Bullet : public Sprite {
   inline static const map<BulletType, float> BulletSpeeds = {
     // Player bullets go UP, so they have a negative speed
     { BulletType::PlayerNormal, -300 },
-    { BulletType::PlayerSpread, -100 },
-    { BulletType::PlayerThickLaser, -200 },
+    { BulletType::PlayerSpread, -200 },
+    
+    // expanding box
+    { BulletType::PlayerThickLaser, -20 },
     
     // Invader bullets go down, +speed
     { BulletType::InvaderNormal, +100 },

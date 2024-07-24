@@ -479,9 +479,17 @@ void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
   
   if( bulletType == BulletType::PlayerSpread ) {
     // Spread makes __3__ bullets
+    for( int i = -1; i <= 1; i++ ) {
+      auto bullet = std::make_shared<Bullet>( shootPoint, bulletType );
+      bullet->velocity.x = i * 50 ;
+      allBullets.push_back( bullet );
+    }
   }
-  auto bullet = std::make_shared<Bullet>( shootPoint, bulletType );
-  allBullets.push_back( bullet );
+  else {
+    auto bullet = std::make_shared<Bullet>( shootPoint, bulletType );
+    allBullets.push_back( bullet );
+  }
+  
 }
 
 void Game::playSpriteAnimation( const RectF &where, AnimationId animationId ) {
