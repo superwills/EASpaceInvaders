@@ -1,13 +1,42 @@
 #pragma once
 
 #include "Sprite.h"
+#include "BulletType.h"
 
 class Bullet : public Sprite {
   inline static Vector2f DefaultBulletScale = Vector2f( .02, .03 );
-
-public:
-  bool isFromInvader = 0;
   
-  Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, bool isShotFromInvader );
+  public://rm
+  BulletType type = BulletType::PlayerNormal;
+  
+  inline static const map<BulletType, float> BulletSpeeds = {
+    // Player bullets go UP, so they have a negative speed
+    { BulletType::PlayerNormal, -100 },
+    { BulletType::PlayerSpread, -100 },
+    { BulletType::PlayerThickLaser, -200 },
+    
+    // Invader bullets go down, +speed
+    { BulletType::InvaderNormal, +100 },
+    { BulletType::InvaderSuper, +400 },
+  };
+  
+  inline static const map<BulletType, AnimationId> BulletAnimations = {
+    { BulletType::PlayerNormal, AnimationId::BulletPlayer },
+    { BulletType::PlayerSpread, AnimationId::BulletPlayer },
+    { BulletType::PlayerThickLaser, AnimationId::BulletPlayer },
+    
+    { BulletType::InvaderNormal, AnimationId::BulletInvaderArrow },
+    { BulletType::InvaderSuper, AnimationId::BulletInvaderLightning },
+  };
+  
+public:
+  static bool IsBulletTypeFromInvader( BulletType bulletType );
+  
+  Bullet( const Vector2f &shootCenter, BulletType bulletType );
   void update( float t ) override;
+  
+  void updateAnimationType();
+  float getBulletSpeed() const;
+  bool isFromInvader() const;
+  
 };

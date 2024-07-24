@@ -37,4 +37,11 @@ string makeString( const char *fmt, ... );
 
 string makeTimeString( double s ) ;
 
-
+// Inclusive
+template <typename Enum>
+bool isBetweenIn( const Enum &val, const Enum &low, const Enum &high ) {
+  int v = (int)val;
+  
+  // low <= v <= high
+  return (int)low <= v   &&   v <= (int)high; 
+}

@@ -63,7 +63,7 @@ void Player::giveItem( shared_ptr<Item> item ) {
 }
 
 void Player::tryShoot() {
-  game->tryShootBullet( box, 0, Vector2f( 0, -DefaultPlayerBulletSpeed ) );
+  game->tryShootBullet( weapon, box.midTop() );
 }
 
 void Player::setMovingLeft() {

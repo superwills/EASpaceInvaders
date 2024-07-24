@@ -2,52 +2,35 @@
 
 #include "SDLWindow.h"
 
+bool Bullet::IsBulletTypeFromInvader( BulletType bulletType ) {
+  bool isInvader = isBetweenIn( bulletType, BulletType::InvaderNormal, BulletType::InvaderSuper );
+  
+  info( "Bullet %d is from %s", bulletType, isInvader?"Invader":"Player" ) ;
+  
+  return isInvader; 
+}
 
-Bullet::Bullet( const RectF &shooterBounds, const Vector2f &initialVelocity, bool isShotFromInvader ) :
-    isFromInvader( isShotFromInvader ) {
+Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :
+    type( bulletType ) {
   
   name = "Bullet/" + name;
-  velocity = initialVelocity;
+  updateAnimationType();
+  
+  velocity.y = getBulletSpeed();
   
   // Hitbox has to be a lot narrower for bullets, so they don't hit as easily but still remain easy visible
   hitBoxScale.x = .2;
 
-  if( isFromInvader ) {
-    // superbullets are 2x as fast and have a different graphic
-    bool superBullet = 0;
-    if( isFromInvader ) {
-      superBullet = withChance( .5 );
-      hitBoxScale.x = .5; // lightning has a wide hit box
-    }
-    
-    AnimationId anim = AnimationId::BulletInvaderArrow;
-    if( superBullet ) {
-      velocity *= 3;
-      anim = AnimationId::BulletInvaderLightning;
-    }
-    animation = sdl->getAnimation( anim );
-  }
-  else {
-    animation = sdl->getAnimation( AnimationId::BulletPlayer );
+  if( type == BulletType::InvaderSuper ) {
+    hitBoxScale.x = .5; // lightning has a wide hit box
   }
   
   float windowHeight = sdl->getWindowSize().y;
   box.size = Vector2f( windowHeight ) * DefaultBulletScale;
-  
-  box.pos.x = shooterBounds.midX() - box.size.x/2;
-  if( isFromInvader ) {
-    // invader shoots from bottom
-    box.pos.y = shooterBounds.bottom();
-  }
-  else {
-    // Player shoots from top
-    box.pos.y = shooterBounds.top();
-  }
+  box.setCenter( shootCenter );
   
   minParticles = 3, maxParticles = 6;
   particleSizeMin = 2, particleSizeMax = 4;
-  
-  
 }
 
 void Bullet::update( float t ) {
@@ -57,4 +40,28 @@ void Bullet::update( float t ) {
 	if( !sdl->getWindowRectangle().hit( box ) ) {
     die();
   } 
+}
+
+void Bullet::updateAnimationType() {
+  auto it = BulletAnimations.find( type );
+  if( it == BulletAnimations.end() ) {
+    error( "No animation for %d", type );
+    return;
+  }
+  
+  setAnimation( it->second );
+}
+
+float Bullet::getBulletSpeed() const {
+  auto it = BulletSpeeds.find( type );
+  if( it == BulletSpeeds.end() ) {
+    error( "No such bullet %d", type );
+    return 100;
+  }
+  
+  return it->second;
+}
+
+bool Bullet::isFromInvader() const {
+  return IsBulletTypeFromInvader( type );
 }

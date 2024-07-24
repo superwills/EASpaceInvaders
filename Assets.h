@@ -56,6 +56,7 @@ enum class AnimationId {
   
   ItemPlus1,  //+1 bullet
   ItemSpread, //spreads bullets
+  ItemThickLaser,
   ItemShield,
 };
 

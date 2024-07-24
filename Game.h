@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BulletType.h"
 #include "Controller.h"
 #include "GameState.h"
 #include "InvaderGroup.h"
@@ -71,7 +72,10 @@ class Game {
   int getNumBullets( bool isFromInvader );
   
   void checkWinConditions();
-	void checkForCollisions();
+  
+  void checkBulletCollisions();
+  void checkAllCollisions();
+  
   void clearDead(); 
 	void runGame();
   void killPlayer();
@@ -94,7 +98,7 @@ public:
   void setMouseJustClicked( uint16_t mouseButton );
    
   // Player shoots from top, invaders from their bottom.
-  void tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel );
+  void tryShootBullet( BulletType bulletType, const Vector2f &shootPoint );
   // Plays a sprite animation ONCE where you want it
   void playSpriteAnimation( const RectF &where, AnimationId animationId );
   void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax );

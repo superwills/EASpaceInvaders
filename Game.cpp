@@ -83,7 +83,7 @@ void Game::genUFO() {
 int Game::getNumBullets( bool isFromInvader ) {
   int num = 0;
   for( auto bullet : allBullets ) {
-    if( isFromInvader == bullet->isFromInvader ) {
+    if( isFromInvader == bullet->isFromInvader() ) {
       num++;
     }
   }
@@ -107,11 +107,9 @@ void Game::checkWinConditions() {
   } 
 }
 
-void Game::checkForCollisions() {
-	// check bullets against invaders, ufo's, bunkers.
+void Game::checkBulletCollisions() {
   for( auto bullet : allBullets ) {
-  
-    // First check against bunkers.
+    // All bullet check bunker
     for( auto bunker : allBunkers ) {
       if( bunker->killHit( bullet ) ) {
         bullet->die();
@@ -123,7 +121,8 @@ void Game::checkForCollisions() {
       continue;
     }
   
-    if( bullet->isFromInvader ) {
+    if( bullet->isFromInvader() ) {
+      // Invader bullet check against player.
       if( !player->dead && bullet->hit( player ) ) {
         bullet->die();
         killPlayer();
@@ -132,31 +131,40 @@ void Game::checkForCollisions() {
       // If it missed the player, we should skip the checks for other invaders + ufos below
       continue;  // there's nothing else for an invader bullet to do
     }
-    
-    for( auto invader : invaderGroup.invaders ) {
-      if( invader->dead ) {
-        continue; // can happen if 2 player bullets try to hit same invader
+    else { // is Player bullet
+      info( "Player bullet type=%d", bullet->type );
+      // check invaders
+      for( auto invader : invaderGroup.invaders ) {
+        if( invader->dead ) {
+          continue; // can happen if 2 player bullets try to hit same invader
+        }
+        
+        if( bullet->hit( invader ) ) {
+          bullet->die();
+          invader->die();
+          break;
+        }
       }
       
-      if( bullet->hit( invader ) ) {
-        bullet->die();
-        invader->die();
-        break;
+      if( bullet->dead ) {
+        // If the bullet was consumed by an invader, skip the ufo check that would happen below
+        continue;
       }
-    }
-    
-    if( bullet->dead ) {
-      // If the bullet was consumed by an invader, skip the ufo check that would happen below
-      continue;
-    }
-    
-    for( auto ufo : allUFOs ) {
-      if( bullet->hit( ufo ) ) {
-        bullet->die();
-        ufo->die();
+      
+      // Player bullet check UFO
+      for( auto ufo : allUFOs ) {
+        if( bullet->hit( ufo ) ) {
+          bullet->die();
+          ufo->die();
+        }
       }
     }
   }
+}
+
+void Game::checkAllCollisions() {
+	// check bullets against invaders, ufo's, bunkers.
+  checkBulletCollisions();
   
   // Check invaders against player itself, bunkers
   for( auto invader : invaderGroup.invaders ) {
@@ -233,10 +241,11 @@ void Game::runGame() {
   for( auto score : allScores ) {
     score->update( dt );
   }
-  checkForCollisions();
- 
+  
+  checkAllCollisions();
+  
   checkWinConditions();
- 
+  
   clearDead(); 
 }
 
@@ -368,6 +377,7 @@ void Game::init() {
   
   sdl->loadSpritesheetAnimation( AnimationId::ItemPlus1, "assets/ims/item+1.png", 6, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::ItemSpread, "assets/ims/item-spread.png", 6, Vector2f( 17, 17 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::ItemThickLaser, "assets/ims/item-thick-laser.png", 6, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::ItemShield, "assets/ims/item-shield.png", 6, Vector2f( 16, 16 ) );
   
   titleScreen = std::make_shared<TitleScreen>( "space invaders!" );
@@ -443,14 +453,17 @@ void Game::setMouseJustClicked( uint16_t mouseButton ) {
   controller.setMouseJustClicked( mouseButton );
 }
 
-void Game::tryShootBullet( const RectF &source, bool isFromInvader, const Vector2f &vel ) {
+void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
+
+  bool isFromInvader = Bullet::IsBulletTypeFromInvader( bulletType );
   int numBullets = getNumBullets( isFromInvader );
   int maxBullets = isFromInvader ? invaderGroup.getMaxNumBullets() : player->getMaxBullets(); 
   if( numBullets >= maxBullets ) {
+    // can't shoot because max #bullets for type is reached.
     return;
   }
   
-  shared_ptr<Bullet> bullet = std::make_shared<Bullet>( source, vel, isFromInvader );
+  auto bullet = std::make_shared<Bullet>( shootPoint, bulletType );
   allBullets.push_back( bullet );
 }
 

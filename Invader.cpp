@@ -23,7 +23,16 @@ void Invader::update( float t ) {
   if( game->isState( GameState::Running ) ) {
     // shoot with chance. what limits shots is the Game checking how many bullets there are out
     if( withChance( ChanceToShoot ) ) {
-      game->tryShootBullet( box, 1, DefaultBulletSpeed );
+      tryShoot();
     }
   }
+}
+
+void Invader::tryShoot() const {  
+  BulletType bulletType = BulletType::InvaderNormal;
+  if( withChance( ChanceForSuperBullet ) ) {
+    bulletType = BulletType::InvaderSuper;
+  }
+  
+  game->tryShootBullet( bulletType, box.midBottom() );
 }

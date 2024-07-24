@@ -41,6 +41,12 @@ struct RectF {
   inline Vector2f centroid() const {
     return Vector2f( midX(), midY() ) ;
   }
+  inline Vector2f midTop() const {
+    return Vector2f( midX(), top() );
+  }
+  inline Vector2f midBottom() const {
+    return Vector2f( midX(), bottom() );
+  }
   
   inline RectF& setCenter( const Vector2f &newCenter ) {
     // position is going to be offset by half the width,

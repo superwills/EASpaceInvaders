@@ -27,13 +27,11 @@ using namespace std;
 
 
 // TODO:
-// Use events?
-// Powerups? Laser? Spread gun?
-// A very big J enemy
+// Could use events for some things?
 
 
 int main(int argc, char* args[]) {
-  
+
   randSeed( (uint32_t)time( 0 ) );
   SDLWindow::SDLInit();
 	
