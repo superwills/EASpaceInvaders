@@ -46,7 +46,7 @@ void Bullet::update( float t ) {
     // laser dies once it reaches the top
     if( box.top() < 0 ) {
       // it can spread particles along it
-      game->particleCloud( box, randInt( 50, 60 ), 24, 36 );
+      game->particleCloud( box, randInt( 50, 60 ), 24, 36, .2 );
       die();
     }
   }

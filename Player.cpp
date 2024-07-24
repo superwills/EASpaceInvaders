@@ -47,6 +47,7 @@ bool Player::canPlayerRespawn() {
 void Player::respawn() {
   maxBullets = DefaultMaxBullets;
   setAnimation( AnimationId::Player );
+  weapon = BulletType::PlayerNormal;
   dead = 0;
 }
 

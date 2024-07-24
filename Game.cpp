@@ -511,19 +511,20 @@ void Game::playSpriteAnimation( const RectF &where, AnimationId animationId ) {
   playOnceAnimations.push_back( spriteAnim );
 }
 
-void Game::particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax ) {
+void Game::particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax, float initialDecay ) {
   for( int i = 0; i < numParticles; i++ ) {
     Vector2f size = Vector2f::random( sizeMin, sizeMax );
     shared_ptr<Particle> p = std::make_shared<Particle>( RectF( pos, Vector2f( size ) ) );
+    p->lifeRemaining *= initialDecay;
     allParticles.push_back( p );
   }
 }
 
-void Game::particleCloud( const RectF &box, int numParticles, float sizeMin, float sizeMax ) {
+void Game::particleCloud( const RectF &box, int numParticles, float sizeMin, float sizeMax, float initialDecay ) {
   for( int i = 0; i < numParticles; i++ ) {
     Vector2f size = Vector2f::random( sizeMin, sizeMax );
     shared_ptr<Particle> p = std::make_shared<Particle>( RectF( box.randomPoint(), Vector2f( size ) ) );
-    p->lifeRemaining = .2;
+    p->lifeRemaining *= initialDecay;
     allParticles.push_back( p );
   }
 }

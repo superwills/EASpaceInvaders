@@ -101,8 +101,10 @@ public:
   void tryShootBullet( BulletType bulletType, const Vector2f &shootPoint );
   // Plays a sprite animation ONCE where you want it
   void playSpriteAnimation( const RectF &where, AnimationId animationId );
-  void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax );
-  void particleCloud( const RectF &box, int numParticles, float sizeMin, float sizeMax );
+  
+  // You can start the particle decayed, so that it doesn't start at 100% alpha with initialDecay
+  void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax, float initialDecay = 1 );
+  void particleCloud( const RectF &box, int numParticles, float sizeMin, float sizeMax, float initialDecay = 1 );
   void createItem( const Vector2f &pos, AnimationId animationId );
   
   void displayScore( int score, const Vector2f &pos, SDL_Color color );
