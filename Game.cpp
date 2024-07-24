@@ -209,16 +209,19 @@ void Game::clearDead() {
 }
 
 void Game::runGame() {
-  invaderGroup.update( dt );
+  
+  // Action that pauses when player is in a dead state
+  if( !player->dead ) {
+    invaderGroup.update( dt );
+    for( auto bullet : allBullets ) {
+      bullet->update( dt );
+    }
+    genUFO();
+  }
   
   player->update( dt );
   scoreSprite->update( dt );
-  genUFO();
 
-  for( auto bullet : allBullets ) {
-    bullet->update( dt );
-  }
-	
   for( auto particle : allParticles ) {
     particle->update( dt );
   }
@@ -403,7 +406,10 @@ void Game::init() {
   sdl->loadSpritesheetAnimation( AnimationId::MenuPointer, "assets/ims/menu-pointer.png", 2, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::UFO, "assets/ims/ufo.png", 2, Vector2f( 32, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 8 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::PlayerDie, "assets/ims/player-die.png", 6, Vector2f( 20, 12 ), White, 0 );
+  Animation& playerDeath = sdl->loadSpritesheetAnimation( AnimationId::PlayerDie, "assets/ims/player-die.png", 6, Vector2f( 20, 12 ), White, 0 );
+  for( auto &frame : playerDeath.frames ) {
+    frame.duration *= 3;
+  }
   sdl->loadSpritesheetAnimation( AnimationId::Boss, "assets/ims/josh.png", 2, Vector2f( 64, 32 ) );
   sdl->loadSpritesheetAnimation( AnimationId::Shield, "assets/ims/shields.png", 4, Vector2f( 16, 16 ) );
   
@@ -513,6 +519,7 @@ void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
 void Game::playSpriteAnimation( const RectF &where, AnimationId animationId ) {
   auto spriteAnim = std::make_shared<Sprite>( where, animationId );
   spriteAnim->animation.cycles = 0;  // DO NOT cycle the anim, so we can remove it when it's done playing thru
+  spriteAnim->minParticles = spriteAnim->maxParticles = 0; // play-once anims don't need a splash
   playOnceAnimations.push_back( spriteAnim );
 }
 

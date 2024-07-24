@@ -40,6 +40,7 @@ public:
   // When object dies, # particles it displays
   int minParticles = 8, maxParticles = 12;
   float particleSizeMin = 4, particleSizeMax = 12;
+  float initialParticleDecay = .9;
   
 	Sprite();
   Sprite( const RectF &rectangle ); 

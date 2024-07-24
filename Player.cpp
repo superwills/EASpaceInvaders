@@ -19,9 +19,10 @@ Player::Player() {
   deathSound = SFXId::ExplodePlayer;
   
   minParticles = 25;
-  maxParticles = 50;
-  particleSizeMin = 30;
-  particleSizeMax = 50;
+  maxParticles = 40;
+  particleSizeMin = 16;
+  particleSizeMax = 22;
+  initialParticleDecay = .8;
 }
 
 void Player::update( float t ) {
