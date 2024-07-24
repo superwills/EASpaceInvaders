@@ -50,6 +50,26 @@ void Player::respawn() {
   dead = 0;
 }
 
+void Player::addShield() {
+  if( shielded ) {
+    return; // player already shielded
+  }
+  
+  shielded = 1;
+  RectF shieldBox = box;
+  shieldBox.pad( box.size/2 );
+  auto shieldSprite = std::make_shared<Sprite>( shieldBox, AnimationId::Shield );
+  children.push_back( shieldSprite );
+}
+
+void Player::loseShield() {
+  if( shielded ) {
+    // The player won't die if shielded, but the shield drops.
+    shielded = 0;
+    children.clear(); // drops the shield.
+  }
+}
+
 void Player::giveItem( shared_ptr<Item> item ) {
   switch( item->character ) {
   case AnimationId::ItemPlus1:
@@ -57,6 +77,9 @@ void Player::giveItem( shared_ptr<Item> item ) {
     break;
     
   case AnimationId::ItemShield:
+    addShield();
+    break;
+    
   case AnimationId::ItemSpread:
     break;
   }

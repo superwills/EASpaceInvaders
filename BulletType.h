@@ -3,6 +3,7 @@
 enum class BulletType {
   PlayerNormal,
   PlayerSpread,
+  PlayerBall,
   PlayerThickLaser,
   
   PlayerHoming,

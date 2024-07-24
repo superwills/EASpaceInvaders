@@ -16,6 +16,7 @@ class Player : public Sprite {
   BulletType weapon = BulletType::PlayerNormal;
   
 public:
+  bool shielded = 0;
   
   Player();
   void update( float t ) override;
@@ -26,6 +27,9 @@ public:
   inline int getNumLivesRemaining() const { return lives; }
   inline bool isOutOfLives() const { return lives <= 0; }
   void respawn();
+  
+  void addShield();
+  void loseShield();
   
   void giveItem( shared_ptr<Item> item );
   void tryShoot();

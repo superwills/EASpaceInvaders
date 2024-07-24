@@ -19,9 +19,9 @@ class Bullet : public Sprite {
   };
   
   inline static const map<BulletType, AnimationId> BulletAnimations = {
-    { BulletType::PlayerNormal, AnimationId::BulletPlayer },
-    { BulletType::PlayerSpread, AnimationId::BulletPlayer },
-    { BulletType::PlayerThickLaser, AnimationId::BulletPlayer },
+    { BulletType::PlayerNormal, AnimationId::BulletPlayerArrow },
+    { BulletType::PlayerSpread, AnimationId::BulletPlayerBall },
+    { BulletType::PlayerThickLaser, AnimationId::BulletLaser },
     
     { BulletType::InvaderNormal, AnimationId::BulletInvaderArrow },
     { BulletType::InvaderSuper, AnimationId::BulletInvaderLightning },

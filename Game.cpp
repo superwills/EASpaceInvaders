@@ -125,7 +125,14 @@ void Game::checkBulletCollisions() {
       // Invader bullet check against player.
       if( !player->dead && bullet->hit( player ) ) {
         bullet->die();
-        killPlayer();
+        
+        // if the player is shielded he just loses his shields
+        if( player->shielded ) {
+          player->loseShield();
+        }
+        else {
+          killPlayer();
+        }
       }
       
       // If it missed the player, we should skip the checks for other invaders + ufos below
@@ -370,7 +377,9 @@ void Game::init() {
   
   sdl->loadSpritesheetAnimation( AnimationId::BulletInvaderArrow, "assets/ims/bullet-arrow.png", 2, Vector2f( 8, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::BulletInvaderLightning, "assets/ims/bullet-lightning.png", 2, Vector2f( 8, 16 ) );
-  sdl->loadSpritesheetAnimation( AnimationId::BulletPlayer, "assets/ims/bullet-player.png", 2, Vector2f( 8, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::BulletPlayerArrow, "assets/ims/bullet-player.png", 2, Vector2f( 8, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::BulletPlayerBall, "assets/ims/bullet-ball.png", 2, Vector2f( 16, 16 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::BulletLaser, "assets/ims/bullet-thick-laser.png", 2, Vector2f( 8, 16 ) );
   
   sdl->loadSpritesheetAnimation( AnimationId::Explode, "assets/ims/explode.png", 5, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::MenuPointer, "assets/ims/menu-pointer.png", 2, Vector2f( 16, 16 ) );
@@ -378,6 +387,7 @@ void Game::init() {
   sdl->loadSpritesheetAnimation( AnimationId::Player, "assets/ims/player.png", 1, Vector2f( 16, 8 ) );
   sdl->loadSpritesheetAnimation( AnimationId::PlayerDie, "assets/ims/player-die.png", 6, Vector2f( 20, 12 ), White, 0 );
   sdl->loadSpritesheetAnimation( AnimationId::Boss, "assets/ims/josh.png", 2, Vector2f( 64, 32 ) );
+  sdl->loadSpritesheetAnimation( AnimationId::Shield, "assets/ims/shields.png", 4, Vector2f( 16, 16 ) );
   
   sdl->loadSpritesheetAnimation( AnimationId::ItemPlus1, "assets/ims/item+1.png", 6, Vector2f( 16, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::ItemSpread, "assets/ims/item-spread.png", 6, Vector2f( 17, 17 ) );
@@ -467,6 +477,9 @@ void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
     return;
   }
   
+  if( bulletType == BulletType::PlayerSpread ) {
+    // Spread makes __3__ bullets
+  }
   auto bullet = std::make_shared<Bullet>( shootPoint, bulletType );
   allBullets.push_back( bullet );
 }

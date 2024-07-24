@@ -45,7 +45,9 @@ enum class AnimationId {
   
   BulletInvaderArrow,
   BulletInvaderLightning,
-  BulletPlayer,
+  BulletPlayerArrow,
+  BulletPlayerBall,
+  BulletLaser,
   
   Explode,
   MenuPointer,
@@ -53,11 +55,12 @@ enum class AnimationId {
   Player,
   PlayerDie,
   Boss,
+  Shield,
   
   ItemPlus1,  //+1 bullet
   ItemSpread, //spreads bullets
-  ItemThickLaser,
   ItemShield,
+  ItemThickLaser,
 };
 
 // This could have been added to class Sprite, but it seemed to crowd it a little.

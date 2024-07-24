@@ -21,6 +21,9 @@ protected:
   RectF box;
   Vector2f velocity;
 	AnimationId itemDrop = AnimationId::NoAnimation;
+ 
+  // Child sprites that move with/are drawn with this sprite.
+  vector< shared_ptr<Sprite> > children;
   
 public:
   string name;    // helps in debug

@@ -100,6 +100,10 @@ void Sprite::enforceWorldLimits() {
 
 void Sprite::move( const Vector2f &displacement ) {
   box.pos += displacement;
+  
+  for( auto child : children ) {
+    child->move( displacement );
+  }
 }
 
 bool Sprite::hit( const Vector2f &p ) {
@@ -121,6 +125,10 @@ void Sprite::update( float t ) {
   if( dieOnAnimationEnd && animation.isEnded() ) {
     die();
   }
+  
+  for( auto child : children ) {
+    child->update( t );
+  }
 }
 
 void Sprite::draw() const {
@@ -132,6 +140,10 @@ void Sprite::draw() const {
 	else {
 		sdl->draw( box, animFrame );  
 	}
+ 
+  for( auto child : children ) {
+    child->draw();
+  } 
 }
 
 void Sprite::die() {
@@ -166,6 +178,10 @@ void Sprite::die() {
   
   if( itemDrop != AnimationId::NoAnimation ) {
     game->createItem( box.centroid(), itemDrop );
+  }
+  
+  for( auto child : children ) {
+    child->die();
   }
 }
 
