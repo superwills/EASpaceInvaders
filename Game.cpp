@@ -146,7 +146,10 @@ void Game::checkBulletCollisions() {
         }
         
         if( bullet->hit( invader ) ) {
-          bullet->die();
+          if( bullet->type != BulletType::PlayerThickLaser ) {
+            // the laser doesn't die
+            bullet->die();
+          }
           invader->die();
           break;
         }

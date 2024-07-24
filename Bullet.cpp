@@ -32,10 +32,23 @@ Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :
 void Bullet::update( float t ) {
   Sprite::update( t );
   
+  if( type == BulletType::PlayerThickLaser ) {
+    // grow the box
+    float laserSpeed = 50;
+    box.size.y += laserSpeed;
+    box.pos.y -= laserSpeed;
+    
+    // laser dies once it reaches the top
+    if( box.top() < 0 ) {
+      // it can spread particles
+      die();
+    }
+  }
+  
   // Once it leaves the bounds kill the bullet
 	if( !sdl->getWindowRectangle().hit( box ) ) {
     die();
-  } 
+  }
 }
 
 void Bullet::updateAnimationType() {

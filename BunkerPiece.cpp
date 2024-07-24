@@ -4,6 +4,6 @@ BunkerPiece::BunkerPiece( const RectF &rectangle, SDL_Color color ) : Sprite( re
   name = "BunkerPiece/" + name;
   deathSound = SFXId::ExplodeBunker;
   if( withChance( .5 ) ) {
-    itemDrop = AnimationId::ItemPlus1;
+    itemDrop = rand<AnimationId>( AnimationId::ItemPlus1, AnimationId::ItemThickLaser );
   }
 }
