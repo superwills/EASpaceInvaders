@@ -60,8 +60,6 @@ class Game {
 	GameState prevState = GameState::Title;
   GameState gameState = GameState::Title;
   
-  float shake = 0;
-  
   vector<uint16_t> startKeys = { SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
   Controller controller;
   
@@ -88,6 +86,9 @@ class Game {
   void controllerUpdate(); 
   
 public:
+  float shake = 0;
+  
+  
  	Game() { }
   ~Game() { }
 	
