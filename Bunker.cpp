@@ -50,7 +50,7 @@ bool Bunker::killHit( shared_ptr<Sprite> other ) {
   }
   
   for( auto bunkerPiece : pieces ) {
-    if( bunkerPiece->dead ) {
+    if( bunkerPiece->isDead() ) {
       // if the piece is dead it's as if it isn't there.
       // (check b/c removal from collections only happens after a frame is complete)
       continue;

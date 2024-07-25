@@ -8,7 +8,7 @@ using std::string, std::vector;
 // Works on Sprite class derivatives (must have T.dead member)
 template <typename T> void clearDeadOnes( vector<T> &v ) {
   v.erase( std::remove_if( v.begin(), v.end(), []( T o ) {
-    return o->dead;
+    return o->isDead();
   } ), v.end() );
 }
 

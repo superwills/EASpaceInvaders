@@ -24,10 +24,10 @@ protected:
   // Child sprites that move with/are drawn with this sprite.
   vector< shared_ptr<Sprite> > children;
   bool dieOnAnimationEnd = 0;
+  bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   
 public:
-  string name;    // helps in debug
-  bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
+  string name;    // for tracing in debug
   
   Animation animation;  // Single frame for non-animated objects
   Vector2f velocity;
@@ -61,6 +61,7 @@ public:
   
   RectF getScaledHitBox() const;
   
+  inline bool isDead() const { return dead; }
   inline Vector2f getPos() const {  return box.pos;  }
   
   void setPos( const Vector2f &pos ) {  box.pos = pos;  }

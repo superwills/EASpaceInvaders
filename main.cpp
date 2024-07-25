@@ -20,7 +20,7 @@ using namespace std;
 // - Some comments for any surprising things
 // - preferring shared_ptr to raw pointers where possible
 // - use auto where type is not ambiguous from line of code
-// - encapsulation
+// - encapsulation for guarded data. some members like 'velocity' are public, because their get/set was passthru
 // - Most things are done programmatically. I find that easier. Object sizes are found as % of window size.
 // - Code tries to be brief while still being clear
 // - Errors in the log mean something should be fixed

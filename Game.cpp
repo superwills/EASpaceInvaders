@@ -100,7 +100,7 @@ void Game::checkWinConditions() {
   
   // See if the invaders won by reaching the bottom, or player dead and death animation finished.
   ///if( invaderGroup.didInvadersWin() || (player->dead && !player->canPlayerRespawn() ) ) {
-  if( invaderGroup.didInvadersWin() || (player->dead && player->animation.isEnded() && player->isOutOfLives() ) ) {
+  if( invaderGroup.didInvadersWin() || (player->isDead() && player->animation.isEnded() && player->isOutOfLives() ) ) {
     info( "Invaders won" );
     setState( GameState::Lost );
     gameOverScreen->lose();
@@ -117,13 +117,13 @@ void Game::checkBulletCollisions() {
       }
     }
     
-    if( bullet->dead ) {
+    if( bullet->isDead() ) {
       continue;
     }
   
     if( bullet->isFromInvader() ) {
       // Invader bullet check against player.
-      if( !player->dead && bullet->hit( player ) ) {
+      if( !player->isDead() && bullet->hit( player ) ) {
         bullet->die();
         
         // if the player is shielded he just loses his shields
@@ -141,7 +141,7 @@ void Game::checkBulletCollisions() {
     else { // is Player bullet
       // check invaders
       for( auto invader : invaderGroup.invaders ) {
-        if( invader->dead ) {
+        if( invader->isDead() ) {
           continue; // can happen if 2 player bullets try to hit same invader
         }
         
@@ -155,7 +155,7 @@ void Game::checkBulletCollisions() {
         }
       }
       
-      if( bullet->dead ) {
+      if( bullet->isDead() ) {
         // If the bullet was consumed by an invader, skip the ufo check that would happen below
         continue;
       }
@@ -177,7 +177,7 @@ void Game::checkAllCollisions() {
   
   // Check invaders against player itself, bunkers
   for( auto invader : invaderGroup.invaders ) {
-    if( !player->dead && invader->hit( player ) ) {
+    if( !player->isDead() && invader->hit( player ) ) {
       killPlayer();
     }
     for( auto bunker : allBunkers ) {
@@ -211,7 +211,7 @@ void Game::clearDead() {
 void Game::runGame() {
   
   // Action that pauses when player is in a dead state
-  if( !player->dead ) {
+  if( !player->isDead() ) {
     invaderGroup.update( dt );
     for( auto bullet : allBullets ) {
       bullet->update( dt );
@@ -307,7 +307,7 @@ void Game::controllerUpdateTitle() {
 
 void Game::controllerUpdateRunning() {
   // Player can only move if not dead.
-  if( player->dead ) {
+  if( player->isDead() ) {
     return;
   }
 
