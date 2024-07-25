@@ -535,14 +535,14 @@ void Game::playSpriteAnimation( const RectF &where, AnimationId animationId ) {
 }
 
 void Game::particleCloud( const RectF &insideBoxArea, const ParticleCloudProperties &particleCloudProperties ) {
-  int numParticles = randIntIn( particleCloudProperties.minParticles, particleCloudProperties.maxParticles );
+  int numParticles = randIntIn( particleCloudProperties.number.min, particleCloudProperties.number.max );
   for( int i = 0; i < numParticles; i++ ) {
     RectF particleBox;
-    particleBox.size = Vector2f::random( particleCloudProperties.particleSizeMin, particleCloudProperties.particleSizeMin );
+    particleBox.size = Vector2f::random( particleCloudProperties.size.min, particleCloudProperties.size.max );
     Vector2f particleCenter = insideBoxArea.randomPoint();
     particleBox.setCenter( particleCenter );
     shared_ptr<Particle> p = std::make_shared<Particle>( particleBox );
-    p->lifeRemaining *= particleCloudProperties.initialParticleDecay;
+    p->lifeRemaining *= particleCloudProperties.initialDecay;
     allParticles.push_back( p );
   }
 }

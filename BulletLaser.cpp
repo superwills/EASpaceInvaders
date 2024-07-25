@@ -5,7 +5,7 @@
 BulletLaser::BulletLaser( const Vector2f &shootCenter ) : Bullet( shootCenter, BulletType::PlayerThickLaser ) {
   particleCloudProperties.setNumParticles( 50, 60 );
   particleCloudProperties.setSizes( 24, 36 );
-  particleCloudProperties.initialParticleDecay = .2;
+  particleCloudProperties.initialDecay = .2;
   game->shakeScreen( .25 );
 }
 

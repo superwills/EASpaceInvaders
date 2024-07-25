@@ -20,7 +20,7 @@ Player::Player() {
   
   particleCloudProperties.setNumParticles( 25, 40 );
   particleCloudProperties.setSizes( 16, 22 );
-  particleCloudProperties.initialParticleDecay = .8;
+  particleCloudProperties.initialDecay = .8;
 }
 
 void Player::update( float t ) {
