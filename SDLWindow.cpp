@@ -88,6 +88,15 @@ void SDLWindow::setColor( SDL_Color color ) {
 	SDL_SetRenderDrawColor( renderer, color.r, color.g, color.b, color.a );
 }
 
+void SDLWindow::resetViewport() {
+  SDL_Rect windowRect = getWindowRectangle().toSDLRect();
+  SDL_RenderSetViewport( renderer, &windowRect );
+}
+
+void SDLWindow::setViewport( SDL_Rect rect ) {
+  SDL_RenderSetViewport( renderer, &rect );
+}
+
 void SDLWindow::present() {
   SDL_RenderPresent( renderer );
 }

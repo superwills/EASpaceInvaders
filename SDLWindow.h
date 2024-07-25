@@ -50,6 +50,9 @@ public:
   RectF getWindowRectangle();
   void clear( SDL_Color color );
 	void setColor( SDL_Color color );
+  // Reset viewport to being whole window 
+  void resetViewport(); 
+  void setViewport( SDL_Rect rect ); 
   // Finished rendering the frame 
   void present();
 

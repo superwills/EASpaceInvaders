@@ -275,6 +275,8 @@ void Game::killPlayer() {
   for( auto bullet : allBullets ) {
     bullet->die();
   }
+  
+  shake = 1;
 }
 
 void Game::updateNumberOfPlayerLives() {
@@ -570,14 +572,16 @@ void Game::changeScore( int byScoreValue ) {
 }
 
 void Game::update() {
-  
   // difference in time between (now) and prev frame's time 
   dt = clock.sec() - clockThisFrame;
   //////dt *= speedMultiplier;  // Speedup multiplier increases the size of the time step.
   // Velocities are multiplied by dt, so things move faster when dt is bigger.
   clockThisFrame = clock.sec();
-
+  
   controllerUpdate();
+  
+  shake -= dt;
+  shake = clamp( shake, 0.f, 10.f );
   
   switch( gameState ) {
   case GameState::Title:
@@ -672,6 +676,12 @@ void Game::draw() {
   if( gameState != GameState::Test ) { 
     scoreSprite->draw();  //always draw the score on top of everything else, except in test mode
   }
-	sdl->present();
+  
+  // Apply shake effect
+  RectF windowRect = sdl->getWindowRectangle();
+  windowRect.pos += Vector2f::random( -25, 25 )*shake;
+  sdl->setViewport( windowRect.toSDLRect() );
+  
+  sdl->present();
 }
 
