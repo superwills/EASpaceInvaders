@@ -5,7 +5,7 @@
 using std::string, std::vector;
 
 // A helper template to avoid repeating this code formula for each collection
-// Works on Sprite class derivatives (must have T.dead member)
+// Works on Sprite class derivatives (must have T.isDead() member function)
 template <typename T> void clearDeadOnes( vector<T> &v ) {
   v.erase( std::remove_if( v.begin(), v.end(), []( T o ) {
     return o->isDead();

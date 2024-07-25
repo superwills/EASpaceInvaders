@@ -21,6 +21,9 @@ public:
   void update( float t );
   void draw();
   
+  // Considered dead when it has no pieces left.
+  inline bool isDead() const { return pieces.empty(); } 
+  
   // Kills any pieces of the bunker hit by Sprite.
   bool killHit( shared_ptr<Sprite> other );
   void clearDead();

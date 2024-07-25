@@ -20,6 +20,8 @@ void Game::initGameBoard() {
   
   // re/create the player
   player = std::make_shared<Player>();
+  newCollideable( player );
+  
   updateNumberOfPlayerLives();
   
   invaderGroup.populate();
@@ -207,6 +209,7 @@ void Game::clearDead() {
   clearDeadOnes( playOnceAnimations );
   clearDeadOnes( allItems );
   clearDeadOnes( allScores );
+  clearDeadOnes( allBunkers );
 }
 
 void Game::runGame() {
@@ -510,18 +513,21 @@ void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
   
   if( bulletType == BulletType::PlayerThickLaser ) {
     auto bullet = std::make_shared<BulletLaser>( shootPoint );
+    newCollideable( bullet );
     allBullets.push_back( bullet );
   }
   else if( bulletType == BulletType::PlayerSpread ) {
     // Spread makes __3__ bullets
     for( int i = -1; i <= 1; i++ ) {
       auto bullet = std::make_shared<Bullet>( shootPoint, bulletType );
-      bullet->velocity.x = i * 50 ;
+      bullet->velocity.x = i * 50;
+      newCollideable( bullet );
       allBullets.push_back( bullet );
     }
   }
   else {
     auto bullet = std::make_shared<Bullet>( shootPoint, bulletType );
+    newCollideable( bullet );
     allBullets.push_back( bullet );
   }
   
@@ -532,6 +538,10 @@ void Game::playSpriteAnimation( const RectF &where, AnimationId animationId ) {
   spriteAnim->animation.cycles = 0;  // DO NOT cycle the anim, so we can remove it when it's done playing thru
   spriteAnim->particleCloudProperties.setNumParticles( 0, 0 ); // play-once anims don't need a splash
   playOnceAnimations.push_back( spriteAnim );
+}
+
+void Game::newCollideable( shared_ptr<Sprite> sprite ) {
+  info( "New collideable appeared" );
 }
 
 void Game::particleCloud( const RectF &insideBoxArea, const ParticleCloudProperties &particleCloudProperties ) {

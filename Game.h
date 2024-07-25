@@ -109,6 +109,10 @@ public:
   // Plays a sprite animation ONCE where you want it
   void playSpriteAnimation( const RectF &where, AnimationId animationId );
   
+  // You're stuck with factory patterns if you want events to fire AFTER OBJECT CONTRUCTION COMPLETE
+  // EVENT
+  void newCollideable( shared_ptr<Sprite> sprite );
+  
   // Generates numParticles that are inside `insideBoxArea`
   void particleCloud( const RectF &insideBoxArea, const ParticleCloudProperties &particleCloudProperties );
   void createItem( const Vector2f &pos, AnimationId animationId );
