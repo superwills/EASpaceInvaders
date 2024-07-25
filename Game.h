@@ -110,7 +110,9 @@ public:
   
   // You can start the particle decayed, so that it doesn't start at 100% alpha with initialDecay
   void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax, float initialDecay = 1 );
-  void particleCloud( const RectF &box, int numParticles, float sizeMin, float sizeMax, float initialDecay = 1 );
+  
+  // Generates numParticles that are inside `insideBoxArea`
+  void particleCloud( const RectF &insideBoxArea, int numParticles, float sizeMin, float sizeMax, float initialDecay = 1 );
   void createItem( const Vector2f &pos, AnimationId animationId );
   
   void displayScore( int score, const Vector2f &pos, SDL_Color color );

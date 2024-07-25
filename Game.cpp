@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include "Bullet.h"
+#include "BulletLaser.h"
 #include "Bunker.h"
 #include "SDLColors.h"
 #include "GameOverScreen.h"
@@ -507,7 +508,11 @@ void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
     return;
   }
   
-  if( bulletType == BulletType::PlayerSpread ) {
+  if( bulletType == BulletType::PlayerThickLaser ) {
+    auto bullet = std::make_shared<BulletLaser>( shootPoint );
+    allBullets.push_back( bullet );
+  }
+  else if( bulletType == BulletType::PlayerSpread ) {
     // Spread makes __3__ bullets
     for( int i = -1; i <= 1; i++ ) {
       auto bullet = std::make_shared<Bullet>( shootPoint, bulletType );
@@ -538,10 +543,13 @@ void Game::particleSplash( const Vector2f &pos, int numParticles, float sizeMin,
   }
 }
 
-void Game::particleCloud( const RectF &box, int numParticles, float sizeMin, float sizeMax, float initialDecay ) {
+void Game::particleCloud( const RectF &insideBoxArea, int numParticles, float sizeMin, float sizeMax, float initialDecay ) {
   for( int i = 0; i < numParticles; i++ ) {
-    Vector2f size = Vector2f::random( sizeMin, sizeMax );
-    shared_ptr<Particle> p = std::make_shared<Particle>( RectF( box.randomPoint(), Vector2f( size ) ) );
+    RectF particleBox;
+    particleBox.size = Vector2f::random( sizeMin, sizeMax );
+    Vector2f particleCenter = insideBoxArea.randomPoint();
+    particleBox.setCenter( particleCenter );
+    shared_ptr<Particle> p = std::make_shared<Particle>( particleBox );
     p->lifeRemaining *= initialDecay;
     allParticles.push_back( p );
   }

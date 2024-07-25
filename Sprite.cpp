@@ -159,8 +159,6 @@ void Sprite::die() {
   // ask for a particle splash from the Game. 
   // No particles if vars set to 0.
   if( minParticles && maxParticles ) {
-    //game->particleSplash( box.centroid(), randInt( minParticles, maxParticles ), particleSizeMin, particleSizeMax, initialParticleDecay );
-    
     game->particleCloud( box, randInt( minParticles, maxParticles ), particleSizeMin, particleSizeMax, initialParticleDecay );
   }
   

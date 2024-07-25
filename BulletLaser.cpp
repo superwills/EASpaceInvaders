@@ -3,9 +3,10 @@
 #include "Game.h"
 
 BulletLaser::BulletLaser( const Vector2f &shootCenter ) : Bullet( shootCenter, BulletType::PlayerThickLaser ) {
-  minParticles = maxParticles = 0; // cancel off the usual centered particles,
+  minParticles = 50, maxParticles = 60;
   particleSizeMin = 24;
   particleSizeMax = 36;
+  initialParticleDecay = .2;
   game->shakeScreen( .25 );
 }
 
@@ -23,11 +24,4 @@ void BulletLaser::update( float t ) {
     die();
   }
   
-}
-
-void BulletLaser::die() {
-  Bullet::die();
-  
-  int numParticles = randInt( CloudMinParticles, CloudMaxParticles );
-  game->particleCloud( box, numParticles, particleSizeMin, particleSizeMax, .2 );
 }
