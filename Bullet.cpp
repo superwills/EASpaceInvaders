@@ -28,29 +28,10 @@ Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :
   
   minParticles = 3, maxParticles = 6;
   particleSizeMin = 2, particleSizeMax = 4;
-  
-  if( type == BulletType::PlayerThickLaser ) {
-    minParticles = maxParticles = 0;
-    game->shakeScreen( .25 );
-  }
 }
 
 void Bullet::update( float t ) {
   Sprite::update( t );
-  
-  if( type == BulletType::PlayerThickLaser ) {
-    // grow the box
-    float laserGrowthSpeed = 50;
-    box.size.y += laserGrowthSpeed;
-    box.pos.y -= laserGrowthSpeed;
-    
-    // laser dies once it reaches the top
-    if( box.top() < 0 ) {
-      // it can spread particles along it
-      game->particleCloud( box, randInt( 50, 60 ), 24, 36, .2 );
-      die();
-    }
-  }
   
   // Once it leaves the bounds kill the bullet
 	if( !sdl->getWindowRectangle().hit( box ) ) {
