@@ -276,7 +276,7 @@ void Game::killPlayer() {
     bullet->die();
   }
   
-  shake = 1;
+  shakeScreen( 1 );
 }
 
 void Game::updateNumberOfPlayerLives() {
@@ -493,6 +493,10 @@ void Game::setMouseJustClicked( uint16_t mouseButton ) {
   controller.setMouseJustClicked( mouseButton );
 }
 
+void Game::shakeScreen( float shakeTime ) {
+  shakeTimeRemaining = shakeTime;
+}
+
 void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
 
   bool isFromInvader = Bullet::IsBulletTypeFromInvader( bulletType );
@@ -580,8 +584,8 @@ void Game::update() {
   
   controllerUpdate();
   
-  shake -= dt;
-  shake = clamp( shake, 0.f, 10.f );
+  shakeTimeRemaining -= dt;
+  shakeTimeRemaining = clamp( shakeTimeRemaining, 0.f, 10.f );
   
   switch( gameState ) {
   case GameState::Title:
@@ -679,7 +683,7 @@ void Game::draw() {
   
   // Apply shake effect
   RectF windowRect = sdl->getWindowRectangle();
-  windowRect.pos += Vector2f::random( -25, 25 )*shake;
+  windowRect.pos += Vector2f::random( -ShakeMagnitude, ShakeMagnitude )*shakeTimeRemaining;
   sdl->setViewport( windowRect.toSDLRect() );
   
   sdl->present();

@@ -63,6 +63,9 @@ class Game {
   vector<uint16_t> startKeys = { SDL_SCANCODE_RETURN, SDL_SCANCODE_RETURN2, SDL_SCANCODE_KP_ENTER };
   Controller controller;
   
+  float shakeTimeRemaining = 0;
+  inline static const float ShakeMagnitude = 25;
+   
   void initGameBoard();
   void clearGameBoard();
   
@@ -86,8 +89,6 @@ class Game {
   void controllerUpdate(); 
   
 public:
-  float shake = 0;
-  
   
  	Game() { }
   ~Game() { }
@@ -99,6 +100,8 @@ public:
 	
   void setKeyJustPressed( uint16_t key );
   void setMouseJustClicked( uint16_t mouseButton );
+  
+  void shakeScreen( float shakeTime );
    
   // Player shoots from top, invaders from their bottom.
   void tryShootBullet( BulletType bulletType, const Vector2f &shootPoint );

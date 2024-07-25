@@ -31,7 +31,7 @@ Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :
   
   if( type == BulletType::PlayerThickLaser ) {
     minParticles = maxParticles = 0;
-    game->shake = .25;
+    game->shakeScreen( .25 );
   }
 }
 
