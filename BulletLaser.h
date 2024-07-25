@@ -9,4 +9,6 @@ public:
   
   void update( float t ) override;
   
+  void onHit() override;
+  
 };

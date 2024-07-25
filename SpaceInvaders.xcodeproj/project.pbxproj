@@ -74,6 +74,7 @@
 		3D62C61F2C526A9300EEABF0 /* BulletLaser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BulletLaser.cpp; sourceTree = "<group>"; };
 		3D62C6202C526A9300EEABF0 /* BulletLaser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BulletLaser.h; sourceTree = "<group>"; };
 		3D62C6222C526F4C00EEABF0 /* ParticleCloudProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParticleCloudProperties.h; sourceTree = "<group>"; };
+		3D62C6242C528F3F00EEABF0 /* ICollideable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICollideable.h; sourceTree = "<group>"; };
 		3D667CC62C4ADA370014BCD0 /* Invader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Invader.cpp; sourceTree = "<group>"; };
 		3D667CC72C4ADA370014BCD0 /* Invader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Invader.h; sourceTree = "<group>"; };
 		3D667CCA2C4BDC330014BCD0 /* Animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
@@ -171,17 +172,6 @@
 			name = sprites;
 			sourceTree = "<group>";
 		};
-		3D228A5D2C4EFACB005B9684 /* object-managers */ = {
-			isa = PBXGroup;
-			children = (
-				3D667CE12C4C316E0014BCD0 /* Bunker.h */,
-				3D667CE02C4C316E0014BCD0 /* Bunker.cpp */,
-				3D667CE72C4D4F410014BCD0 /* InvaderGroup.h */,
-				3D667CE62C4D4F410014BCD0 /* InvaderGroup.cpp */,
-			);
-			name = "object-managers";
-			sourceTree = "<group>";
-		};
 		3D228A5E2C4F17D4005B9684 /* geometry */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,12 +261,16 @@
 		9FC715E31A152813004FDDD1 /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				3D228A5D2C4EFACB005B9684 /* object-managers */,
 				3D228A5C2C4EF103005B9684 /* sprites */,
 				3D667CC92C4ADAE50014BCD0 /* screens */,
 				3D9200682C4AACFF001198CA /* Assets.h */,
 				3D92006B2C4AB501001198CA /* Assets.cpp */,
+				3D667CE12C4C316E0014BCD0 /* Bunker.h */,
+				3D667CE02C4C316E0014BCD0 /* Bunker.cpp */,
 				3D62C61E2C516B5E00EEABF0 /* BulletType.h */,
+				3D667CE72C4D4F410014BCD0 /* InvaderGroup.h */,
+				3D667CE62C4D4F410014BCD0 /* InvaderGroup.cpp */,
+				3D62C6242C528F3F00EEABF0 /* ICollideable.h */,
 				9FC715C21A152805004FDDD1 /* Game.h */,
 				9FC715D01A152805004FDDD1 /* Game.cpp */,
 				3D228A602C4F1E17005B9684 /* GameState.h */,

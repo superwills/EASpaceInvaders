@@ -64,11 +64,6 @@ shared_ptr<Sprite> Sprite::Text( const string &text, const RectF &box, SDL_Color
   return textSprite;
 }
 
-RectF Sprite::getScaledHitBox() const {
-  RectF scaled = box.scaledCopy( hitBoxScale );
-  return scaled;
-}
-
 bool Sprite::exitedWorldBounds() {
   return !sdl->getWindowRectangle().hit( box );
 }
@@ -106,16 +101,8 @@ void Sprite::move( const Vector2f &displacement ) {
   }
 }
 
-bool Sprite::hit( const Vector2f &p ) {
-  return getScaledHitBox().hit( p );
-}
-
-bool Sprite::hit( const RectF &rect ) {
-  return getScaledHitBox().hit( rect );
-}
-
-bool Sprite::hit( shared_ptr<Sprite> other ) {
-  return getScaledHitBox().hit( other->getScaledHitBox() );
+RectF Sprite::getHitBox() const {
+  return box.scaledCopy( hitBoxScale );;
 }
 
 void Sprite::turnOffParticleCloudSplash() {

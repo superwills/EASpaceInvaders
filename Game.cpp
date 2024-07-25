@@ -498,7 +498,8 @@ void Game::setMouseJustClicked( uint16_t mouseButton ) {
 }
 
 void Game::shakeScreen( float shakeTime ) {
-  shakeTimeRemaining = shakeTime;
+  shakeTimeRemaining += shakeTime;
+  shakeTimeRemaining = clamp( shakeTimeRemaining, 0.f, 1.f );
 }
 
 void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
@@ -595,7 +596,7 @@ void Game::update() {
   controllerUpdate();
   
   shakeTimeRemaining -= dt;
-  shakeTimeRemaining = clamp( shakeTimeRemaining, 0.f, 10.f );
+  shakeTimeRemaining = clamp( shakeTimeRemaining, 0.f, 1.f );
   
   switch( gameState ) {
   case GameState::Title:

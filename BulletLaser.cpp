@@ -6,7 +6,6 @@ BulletLaser::BulletLaser( const Vector2f &shootCenter ) : Bullet( shootCenter, B
   particleCloudProperties.setNumParticles( 50, 60 );
   particleCloudProperties.setSizes( 24, 36 );
   particleCloudProperties.initialDecay = .2;
-  game->shakeScreen( .25 );
 }
 
 void BulletLaser::update( float t ) {
@@ -23,4 +22,8 @@ void BulletLaser::update( float t ) {
     die();
   }
   
+}
+
+void BulletLaser::onHit() {
+  game->shakeScreen( .1 );
 }

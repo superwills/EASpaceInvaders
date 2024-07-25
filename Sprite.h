@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Animation.h"
+#include "ICollideable.h"
 #include "ParticleCloudProperties.h"
 #include "SDLColors.h"
 #include "RectF.h"
@@ -12,10 +13,11 @@ using std::vector;
 
 class Game;
 
-class Sprite : public std::enable_shared_from_this<Sprite> {
+class Sprite : public ICollideable, public std::enable_shared_from_this<Sprite> {
   inline static int NextSpriteId = 0;
   
 protected:
+  float hp = 1;
   int spriteId = NextSpriteId++;
   Vector2f hitBoxScale = 1;   // < 1 for more forgiving collision checks
   // This member represents the position & the size of the sprite combined
@@ -58,8 +60,6 @@ public:
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, const RectF &box, SDL_Color iColor );
   
-  RectF getScaledHitBox() const;
-  
   inline bool isDead() const { return dead; }
   inline Vector2f getPos() const {  return box.pos;  }
   
@@ -73,11 +73,10 @@ public:
   void enforceWorldLimits();
 	void move( const Vector2f &displacement );
   
-  bool hit( const Vector2f &p );
-  bool hit( const RectF &rect );
-  bool hit( shared_ptr<Sprite> other );
-  
   void turnOffParticleCloudSplash();
+  
+  // ICollideable interface implementation
+  RectF getHitBox() const override;
   
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update( float t );
