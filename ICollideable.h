@@ -1,10 +1,9 @@
 #pragma once
 
-#include <memory>
-using std::shared_ptr;
-
 #include "Vectorf.h"
 #include "RectF.h"
+
+#include "StlUtil.h"
 
 class ICollideable {
 public:
@@ -34,3 +33,5 @@ public:
   // optionally can implement something to do when hit
   virtual void onHit() { }
 };
+
+DECLARE_SHARED_PTR( ICollideable );

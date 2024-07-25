@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 using std::string, std::vector;
 
 // A helper template to avoid repeating this code formula for each collection
@@ -45,3 +46,5 @@ bool isBetweenIn( const Enum &val, const Enum &low, const Enum &high ) {
   // low <= v <= high
   return (int)low <= v   &&   v <= (int)high; 
 }
+
+#define DECLARE_SHARED_PTR(TYPE) typedef std::shared_ptr<TYPE> SP_##TYPE

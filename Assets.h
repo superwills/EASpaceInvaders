@@ -30,8 +30,8 @@ enum class SFXId {
 
 enum class MusicId {
   NoMusic,
-  Background0,
-  Background1,
+  DemoMusic,
+  Stardust,
 };
 
 // These also uniquely identify object types in the game
