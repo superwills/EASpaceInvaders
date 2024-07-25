@@ -22,7 +22,8 @@ public:
   void update( float t );
   void draw();
   
-  RectF getHitBox() const override;
+  RectF getHitBox() const override {  return bounds;  }
+  Vector2f getCentroid() const override {  return bounds.centroid();  }
   
   // Considered dead when it has no pieces left.
   inline bool isDead() const { return pieces.empty(); } 

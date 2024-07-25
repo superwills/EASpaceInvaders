@@ -39,7 +39,6 @@ void InvaderGroup::addRow( AnimationId character ) {
     box.size = InvaderSize;
     
     shared_ptr<Invader> invader = std::make_shared<Invader>( box, character );
-    game->newCollideable( invader );
     invaders.push_back( invader );
   }
   

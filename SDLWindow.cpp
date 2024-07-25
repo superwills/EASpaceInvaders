@@ -106,13 +106,13 @@ void SDLWindow::line( int startX, int startY, int endX, int endY, SDL_Color colo
 	SDL_RenderDrawLine( renderer, startX, startY, endX, endY );
 }
 
-void SDLWindow::outlineRect( const RectF &rect, SDL_Color color ) {
+void SDLWindow::rectOutline( const RectF &rect, SDL_Color color ) {
 	SDL_Rect sdlRect = rect.toSDLRect();
 	setColor( color );
 	SDL_RenderDrawRect( renderer, &sdlRect );
 }
 
-void SDLWindow::fillRect( const RectF &rect, SDL_Color color ) {
+void SDLWindow::rectFill( const RectF &rect, SDL_Color color ) {
   SDL_Rect sdlRect = rect.toSDLRect();
 	setColor( color );
 	SDL_RenderFillRect( renderer, &sdlRect );

@@ -41,3 +41,5 @@ public:
   bool isFromInvader() const;
   
 };
+
+DECLARE_SHARED_PTR( Bullet );

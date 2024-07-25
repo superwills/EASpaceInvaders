@@ -64,9 +64,10 @@ public:
   inline Vector2f getPos() const {  return box.pos;  }
   
   void setPos( const Vector2f &pos ) {  box.pos = pos;  }
+  
   // Set position of sprite so it's center is @pos (accounting for current size of sprite) 
-  void setCenter( const Vector2f &pos ) { box.setCenter( pos ); }
-  Vector2f getCenter() {  return box.centroid();  }
+  void setCenter( const Vector2f &pos ) {  box.setCenter( pos );  }
+  
   void setSize( const Vector2f &size ) {  box.size = size;  }
   
   bool exitedWorldBounds();
@@ -76,7 +77,8 @@ public:
   void turnOffParticleCloudSplash();
   
   // ICollideable interface implementation
-  RectF getHitBox() const override;
+  inline RectF getHitBox() const override {  return box.scaledCopy( hitBoxScale );  }
+  inline Vector2f getCentroid() const override {  return box.centroid();  }
   
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update( float t );

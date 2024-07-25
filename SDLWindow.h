@@ -58,8 +58,8 @@ public:
 
 	// SDL supplied graphics primitives functionality
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
-	void outlineRect( const RectF &rect, SDL_Color color );
-	void fillRect( const RectF &rect, SDL_Color color );
+	void rectOutline( const RectF &rect, SDL_Color color );
+	void rectFill( const RectF &rect, SDL_Color color );
   // Drawing textures is always done using an Animation::Frame.
   void draw( const RectF &whereToDraw, const Animation::Frame &frame );
   

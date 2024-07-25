@@ -10,7 +10,7 @@ using namespace std;
 // coding features (influenced by mojang )
 // - Init all vars
 // - ptrs are always checked when they can be null
-// - asserts, but "assert is not error checking"
+// - failsafe codepaths, "assert is not error checking"
 // - all array bounds accesses checked, unless "sure"
 //   - (the above few may catch quite a few bugs)
 // - avoid new/delete and use shared_ptr when possible
@@ -25,7 +25,6 @@ using namespace std;
 // - Code tries to be brief while still being clear
 // - Errors in the log mean something should be fixed
 
-
 // TODO:
 // Could use events for some things?
 
@@ -36,7 +35,7 @@ int main(int argc, char* args[]) {
   SDLWindow::SDLInit();
 	
   sdl = std::make_shared<SDLWindow>( "Space Invaders", 800, 600 );
-  game = std::make_shared<Game>();
+  game = std::make_shared<Game>( sdl->getWindowRectangle() );
   game->init();
 
 	while( !game->isState( GameState::Exiting ) ) {

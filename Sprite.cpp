@@ -101,10 +101,6 @@ void Sprite::move( const Vector2f &displacement ) {
   }
 }
 
-RectF Sprite::getHitBox() const {
-  return box.scaledCopy( hitBoxScale );;
-}
-
 void Sprite::turnOffParticleCloudSplash() {
   particleCloudProperties.setNumParticles( 0, 0 );
 }
@@ -126,7 +122,7 @@ void Sprite::draw() const {
   const Animation::Frame &animFrame = animation.getCurrentFrame();
   if( !animFrame.tex ) {
 		// no texture, so draw a solid rect
-		sdl->fillRect( box, animFrame.color );
+		sdl->rectFill( box, animFrame.color );
 	}
 	else {
 		sdl->draw( box, animFrame );  
@@ -159,7 +155,7 @@ void Sprite::die() {
   
   int score = getScore();
   if( score > 0 ) {
-    game->displayScore( score, getCenter(), White );
+    game->displayScore( score, getCentroid(), White );
     game->changeScore( score );
   }
   

@@ -8,6 +8,10 @@
 class ICollideable {
 public:
   virtual RectF getHitBox() const = 0;
+  
+  // For placement in the Quadtree
+  virtual Vector2f getCentroid() const = 0;
+  
   virtual bool hit( const Vector2f &pt ) {
     bool didHit = getHitBox().hit( pt );
     if( didHit ) {

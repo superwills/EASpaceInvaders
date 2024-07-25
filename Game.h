@@ -5,6 +5,7 @@
 #include "GameState.h"
 #include "InvaderGroup.h"
 #include "ParticleCloudProperties.h"
+#include "Quadtree.h"
 #include "SDLWindow.h"
 #include "Sprite.h"
 #include "StopWatch.h"
@@ -66,7 +67,9 @@ class Game {
   
   float shakeTimeRemaining = 0;
   inline static const float ShakeMagnitude = 25;
-   
+  
+  Quadtree quadtree;
+  
   void initGameBoard();
   void clearGameBoard();
   
@@ -91,7 +94,7 @@ class Game {
   
 public:
   
- 	Game() { }
+ 	Game( const RectF &bounds );
   ~Game() { }
 	
   void init(); 
@@ -108,10 +111,6 @@ public:
   void tryShootBullet( BulletType bulletType, const Vector2f &shootPoint );
   // Plays a sprite animation ONCE where you want it
   void playSpriteAnimation( const RectF &where, AnimationId animationId );
-  
-  // You're stuck with factory patterns if you want events to fire AFTER OBJECT CONTRUCTION COMPLETE
-  // EVENT
-  void newCollideable( shared_ptr<Sprite> sprite );
   
   // Generates numParticles that are inside `insideBoxArea`
   void particleCloud( const RectF &insideBoxArea, const ParticleCloudProperties &particleCloudProperties );

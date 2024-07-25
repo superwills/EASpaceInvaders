@@ -42,10 +42,6 @@ void Bunker::draw() {
   }
 }
 
-RectF Bunker::getHitBox() const {
-  return bounds;
-}
-
 bool Bunker::killHit( shared_ptr<Sprite> other ) {
   
   // don't bother to check any pieces if sprite misses the whole bunker bounds

@@ -14,4 +14,8 @@ inline SDL_Color SDL_ColorMake( Uint8 r, Uint8 g, Uint8 b, Uint8 a ) {
 	return color;
 }
 
+inline SDL_Color operator*( const SDL_Color& color, float v ) {
+  return { (Uint8)(color.r*v), (Uint8)(color.g*v), (Uint8)(color.b*v), (Uint8)(color.a*v) };
+}
+
 SDL_Color SDL_RandomSolidColor();

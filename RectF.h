@@ -25,6 +25,7 @@ struct RectF {
   
   inline float midX() const { return pos.x + size.x/2; }
   inline float midY() const { return pos.y + size.y/2; }
+  inline Vector2f mid() const { return Vector2f( midX(), midY() ); }
   
   inline Vector2f bottomLeft() const {
     return Vector2f( left(), bottom() ) ;

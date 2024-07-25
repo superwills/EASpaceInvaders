@@ -47,4 +47,9 @@ bool isBetweenIn( const Enum &val, const Enum &low, const Enum &high ) {
   return (int)low <= v   &&   v <= (int)high; 
 }
 
+template <typename T>
+void append( vector<T> &dst, const vector<T> &src ) {
+  dst.insert( dst.end(), src.begin(), src.end() );
+}
+
 #define DECLARE_SHARED_PTR(TYPE) typedef std::shared_ptr<TYPE> SP_##TYPE
