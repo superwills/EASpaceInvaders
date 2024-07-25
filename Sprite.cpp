@@ -76,25 +76,25 @@ bool Sprite::exitedWorldBounds() {
 void Sprite::enforceWorldLimits() {
 	if( box.top() < 0 ) {
 		float overshot = 0 - box.top();
-    box.pos.y += overshot;
+    move( Vector2f( 0, overshot ) );
 	}
   
   Vector2f windowSize = sdl->getWindowSize();
 	if( box.bottom() > windowSize.y ) {
 		float overshot = windowSize.y - box.bottom();
-    box.pos.y += overshot;
+    move( Vector2f( 0, overshot ) );
 	}
   
 	// ensure stays within bounds of world
 	// two of these can happen simultaneously, which is why no else is used
 	if( box.left() < 0 ) {
 		float overshot = - box.left();
-    box.pos.x += overshot;
+    move( Vector2f( overshot, 0 ) );
 	}
   
 	if( box.right() > windowSize.x ) {
 		float overshot = windowSize.x - box.right();
-    box.pos.x += overshot;
+    move( Vector2f( overshot, 0 ) );
 	}
 }
 
