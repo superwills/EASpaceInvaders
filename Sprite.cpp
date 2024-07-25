@@ -60,7 +60,7 @@ void Sprite::setAnimation( AnimationId animationId ) {
 shared_ptr<Sprite> Sprite::Text( const string &text, const RectF &box, SDL_Color iColor ) {
   shared_ptr<Texture> tex = sdl->makeTextTexture( text );
   shared_ptr<Sprite> textSprite = std::make_shared<Sprite>( box, tex, iColor );
-  textSprite->minParticles = textSprite->maxParticles = 0;
+  textSprite->turnOffParticleCloudSplash();
   return textSprite;
 }
 
@@ -118,6 +118,10 @@ bool Sprite::hit( shared_ptr<Sprite> other ) {
   return getScaledHitBox().hit( other->getScaledHitBox() );
 }
 
+void Sprite::turnOffParticleCloudSplash() {
+  particleCloudProperties.setNumParticles( 0, 0 );
+}
+
 void Sprite::update( float t ) {
   animation.update( t );
   move( velocity*t );
@@ -158,8 +162,8 @@ void Sprite::die() {
   
   // ask for a particle splash from the Game. 
   // No particles if vars set to 0.
-  if( minParticles && maxParticles ) {
-    game->particleCloud( box, randInt( minParticles, maxParticles ), particleSizeMin, particleSizeMax, initialParticleDecay );
+  if( particleCloudProperties.isOn() ) {
+    game->particleCloud( box, particleCloudProperties );
   }
   
   if( deathSound != SFXId::NoSFX ) {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Animation.h"
+#include "ParticleCloudProperties.h"
 #include "SDLColors.h"
 #include "RectF.h"
 #include "SDLWindow.h"
@@ -38,9 +39,7 @@ public:
   SFXId deathSound = SFXId::NoSFX;
   
   // When object dies, # particles it displays
-  int minParticles = 8, maxParticles = 12;
-  float particleSizeMin = 4, particleSizeMax = 12;
-  float initialParticleDecay = .9;
+  ParticleCloudProperties particleCloudProperties;
   
 	Sprite();
   Sprite( const RectF &rectangle ); 
@@ -77,6 +76,8 @@ public:
   bool hit( const Vector2f &p );
   bool hit( const RectF &rect );
   bool hit( shared_ptr<Sprite> other );
+  
+  void turnOffParticleCloudSplash();
   
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update( float t );

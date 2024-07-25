@@ -7,8 +7,8 @@ UFO::UFO( const RectF &rectangle ) : Sprite( rectangle, AnimationId::UFO ) {
   velocity.x = -DefaultUFOSpeed;
   deathSound = SFXId::Explode2;
   
-  minParticles = 10, maxParticles = 20;
-  particleSizeMin = 14, particleSizeMax = 25;
+  particleCloudProperties.setNumParticles( 10, 20 );
+  particleCloudProperties.setSizes( 14, 25 );
   
   sfxChannel = sdl->loopSound( SFXId::UFO );
   

@@ -4,6 +4,7 @@
 #include "Controller.h"
 #include "GameState.h"
 #include "InvaderGroup.h"
+#include "ParticleCloudProperties.h"
 #include "SDLWindow.h"
 #include "Sprite.h"
 #include "StopWatch.h"
@@ -108,11 +109,8 @@ public:
   // Plays a sprite animation ONCE where you want it
   void playSpriteAnimation( const RectF &where, AnimationId animationId );
   
-  // You can start the particle decayed, so that it doesn't start at 100% alpha with initialDecay
-  void particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax, float initialDecay = 1 );
-  
   // Generates numParticles that are inside `insideBoxArea`
-  void particleCloud( const RectF &insideBoxArea, int numParticles, float sizeMin, float sizeMax, float initialDecay = 1 );
+  void particleCloud( const RectF &insideBoxArea, const ParticleCloudProperties &particleCloudProperties );
   void createItem( const Vector2f &pos, AnimationId animationId );
   
   void displayScore( int score, const Vector2f &pos, SDL_Color color );

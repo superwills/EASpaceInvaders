@@ -26,8 +26,8 @@ Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :
   box.size = Vector2f( windowHeight ) * DefaultBulletScale;
   box.setCenter( shootCenter );
   
-  minParticles = 3, maxParticles = 6;
-  particleSizeMin = 2, particleSizeMax = 4;
+  particleCloudProperties.setNumParticles( 3, 6 );
+  particleCloudProperties.setSizes( 2, 4 );
 }
 
 void Bullet::update( float t ) {

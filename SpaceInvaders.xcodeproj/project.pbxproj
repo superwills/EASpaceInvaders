@@ -73,6 +73,7 @@
 		3D62C61E2C516B5E00EEABF0 /* BulletType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BulletType.h; sourceTree = "<group>"; };
 		3D62C61F2C526A9300EEABF0 /* BulletLaser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BulletLaser.cpp; sourceTree = "<group>"; };
 		3D62C6202C526A9300EEABF0 /* BulletLaser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BulletLaser.h; sourceTree = "<group>"; };
+		3D62C6222C526F4C00EEABF0 /* ParticleCloudProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParticleCloudProperties.h; sourceTree = "<group>"; };
 		3D667CC62C4ADA370014BCD0 /* Invader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Invader.cpp; sourceTree = "<group>"; };
 		3D667CC72C4ADA370014BCD0 /* Invader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Invader.h; sourceTree = "<group>"; };
 		3D667CCA2C4BDC330014BCD0 /* Animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
@@ -159,6 +160,7 @@
 				3D8D2FFC2C51367B007B64EE /* Item.cpp */,
 				3D667CED2C4D82590014BCD0 /* Particle.h */,
 				3D667CEC2C4D82590014BCD0 /* Particle.cpp */,
+				3D62C6222C526F4C00EEABF0 /* ParticleCloudProperties.h */,
 				9FC715C51A152805004FDDD1 /* Player.h */,
 				9FC715D21A152805004FDDD1 /* Player.cpp */,
 				3D8D30032C514A40007B64EE /* ScoreDisplay.h */,

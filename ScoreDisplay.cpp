@@ -10,7 +10,7 @@ ScoreDisplay::ScoreDisplay( int value, const Vector2f &center, SDL_Color color )
   shared_ptr<Texture> tex = sdl->makeTextTexture( numbers );
   addAnimationFrame( tex, color );
   
-  minParticles = maxParticles = 0;
+  particleCloudProperties.setNumParticles( 0, 0 );
   velocity.y = -5;
 }
 

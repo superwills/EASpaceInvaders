@@ -3,10 +3,9 @@
 #include "Game.h"
 
 BulletLaser::BulletLaser( const Vector2f &shootCenter ) : Bullet( shootCenter, BulletType::PlayerThickLaser ) {
-  minParticles = 50, maxParticles = 60;
-  particleSizeMin = 24;
-  particleSizeMax = 36;
-  initialParticleDecay = .2;
+  particleCloudProperties.setNumParticles( 50, 60 );
+  particleCloudProperties.setSizes( 24, 36 );
+  particleCloudProperties.initialParticleDecay = .2;
   game->shakeScreen( .25 );
 }
 

@@ -530,27 +530,19 @@ void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
 void Game::playSpriteAnimation( const RectF &where, AnimationId animationId ) {
   auto spriteAnim = std::make_shared<Sprite>( where, animationId );
   spriteAnim->animation.cycles = 0;  // DO NOT cycle the anim, so we can remove it when it's done playing thru
-  spriteAnim->minParticles = spriteAnim->maxParticles = 0; // play-once anims don't need a splash
+  spriteAnim->particleCloudProperties.setNumParticles( 0, 0 ); // play-once anims don't need a splash
   playOnceAnimations.push_back( spriteAnim );
 }
 
-void Game::particleSplash( const Vector2f &pos, int numParticles, float sizeMin, float sizeMax, float initialDecay ) {
-  for( int i = 0; i < numParticles; i++ ) {
-    Vector2f size = Vector2f::random( sizeMin, sizeMax );
-    shared_ptr<Particle> p = std::make_shared<Particle>( RectF( pos, Vector2f( size ) ) );
-    p->lifeRemaining *= initialDecay;
-    allParticles.push_back( p );
-  }
-}
-
-void Game::particleCloud( const RectF &insideBoxArea, int numParticles, float sizeMin, float sizeMax, float initialDecay ) {
+void Game::particleCloud( const RectF &insideBoxArea, const ParticleCloudProperties &particleCloudProperties ) {
+  int numParticles = randIntIn( particleCloudProperties.minParticles, particleCloudProperties.maxParticles );
   for( int i = 0; i < numParticles; i++ ) {
     RectF particleBox;
-    particleBox.size = Vector2f::random( sizeMin, sizeMax );
+    particleBox.size = Vector2f::random( particleCloudProperties.particleSizeMin, particleCloudProperties.particleSizeMin );
     Vector2f particleCenter = insideBoxArea.randomPoint();
     particleBox.setCenter( particleCenter );
     shared_ptr<Particle> p = std::make_shared<Particle>( particleBox );
-    p->lifeRemaining *= initialDecay;
+    p->lifeRemaining *= particleCloudProperties.initialParticleDecay;
     allParticles.push_back( p );
   }
 }
