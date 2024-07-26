@@ -8,14 +8,12 @@ void QuadtreeNode::constructChildren() {
     return;
   }
 
-  Vector2f mid = bounds.mid();
-  
-  info( "Constructing %d children", N );
-  children.resize( N, 0 );
+  Vector2f size = bounds.size/2;
+  children.resize( N );
   
   for( int i = 0; i < children.size(); i++ ) {
-    children[ i ] = new QuadtreeNode;
-    children[ i ]->bounds.size = mid;   // All same size.
+    children[ i ] = std::make_shared<QuadtreeNode>();
+    children[ i ]->bounds.size = size;   // All same size.
     
     children[ i ]->color = color * 2;
   }
@@ -28,17 +26,20 @@ void QuadtreeNode::constructChildren() {
   children[ TopLeft ]->bounds.pos = bounds.pos;
   children[ TopRight ]->bounds.pos = bounds.midTop();
   children[ BottomLeft ]->bounds.pos = bounds.midLeft();
-  children[ BottomRight ]->bounds.pos = mid;
+  children[ BottomRight ]->bounds.pos = bounds.mid();
+  
+  info( "%s spawned 4 children:", bounds.toString().c_str() );
+  for( int i = 0; i < children.size(); i++ ) {
+    info( "  - %s", children[ i ]->bounds.toString().c_str() );
+  }
 }
 
 void QuadtreeNode::pushObjectsDown() {
+  info( "%s push objects down", bounds.toString().c_str() );
   for( auto obj : objects ) {
+    info( "Pushing %s", obj->getName().c_str() );
     // Push the object 
     for( int i = 0; i < children.size(); i++ ) {
-      if( !children[ i ] ) {
-        error( "%d dne", i );
-      }
-      else
       if( children[ i ]->contains( obj ) ) {
         children[ i ]->add( obj );
       }
@@ -70,7 +71,7 @@ bool QuadtreeNode::add( shared_ptr<ICollideable> obj ) {
     // once this node gets too "full", you can subdivide it
     if( objects.size() >= MaxObjects ) {
       constructChildren();
-      // pushObjectsDown();
+      pushObjectsDown();
     }
   }
   return 1;
@@ -103,11 +104,11 @@ void QuadtreeNode::query( const RectF &box, vector< shared_ptr<ICollideable> > &
   }
 }
 
-void QuadtreeNode::draw() const {
-  sdl->rectOutline( bounds.copy().pad( -1 ), color );
+void QuadtreeNode::draw( int depth ) const {
+  sdl->rectOutline( bounds.copy().pad( -2*depth ), color );
   
   for( int i = 0; i < children.size(); i++ ) {
-    children[ i ]->draw();
+    children[ i ]->draw( depth + 1 );
   }
 }
 
@@ -130,7 +131,6 @@ void Quadtree::each( const std::function<void( QuadtreeNode* )> &fn ) {
 }
 
 void Quadtree::add( shared_ptr<ICollideable> obj ) {
-  info( "adding %s", obj->getName().c_str() );
   root.add( obj );
   Uint8 base = 50;
   root.color = { base, base, base, 255 };
@@ -150,5 +150,5 @@ vector< shared_ptr<ICollideable> > Quadtree::query( shared_ptr<ICollideable> obj
 }
 
 void Quadtree::draw() {
-  root.draw();
+  root.draw( 0 );
 }

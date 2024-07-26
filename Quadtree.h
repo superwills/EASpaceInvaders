@@ -11,8 +11,8 @@ struct QuadtreeNode {
   
   enum ChildNode { TopRight, TopLeft, BottomLeft, BottomRight };
   inline static const int N = 4;
-  vector< QuadtreeNode* > children;
-  int MaxObjects = 25;
+  vector< shared_ptr<QuadtreeNode> > children;
+  int MaxObjects = 4;
   SDL_Color color = Red;
   
   vector< shared_ptr<ICollideable> > objects;
@@ -36,7 +36,7 @@ struct QuadtreeNode {
   // Pass the `box` rather than regenerating it multiple times
   void query( const RectF &box, vector< shared_ptr<ICollideable> > &results );
   
-  void draw() const;
+  void draw( int depth ) const;
   
   void each( const std::function<void( QuadtreeNode* )> &fn );
 };
