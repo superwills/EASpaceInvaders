@@ -125,7 +125,25 @@ void Game::checkBulletCollisions_basic() {
     if( bullet->isDead() ) {
       continue;
     }
-  
+    
+    // Check bullet-bullet
+    for( auto oBullet : allBullets ) {
+      // they have to be from opposite teams to collide
+      if( bullet->isFromInvader() && !oBullet->isFromInvader() ) {
+        if( bullet->hit( oBullet ) ) {
+          if( bullet->type != BulletType::PlayerThickLaser )
+          bullet->die();
+          
+          if( oBullet->type != BulletType::PlayerThickLaser )
+          oBullet->die();
+        }
+      }
+    }
+    
+    if( bullet->isDead() ) {
+      continue;
+    }
+    
     if( bullet->isFromInvader() ) {
       // Invader bullet check against player.
       if( !player->isDead() && bullet->hit( player ) ) {
@@ -338,10 +356,10 @@ void Game::runGame() {
   
   StopWatch timer;
   
-  //checkAllCollisions_basic();
-  checkAllCollisions_quadtree();
+  checkAllCollisions_basic();
+  //checkAllCollisions_quadtree();
   Vector2f windowSize = sdl->getWindowSize();
-  RectF where( windowSize.x*.8, windowSize.y*.2, windowSize.x*.2, windowSize.y*.2 );
+  RectF where( windowSize.x*.85, windowSize.y*.05, windowSize.x*.1, windowSize.y*.1 );
   timerSprite = Sprite::Text( makeString( "%.3f", timer.sec()*1000. ), where, White );
   
   checkWinConditions();

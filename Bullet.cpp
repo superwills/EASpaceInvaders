@@ -16,10 +16,13 @@ Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :
   velocity.y = getBulletSpeed();
   
   // Hitbox has to be a lot narrower for bullets, so they don't hit as easily but still remain easy visible
-  hitBoxScale.x = .2;
+  hitBoxScale.x = .4;
 
   if( type == BulletType::InvaderSuper ) {
     hitBoxScale.x = .5; // lightning has a wide hit box
+  }
+  if( type == BulletType::PlayerThickLaser ) {
+    hitBoxScale.x = .9;
   }
   
   float windowHeight = sdl->getWindowSize().y;
