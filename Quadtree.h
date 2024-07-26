@@ -12,7 +12,7 @@ struct QuadtreeNode {
   enum ChildNode { TopRight, TopLeft, BottomLeft, BottomRight };
   inline static const int N = 4;
   vector< shared_ptr<QuadtreeNode> > children;
-  int MaxObjects = 4;
+  int MaxObjects = 10;
   SDL_Color color = Red;
   
   vector< shared_ptr<ICollideable> > objects;

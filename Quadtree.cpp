@@ -98,7 +98,7 @@ void QuadtreeNode::query( const RectF &box, vector< shared_ptr<ICollideable> > &
 }
 
 void QuadtreeNode::draw( int depth ) const {
-  sdl->rectOutline( bounds.copy().pad( -2*depth ), color );
+  sdl->rectOutline( bounds.copy().pad( -4*depth ), color );
   
   for( int i = 0; i < children.size(); i++ ) {
     children[ i ]->draw( depth + 1 );

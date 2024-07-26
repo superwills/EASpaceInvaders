@@ -21,7 +21,7 @@ class InvaderGroup {
   inline static const Vector2f InterInvaderSpacingPercent = Vector2f( .03, .01 );
   inline static Vector2f InterInvaderSpacing;
   
-  inline static const int invadersPerRow = 5; // 11 across in the original game.
+  inline static const int invadersPerRow = 11; // 11 across in the original game.
   inline static const int DefaultMaxBullets = 2;
   inline static const int DesperationThreshold = 10;
   

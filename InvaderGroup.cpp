@@ -67,10 +67,10 @@ void InvaderGroup::populate() {
   InvaderSize = bounds.size / invadersPerRow;
   InvaderSize -= InterInvaderSpacing;
   
-  //addRow( AnimationId::InvaderE );
-  //addRow( AnimationId::InvaderA );
-  //addRow( AnimationId::Invader2 );
-  //addRow( AnimationId::Invader1 );
+  addRow( AnimationId::InvaderE );
+  addRow( AnimationId::InvaderA );
+  addRow( AnimationId::Invader2 );
+  addRow( AnimationId::Invader1 );
   addRow( AnimationId::Invader1 );
 }
 
