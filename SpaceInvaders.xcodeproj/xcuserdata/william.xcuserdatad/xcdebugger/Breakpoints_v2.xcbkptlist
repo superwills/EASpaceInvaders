@@ -30,10 +30,57 @@
             filePath = "Quadtree.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "QuadtreeNode::pushObjectsDown()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "01C6C1E6-A237-4CBA-AC76-8F579D1A3F01 - ecac5c21e2bdf1b6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QuadtreeNode::pushObjectsDown()"
+                  moduleName = "SpaceInvaders"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/william/code/sdlApp/Quadtree.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "183">
+               </Location>
+               <Location
+                  uuid = "01C6C1E6-A237-4CBA-AC76-8F579D1A3F01 - ecac5c21e2bdf1b6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QuadtreeNode::pushObjectsDown()"
+                  moduleName = "SpaceInvaders"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/william/code/sdlApp/Quadtree.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "161">
+               </Location>
+               <Location
+                  uuid = "01C6C1E6-A237-4CBA-AC76-8F579D1A3F01 - ecac5c21e2bdf1b6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "QuadtreeNode::pushObjectsDown()"
+                  moduleName = "SpaceInvaders"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/william/code/sdlApp/Quadtree.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "175">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
