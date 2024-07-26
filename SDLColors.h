@@ -6,6 +6,8 @@
 #include <sdl.h>
 #endif
 
+#include <algorithm>
+
 extern SDL_Color White, Black, Red, Green, Blue, Yellow, Magenta, Cyan,
   Indigo;
 
@@ -15,7 +17,12 @@ inline SDL_Color SDL_ColorMake( Uint8 r, Uint8 g, Uint8 b, Uint8 a ) {
 }
 
 inline SDL_Color operator*( const SDL_Color& color, float v ) {
-  return { (Uint8)(color.r*v), (Uint8)(color.g*v), (Uint8)(color.b*v), (Uint8)(color.a*v) };
+  float r = std::clamp( color.r*v, 0.f, 255.f );
+  float g = std::clamp( color.g*v, 0.f, 255.f );
+  float b = std::clamp( color.b*v, 0.f, 255.f );
+  float a = std::clamp( color.a*v, 0.f, 255.f );
+  
+  return { (Uint8)r, (Uint8)g, (Uint8)b, (Uint8)a };
 }
 
 SDL_Color SDL_RandomSolidColor();

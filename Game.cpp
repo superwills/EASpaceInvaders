@@ -112,7 +112,7 @@ void Game::checkWinConditions() {
   } 
 }
 
-void Game::checkBulletCollisions() {
+void Game::checkBulletCollisions_basic() {
   for( auto bullet : allBullets ) {
     // All bullet check bunker
     for( auto bunker : allBunkers ) {
@@ -176,9 +176,9 @@ void Game::checkBulletCollisions() {
   }
 }
 
-void Game::checkAllCollisions() {
+void Game::checkAllCollisions_basic() {
 	// check bullets against invaders, ufo's, bunkers.
-  checkBulletCollisions();
+  checkBulletCollisions_basic();
   
   // Check invaders against player itself, bunkers
   for( auto invader : invaderGroup.invaders ) {
@@ -198,6 +198,81 @@ void Game::checkAllCollisions() {
       item->die();
     }
   }
+}
+
+void Game::buildQuadtree() {
+  quadtree = Quadtree( sdl->getWindowRectangle() );
+  quadtree.add( player );
+  for( auto bullet : allBullets ) {
+    quadtree.add( bullet );
+  }
+  for( auto bunker : allBunkers ) {
+    quadtree.add( bunker );
+  }
+  for( auto ufo : allUFOs ) {
+    quadtree.add( ufo );
+  }
+  for( auto item : allItems ) {
+    quadtree.add( item );
+  }
+  for( auto invader : invaderGroup.invaders ) {
+    quadtree.add( invader );
+  }
+}
+
+void Game::checkAllCollisions_quadtree() {
+  buildQuadtree();
+  
+  quadtree.each( []( QuadtreeNode *qtNode ) {
+    RectF textRect = qtNode->bounds;
+    textRect.size = Vector2f( 25, 25 );
+    textRect.setCenter( qtNode->bounds.mid() );
+    auto spText = Sprite::Text( makeString( "%zu", qtNode->objects.size() ), textRect, White );
+    game->debugText.push_back( spText );
+  } );
+  
+  // Now run collisions of each intersectable against a quadtree query
+  vector< SP_ICollideable > results = quadtree.query( player );
+  quadtree.add( player );
+  for( auto bullet : allBullets ) {
+    results = quadtree.query( bullet );
+    
+    for( auto r : results ) {
+      debugRect.push_back( r->getHitBox() );
+      //info( "%s cand hit %s", bullet->getName().c_str(), r->getName().c_str() );
+    }
+  }
+  for( auto bunker : allBunkers ) {
+    results = quadtree.query( bunker );
+    
+    for( auto r : results ) {
+      //info( "%s cand hit %s", bunker->getName().c_str(), r->getName().c_str() );
+    }
+  }
+  for( auto ufo : allUFOs ) {
+    results = quadtree.query( ufo );
+    
+    for( auto r : results ) {
+      //info( "%s cand hit %s", ufo->getName().c_str(), r->getName().c_str() );
+    }
+  }
+  for( auto item : allItems ) {
+    results = quadtree.query( item );
+    
+    for( auto r : results ) {
+      //info( "%s cand hit %s", item->getName().c_str(), r->getName().c_str() );
+    }
+  }
+  for( auto invader : invaderGroup.invaders ) {
+    results = quadtree.query( invader );
+    
+    for( auto r : results ) {
+      debugRect.push_back( r->getHitBox() );
+      //info( "%s cand hit %s", bullet->getName().c_str(), r->getName().c_str() );
+    }
+  }
+  
+  
 }
 
 void Game::clearDead() {
@@ -227,6 +302,7 @@ void Game::runGame() {
   
   player->update( dt );
   scoreSprite->update( dt );
+  if( timerSprite )  timerSprite->update( dt );
 
   for( auto particle : allParticles ) {
     particle->update( dt );
@@ -260,7 +336,13 @@ void Game::runGame() {
     score->update( dt );
   }
   
-  checkAllCollisions();
+  StopWatch timer;
+  
+  //checkAllCollisions_basic();
+  checkAllCollisions_quadtree();
+  Vector2f windowSize = sdl->getWindowSize();
+  RectF where( windowSize.x*.8, windowSize.y*.2, windowSize.x*.2, windowSize.y*.2 );
+  timerSprite = Sprite::Text( makeString( "%.3f", timer.sec()*1000. ), where, White );
   
   checkWinConditions();
   
@@ -501,7 +583,7 @@ void Game::setMouseJustClicked( uint16_t mouseButton ) {
 
 void Game::shakeScreen( float shakeTime ) {
   shakeTimeRemaining += shakeTime;
-  shakeTimeRemaining = clamp( shakeTimeRemaining, 0.f, 1.f );
+  shakeTimeRemaining = std::clamp( shakeTimeRemaining, 0.f, 1.f );
 }
 
 void Game::tryShootBullet( BulletType bulletType, const Vector2f &shootPoint ) {
@@ -591,7 +673,7 @@ void Game::update() {
   controllerUpdate();
   
   shakeTimeRemaining -= dt;
-  shakeTimeRemaining = clamp( shakeTimeRemaining, 0.f, 1.f );
+  shakeTimeRemaining = std::clamp( shakeTimeRemaining, 0.f, 1.f );
   
   switch( gameState ) {
   case GameState::Title:
@@ -607,7 +689,8 @@ void Game::update() {
 	
   case GameState::Paused: 
 		pausedText->update( dt );
-	  break;
+    checkAllCollisions_quadtree(); // draw debug   
+    break;
   
   case GameState::Won:
   case GameState::Lost:
@@ -627,17 +710,21 @@ void Game::update() {
 void Game::draw() {
 	sdl->clear( bkgColor );
   
-  quadtree.draw();
-  
 	switch( gameState ) {
   case GameState::Title:
     titleScreen->draw();
     break;
     
+    
+  case GameState::Paused: 
+		pausedText->draw();
+	  [[ fallthrough ]];
+  
   case GameState::Running:
     invaderGroup.draw();
 		player->draw();
-		
+    timerSprite->draw();
+
     for( auto bullet : allBullets ) {
       bullet->draw();
     }
@@ -670,9 +757,6 @@ void Game::draw() {
     }
 	  break;
   
-  case GameState::Paused: 
-		pausedText->draw();
-	  break;
   case GameState::Won:
   case GameState::Lost:
     gameOverScreen->draw();
@@ -693,6 +777,17 @@ void Game::draw() {
   RectF windowRect = sdl->getWindowRectangle();
   windowRect.pos += Vector2f::random( -ShakeMagnitude, ShakeMagnitude )*shakeTimeRemaining;
   sdl->setViewport( windowRect.toSDLRect() );
+  
+  quadtree.draw();
+  for( const RectF &rect : debugRect ) {
+    sdl->rectOutline( rect, Red );
+  }
+  debugRect.clear();
+  
+  for( auto spText : debugText ) {
+    spText->draw();
+  }
+  debugText.clear();
   
   sdl->present();
 }

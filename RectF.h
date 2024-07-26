@@ -15,6 +15,10 @@ struct RectF {
     
   RectF( const Vector2f &position, const Vector2f &theSize ):
     pos( position ), size( theSize ) { }
+    
+  RectF copy() const {
+    return RectF( *this );
+  }
   
   // The top left corner is the origin.
   inline float top() const { return pos.y; } 

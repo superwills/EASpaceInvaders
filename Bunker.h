@@ -24,6 +24,7 @@ public:
   
   RectF getHitBox() const override {  return bounds;  }
   Vector2f getCentroid() const override {  return bounds.centroid();  }
+  inline string getName() const override {  return makeString( "Bunker %s", bounds.toString().c_str() );  }
   
   // Considered dead when it has no pieces left.
   inline bool isDead() const { return pieces.empty(); } 

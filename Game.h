@@ -35,19 +35,26 @@ class Game {
   shared_ptr<TitleScreen> titleScreen;
   shared_ptr<GameOverScreen> gameOverScreen;
   
-	shared_ptr<Sprite> pausedText;
-  shared_ptr<Player> player;
+  vector<RectF> debugRect;
+  vector< shared_ptr<Sprite> > debugText;
   
+  // Collideable:
+  shared_ptr<Player> player;
   vector< shared_ptr<Bullet> > allBullets;
   vector< shared_ptr<Bunker> > allBunkers;
-  vector< shared_ptr<Particle> > allParticles;
   vector< shared_ptr<UFO> > allUFOs;
-  vector< shared_ptr<Sprite> > playerLives;
-  vector< shared_ptr<Sprite> > playOnceAnimations;
   vector< shared_ptr<Item> > allItems;
-  vector< shared_ptr<ScoreDisplay> > allScores;
-  
   InvaderGroup invaderGroup;
+  
+  // Cosmetic
+  shared_ptr<Sprite> pausedText;
+  vector< shared_ptr<Particle> > allParticles;
+  vector< shared_ptr<ScoreDisplay> > allScores;
+  vector< shared_ptr<Sprite> > playOnceAnimations;
+  vector< shared_ptr<Sprite> > playerLives;
+  
+  shared_ptr<Sprite> timerSprite;
+  
   Test test;
   
 	SDL_Color bkgColor;	// the current background color
@@ -80,8 +87,11 @@ class Game {
   
   void checkWinConditions();
   
-  void checkBulletCollisions();
-  void checkAllCollisions();
+  void checkBulletCollisions_basic();
+  void checkAllCollisions_basic();
+  
+  void buildQuadtree();
+  void checkAllCollisions_quadtree();
   
   void clearDead(); 
 	void runGame();

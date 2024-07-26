@@ -79,6 +79,7 @@ public:
   // ICollideable interface implementation
   inline RectF getHitBox() const override {  return box.scaledCopy( hitBoxScale );  }
   inline Vector2f getCentroid() const override {  return box.centroid();  }
+  inline string getName() const override {  return name.c_str();  }
   
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update( float t );
