@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BulletType.h"
+#include "ColorRect.h"
 #include "Controller.h"
 #include "GameState.h"
 #include "InvaderGroup.h"
@@ -35,7 +36,6 @@ class Game {
   shared_ptr<TitleScreen> titleScreen;
   shared_ptr<GameOverScreen> gameOverScreen;
   
-  vector<RectF> debugRect;
   vector< shared_ptr<Sprite> > debugText;
   
   // Collideable:
@@ -76,6 +76,7 @@ class Game {
   inline static const float ShakeMagnitude = 25;
   
   Quadtree quadtree;
+  vector<ColorRect> debugRect, permDebugRect;
   
   void initGameBoard();
   void clearGameBoard();
@@ -132,6 +133,12 @@ public:
   
   void update();
 	void draw();
+ 
+  // Rectangle that appears for 1 frame
+  void addDebugRect( const RectF &rect, SDL_Color color );
+  
+  // Persistent rectangle that doesn't get erased after 1 frame
+  void addPermDebugRect( const RectF &rect, SDL_Color color );
 };
 
 extern shared_ptr<Game> game;

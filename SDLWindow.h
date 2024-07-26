@@ -19,6 +19,7 @@ using std::map, std::shared_ptr;
 
 #include "Animation.h"
 #include "Assets.h"
+#include "ColorRect.h"
 #include "Log.h"
 #include "RectF.h"
 #include "Vectorf.h"
@@ -59,8 +60,9 @@ public:
 	// SDL supplied graphics primitives functionality
 	void line( int startX, int startY, int endX, int endY, SDL_Color color );
 	void rectOutline( const RectF &rect, SDL_Color color );
-	void rectFill( const RectF &rect, SDL_Color color );
-  // Drawing textures is always done using an Animation::Frame.
+  void rectFill( const RectF &rect, SDL_Color color );
+  void rect( const ColorRect &rect ); 
+	// Drawing textures is always done using an Animation::Frame.
   void draw( const RectF &whereToDraw, const Animation::Frame &frame );
   
   // Texture loading.

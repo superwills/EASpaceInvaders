@@ -78,6 +78,7 @@
 		3D62C6242C528F3F00EEABF0 /* ICollideable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICollideable.h; sourceTree = "<group>"; };
 		3D62C6262C52955400EEABF0 /* Quadtree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Quadtree.cpp; sourceTree = "<group>"; };
 		3D62C6272C52955400EEABF0 /* Quadtree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Quadtree.h; sourceTree = "<group>"; };
+		3D62C6292C53E6DC00EEABF0 /* ColorRect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorRect.h; sourceTree = "<group>"; };
 		3D667CC62C4ADA370014BCD0 /* Invader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Invader.cpp; sourceTree = "<group>"; };
 		3D667CC72C4ADA370014BCD0 /* Invader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Invader.h; sourceTree = "<group>"; };
 		3D667CCA2C4BDC330014BCD0 /* Animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Animation.cpp; sourceTree = "<group>"; };
@@ -239,6 +240,7 @@
 				9FC715D31A152805004FDDD1 /* SDLWindow.cpp */,
 				3D667CE42C4C796C0014BCD0 /* Texture.h */,
 				3D667CE32C4C796C0014BCD0 /* Texture.cpp */,
+				3D62C6292C53E6DC00EEABF0 /* ColorRect.h */,
 			);
 			name = SDL;
 			sourceTree = "<group>";

@@ -11,7 +11,7 @@ struct QuadtreeNode {
   
   enum ChildNode { TopRight, TopLeft, BottomLeft, BottomRight };
   inline static const int N = 4;
-  shared_ptr<QuadtreeNode> children[ N ];
+  vector< shared_ptr<QuadtreeNode> > children;
   int MaxObjects = 25;
   SDL_Color color = Red;
   
@@ -20,6 +20,7 @@ struct QuadtreeNode {
   QuadtreeNode() { }
   QuadtreeNode( const RectF &rect ) : bounds( rect ) { }
   
+  inline bool hasChildren() const {  return !children.empty();  }
   inline bool contains( shared_ptr<ICollideable> obj ) const {
     return bounds.hit( obj->getHitBox() );
   }

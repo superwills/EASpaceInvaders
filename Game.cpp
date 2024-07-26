@@ -238,7 +238,7 @@ void Game::checkAllCollisions_quadtree() {
     results = quadtree.query( bullet );
     
     for( auto r : results ) {
-      debugRect.push_back( r->getHitBox() );
+      addDebugRect( r->getHitBox(), Red );
       //info( "%s cand hit %s", bullet->getName().c_str(), r->getName().c_str() );
     }
   }
@@ -267,7 +267,7 @@ void Game::checkAllCollisions_quadtree() {
     results = quadtree.query( invader );
     
     for( auto r : results ) {
-      debugRect.push_back( r->getHitBox() );
+      addDebugRect( r->getHitBox(), Red );
       //info( "%s cand hit %s", bullet->getName().c_str(), r->getName().c_str() );
     }
   }
@@ -779,10 +779,14 @@ void Game::draw() {
   sdl->setViewport( windowRect.toSDLRect() );
   
   quadtree.draw();
-  for( const RectF &rect : debugRect ) {
-    sdl->rectOutline( rect, Red );
+  for( const ColorRect &crect : debugRect ) {
+    sdl->rect( crect );
   }
   debugRect.clear();
+  
+  for( const ColorRect &crect : permDebugRect ) {
+    sdl->rect( crect );
+  }
   
   for( auto spText : debugText ) {
     spText->draw();
@@ -792,3 +796,10 @@ void Game::draw() {
   sdl->present();
 }
 
+void Game::addDebugRect( const RectF &rect, SDL_Color color ) {
+  debugRect.emplace_back( ColorRect( rect, color ) );
+}
+  
+void Game::addPermDebugRect( const RectF &rect, SDL_Color color ) {
+  permDebugRect.emplace_back( ColorRect( rect, color ) );
+}

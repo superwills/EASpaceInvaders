@@ -1,26 +1,36 @@
 #include "Quadtree.h"
 
+#include "Game.h"
+
 void QuadtreeNode::constructChildren() {
   Vector2f mid = bounds.mid();
   
   for( int i = 0; i < N; i++ ) {
-    children[ i ] = std::make_shared<QuadtreeNode>();
+    children.push_back( std::make_shared<QuadtreeNode>() );
     children[ i ]->bounds.size = mid;   // All same size.
     
     children[ i ]->color = color * 2;
   }
   
-  children[ TopRight ]->bounds.pos.x = mid.x;
-  children[ BottomLeft ]->bounds.pos.y = mid.y;
+  // +-----+
+  // |TL|TR|
+  // +--+--+
+  // |BL|BR|
+  // +-----+
+  children[ TopLeft ]->bounds.pos = bounds.pos;
+  children[ TopRight ]->bounds.pos = bounds.midTop();
+  children[ BottomLeft ]->bounds.pos = bounds.midLeft();
   children[ BottomRight ]->bounds.pos = mid;
 }
 
 void QuadtreeNode::pushObjectsDown() {
   for( auto obj : objects ) {
-    if( !contains( obj ) )  continue;
-    
-    // Push each child down a level.
-    for( int i = 0; i < N   &&   children[ i ]; i++ ) {
+    // Push the object 
+    for( int i = 0; children.size(); i++ ) {
+      if( !children[ i ] ) {
+        error( "%d dne", i );
+      }
+      else
       if( children[ i ]->contains( obj ) ) {
         children[ i ]->add( obj );
       }
@@ -37,21 +47,23 @@ bool QuadtreeNode::add( shared_ptr<ICollideable> obj ) {
     return 0;
   }
   
-  // Try to push it into a child node first
   // Find which child it belongs in
-  for( int i = 0; i < N   &&   children[ i ]; i++ ) {
-    if( children[ i ]->contains( obj ) ) {
-      children[ i ]->add( obj );
-      return 1;
+  if( hasChildren() ) {
+    // push responsibility off to children.
+    for( int i = 0; i < children.size(); i++ ) {
+      if( children[ i ]->contains( obj ) ) {
+        children[ i ]->add( obj ); // may go in more than 1 for straddling objects
+      }
     }
   }
-  
-  // once this node gets too "full", you can subdivide it
-  objects.push_back( obj );
-  
-  if( objects.size() >= MaxObjects ) {
-    constructChildren();
-    pushObjectsDown();
+  else {
+    objects.push_back( obj );
+    
+    // once this node gets too "full", you can subdivide it
+    if( objects.size() >= MaxObjects ) {
+      //constructChildren();
+      // pushObjectsDown();
+    }
   }
   return 1;
 }
@@ -64,7 +76,7 @@ void QuadtreeNode::remove( shared_ptr<ICollideable> obj ) {
   }
   else {
     // if not perculate the command to search/remove it from wherever it is
-    for( int i = 0; i < N   &&   children[ i ]; i++ ) {
+    for( int i = 0; children.size(); i++ ) {
       children[ i ]->remove( obj );
     }
   }
@@ -77,7 +89,7 @@ void QuadtreeNode::query( const RectF &box, vector< shared_ptr<ICollideable> > &
     append( results, objects );
     
     // also check my children
-    for( int i = 0; i < N   &&   children[ i ]; i++ ) {
+    for( int i = 0; children.size(); i++ ) {
       children[ i ]->query( box, results );
     }
   }
@@ -86,14 +98,14 @@ void QuadtreeNode::query( const RectF &box, vector< shared_ptr<ICollideable> > &
 void QuadtreeNode::draw() const {
   sdl->rectOutline( bounds.copy().pad( -1 ), color );
   
-  for( int i = 0; i < N   &&   children[ i ]; i++ ) {
+  for( int i = 0; children.size(); i++ ) {
     children[ i ]->draw();
   }
 }
 
 void QuadtreeNode::each( const std::function<void( QuadtreeNode* )> &fn ) {
   fn( this );
-  for( int i = 0; i < N   &&   children[ i ]; i++ ) {
+  for( int i = 0; children.size(); i++ ) {
     children[ i ]->each( fn ); //recurse
   }
 }
@@ -109,6 +121,7 @@ void Quadtree::each( const std::function<void( QuadtreeNode* )> &fn ) {
 }
 
 void Quadtree::add( shared_ptr<ICollideable> obj ) {
+  info( "adding %s", obj->getName().c_str() );
   root.add( obj );
   Uint8 base = 50;
   root.color = { base, base, base, 255 };

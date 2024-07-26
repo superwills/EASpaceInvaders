@@ -118,6 +118,15 @@ void SDLWindow::rectFill( const RectF &rect, SDL_Color color ) {
 	SDL_RenderFillRect( renderer, &sdlRect );
 }
 
+void SDLWindow::rect( const ColorRect &rect ) {
+  if( rect.fill ) {
+    rectFill( rect.bounds, rect.color );
+  }
+  else {
+    rectOutline( rect.bounds, rect.color );
+  }
+}
+
 void SDLWindow::draw( const RectF &whereToDraw, const Animation::Frame &frame ) {
   assert( frame.tex->sdlTex && "sdlTex must be set" );
   
