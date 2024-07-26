@@ -27,17 +27,10 @@ void QuadtreeNode::constructChildren() {
   children[ TopRight ]->bounds.pos = bounds.midTop();
   children[ BottomLeft ]->bounds.pos = bounds.midLeft();
   children[ BottomRight ]->bounds.pos = bounds.mid();
-  
-  info( "%s spawned 4 children:", bounds.toString().c_str() );
-  for( int i = 0; i < children.size(); i++ ) {
-    info( "  - %s", children[ i ]->bounds.toString().c_str() );
-  }
 }
 
 void QuadtreeNode::pushObjectsDown() {
-  info( "%s push objects down", bounds.toString().c_str() );
   for( auto obj : objects ) {
-    info( "Pushing %s", obj->getName().c_str() );
     // Push the object 
     for( int i = 0; i < children.size(); i++ ) {
       if( children[ i ]->contains( obj ) ) {
