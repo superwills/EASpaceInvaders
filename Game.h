@@ -75,7 +75,7 @@ class Game {
   inline static const float ShakeMagnitude = 25;
   
   Quadtree quadtree;
-  vector<ColorRect> debugRect, permDebugRect;
+  vector<ColorRect> debugRects;
   
   void initGameBoard();
   void clearGameBoard();
@@ -136,11 +136,7 @@ public:
  
   void drawDebug(); 
  
-  // Rectangle that appears for 1 frame
-  void addDebugRect( const RectF &rect, SDL_Color color );
-  
-  // Persistent rectangle that doesn't get erased after 1 frame
-  void addPermDebugRect( const RectF &rect, SDL_Color color );
+  void addDebugRect( const RectF &rect, SDL_Color color, int frames = 1 );
 };
 
 extern shared_ptr<Game> game;

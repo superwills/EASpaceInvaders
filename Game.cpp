@@ -234,10 +234,11 @@ void Game::checkAllCollisions_quadtree() {
     candidates = quadtree.query( bullet );
     
     for( auto r : candidates ) {
-      //addDebugRect( r->getHitBox(), Red );
+      addDebugRect( r->getHitBox(), Red, 5 );
       
       // Quadtree always pulls self
       if( bullet == r )  continue;
+      //if( bullet == r || r->isDead() )  continue;
       
       if( bullet->hit( r ) ) {
       }
@@ -248,8 +249,11 @@ void Game::checkAllCollisions_quadtree() {
     candidates = quadtree.query( invader );
     
     for( auto r : candidates ) {
-      //addDebugRect( r->getHitBox(), Red );
-      invader->hit( r ); 
+      // Don't bother with invader-invader box hit tests
+      if( r->collisionType != ICollideableType::Invader ) {
+        addDebugRect( r->getHitBox(), Blue, 3 );
+        invader->hit( r ); 
+      }
     }
   }
   
@@ -799,14 +803,14 @@ void Game::draw() {
 void Game::drawDebug() {
   //quadtree.draw();
   
-  for( const ColorRect &crect : debugRect ) {
+  for( ColorRect &crect : debugRects ) {
     sdl->rect( crect );
+    crect.frames--;
   }
-  debugRect.clear();
+  debugRects.erase( std::remove_if( debugRects.begin(), debugRects.end(), []( ColorRect &r ) {
+    return r.frames <= 0;
+  }), debugRects.end() );
   
-  for( const ColorRect &crect : permDebugRect ) {
-    sdl->rect( crect );
-  }
   
   #if 0
   quadtree.each( []( QuadtreeNode *qtNode ) {
@@ -824,10 +828,7 @@ void Game::drawDebug() {
   #endif
 }
 
-void Game::addDebugRect( const RectF &rect, SDL_Color color ) {
-  debugRect.emplace_back( ColorRect( rect, color ) );
+void Game::addDebugRect( const RectF &rect, SDL_Color color, int frames ) {
+  debugRects.emplace_back( ColorRect( rect, color, frames ) );
 }
   
-void Game::addPermDebugRect( const RectF &rect, SDL_Color color ) {
-  permDebugRect.emplace_back( ColorRect( rect, color ) );
-}

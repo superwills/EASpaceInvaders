@@ -248,6 +248,7 @@
 		9FC715E11A15280B004FDDD1 /* SDL */ = {
 			isa = PBXGroup;
 			children = (
+				3D62C6292C53E6DC00EEABF0 /* ColorRect.h */,
 				9FC715C11A152805004FDDD1 /* Controller.h */,
 				9FC715CF1A152805004FDDD1 /* Controller.cpp */,
 				9FC715C01A152805004FDDD1 /* SDLColors.h */,
@@ -256,7 +257,6 @@
 				9FC715D31A152805004FDDD1 /* SDLWindow.cpp */,
 				3D667CE42C4C796C0014BCD0 /* Texture.h */,
 				3D667CE32C4C796C0014BCD0 /* Texture.cpp */,
-				3D62C6292C53E6DC00EEABF0 /* ColorRect.h */,
 			);
 			name = SDL;
 			sourceTree = "<group>";
