@@ -41,8 +41,5 @@ void Particle::die() {
     error( "%s double die call", name.c_str() );
   }
   
-  // mark for removal at end of frame.
-  // The reason for doing this is it is awkward to remove from collections while iterating
-  // (which is often when we discover the object died)
   dead = 1;
 }

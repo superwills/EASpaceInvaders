@@ -4,10 +4,12 @@
 
 class UFO : public Sprite {
   int sfxChannel = -1;
-  inline static const float DefaultUFOSpeed = 250;
-  
+  inline static const float DefaultUFOSpeed = 200;
+  inline static const Vector2f DefaultSizePercent = Vector2f( .08, .06 );
 public:
-  UFO( const RectF &rectangle );
+  inline static float GenInterval = 15;
+  
+  UFO();
   ~UFO();
   
   void update( float t ) override;

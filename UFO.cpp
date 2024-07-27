@@ -1,11 +1,18 @@
 #include "UFO.h"
 
 #include "Assets.h"
+#include "SDLWindow.h"
 
-UFO::UFO( const RectF &rectangle ) :
-    Sprite( rectangle, AnimationId::UFO ) {
+UFO::UFO() {
   name = "UFO/" + name;
   collisionType = ICollideableType::UFO;
+  setAnimation( AnimationId::UFO );
+  Vector2f windowSize = sdl->getWindowSize();
+  
+  box.size = windowSize * DefaultSizePercent;
+  box.pos.x = windowSize.x; // start offscreen right
+  box.pos.x--; // 1 pixel in to be sure it doesn't immediately die for being offscreen
+  box.pos.y = box.size.y / 2;  
   velocity.x = -DefaultUFOSpeed;
   deathSound = SFXId::Explode2;
   

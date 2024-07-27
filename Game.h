@@ -63,8 +63,7 @@ class Game {
   shared_ptr<Sprite> scoreSprite;
   
   // You get a UFO every (interval) sec.
-  inline static float UFOInterval = 20;
-  float nextUFO = UFOInterval;
+  float nextUFO = 5;
 	
 	GameState prevState = GameState::Title;
   GameState gameState = GameState::Title;

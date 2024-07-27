@@ -20,6 +20,6 @@ public:
   // decay the particle alpha
   void update( float t ) override;
   
-  // Prevent particles from spawning other particles!
+  // Particles have a super simple death
   void die() override;
 };

@@ -74,14 +74,9 @@ void Game::togglePause() {
 void Game::genUFO() {
   nextUFO -= dt;
   if( nextUFO < 0 ) {
-    nextUFO = UFOInterval;
+    nextUFO = UFO::GenInterval;
     
-    RectF ufoBox;
-    ufoBox.size = Vector2f( 64, 32 );
-    ufoBox.pos.x = sdl->getWindowSize().x; // start offscreen right
-    ufoBox.pos.x--; // 1 pixel in to be sure it doesn't immediately die for being offscreen
-    ufoBox.pos.y = ufoBox.size.y / 2;
-    shared_ptr<UFO> ufo = std::make_shared<UFO>( ufoBox );
+    shared_ptr<UFO> ufo = std::make_shared<UFO>();
     allUFOs.push_back( ufo );
   }
 }
@@ -574,12 +569,20 @@ void Game::playerDie() {
   
   // Kill all powerups on screen
   for( auto item : allItems ) {
-    item->die();
+    if( !item->isDead() ) {
+      item->die();
+    }
   }
   
   // so the player doesn't get hit when respawn
   for( auto bullet : allBullets ) {
-    bullet->die();
+    if( !bullet->isDead() ) {
+      bullet->die();
+    }
+  }
+  
+  for( auto ufo : allUFOs ) {
+    ufo->velocity *= 4; // he's leaving
   }
   
   shakeScreen( 1 );
