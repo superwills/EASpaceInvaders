@@ -57,14 +57,18 @@ void Bullet::onHit( ICollideable *o ) {
   case ICollideableType::Bunker:
     break;
   case ICollideableType::BunkerPiece:
+    die();
     break;
   case ICollideableType::Invader:
+    die();
     break;
   case ICollideableType::Item:
     break;
   case ICollideableType::Player:
+    die();
     break;
   case ICollideableType::UFO:
+    die();
     break;
     
   case ICollideableType::NotCollideable:

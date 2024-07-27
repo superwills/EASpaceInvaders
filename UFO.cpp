@@ -34,6 +34,32 @@ void UFO::update( float t ) {
   }
 }
 
+void UFO::onHit( ICollideable *o ) {
+  switch( o->collisionType ) {
+  case ICollideableType::Bullet:
+    die();
+    break;
+  case ICollideableType::Bunker:
+    break;
+  case ICollideableType::BunkerPiece:
+    break;
+  case ICollideableType::Invader:
+    break;
+  case ICollideableType::Item:
+    break;
+  case ICollideableType::Player:
+    break;
+  case ICollideableType::UFO:
+    break;
+    
+  case ICollideableType::NotCollideable:
+  default:
+    error( "Colliding with non-collideable" );
+    break;
+  }
+}
+
+
 int UFO::getScore() const {
   int baseScore = Sprite::getScore();
   

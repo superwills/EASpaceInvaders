@@ -38,6 +38,8 @@ void Player::die() {
   Sprite::die();
   // swap out the player death sprite.
   setAnimation( AnimationId::PlayerDie );
+  
+  game->playerDie();
 }
 
 bool Player::canPlayerRespawn() {
@@ -64,17 +66,20 @@ void Player::addShield() {
 }
 
 void Player::loseShield() {
-  if( shielded ) {
-    // The player won't die if shielded, but the shield drops.
-    shielded = 0;
-    children.clear(); // drops the shield.
-  }
+  // The player won't die if shielded, but the shield drops.
+  shielded = 0;
+  children.clear(); // drops the shield.
 }
 
 void Player::onHit( ICollideable *o ) {
   switch( o->collisionType ) {
   case ICollideableType::Bullet:
-    die();
+    if( shielded ) {
+      loseShield();
+    }
+    else {
+      die();
+    }
     break;
   case ICollideableType::Bunker:
     break;
@@ -121,6 +126,8 @@ void Player::giveItem( shared_ptr<Item> item ) {
   default:
     break;
   }
+  
+  sdl->playSound( SFXId::Blip );
 }
 
 void Player::tryShoot() {

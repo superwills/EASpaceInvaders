@@ -158,11 +158,6 @@ void Game::checkBulletCollisions_basic() {
         }
         
         if( bullet->hit( invader ) ) {
-          if( bullet->type != BulletType::PlayerThickLaser ) {
-            // the laser doesn't die
-            bullet->die();
-          }
-          invader->die();
           break;
         }
       }
@@ -175,8 +170,6 @@ void Game::checkBulletCollisions_basic() {
       // Player bullet check UFO
       for( auto ufo : allUFOs ) {
         if( bullet->hit( ufo ) ) {
-          bullet->die();
-          ufo->die();
         }
       }
     }
@@ -189,8 +182,10 @@ void Game::checkAllCollisions_basic() {
   
   // Check invaders against player itself, bunkers
   for( auto invader : invaderGroup.invaders ) {
-    if( !player->isDead() && invader->hit( player ) ) {
-      killPlayer();
+    if( !player->isDead() ) {
+      if( invader->hit( player ) ) {
+        
+      }
     }
     for( auto bunker : allBunkers ) {
       // kill bunker pieces hit by this invader
@@ -203,9 +198,7 @@ void Game::checkAllCollisions_basic() {
   
   for( auto item : allItems ) {
     if( player->hit( item ) ) {
-      sdl->playSound( SFXId::Blip );
-      player->giveItem( item );
-      item->die();
+      
     }
   }
 }
@@ -360,24 +353,6 @@ void Game::runGame() {
   checkWinConditions();
   
   clearDead(); 
-}
-
-void Game::killPlayer() {
-  // call the player to die.
-  player->die();
-  updateNumberOfPlayerLives();
-  
-  // Kill all powerups on screen
-  for( auto item : allItems ) {
-    item->die();
-  }
-  
-  // so the player doesn't get hit when respawn
-  for( auto bullet : allBullets ) {
-    bullet->die();
-  }
-  
-  shakeScreen( 1 );
 }
 
 void Game::updateNumberOfPlayerLives() {
@@ -592,6 +567,22 @@ void Game::setKeyJustPressed( uint16_t key ) {
 
 void Game::setMouseJustClicked( uint16_t mouseButton ) {
   controller.setMouseJustClicked( mouseButton );
+}
+
+void Game::playerDie() {
+  updateNumberOfPlayerLives();
+  
+  // Kill all powerups on screen
+  for( auto item : allItems ) {
+    item->die();
+  }
+  
+  // so the player doesn't get hit when respawn
+  for( auto bullet : allBullets ) {
+    bullet->die();
+  }
+  
+  shakeScreen( 1 );
 }
 
 void Game::shakeScreen( float shakeTime ) {

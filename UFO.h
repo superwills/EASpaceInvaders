@@ -11,5 +11,7 @@ public:
   ~UFO();
   
   void update( float t ) override;
+  void onHit( ICollideable *o ) override;
+  
   int getScore() const override;
 };

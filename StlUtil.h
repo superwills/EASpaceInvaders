@@ -53,3 +53,10 @@ void append( vector<T> &dst, const vector<T> &src ) {
 }
 
 #define DECLARE_SHARED_PTR(TYPE) typedef std::shared_ptr<TYPE> SP_##TYPE
+
+// shared_from_this() for derived classes: defines a fn shared_CLASS, returning shared_ptr<CLASS>
+// A base class of CLASS must derived from enable_shared_from_this 
+#define shared_derived( CLASS ) shared_ptr<CLASS> shared_##CLASS() { return static_pointer_cast<CLASS>( shared_from_this() ); }
+
+// eg shared_derived( Item ) declares:
+//shared_ptr<Item> shared_Item() { return dynamic_pointer_cast<Item>( shared_from_this() ); }

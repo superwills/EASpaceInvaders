@@ -96,7 +96,6 @@ class Game {
   
   void clearDead(); 
 	void runGame();
-  void killPlayer();
   void updateNumberOfPlayerLives();
   
   void controllerUpdateTitle();
@@ -116,6 +115,8 @@ public:
   void setKeyJustPressed( uint16_t key );
   void setMouseJustClicked( uint16_t mouseButton );
   
+  // Things to happen in the game when the player dies
+  void playerDie();
   void shakeScreen( float shakeTime );
    
   // Player shoots from top, invaders from their bottom.
