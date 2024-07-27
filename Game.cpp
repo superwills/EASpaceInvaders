@@ -233,14 +233,13 @@ void Game::checkAllCollisions_quadtree() {
   for( auto bullet : allBullets ) {
     candidates = quadtree.query( bullet );
     
-    for( auto r : candidates ) {
-      addDebugRect( r->getHitBox(), Red, 5 );
+    for( auto cand : candidates ) {
+      addDebugRect( cand->getHitBox(), Red, .1 );
       
       // Quadtree always pulls self
-      if( bullet == r )  continue;
-      //if( bullet == r || r->isDead() )  continue;
+      if( bullet == cand || cand->isDead() )  continue;
       
-      if( bullet->hit( r ) ) {
+      if( bullet->hit( cand ) ) {
       }
     }
   }
@@ -248,11 +247,13 @@ void Game::checkAllCollisions_quadtree() {
   for( auto invader : invaderGroup.invaders ) {
     candidates = quadtree.query( invader );
     
-    for( auto r : candidates ) {
+    for( auto cand : candidates ) {
+      if( invader == cand || cand->isDead() )  continue;
+      
       // Don't bother with invader-invader box hit tests
-      if( r->collisionType != ICollideableType::Invader ) {
-        addDebugRect( r->getHitBox(), Blue, 3 );
-        invader->hit( r ); 
+      if( isAnyOf( cand->collisionType, { ICollideableType::Bunker, ICollideableType::Player } ) ) {
+        addDebugRect( cand->getHitBox(), Blue, .05 );
+        invader->hit( cand ); 
       }
     }
   }
@@ -805,10 +806,10 @@ void Game::drawDebug() {
   
   for( ColorRect &crect : debugRects ) {
     sdl->rect( crect );
-    crect.frames--;
+    crect.update( dt );
   }
-  debugRects.erase( std::remove_if( debugRects.begin(), debugRects.end(), []( ColorRect &r ) {
-    return r.frames <= 0;
+  debugRects.erase( std::remove_if( debugRects.begin(), debugRects.end(), []( const ColorRect &r ) {
+    return r.isDead();
   }), debugRects.end() );
   
   
@@ -828,7 +829,7 @@ void Game::drawDebug() {
   #endif
 }
 
-void Game::addDebugRect( const RectF &rect, SDL_Color color, int frames ) {
-  debugRects.emplace_back( ColorRect( rect, color, frames ) );
+void Game::addDebugRect( const RectF &rect, SDL_Color color, float lifetime ) {
+  debugRects.emplace_back( ColorRect( rect, color, lifetime ) );
 }
   

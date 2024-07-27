@@ -8,7 +8,7 @@ class Item : public Sprite {
   
 public:
   Item( const Vector2f &center, AnimationId animationId );
-  shared_derived( Item )
+  DECLARE_SHARED_DERIVED( Item )
   
   void update( float t ) override;
   void die() override;

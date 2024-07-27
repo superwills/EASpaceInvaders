@@ -136,7 +136,7 @@ public:
  
   void drawDebug(); 
  
-  void addDebugRect( const RectF &rect, SDL_Color color, int frames = 1 );
+  void addDebugRect( const RectF &rect, SDL_Color color, float lifetime = 1 );
 };
 
 extern shared_ptr<Game> game;

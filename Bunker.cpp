@@ -3,6 +3,7 @@
 #include "Assets.h"
 #include "Bullet.h"
 #include "BunkerPiece.h"
+#include "Invader.h"
 #include "Sprite.h"
 #include "StlUtil.h"
 
@@ -104,7 +105,10 @@ void Bunker::onHit( ICollideable *o ) {
     break;
   case ICollideableType::BunkerPiece:
     break;
-  case ICollideableType::Invader:
+  case ICollideableType::Invader: {
+      auto invader = ((Invader*)o)->shared_Invader();
+      checkPiecesHit( invader );
+    }
     break;
   case ICollideableType::Item:
     break;

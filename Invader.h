@@ -20,6 +20,8 @@ class Invader : public Sprite {
   
 public:
   Invader( const RectF& rectangle, AnimationId animationId );
+  DECLARE_SHARED_DERIVED( Invader )
+  
   void update( float t ) override;
   
   void onHit( ICollideable *o ) override;

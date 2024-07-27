@@ -36,7 +36,7 @@ public:
   static bool IsBulletTypeFromInvader( BulletType bulletType );
   
   Bullet( const Vector2f &shootCenter, BulletType bulletType );
-  shared_derived( Bullet )
+  DECLARE_SHARED_DERIVED( Bullet )
   
   void update( float t ) override;
   

@@ -8,12 +8,18 @@ struct ColorRect {
   SDL_Color color = Red;
   bool fill = 0;
   
-  inline static const int DefaultNumFrames = 10;
-  int frames = DefaultNumFrames;
+  inline static const int DefaultLifetime = 10;
+  float initialLifetime = DefaultLifetime;
+  float lifetime = DefaultLifetime;
   
-  inline bool isDead() const { return frames <= 0; }
-  ColorRect( const RectF &rect, SDL_Color theColor, int numFrames = DefaultNumFrames ) :
-    bounds( rect ), color( theColor ), frames( numFrames ) {
+  inline bool isDead() const { return lifetime <= 0; }
+  void update( float t ) {
+    lifetime -= t;
+    float percentLifeRem = lifetime / initialLifetime;
+    color.a = 255 * percentLifeRem;
+  }
+  ColorRect( const RectF &rect, SDL_Color theColor, float startingLifetime = DefaultLifetime ) :
+    bounds( rect ), color( theColor ), initialLifetime( startingLifetime ), lifetime( startingLifetime ) {
   }
 };
 
