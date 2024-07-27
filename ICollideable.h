@@ -21,10 +21,17 @@ enum class ICollideableType {
 };
 
 class ICollideable {
+protected:
+  // Things that can be hit also have a concept of being dead (no longer hittable/responsive to hits)
+  bool dead = 0;  // When dead, object is removed in cleanup pass, after all objects move.
+  // Setting something to dead should only be done by a die() call
+  
 public:
   // Using this tag, collision interface stays simple
   // Can use this information to reliably downcast to concrete types
   ICollideableType collisionType = ICollideableType::NotCollideable;
+  
+  inline bool isDead() const { return dead; }
   
   virtual RectF getHitBox() const = 0;
   
@@ -54,10 +61,15 @@ public:
       error( "evaluating collision of uncollideables" );
     }
     
+    if( isDead() || o->isDead() ) {
+      error( "Collision checking dead objects" );
+      return 0;
+    }
+    
     bool didHit = getHitBox().hit( o->getHitBox() );
     if( didHit ) {
       // Trigger hit to BOTH objects.
-      onHit( o.get() );      
+      onHit( o.get() );
       o->onHit( this );
     }
     return didHit;
@@ -68,6 +80,8 @@ public:
   // usually objects should manipulate themselves and only query o for information
   // (rather than also telling o what to do when hit)
   virtual void onHit( ICollideable *o ) { }
+  
+  virtual void die() { }
 };
 
 DECLARE_SHARED_PTR( ICollideable );

@@ -27,7 +27,6 @@ protected:
   // Child sprites that move with/are drawn with this sprite.
   vector< shared_ptr<Sprite> > children;
   bool dieOnAnimationEnd = 0;
-  bool dead = 0;  // set so that object is removed in cleanup pass, after all objects move.
   
 public:
   string name;    // for tracing in debug
@@ -60,7 +59,6 @@ public:
   // Makes a text sprite in the default font
 	static shared_ptr<Sprite> Text( const string &text, const RectF &box, SDL_Color iColor );
   
-  inline bool isDead() const { return dead; }
   inline Vector2f getPos() const {  return box.pos;  }
   
   void setPos( const Vector2f &pos ) {  box.pos = pos;  }
@@ -84,7 +82,7 @@ public:
   // Every sprite can override update / draw, to act/appear differently.
 	virtual void update( float t );
 	virtual void draw() const;
-  virtual void die();
+  void die() override;
  
   virtual int getScore() const; 
   
