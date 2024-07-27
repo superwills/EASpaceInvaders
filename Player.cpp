@@ -7,6 +7,7 @@
 
 Player::Player() {
   name = "Player/" + name;
+  collisionType = ICollideableType::Player;
   
   Vector2f windowSize = sdl->getWindowSize();
   box.size = windowSize * Player::DefaultPlayerSizePercent;
@@ -70,8 +71,8 @@ void Player::loseShield() {
   }
 }
 
-void Player::onHit( shared_ptr<ICollideable> o ) {
-  switch( o->getType() ) {
+void Player::onHit( ICollideable *o ) {
+  switch( o->collisionType ) {
   case ICollideableType::Bullet:
     die();
     break;
@@ -83,7 +84,7 @@ void Player::onHit( shared_ptr<ICollideable> o ) {
     die();
     break;
   case ICollideableType::Item: {
-      shared_ptr<Item> item = dynamic_pointer_cast<Item>( o );
+      Item *item = (Item*)o;
     }
     break;
   case ICollideableType::Player:
@@ -91,7 +92,9 @@ void Player::onHit( shared_ptr<ICollideable> o ) {
   case ICollideableType::UFO:
     break;
     
+  case ICollideableType::NotCollideable:
   default:
+    error( "Colliding with non-collideable" );
     break;
   }
 }

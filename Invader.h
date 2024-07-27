@@ -22,7 +22,7 @@ public:
   Invader( const RectF& rectangle, AnimationId animationId );
   void update( float t ) override;
   
-  void onHit( shared_ptr<ICollideable> o ) override;
+  void onHit( ICollideable *o ) override;
   
   void tryShoot() const;
 };

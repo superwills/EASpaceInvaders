@@ -11,6 +11,7 @@ Bullet::Bullet( const Vector2f &shootCenter, BulletType bulletType ) :
     type( bulletType ) {
   
   name = "Bullet/" + name;
+  collisionType = ICollideableType::Bullet;
   updateAnimationType();
   
   velocity.y = getBulletSpeed();
@@ -42,9 +43,10 @@ void Bullet::update( float t ) {
   }
 }
 
-void Bullet::onHit( shared_ptr<ICollideable> o ) {
-  switch( o->getType() ) {
+void Bullet::onHit( ICollideable *o ) {
+  switch( o->collisionType ) {
   case ICollideableType::Bullet:
+    die();
     break;
   case ICollideableType::Bunker:
     break;
@@ -59,7 +61,9 @@ void Bullet::onHit( shared_ptr<ICollideable> o ) {
   case ICollideableType::UFO:
     break;
     
+  case ICollideableType::NotCollideable:
   default:
+    error( "Colliding with non-collideable" );
     break;
   }
 }

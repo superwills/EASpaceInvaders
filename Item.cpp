@@ -3,6 +3,8 @@
 #include "Bullet.h"
 
 Item::Item( const Vector2f &center, AnimationId animationId ) {
+  name = "Item/" + name;
+  collisionType = ICollideableType::Item;
   box.size = sdl->getWindowSize() * DefaultSizePercent;
   box.setCenter( center );
   
@@ -11,11 +13,11 @@ Item::Item( const Vector2f &center, AnimationId animationId ) {
   setAnimation( animationId );
 }
 
-void Item::onHit( shared_ptr<ICollideable> o ) {
-  switch( o->getType() ) {
+void Item::onHit( ICollideable *o ) {
+  switch( o->collisionType ) {
   case ICollideableType::Bullet: {
       // laser obliterates items
-      shared_ptr<Bullet> bullet = dynamic_pointer_cast<Bullet>( o );
+      Bullet *bullet = (Bullet*)o;
       if( bullet->type == BulletType::PlayerThickLaser ) {
         die();
       }
@@ -34,8 +36,10 @@ void Item::onHit( shared_ptr<ICollideable> o ) {
     break;
   case ICollideableType::UFO:
     break;
-    
+  
+  case ICollideableType::NotCollideable:
   default:
+    error( "Colliding with non-collideable" );
     break;
   }
 }

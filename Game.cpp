@@ -116,8 +116,7 @@ void Game::checkBulletCollisions_basic() {
   for( auto bullet : allBullets ) {
     // All bullet check bunker
     for( auto bunker : allBunkers ) {
-      if( bunker->killHit( bullet ) ) {
-        bullet->die();
+      if( bunker->hit( bullet ) ) {
         break;
       }
     }
@@ -205,7 +204,10 @@ void Game::checkAllCollisions_basic() {
     }
     for( auto bunker : allBunkers ) {
       // kill bunker pieces hit by this invader
-      bunker->killHit( invader );
+      if( bunker->hit( invader ) ) {
+        // though you usually can't hit more than 1 bunker because they're far apart
+        // keep checking other bunkers too
+      }
     }
   }
   
@@ -227,6 +229,7 @@ void Game::buildQuadtree() {
   for( auto bunker : allBunkers ) {
     quadtree.add( bunker );
   }
+  // Notice how we do not add the bunkerPi
   for( auto ufo : allUFOs ) {
     quadtree.add( ufo );
   }

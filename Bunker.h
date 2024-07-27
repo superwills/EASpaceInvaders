@@ -29,7 +29,7 @@ public:
   // Considered dead when it has no pieces left.
   inline bool isDead() const { return pieces.empty(); } 
   
-  // Kills any pieces of the bunker hit by Sprite.
-  bool killHit( shared_ptr<Sprite> other );
+  // Perform hitchecks on bunker hit by Sprite.
+  bool hit( shared_ptr<ICollideable> other ) override;
   void clearDead();
 };

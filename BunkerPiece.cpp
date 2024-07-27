@@ -1,7 +1,9 @@
 #include "BunkerPiece.h"
 
-BunkerPiece::BunkerPiece( const RectF &rectangle, SDL_Color color ) : Sprite( rectangle, color ) {
+BunkerPiece::BunkerPiece( const RectF &rectangle, SDL_Color color ) :
+    Sprite( rectangle, color ) {
   name = "BunkerPiece/" + name;
+  collisionType = ICollideableType::BunkerPiece;
   deathSound = SFXId::ExplodeBunker;
   
   if( withChance( .1 ) ) {
@@ -12,15 +14,17 @@ BunkerPiece::BunkerPiece( const RectF &rectangle, SDL_Color color ) : Sprite( re
   }
 }
 
-void BunkerPiece::onHit( shared_ptr<ICollideable> o ) {
-  switch( o->getType() ) {
+void BunkerPiece::onHit( ICollideable *o ) {
+  switch( o->collisionType ) {
   case ICollideableType::Bullet:
+    die();
     break;
   case ICollideableType::Bunker:
     break;
   case ICollideableType::BunkerPiece:
     break;
   case ICollideableType::Invader:
+    die();
     break;
   case ICollideableType::Item:
     break;
@@ -29,7 +33,9 @@ void BunkerPiece::onHit( shared_ptr<ICollideable> o ) {
   case ICollideableType::UFO:
     break;
     
+  case ICollideableType::NotCollideable:
   default:
+    error( "Colliding with non-collideable" );
     break;
   }
 }

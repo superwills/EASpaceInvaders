@@ -8,6 +8,6 @@ class Item : public Sprite {
 public:
   Item( const Vector2f &center, AnimationId animationId );
   
-  void onHit( shared_ptr<ICollideable> o ) override;
+  void onHit( ICollideable *o ) override;
   
 };

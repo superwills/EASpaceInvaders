@@ -2,8 +2,10 @@
 
 #include "Assets.h"
 
-UFO::UFO( const RectF &rectangle ) : Sprite( rectangle, AnimationId::UFO ) {
+UFO::UFO( const RectF &rectangle ) :
+    Sprite( rectangle, AnimationId::UFO ) {
   name = "UFO/" + name;
+  collisionType = ICollideableType::UFO;
   velocity.x = -DefaultUFOSpeed;
   deathSound = SFXId::Explode2;
   

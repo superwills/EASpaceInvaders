@@ -3,8 +3,10 @@
 #include "Game.h"
 #include "Log.h"
 
-Invader::Invader( const RectF& rectangle, AnimationId animationId ) : Sprite( rectangle, animationId ) {
+Invader::Invader( const RectF& rectangle, AnimationId animationId ) :
+    Sprite( rectangle, animationId ) {
   name = "Invader/" + name; // prepend Invader/
+  collisionType = ICollideableType::Invader;
   animation = sdl->getAnimation( animationId );
   deathSound = SFXId::ExplodeEnemy;
   deathAnimation = AnimationId::Explode;
@@ -28,8 +30,8 @@ void Invader::update( float t ) {
   }
 }
 
-void Invader::onHit( shared_ptr<ICollideable> o ) {
-  switch( o->getType() ) {
+void Invader::onHit( ICollideable *o ) {
+  switch( o->collisionType ) {
   case ICollideableType::Bullet:
     // hit by bullet damage or die
     die();
@@ -49,7 +51,9 @@ void Invader::onHit( shared_ptr<ICollideable> o ) {
   case ICollideableType::UFO:
     break;
     
+  case ICollideableType::NotCollideable:
   default:
+    error( "Colliding with non-collideable" );
     break;
   }
 }

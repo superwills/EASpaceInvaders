@@ -2,7 +2,8 @@
 
 #include "Game.h"
 
-BulletLaser::BulletLaser( const Vector2f &shootCenter ) : Bullet( shootCenter, BulletType::PlayerThickLaser ) {
+BulletLaser::BulletLaser( const Vector2f &shootCenter ) :
+    Bullet( shootCenter, BulletType::PlayerThickLaser ) {
   particleCloudProperties.setNumParticles( 50, 60 );
   particleCloudProperties.setSizes( 24, 36 );
   particleCloudProperties.initialDecay = .2;
@@ -24,9 +25,9 @@ void BulletLaser::update( float t ) {
   
 }
 
-void BulletLaser::onHit( shared_ptr<ICollideable> o ) {
+void BulletLaser::onHit( ICollideable *o ) {
   float shakeAmount = 0;
-  switch( o->getType() ) {
+  switch( o->collisionType ) {
   case ICollideableType::Bullet:
     shakeAmount += .05;
     break;
@@ -35,6 +36,7 @@ void BulletLaser::onHit( shared_ptr<ICollideable> o ) {
     break;
   case ICollideableType::BunkerPiece:
     shakeAmount += .15;
+    die();
     break;
   case ICollideableType::Invader:
     shakeAmount += .1;
@@ -47,7 +49,9 @@ void BulletLaser::onHit( shared_ptr<ICollideable> o ) {
     shakeAmount += .2;
     break;
     
+  case ICollideableType::NotCollideable:
   default:
+    error( "Colliding with non-collideable" );
     break;
   }
 

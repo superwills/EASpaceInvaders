@@ -42,10 +42,11 @@ void Bunker::draw() {
   }
 }
 
-bool Bunker::killHit( shared_ptr<Sprite> other ) {
+bool Bunker::hit( shared_ptr<ICollideable> other ) {
   
   // don't bother to check any pieces if sprite misses the whole bunker bounds
   if( !other->hit( bounds ) ) {
+    // This check becomes redundant when quadtrees are used and can be removed
     return 0;
   }
   
@@ -57,7 +58,6 @@ bool Bunker::killHit( shared_ptr<Sprite> other ) {
     }
     
     if( bunkerPiece->hit( other ) ) {
-      bunkerPiece->die();
       return 1;
     }
   }
