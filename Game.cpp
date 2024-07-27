@@ -234,11 +234,12 @@ void Game::checkAllCollisions_quadtree() {
     candidates = quadtree.query( bullet );
     
     for( auto cand : candidates ) {
-      addDebugRect( cand->getHitBox(), Red, .1 );
+      //addDebugRect( cand->getHitBox(), Red, .1 );
       
       // Quadtree always pulls self
       if( bullet == cand || cand->isDead() )  continue;
       
+      // Bullets can pretty much hit anything, so check against all
       if( bullet->hit( cand ) ) {
       }
     }
@@ -250,40 +251,16 @@ void Game::checkAllCollisions_quadtree() {
     for( auto cand : candidates ) {
       if( invader == cand || cand->isDead() )  continue;
       
-      // Don't bother with invader-invader box hit tests
+      // Only check for invader-bunker & invader-player collisions
       if( isAnyOf( cand->collisionType, { ICollideableType::Bunker, ICollideableType::Player } ) ) {
-        addDebugRect( cand->getHitBox(), Blue, .05 );
-        invader->hit( cand ); 
+        if( invader->hit( cand ) ) {
+        
+        } 
       }
     }
   }
   
-  /*
-  // We don't need to query bunkers, since Bullets and Invaders both query 
-  for( auto bunker : allBunkers ) {
-    candidates = quadtree.query( bunker );
-    
-    for( auto r : candidates ) {
-      bunker->hit( r );
-    }
-  }
-  
-  for( auto ufo : allUFOs ) {
-    candidates = quadtree.query( ufo );
-    
-    for( auto r : candidates ) {
-      ufo->hit( r );
-    }
-  }
-  for( auto item : allItems ) {
-    candidates = quadtree.query( item );
-    
-    for( auto r : candidates ) {
-      item->hit( r );
-    }
-  }
-  
-  */
+  // We don't need to query from bunkers, ufos, or items, since player, Bullets and Invaders query instead 
   
 }
 
