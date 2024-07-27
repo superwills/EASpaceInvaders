@@ -28,6 +28,33 @@ void Invader::update( float t ) {
   }
 }
 
+void Invader::onHit( shared_ptr<ICollideable> o ) {
+  switch( o->getType() ) {
+  case ICollideableType::Bullet:
+    // hit by bullet damage or die
+    die();
+    break;
+  case ICollideableType::Bunker:
+    // do nothing
+    break;
+  case ICollideableType::BunkerPiece:
+    break;
+  case ICollideableType::Invader:
+    break;
+  case ICollideableType::Item:
+    break;
+  case ICollideableType::Player:
+    // nothing happens to me
+    break;
+  case ICollideableType::UFO:
+    break;
+    
+  default:
+    break;
+  }
+}
+
+
 void Invader::tryShoot() const {  
   BulletType bulletType = BulletType::InvaderNormal;
   if( withChance( ChanceForSuperBullet ) ) {

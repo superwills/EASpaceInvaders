@@ -24,6 +24,32 @@ void BulletLaser::update( float t ) {
   
 }
 
-void BulletLaser::onHit() {
-  game->shakeScreen( .1 );
+void BulletLaser::onHit( shared_ptr<ICollideable> o ) {
+  float shakeAmount = 0;
+  switch( o->getType() ) {
+  case ICollideableType::Bullet:
+    shakeAmount += .05;
+    break;
+  case ICollideableType::Bunker:
+    //shakeAmount += .1;
+    break;
+  case ICollideableType::BunkerPiece:
+    shakeAmount += .15;
+    break;
+  case ICollideableType::Invader:
+    shakeAmount += .1;
+    break;
+  case ICollideableType::Item:
+    break;
+  case ICollideableType::Player:
+    break;
+  case ICollideableType::UFO:
+    shakeAmount += .2;
+    break;
+    
+  default:
+    break;
+  }
+
+  game->shakeScreen( shakeAmount );
 }

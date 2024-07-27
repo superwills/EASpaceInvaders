@@ -153,25 +153,8 @@
 			isa = PBXGroup;
 			children = (
 				3D228A5F2C4F180B005B9684 /* base */,
-				9FC715BF1A152805004FDDD1 /* Bullet.h */,
-				9FC715CD1A152805004FDDD1 /* Bullet.cpp */,
-				3D62C6202C526A9300EEABF0 /* BulletLaser.h */,
-				3D62C61F2C526A9300EEABF0 /* BulletLaser.cpp */,
-				3D8D30002C51467E007B64EE /* BunkerPiece.h */,
-				3D8D2FFF2C51467E007B64EE /* BunkerPiece.cpp */,
-				3D667CC72C4ADA370014BCD0 /* Invader.h */,
-				3D667CC62C4ADA370014BCD0 /* Invader.cpp */,
-				3D8D2FFD2C51367B007B64EE /* Item.h */,
-				3D8D2FFC2C51367B007B64EE /* Item.cpp */,
-				3D667CED2C4D82590014BCD0 /* Particle.h */,
-				3D667CEC2C4D82590014BCD0 /* Particle.cpp */,
-				3D62C6222C526F4C00EEABF0 /* ParticleCloudProperties.h */,
-				9FC715C51A152805004FDDD1 /* Player.h */,
-				9FC715D21A152805004FDDD1 /* Player.cpp */,
-				3D8D30032C514A40007B64EE /* ScoreDisplay.h */,
-				3D8D30022C514A40007B64EE /* ScoreDisplay.cpp */,
-				3D228A542C4D9F1D005B9684 /* UFO.h */,
-				3D228A532C4D9F1D005B9684 /* UFO.cpp */,
+				3D62C62B2C54556600EEABF0 /* cosmetic */,
+				3D62C62A2C54554F00EEABF0 /* intersectable */,
 			);
 			name = sprites;
 			sourceTree = "<group>";
@@ -192,6 +175,39 @@
 				9FC715D41A152805004FDDD1 /* Sprite.cpp */,
 			);
 			name = base;
+			sourceTree = "<group>";
+		};
+		3D62C62A2C54554F00EEABF0 /* intersectable */ = {
+			isa = PBXGroup;
+			children = (
+				9FC715BF1A152805004FDDD1 /* Bullet.h */,
+				9FC715CD1A152805004FDDD1 /* Bullet.cpp */,
+				3D62C6202C526A9300EEABF0 /* BulletLaser.h */,
+				3D62C61F2C526A9300EEABF0 /* BulletLaser.cpp */,
+				3D8D30002C51467E007B64EE /* BunkerPiece.h */,
+				3D8D2FFF2C51467E007B64EE /* BunkerPiece.cpp */,
+				3D667CC72C4ADA370014BCD0 /* Invader.h */,
+				3D667CC62C4ADA370014BCD0 /* Invader.cpp */,
+				3D8D2FFD2C51367B007B64EE /* Item.h */,
+				3D8D2FFC2C51367B007B64EE /* Item.cpp */,
+				9FC715C51A152805004FDDD1 /* Player.h */,
+				9FC715D21A152805004FDDD1 /* Player.cpp */,
+				3D228A542C4D9F1D005B9684 /* UFO.h */,
+				3D228A532C4D9F1D005B9684 /* UFO.cpp */,
+			);
+			name = intersectable;
+			sourceTree = "<group>";
+		};
+		3D62C62B2C54556600EEABF0 /* cosmetic */ = {
+			isa = PBXGroup;
+			children = (
+				3D667CED2C4D82590014BCD0 /* Particle.h */,
+				3D667CEC2C4D82590014BCD0 /* Particle.cpp */,
+				3D62C6222C526F4C00EEABF0 /* ParticleCloudProperties.h */,
+				3D8D30032C514A40007B64EE /* ScoreDisplay.h */,
+				3D8D30022C514A40007B64EE /* ScoreDisplay.cpp */,
+			);
+			name = cosmetic;
 			sourceTree = "<group>";
 		};
 		3D667CC92C4ADAE50014BCD0 /* screens */ = {

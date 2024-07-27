@@ -6,5 +6,8 @@ class Item : public Sprite {
   inline static const Vector2f DefaultSizePercent = Vector2f( .05, .05 );
   
 public:
-  Item( const Vector2f &center, AnimationId animationId ); 
+  Item( const Vector2f &center, AnimationId animationId );
+  
+  void onHit( shared_ptr<ICollideable> o ) override;
+  
 };

@@ -36,6 +36,8 @@ public:
   Bullet( const Vector2f &shootCenter, BulletType bulletType );
   void update( float t ) override;
   
+  void onHit( shared_ptr<ICollideable> o ) override;
+  
   void updateAnimationType();
   float getBulletSpeed() const;
   bool isFromInvader() const;

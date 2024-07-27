@@ -39,12 +39,12 @@ class Game {
   vector< shared_ptr<Sprite> > debugText;
   
   // Collideable:
-  shared_ptr<Player> player;
   vector< shared_ptr<Bullet> > allBullets;
   vector< shared_ptr<Bunker> > allBunkers;
-  vector< shared_ptr<UFO> > allUFOs;
-  vector< shared_ptr<Item> > allItems;
   InvaderGroup invaderGroup;
+  vector< shared_ptr<Item> > allItems;
+  shared_ptr<Player> player;
+  vector< shared_ptr<UFO> > allUFOs;
   
   // Cosmetic
   shared_ptr<Sprite> pausedText;

@@ -31,6 +31,8 @@ public:
   void addShield();
   void loseShield();
   
+  void onHit( shared_ptr<ICollideable> o ) override;
+  
   void giveItem( shared_ptr<Item> item );
   void tryShoot();
   void setMovingLeft();

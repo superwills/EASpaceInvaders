@@ -9,6 +9,6 @@ public:
   
   void update( float t ) override;
   
-  void onHit() override;
+  void onHit( shared_ptr<ICollideable> o ) override;
   
 };

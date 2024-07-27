@@ -70,6 +70,32 @@ void Player::loseShield() {
   }
 }
 
+void Player::onHit( shared_ptr<ICollideable> o ) {
+  switch( o->getType() ) {
+  case ICollideableType::Bullet:
+    die();
+    break;
+  case ICollideableType::Bunker:
+    break;
+  case ICollideableType::BunkerPiece:
+    break;
+  case ICollideableType::Invader:
+    die();
+    break;
+  case ICollideableType::Item: {
+      shared_ptr<Item> item = dynamic_pointer_cast<Item>( o );
+    }
+    break;
+  case ICollideableType::Player:
+    break;
+  case ICollideableType::UFO:
+    break;
+    
+  default:
+    break;
+  }
+}
+
 void Player::giveItem( shared_ptr<Item> item ) {
   switch( item->character ) {
   case AnimationId::ItemPlus1:
@@ -86,6 +112,9 @@ void Player::giveItem( shared_ptr<Item> item ) {
     
   case AnimationId::ItemThickLaser:
     weapon = BulletType::PlayerThickLaser;
+    break;
+    
+  default:
     break;
   }
 }

@@ -260,6 +260,8 @@ void Game::checkAllCollisions_quadtree() {
       //info( "%s cand hit %s", bullet->getName().c_str(), r->getName().c_str() );
     }
   }
+  
+  /*
   for( auto bunker : allBunkers ) {
     results = quadtree.query( bunker );
     
@@ -289,7 +291,7 @@ void Game::checkAllCollisions_quadtree() {
       //info( "%s cand hit %s", bullet->getName().c_str(), r->getName().c_str() );
     }
   }
-  
+  */
   
 }
 

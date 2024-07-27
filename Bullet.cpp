@@ -42,6 +42,29 @@ void Bullet::update( float t ) {
   }
 }
 
+void Bullet::onHit( shared_ptr<ICollideable> o ) {
+  switch( o->getType() ) {
+  case ICollideableType::Bullet:
+    break;
+  case ICollideableType::Bunker:
+    break;
+  case ICollideableType::BunkerPiece:
+    break;
+  case ICollideableType::Invader:
+    break;
+  case ICollideableType::Item:
+    break;
+  case ICollideableType::Player:
+    break;
+  case ICollideableType::UFO:
+    break;
+    
+  default:
+    break;
+  }
+}
+
+
 void Bullet::updateAnimationType() {
   auto it = BulletAnimations.find( type );
   if( it == BulletAnimations.end() ) {
