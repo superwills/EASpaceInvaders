@@ -45,8 +45,14 @@ void Bullet::update( float t ) {
 
 void Bullet::onHit( ICollideable *o ) {
   switch( o->collisionType ) {
-  case ICollideableType::Bullet:
-    die();
+  case ICollideableType::Bullet: {
+      Bullet *bullet = (Bullet*)o;
+      
+      // they have to be from opposite teams to collide
+      if( isFromInvader() != bullet->isFromInvader() ) {
+        die();
+      }
+    }
     break;
   case ICollideableType::Bunker:
     break;

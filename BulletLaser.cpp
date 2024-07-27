@@ -30,9 +30,9 @@ void BulletLaser::onHit( ICollideable *o ) {
   switch( o->collisionType ) {
   case ICollideableType::Bullet:
     shakeAmount += .05;
+    // thicklaser's don't die when hit
     break;
   case ICollideableType::Bunker:
-    //shakeAmount += .1;
     break;
   case ICollideableType::BunkerPiece:
     shakeAmount += .15;

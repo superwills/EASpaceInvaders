@@ -15,7 +15,8 @@
 
 shared_ptr<Game> game;
 
-Game::Game( const RectF &bounds ) : quadtree( bounds ) {
+Game::Game( const RectF &bounds ) :
+    quadtree( bounds ) {
 }
 
 void Game::initGameBoard() {
@@ -127,14 +128,8 @@ void Game::checkBulletCollisions_basic() {
     
     // Check bullet-bullet
     for( auto oBullet : allBullets ) {
-      // they have to be from opposite teams to collide
       if( bullet->isFromInvader() && !oBullet->isFromInvader() ) {
         if( bullet->hit( oBullet ) ) {
-          if( bullet->type != BulletType::PlayerThickLaser )
-          bullet->die();
-          
-          if( oBullet->type != BulletType::PlayerThickLaser )
-          oBullet->die();
         }
       }
     }
