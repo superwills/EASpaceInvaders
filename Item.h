@@ -10,6 +10,8 @@ public:
   Item( const Vector2f &center, AnimationId animationId );
   shared_derived( Item )
   
+  void update( float t ) override;
+  void die() override;
   void onHit( ICollideable *o ) override;
   
 };

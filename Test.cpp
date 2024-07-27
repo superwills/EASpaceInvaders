@@ -10,12 +10,14 @@ Test::Test() {
   largeSpriteRectangle.size = windowRectangle.size * .33;
   largeSpriteRectangle.setCenter( windowRectangle.size / 2 );
   largeSprite = std::make_shared<Sprite>( largeSpriteRectangle, Yellow );
+  largeSprite->collisionType = ICollideableType::TestSprite;
   sprites.push_back( largeSprite );
   
   for( int i = 0; i < 500; i++ ) {
     RectF r( windowRectangle.randomPoint(), Vector2f( 16 ) );
     
     auto smallSprite = std::make_shared<Sprite>( r, White );
+    smallSprite->collisionType = ICollideableType::TestSprite;
     if( largeSprite->hit( smallSprite ) ) {
       smallSprite->animation.frames.front().color = Blue;
     }

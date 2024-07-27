@@ -10,3 +10,5 @@ public:
   void onHit( ICollideable *o ) override;
   
 };
+
+DECLARE_SHARED_PTR( BunkerPiece );

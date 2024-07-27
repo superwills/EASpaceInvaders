@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Sprite.h"
+
 #include "BulletType.h"
+#include "StlUtil.h"
 
 class Bullet : public Sprite {
   inline static Vector2f DefaultBulletScale = Vector2f( .02, .03 );
@@ -34,13 +36,15 @@ public:
   static bool IsBulletTypeFromInvader( BulletType bulletType );
   
   Bullet( const Vector2f &shootCenter, BulletType bulletType );
+  shared_derived( Bullet )
+  
   void update( float t ) override;
   
+  bool isFromInvader() const;
   void onHit( ICollideable *o ) override;
   
   void updateAnimationType();
   float getBulletSpeed() const;
-  bool isFromInvader() const;
   
 };
 

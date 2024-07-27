@@ -13,6 +13,20 @@ Item::Item( const Vector2f &center, AnimationId animationId ) {
   setAnimation( animationId );
 }
 
+void Item::update( float t ) {
+  Sprite::update( t );
+  
+  // If the item leaves the bounds, then it dies.
+  if( !sdl->getWindowRectangle().hit( box ) ) {
+    die();
+  }
+  
+}
+
+void Item::die() {
+  Sprite::die();
+}
+
 void Item::onHit( ICollideable *o ) {
   switch( o->collisionType ) {
   case ICollideableType::Bullet: {

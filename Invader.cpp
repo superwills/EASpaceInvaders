@@ -1,5 +1,6 @@
 #include "Invader.h"
 
+#include "Bullet.h"
 #include "Game.h"
 #include "Log.h"
 
@@ -32,9 +33,14 @@ void Invader::update( float t ) {
 
 void Invader::onHit( ICollideable *o ) {
   switch( o->collisionType ) {
-  case ICollideableType::Bullet:
-    // hit by bullet damage or die
-    die();
+  case ICollideableType::Bullet: {
+      // hit by bullet damage or die
+      Bullet *bullet = (Bullet*)o;
+      // Don't get hit by friendlies
+      if( !bullet->isFromInvader() ) {
+        die();
+      }
+    }
     break;
   case ICollideableType::Bunker:
     // do nothing

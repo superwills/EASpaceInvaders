@@ -31,5 +31,9 @@ public:
   
   // Perform hitchecks on bunker hit by Sprite.
   bool hit( shared_ptr<ICollideable> o ) override;
+  bool checkPiecesHit( shared_ptr<ICollideable> o );
+  
+  void onHit( ICollideable *o ) override;
+  
   void clearDead();
 };

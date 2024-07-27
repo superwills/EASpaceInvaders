@@ -134,6 +134,8 @@ public:
   void update();
 	void draw();
  
+  void drawDebug(); 
+ 
   // Rectangle that appears for 1 frame
   void addDebugRect( const RectF &rect, SDL_Color color );
   

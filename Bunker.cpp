@@ -1,6 +1,7 @@
 #include "Bunker.h"
 
 #include "Assets.h"
+#include "Bullet.h"
 #include "BunkerPiece.h"
 #include "Sprite.h"
 #include "StlUtil.h"
@@ -8,6 +9,7 @@
 Bunker::Bunker( const RectF &initialBounds ) :
     bounds( initialBounds ) {
   
+  collisionType = ICollideableType::Bunker;
   Vector2f bunkerPieceSize = bounds.size / 3;
   
   // 3 across, 3 down (skip the middle bottom one)
@@ -44,12 +46,17 @@ void Bunker::draw() {
 
 bool Bunker::hit( shared_ptr<ICollideable> o ) {
   
-  // don't bother to check any pieces if sprite misses the whole bunker bounds
-  if( !o->hit( bounds ) ) {
-    // This check becomes redundant when quadtrees are used and can be removed
-    return 0;
-  }
+  // hitting the bunker just means you hit it's bounds.
+  // you have to do a 2nd check to see if you hit any of it's pieces or not.
   
+  // don't bother to check any pieces if sprite misses the whole bunker bounds
+  return o->hit( bounds );
+}
+
+bool Bunker::checkPiecesHit( shared_ptr<ICollideable> o ) {
+  
+  vector<SP_BunkerPiece> hits;
+
   for( auto bunkerPiece : pieces ) {
     if( bunkerPiece->isDead() ) {
       // if the piece is dead it's as if it isn't there.
@@ -57,12 +64,60 @@ bool Bunker::hit( shared_ptr<ICollideable> o ) {
       continue;
     }
     
-    if( bunkerPiece->hit( o ) ) {
-      return 1;
+    // testHit so you don't trigger onHit yet (only for closest one)
+    if( bunkerPiece->testHit( o ) ) {
+      hits.push_back( bunkerPiece );
     }
   }
   
-  return 0;
+  SP_BunkerPiece closestBunkerPiece;
+  float closestDist2 = HUGE_VALF;
+  // Give you the closest one to centroid
+  for( auto bunkerPiece : hits ) {
+    float dist2 = ( o->getCentroid() - bunkerPiece->getCentroid() ).len2();
+    
+    if( dist2 < closestDist2 ) {
+      closestDist2 = dist2;
+      closestBunkerPiece = bunkerPiece;
+    }
+  }
+  
+  if( closestBunkerPiece ) {
+    // Now trigger onHit events for closest only
+    closestBunkerPiece->onHit( o.get() );
+    o->onHit( closestBunkerPiece.get() );
+    return 1;
+  }
+  else {
+    return 0;
+  }
+}
+
+void Bunker::onHit( ICollideable *o ) {
+  switch( o->collisionType ) {
+  case ICollideableType::Bullet: {
+      auto bullet = ((Bullet*)o)->shared_Bullet();
+      checkPiecesHit( bullet );
+    }
+    break;
+  case ICollideableType::Bunker:
+    break;
+  case ICollideableType::BunkerPiece:
+    break;
+  case ICollideableType::Invader:
+    break;
+  case ICollideableType::Item:
+    break;
+  case ICollideableType::Player:
+    break;
+  case ICollideableType::UFO:
+    break;
+    
+  case ICollideableType::NotCollideable:
+  default:
+    error( "Colliding with non-collideable" );
+    break;
+  }
 }
 
 void Bunker::clearDead() {

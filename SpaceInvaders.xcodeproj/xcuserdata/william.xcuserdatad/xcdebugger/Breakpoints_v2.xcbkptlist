@@ -23,16 +23,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "DB917C5F-888B-4176-B568-4553E41AE885"
-            shouldBeEnabled = "Yes"
+            uuid = "9DA5F530-9541-477B-AF19-E4917EED75DE"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Sprite.cpp"
+            filePath = "Quadtree.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "Sprite::die()"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "QuadtreeNode::add(obj)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

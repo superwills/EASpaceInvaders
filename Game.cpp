@@ -207,7 +207,7 @@ void Game::buildQuadtree() {
   for( auto bunker : allBunkers ) {
     quadtree.add( bunker );
   }
-  // Notice how we do not add the bunkerPi
+  // Notice how we do not add the bunkerPieces because they are in the bunkers
   for( auto ufo : allUFOs ) {
     quadtree.add( ufo );
   }
@@ -222,56 +222,62 @@ void Game::buildQuadtree() {
 void Game::checkAllCollisions_quadtree() {
   buildQuadtree();
   
-  quadtree.each( []( QuadtreeNode *qtNode ) {
-    RectF textRect = qtNode->bounds;
-    textRect.size = Vector2f( 25, 25 );
-    textRect.setCenter( qtNode->bounds.mid() );
-    auto spText = Sprite::Text( makeString( "%zu", qtNode->objects.size() ), textRect, White );
-    game->debugText.push_back( spText );
-  } );
-  
   // Now run collisions of each intersectable against a quadtree query
-  vector< SP_ICollideable > results = quadtree.query( player );
-  quadtree.add( player );
+  vector< SP_ICollideable > candidates;
+  
+  candidates = quadtree.query( player );
+  for( auto r : candidates ) {
+    player->hit( r );
+  }
+  
   for( auto bullet : allBullets ) {
-    results = quadtree.query( bullet );
+    candidates = quadtree.query( bullet );
     
-    for( auto r : results ) {
-      addDebugRect( r->getHitBox(), Red );
-      //info( "%s cand hit %s", bullet->getName().c_str(), r->getName().c_str() );
+    for( auto r : candidates ) {
+      //addDebugRect( r->getHitBox(), Red );
+      
+      // Quadtree always pulls self
+      if( bullet == r )  continue;
+      
+      if( bullet->hit( r ) ) {
+      }
+    }
+  }
+  
+  for( auto invader : invaderGroup.invaders ) {
+    candidates = quadtree.query( invader );
+    
+    for( auto r : candidates ) {
+      //addDebugRect( r->getHitBox(), Red );
+      invader->hit( r ); 
     }
   }
   
   /*
+  // We don't need to query bunkers, since Bullets and Invaders both query 
   for( auto bunker : allBunkers ) {
-    results = quadtree.query( bunker );
+    candidates = quadtree.query( bunker );
     
-    for( auto r : results ) {
-      //info( "%s cand hit %s", bunker->getName().c_str(), r->getName().c_str() );
+    for( auto r : candidates ) {
+      bunker->hit( r );
     }
   }
+  
   for( auto ufo : allUFOs ) {
-    results = quadtree.query( ufo );
+    candidates = quadtree.query( ufo );
     
-    for( auto r : results ) {
-      //info( "%s cand hit %s", ufo->getName().c_str(), r->getName().c_str() );
+    for( auto r : candidates ) {
+      ufo->hit( r );
     }
   }
   for( auto item : allItems ) {
-    results = quadtree.query( item );
+    candidates = quadtree.query( item );
     
-    for( auto r : results ) {
-      //info( "%s cand hit %s", item->getName().c_str(), r->getName().c_str() );
+    for( auto r : candidates ) {
+      item->hit( r );
     }
   }
-  for( auto invader : invaderGroup.invaders ) {
-    results = quadtree.query( invader );
-    
-    for( auto r : results ) {
-      addDebugRect( r->getHitBox(), Red );
-      //info( "%s cand hit %s", bullet->getName().c_str(), r->getName().c_str() );
-    }
-  }
+  
   */
   
 }
@@ -339,15 +345,18 @@ void Game::runGame() {
   
   StopWatch timer;
   
-  checkAllCollisions_basic();
-  //checkAllCollisions_quadtree();
+  clearDead();
+  
+  //checkAllCollisions_basic();
+  checkAllCollisions_quadtree();
   Vector2f windowSize = sdl->getWindowSize();
   RectF where( windowSize.x*.85, windowSize.y*.05, windowSize.x*.1, windowSize.y*.1 );
-  timerSprite = Sprite::Text( makeString( "%.3f", timer.sec()*1000. ), where, White );
+  //timerSprite = Sprite::Text( makeString( "%.3f", timer.sec()*1000. ), where, White );
+  timerSprite = Sprite::Text( makeString( "items %zu", allItems.size() ), where, White );
   
   checkWinConditions();
   
-  clearDead(); 
+  clearDead();
 }
 
 void Game::updateNumberOfPlayerLives() {
@@ -673,8 +682,6 @@ void Game::changeScore( int byScoreValue ) {
 void Game::update() {
   // difference in time between (now) and prev frame's time 
   dt = clock.sec() - clockThisFrame;
-  //////dt *= speedMultiplier;  // Speedup multiplier increases the size of the time step.
-  // Velocities are multiplied by dt, so things move faster when dt is bigger.
   clockThisFrame = clock.sec();
   
   controllerUpdate();
@@ -721,7 +728,6 @@ void Game::draw() {
   case GameState::Title:
     titleScreen->draw();
     break;
-    
     
   case GameState::Paused: 
 		pausedText->draw();
@@ -785,7 +791,14 @@ void Game::draw() {
   windowRect.pos += Vector2f::random( -ShakeMagnitude, ShakeMagnitude )*shakeTimeRemaining;
   sdl->setViewport( windowRect.toSDLRect() );
   
-  quadtree.draw();
+  drawDebug();
+  
+  sdl->present();
+}
+
+void Game::drawDebug() {
+  //quadtree.draw();
+  
   for( const ColorRect &crect : debugRect ) {
     sdl->rect( crect );
   }
@@ -795,12 +808,20 @@ void Game::draw() {
     sdl->rect( crect );
   }
   
+  #if 0
+  quadtree.each( []( QuadtreeNode *qtNode ) {
+    RectF textRect = qtNode->bounds;
+    textRect.size = Vector2f( 25, 25 );
+    textRect.setCenter( qtNode->bounds.mid() );
+    auto spText = Sprite::Text( makeString( "%zu", qtNode->objects.size() ), textRect, White );
+    game->debugText.push_back( spText );
+  } );
+  
   for( auto spText : debugText ) {
     spText->draw();
   }
   debugText.clear();
-  
-  sdl->present();
+  #endif
 }
 
 void Game::addDebugRect( const RectF &rect, SDL_Color color ) {

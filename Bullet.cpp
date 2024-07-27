@@ -43,6 +43,10 @@ void Bullet::update( float t ) {
   }
 }
 
+bool Bullet::isFromInvader() const {
+  return IsBulletTypeFromInvader( type );
+}
+
 void Bullet::onHit( ICollideable *o ) {
   switch( o->collisionType ) {
   case ICollideableType::Bullet: {
@@ -55,20 +59,25 @@ void Bullet::onHit( ICollideable *o ) {
     }
     break;
   case ICollideableType::Bunker:
+    // hitting the bunker bounds does nothing to a bullet
     break;
   case ICollideableType::BunkerPiece:
     die();
     break;
   case ICollideableType::Invader:
-    die();
+    if( !isFromInvader() ) {
+      die();
+    }
     break;
   case ICollideableType::Item:
     break;
   case ICollideableType::Player:
-    die();
+    if( isFromInvader() ) {
+      die();
+    }
     break;
   case ICollideableType::UFO:
-    die();
+    die(); // invader bullets can't go backwards..
     break;
     
   case ICollideableType::NotCollideable:
@@ -97,8 +106,4 @@ float Bullet::getBulletSpeed() const {
   }
   
   return it->second;
-}
-
-bool Bullet::isFromInvader() const {
-  return IsBulletTypeFromInvader( type );
 }

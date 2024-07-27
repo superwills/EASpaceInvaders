@@ -137,9 +137,9 @@ void Quadtree::remove( shared_ptr<ICollideable> obj ) {
 vector< shared_ptr<ICollideable> > Quadtree::query( shared_ptr<ICollideable> obj ) {
   // get leaf node that completely contains box.
   // if you straddle two boxes, you have to get the things in both.
-  vector< shared_ptr<ICollideable> > results;
-  root.query( obj->getHitBox(), results );
-  return results;
+  vector< shared_ptr<ICollideable> > candidates;
+  root.query( obj->getHitBox(), candidates );
+  return candidates;
 }
 
 void Quadtree::draw() {

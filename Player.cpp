@@ -73,12 +73,17 @@ void Player::loseShield() {
 
 void Player::onHit( ICollideable *o ) {
   switch( o->collisionType ) {
-  case ICollideableType::Bullet:
-    if( shielded ) {
-      loseShield();
-    }
-    else {
-      die();
+  case ICollideableType::Bullet: {
+      Bullet *bullet = (Bullet*)o;
+      
+      if( bullet->isFromInvader() ) {
+        if( shielded ) {
+          loseShield();
+        }
+        else {
+          die();
+        }
+      }
     }
     break;
   case ICollideableType::Bunker:

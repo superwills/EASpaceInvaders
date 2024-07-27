@@ -17,6 +17,7 @@ enum class ICollideableType {
   Item,
   Player,
   UFO,
+  TestSprite,
 };
 
 class ICollideable {
@@ -37,6 +38,11 @@ public:
   }
   virtual bool hit( const RectF &rect ) {
     return getHitBox().hit( rect );
+  }
+  
+  // Tests if ICollideables hit each other without triggering onHit events
+  virtual bool testHit( shared_ptr<ICollideable> o ) {
+    return getHitBox().hit( o->getHitBox() );
   }
   
   virtual bool hit( shared_ptr<ICollideable> o ) {
