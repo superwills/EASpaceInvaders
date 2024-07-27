@@ -1,15 +1,23 @@
 #pragma once
 
 struct Range {
-  int min, max;
+  int min = 0, max = 0;
+  
+  Range() { }
+  Range( int iMin, int iMax ) :
+    min( iMin ), max( iMax ) { }
 };
 struct RangeF {
-  float min, max;
+  float min = 0, max = 0;
+  
+  RangeF() { }
+  RangeF( float iMin, float iMax ) :
+    min( iMin ), max( iMax ) { }
 };
 
 struct ParticleCloudProperties {
-  Range number;
-  RangeF size;
+  Range number = Range( 4, 8 );
+  RangeF size = RangeF( 8, 12 );
   
   // You can start the particle decayed, so that it doesn't start at 100% alpha with initialDecay
   float initialDecay = .9;
