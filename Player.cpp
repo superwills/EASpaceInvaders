@@ -84,7 +84,8 @@ void Player::onHit( ICollideable *o ) {
     die();
     break;
   case ICollideableType::Item: {
-      Item *item = (Item*)o;
+      auto item = ((Item*)o)->shared_Item();
+      giveItem( item );
     }
     break;
   case ICollideableType::Player:

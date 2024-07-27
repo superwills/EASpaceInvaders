@@ -38,6 +38,7 @@ public:
   virtual bool hit( const RectF &rect ) {
     return getHitBox().hit( rect );
   }
+  
   virtual bool hit( shared_ptr<ICollideable> o ) {
     // Hard assert can be annoying
     //assert( collisionType != ICollideableType::NotCollideable &&
@@ -56,6 +57,7 @@ public:
     return didHit;
   }
   
+  // This function takes a plain pointer because : enable_shared_from_this<ICollideable> collides with Sprite
   // optionally can implement something to do when hit
   // usually objects should manipulate themselves and only query o for information
   // (rather than also telling o what to do when hit)

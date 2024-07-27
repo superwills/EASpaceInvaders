@@ -130,6 +130,7 @@ void Game::checkBulletCollisions_basic() {
     for( auto oBullet : allBullets ) {
       if( bullet->isFromInvader() && !oBullet->isFromInvader() ) {
         if( bullet->hit( oBullet ) ) {
+          //
         }
       }
     }
@@ -140,15 +141,9 @@ void Game::checkBulletCollisions_basic() {
     
     if( bullet->isFromInvader() ) {
       // Invader bullet check against player.
-      if( !player->isDead() && bullet->hit( player ) ) {
-        bullet->die();
-        
-        // if the player is shielded he just loses his shields
-        if( player->shielded ) {
-          player->loseShield();
-        }
-        else {
-          killPlayer();
+      if( !player->isDead() ) {
+        if( bullet->hit( player ) ) {
+          
         }
       }
       

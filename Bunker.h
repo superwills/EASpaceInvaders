@@ -30,6 +30,6 @@ public:
   inline bool isDead() const { return pieces.empty(); } 
   
   // Perform hitchecks on bunker hit by Sprite.
-  bool hit( shared_ptr<ICollideable> other ) override;
+  bool hit( shared_ptr<ICollideable> o ) override;
   void clearDead();
 };
