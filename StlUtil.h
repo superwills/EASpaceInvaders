@@ -5,6 +5,8 @@
 #include <memory>
 using std::string, std::vector;
 
+#define skip continue
+
 // A helper template to avoid repeating this code formula for each collection
 // Works on Sprite class derivatives (must have T.isDead() member function)
 template <typename T> void clearDeadOnes( vector<T> &v ) {

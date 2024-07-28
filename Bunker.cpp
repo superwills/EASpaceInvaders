@@ -50,11 +50,9 @@ bool Bunker::checkPiecesHit( shared_ptr<ICollideable> o ) {
   vector<SP_BunkerPiece> hits;
 
   for( auto bunkerPiece : pieces ) {
-    if( bunkerPiece->isDead() ) {
-      // if the piece is dead it's as if it isn't there.
-      // (check b/c removal from collections only happens after a frame is complete)
-      continue;
-    }
+    // if the piece is dead it's as if it isn't there.
+    // (check b/c removal from collections only happens after a frame is complete)
+    if( bunkerPiece->isDead() )  skip;
     
     // testHit so you don't trigger onHit yet (only for closest one)
     if( bunkerPiece->testHit( o ) ) {

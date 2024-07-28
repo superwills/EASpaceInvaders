@@ -117,9 +117,7 @@ void Game::checkBulletCollisions_basic() {
       }
     }
     
-    if( bullet->isDead() ) {
-      continue;
-    }
+    if( bullet->isDead() )  skip;
     
     // Check bullet-bullet
     for( auto oBullet : allBullets ) {
@@ -130,9 +128,7 @@ void Game::checkBulletCollisions_basic() {
       }
     }
     
-    if( bullet->isDead() ) {
-      continue;
-    }
+    if( bullet->isDead() )  skip;
     
     if( bullet->isFromInvader() ) {
       // Invader bullet check against player.
@@ -148,19 +144,16 @@ void Game::checkBulletCollisions_basic() {
     else { // is Player bullet
       // check invaders
       for( auto invader : invaderGroup.invaders ) {
-        if( invader->isDead() ) {
-          continue; // can happen if 2 player bullets try to hit same invader
-        }
+        // can happen if 2 player bullets try to hit same invader
+        if( invader->isDead() )  skip;
         
         if( bullet->hit( invader ) ) {
           break;
         }
       }
       
-      if( bullet->isDead() ) {
-        // If the bullet was consumed by an invader, skip the ufo check that would happen below
-        continue;
-      }
+      // If the bullet was consumed by an invader, skip the ufo check that would happen below
+      if( bullet->isDead() )  skip;
       
       // Player bullet check UFO
       for( auto ufo : allUFOs ) {
@@ -177,12 +170,16 @@ void Game::checkAllCollisions_basic() {
   
   // Check invaders against player itself, bunkers
   for( auto invader : invaderGroup.invaders ) {
+    if( invader->isDead() )  skip;
+    
     if( !player->isDead() ) {
       if( invader->hit( player ) ) {
         
       }
     }
     for( auto bunker : allBunkers ) {
+      if( bunker->isDead() )  skip;
+      
       // kill bunker pieces hit by this invader
       if( bunker->hit( invader ) ) {
         // though you usually can't hit more than 1 bunker because they're far apart
@@ -192,6 +189,8 @@ void Game::checkAllCollisions_basic() {
   }
   
   for( auto item : allItems ) {
+    if( item->isDead() )  skip;
+    
     if( player->hit( item ) ) {
       
     }
@@ -235,9 +234,7 @@ void Game::checkAllCollisions_quadtree() {
   }
   
   for( auto bullet : allBullets ) {
-    if( bullet->isDead() ) {
-      continue;
-    }
+    if( bullet->isDead() )  skip;
     
     candidates = quadtree.query( bullet );
     
@@ -245,7 +242,7 @@ void Game::checkAllCollisions_quadtree() {
       //addDebugRect( cand->getHitBox(), Red, .1 );
       
       // Quadtree always pulls self
-      if( bullet == cand || cand->isDead() )  continue;
+      if( bullet == cand || cand->isDead() )  skip;
       
       // Bullets can pretty much hit anything, so check against all
       if( bullet->hit( cand ) ) {
@@ -257,14 +254,12 @@ void Game::checkAllCollisions_quadtree() {
   }
   
   for( auto invader : invaderGroup.invaders ) {
-    if( invader->isDead() ) {
-      continue;
-    }
+    if( invader->isDead() )  skip;
     
     candidates = quadtree.query( invader );
     
     for( auto cand : candidates ) {
-      if( invader == cand || cand->isDead() )  continue;
+      if( invader == cand || cand->isDead() )  skip;
       
       // Only check for invader-bunker & invader-player collisions
       if( isAnyOf( cand->collisionType, { ICollideableType::Bunker, ICollideableType::Player } ) ) {
@@ -346,8 +341,8 @@ void Game::runGame() {
   
   RectF::BoxHits = 0;
   
-  //checkAllCollisions_basic();
-  checkAllCollisions_quadtree();
+  checkAllCollisions_basic();
+  //checkAllCollisions_quadtree();
   Vector2f windowSize = sdl->getWindowSize();
   RectF where( windowSize.x*.85, windowSize.y*.05, windowSize.x*.1, windowSize.y*.1 );
   timerSprite = Sprite::Text( makeString( "box hits %d", RectF::BoxHits ), where, White );
