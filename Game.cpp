@@ -113,7 +113,7 @@ void Game::checkBulletCollisions_basic() {
     // All bullet check bunker
     for( auto bunker : allBunkers ) {
       if( bunker->hit( bullet ) ) {
-        break;
+        bunker->checkPiecesHit( bullet );
       }
     }
     
@@ -325,16 +325,15 @@ void Game::runGame() {
     score->update( dt );
   }
   
-  StopWatch timer;
-  
   clearDead();
+  
+  RectF::BoxHits = 0;
   
   //checkAllCollisions_basic();
   checkAllCollisions_quadtree();
   Vector2f windowSize = sdl->getWindowSize();
   RectF where( windowSize.x*.85, windowSize.y*.05, windowSize.x*.1, windowSize.y*.1 );
-  //timerSprite = Sprite::Text( makeString( "%.3f", timer.sec()*1000. ), where, White );
-  timerSprite = Sprite::Text( makeString( "items %zu", allItems.size() ), where, White );
+  timerSprite = Sprite::Text( makeString( "box hits %d", RectF::BoxHits ), where, White );
   
   checkWinConditions();
   

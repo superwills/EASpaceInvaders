@@ -9,6 +9,8 @@ struct RectF {
   // pos is TOP LEFT of rectangle.
   Vector2f pos, size;
   
+  inline static int BoxHits = 0;
+  
   RectF() { }
   RectF( float x, float y, float w, float h ) :
     pos( x, y ), size( w, h ) { }
@@ -91,6 +93,7 @@ struct RectF {
   }
   
   inline bool hit( const Vector2f& v ) const {
+    ++BoxHits;
     // +-------------->
     // | +---+
     // | |*  | 
@@ -102,6 +105,7 @@ struct RectF {
   }
   
   inline bool hit( const RectF& o ) const {
+    ++BoxHits;
     // Easy to check the miss situations
     // +-------------->
     // | +---+
@@ -121,6 +125,7 @@ struct RectF {
   }
   
   inline bool contains( const RectF& r ) const {
+    ++BoxHits;
     return hit( r.bottomLeft() ) && hit( r.topRight() );
   }
   

@@ -45,15 +45,6 @@ void Bunker::draw() {
   }
 }
 
-bool Bunker::hit( shared_ptr<ICollideable> o ) {
-  
-  // hitting the bunker just means you hit it's bounds.
-  // you have to do a 2nd check to see if you hit any of it's pieces or not.
-  
-  // don't bother to check any pieces if sprite misses the whole bunker bounds
-  return o->hit( bounds );
-}
-
 bool Bunker::checkPiecesHit( shared_ptr<ICollideable> o ) {
   
   vector<SP_BunkerPiece> hits;
