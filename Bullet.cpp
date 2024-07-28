@@ -43,10 +43,6 @@ void Bullet::update( float t ) {
   }
 }
 
-bool Bullet::isFromInvader() const {
-  return IsBulletTypeFromInvader( type );
-}
-
 void Bullet::onHit( ICollideable *o ) {
   switch( o->collisionType ) {
   case ICollideableType::Bullet: {
@@ -87,6 +83,9 @@ void Bullet::onHit( ICollideable *o ) {
   }
 }
 
+bool Bullet::isFromInvader() const {
+  return IsBulletTypeFromInvader( type );
+}
 
 void Bullet::updateAnimationType() {
   auto it = BulletAnimations.find( type );

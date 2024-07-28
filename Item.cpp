@@ -32,7 +32,7 @@ void Item::onHit( ICollideable *o ) {
   case ICollideableType::Bullet: {
       // laser obliterates items
       Bullet *bullet = (Bullet*)o;
-      if( bullet->type == BulletType::PlayerThickLaser ) {
+      if( bullet->isBulletType( BulletType::PlayerThickLaser ) ) {
         die();
       }
     }

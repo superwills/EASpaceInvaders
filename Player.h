@@ -14,9 +14,9 @@ class Player : public Sprite {
   inline static const int DefaultMaxBullets = 1;
   int maxBullets = DefaultMaxBullets;
   BulletType weapon = BulletType::PlayerThickLaser;
+  bool shielded = 0;
   
 public:
-  bool shielded = 0;
   
   Player();
   void update( float t ) override;

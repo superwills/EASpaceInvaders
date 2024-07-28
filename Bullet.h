@@ -29,20 +29,21 @@ class Bullet : public Sprite {
     { BulletType::InvaderNormal, AnimationId::BulletInvaderArrow },
     { BulletType::InvaderSuper, AnimationId::BulletInvaderLightning },
   };
+  BulletType type = BulletType::PlayerNormal;
   
 public:
-  BulletType type = BulletType::PlayerNormal;
   
   static bool IsBulletTypeFromInvader( BulletType bulletType );
   
   Bullet( const Vector2f &shootCenter, BulletType bulletType );
   DECLARE_SHARED_DERIVED( Bullet )
   
+  inline bool isBulletType( BulletType bulletType ) const { return type == bulletType; }
   void update( float t ) override;
   
-  bool isFromInvader() const;
   void onHit( ICollideable *o ) override;
   
+  bool isFromInvader() const;
   void updateAnimationType();
   float getBulletSpeed() const;
   
