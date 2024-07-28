@@ -227,10 +227,18 @@ void Game::checkAllCollisions_quadtree() {
   
   candidates = quadtree.query( player );
   for( auto r : candidates ) {
-    player->hit( r );
+    if( player->hit( r ) ) {
+      if( player->isDead() ) {
+        break;
+      }
+    }
   }
   
   for( auto bullet : allBullets ) {
+    if( bullet->isDead() ) {
+      continue;
+    }
+    
     candidates = quadtree.query( bullet );
     
     for( auto cand : candidates ) {
@@ -241,11 +249,18 @@ void Game::checkAllCollisions_quadtree() {
       
       // Bullets can pretty much hit anything, so check against all
       if( bullet->hit( cand ) ) {
+        if( bullet->isDead() ) {
+          break;
+        }
       }
     }
   }
   
   for( auto invader : invaderGroup.invaders ) {
+    if( invader->isDead() ) {
+      continue;
+    }
+    
     candidates = quadtree.query( invader );
     
     for( auto cand : candidates ) {
@@ -254,7 +269,9 @@ void Game::checkAllCollisions_quadtree() {
       // Only check for invader-bunker & invader-player collisions
       if( isAnyOf( cand->collisionType, { ICollideableType::Bunker, ICollideableType::Player } ) ) {
         if( invader->hit( cand ) ) {
-        
+          if( invader->isDead() ) {
+            break;
+          }
         } 
       }
     }
