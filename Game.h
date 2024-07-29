@@ -36,8 +36,6 @@ class Game {
   shared_ptr<TitleScreen> titleScreen;
   shared_ptr<GameOverScreen> gameOverScreen;
   
-  vector< shared_ptr<Sprite> > debugText;
-  
   // Collideable:
   vector< shared_ptr<Bullet> > allBullets;
   vector< shared_ptr<Bunker> > allBunkers;
@@ -53,8 +51,8 @@ class Game {
   vector< shared_ptr<Sprite> > playOnceAnimations;
   vector< shared_ptr<Sprite> > playerLives;
   
-  shared_ptr<Sprite> timerSprite;
-  
+  string debugText;
+  shared_ptr<Sprite> debugTextSprite;
   Test test;
   
 	SDL_Color bkgColor;	// the current background color

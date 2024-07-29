@@ -64,14 +64,12 @@ void InvaderGroup::populate() {
   // Lay the invaders out
   InterInvaderSpacing = bounds.size * InterInvaderSpacingPercent;
   
-  InvaderSize = bounds.size / invadersPerRow;
+  InvaderSize = bounds.size / Vector2f( invadersPerRow, InvaderRows.size() ); // Asssume 5 rows
   InvaderSize -= InterInvaderSpacing;
   
-  addRow( AnimationId::InvaderE );
-  addRow( AnimationId::InvaderA );
-  addRow( AnimationId::Invader2 );
-  addRow( AnimationId::Invader1 );
-  addRow( AnimationId::Invader1 );
+  for( auto invaderType : InvaderRows ) {
+    addRow( invaderType );
+  }
 }
 
 void InvaderGroup::update( float t ) {

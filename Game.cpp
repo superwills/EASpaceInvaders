@@ -166,6 +166,7 @@ void Game::checkBulletCollisions_basic() {
 }
 
 void Game::checkAllCollisions_basic() {
+  RectF::BoxHits = 0;
 	// check bullets against invaders, ufo's, bunkers.
   checkBulletCollisions_basic();
   
@@ -196,9 +197,12 @@ void Game::checkAllCollisions_basic() {
       
     }
   }
+  
+  debugText = makeString( "%d", RectF::BoxHits );
 }
 
 void Game::buildQuadtree() {
+  RectF::BoxHits = 0;
   quadtree = Quadtree( sdl->getWindowRectangle() );
   quadtree.add( player );
   for( auto bullet : allBullets ) {
@@ -217,19 +221,25 @@ void Game::buildQuadtree() {
   for( auto invader : invaderGroup.invaders ) {
     quadtree.add( invader );
   }
+  debugText = makeString( "%d", RectF::BoxHits );
 }
 
 void Game::checkAllCollisions_quadtree() {
   buildQuadtree();
   
+  RectF::BoxHits = 0;
   // Now run collisions of each intersectable against a quadtree query
   vector< SP_ICollideable > candidates;
   
-  candidates = quadtree.query( player );
-  for( auto r : candidates ) {
-    if( player->hit( r ) ) {
-      if( player->isDead() ) {
-        break;
+  if( !player->isDead() ) {
+    candidates = quadtree.query( player );
+    for( auto cand : candidates ) {
+      if( player == cand || cand->isDead() )  skip;
+      
+      if( player->hit( cand ) ) {
+        if( player->isDead() ) {
+          break;
+        }
       }
     }
   }
@@ -274,6 +284,7 @@ void Game::checkAllCollisions_quadtree() {
   }
   
   // We don't need to query from bunkers, ufos, or items, since player, Bullets and Invaders query instead 
+  debugText += makeString( "/%d", RectF::BoxHits );
   
 }
 
@@ -304,7 +315,7 @@ void Game::runGame() {
   
   player->update( dt );
   scoreSprite->update( dt );
-  if( timerSprite )  timerSprite->update( dt );
+  if( debugTextSprite )  debugTextSprite->update( dt );
 
   for( auto particle : allParticles ) {
     particle->update( dt );
@@ -340,13 +351,12 @@ void Game::runGame() {
   
   clearDead();
   
-  RectF::BoxHits = 0;
+  //checkAllCollisions_basic();
+  checkAllCollisions_quadtree();
   
-  checkAllCollisions_basic();
-  //checkAllCollisions_quadtree();
   Vector2f windowSize = sdl->getWindowSize();
-  RectF where( windowSize.x*.85, windowSize.y*.05, windowSize.x*.1, windowSize.y*.1 );
-  timerSprite = Sprite::Text( makeString( "box hits %d", RectF::BoxHits ), where, White );
+  RectF debugTextBox( windowSize.x*.85, windowSize.y*.05, windowSize.x*.1, windowSize.y*.1 );
+  debugTextSprite = Sprite::Text( debugText, debugTextBox, White );
   
   checkWinConditions();
   
@@ -730,7 +740,7 @@ void Game::draw() {
   case GameState::Running:
     invaderGroup.draw();
 		player->draw();
-    timerSprite->draw();
+    debugTextSprite->draw();
 
     for( auto bullet : allBullets ) {
       bullet->draw();

@@ -15,13 +15,16 @@ class InvaderGroup {
   bool invaderReachedBottom = 0;
   
   // Invaders fit in a box this% of the original window size.
-  inline static const Vector2f DefaultInvaderBoundsSizePercent = Vector2f( .6, .6 );
+  inline static const Vector2f DefaultInvaderBoundsSizePercent = Vector2f( .6, .25 );
   
   inline static Vector2f InvaderSize = Vector2f( 100 ); // dummy val, really computed based on window size
   inline static const Vector2f InterInvaderSpacingPercent = Vector2f( .03, .01 );
   inline static Vector2f InterInvaderSpacing;
   
   inline static const int invadersPerRow = 11; // 11 across in the original game.
+  inline static const vector<AnimationId> InvaderRows = {
+    AnimationId::InvaderE, AnimationId::InvaderA, AnimationId::Invader2, AnimationId::Invader1, AnimationId::Invader1
+  };
   inline static const int DefaultMaxBullets = 2;
   inline static const int DesperationThreshold = 10;
   
