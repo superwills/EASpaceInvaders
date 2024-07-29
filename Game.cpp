@@ -112,8 +112,9 @@ void Game::checkBulletCollisions_basic() {
   for( auto bullet : allBullets ) {
     // All bullet check bunker
     for( auto bunker : allBunkers ) {
+      if( bunker->isDead() )  skip;
+      
       if( bunker->hit( bullet ) ) {
-        bunker->checkPiecesHit( bullet );
       }
     }
     

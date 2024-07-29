@@ -62,7 +62,9 @@ public:
     }
     
     if( isDead() || o->isDead() ) {
-      error( "Collision checking dead objects" );
+      error( "Collision checking dead objects: %s [%s] vs %s [%s]",
+        getName().c_str(), isDead()?"dead":"alive",
+        o->getName().c_str(), o->isDead()?"dead":"alive" );
       return 0;
     }
     

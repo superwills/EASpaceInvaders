@@ -13,7 +13,7 @@ class Player : public Sprite {
   int lives = 3;
   inline static const int DefaultMaxBullets = 1;
   int maxBullets = DefaultMaxBullets;
-  BulletType weapon = BulletType::PlayerThickLaser;
+  BulletType weapon = BulletType::PlayerNormal;
   bool shielded = 0;
   
 public:

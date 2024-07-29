@@ -7,6 +7,7 @@ struct Range {
   Range( int iMin, int iMax ) :
     min( iMin ), max( iMax ) { }
 };
+
 struct RangeF {
   float min = 0, max = 0;
   
