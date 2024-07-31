@@ -69,7 +69,10 @@ void Bullet::onHit( ICollideable *o ) {
     break;
   case ICollideableType::Player:
     if( isFromInvader() ) {
-      die();
+      // avoid double die call, b/c when the player dies, all bullets die.
+      if( !isDead() ) {
+        die();
+      }
     }
     break;
   case ICollideableType::UFO:
