@@ -76,10 +76,10 @@ bool Bunker::checkPiecesHit( shared_ptr<ICollideable> o ) {
     // Now trigger onHit events for closest only
     closestBunkerPiece->onHit( o.get() );
     o->onHit( closestBunkerPiece.get() );
-    return 1;
+    return true;
   }
   else {
-    return 0;
+    return false;
   }
 }
 

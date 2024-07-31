@@ -37,7 +37,7 @@ void UFO::update( float t ) {
   
   if( exitedWorldBounds() ) {
     // Here we shortcut all the usual in the object dying and just remove it
-    dead = 1;
+    dead = true;
   }
 }
 

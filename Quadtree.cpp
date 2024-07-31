@@ -46,7 +46,7 @@ bool QuadtreeNode::add( shared_ptr<ICollideable> obj ) {
   // It didn't fit in the children, so either it misses, or I don't have children yet.
   if( !contains( obj ) ) {
     error( "%s does not intersect quadtree bounds", obj->getName().c_str() );
-    return 0;
+    return false;
   }
   
   // Find which child it belongs in
@@ -67,7 +67,7 @@ bool QuadtreeNode::add( shared_ptr<ICollideable> obj ) {
       pushObjectsDown();
     }
   }
-  return 1;
+  return true;
 }
 
 void QuadtreeNode::remove( shared_ptr<ICollideable> obj ) {

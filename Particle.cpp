@@ -41,5 +41,5 @@ void Particle::die() {
     error( "%s double die call", name.c_str() );
   }
   
-  dead = 1;
+  dead = true;
 }

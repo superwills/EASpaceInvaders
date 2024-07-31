@@ -65,7 +65,7 @@ public:
       error( "Collision checking dead objects: %s [%s] vs %s [%s]",
         getName().c_str(), isDead()?"dead":"alive",
         o->getName().c_str(), o->isDead()?"dead":"alive" );
-      return 0;
+      return false;
     }
     
     bool didHit = getHitBox().hit( o->getHitBox() );

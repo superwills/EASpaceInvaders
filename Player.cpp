@@ -58,7 +58,7 @@ void Player::addShield() {
     return; // player already shielded
   }
   
-  shielded = 1;
+  shielded = true;
   RectF shieldBox = box;
   shieldBox.pad( box.size/2 );
   auto shieldSprite = std::make_shared<Sprite>( shieldBox, AnimationId::Shield );

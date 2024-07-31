@@ -28,7 +28,7 @@ void GameOverScreen::addInvaders( AnimationId character1, AnimationId character2
   // _I_I_I_I_I_
   Vector2f invaderSize( windowSize.x / 11 );
   
-  bool useChr1 = 1;
+  bool useChr1 = true;
   for( int i = 1; i <= 9; i+=2 ) {
     Vector2f invaderPos;
     invaderPos.x = i*invaderSize.x;

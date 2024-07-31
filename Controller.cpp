@@ -46,7 +46,7 @@ bool Controller::mouseJustPressed( uint16_t mouseButton ) {
   
   if( it == mouseButtonsJustPressed.end() ) {
     // hasn't been pushed before or doesn't exist
-    return 0;
+    return false;
   }
   
   return it->second;
@@ -56,7 +56,7 @@ bool Controller::isPressed( uint16_t key ) {
   // The scancode has to be between 0 and SDL_NUM_SCANCODES to be a valid index
   if( key > SDL_NUM_SCANCODES ) {
     error( "Invalid key index %hu", key );
-    return 0;
+    return false;
   }
   return keystates[ key ];
 }
@@ -64,7 +64,7 @@ bool Controller::isPressed( uint16_t key ) {
 bool Controller::justPressed( uint16_t key ) {
   if( key > SDL_NUM_SCANCODES ) {
     error( "Invalid key index %hu", key );
-    return 0;
+    return false;
   }
   return keysJustPressed[ key ];
 }
@@ -72,16 +72,16 @@ bool Controller::justPressed( uint16_t key ) {
 bool Controller::justPressedAny( const vector<uint16_t>& keys ) {
   for( uint16_t key : keys ) {
     if( justPressed( key ) ) {
-      return 1;
+      return true;
     }
   }
-  return 0;
+  return false;
 }
 
 bool Controller::justReleased( uint16_t key ) {
   if( key > SDL_NUM_SCANCODES ) {
     error( "Invalid key index %hu", key );
-    return 0;
+    return false;
   }
   return keysJustReleased[ key ];
 }

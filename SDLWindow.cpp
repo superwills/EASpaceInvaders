@@ -194,7 +194,7 @@ shared_ptr<Texture> SDLWindow::makeTextTexture( const string &text ) {
 	SDL_Surface *textSurface = TTF_RenderText_Solid( defaultFont, text.c_str(), White );
   if( !textSurface ) {
     error( "TTF_RenderText_Solid failed %s", text.c_str() );
-    return 0;
+    return nullptr;
   }
   
 	return std::make_shared<Texture>( textSurface, renderer );

@@ -36,7 +36,7 @@ private:
 public:
   // These are public so you can edit still the frames
   vector<Frame> frames;
-  bool cycles = 1; // animation cycles or plays thru once
+  bool cycles = true; // animation cycles or plays thru once
   
   Animation() {
   }

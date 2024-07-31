@@ -46,10 +46,10 @@ struct After {
 
   bool isTime() {
     // Only returns true ONCE.
-    if( done )  return 0;
+    if( done )  return false;
 
     if( watch.sec() > when )
-      done = 1;
+      done = true;
     
     return done;
   }

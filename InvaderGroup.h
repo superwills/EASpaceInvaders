@@ -29,7 +29,7 @@ class InvaderGroup {
   inline static const int DesperationThreshold = 10;
   
   int row = 0; // which row we're on when adding invaders.
-  bool movingRight = 1;
+  bool movingRight = true;
   RectF bounds = RectF( 0, 0, 256, 256 );
   
   // Basic AI function. Measure between 0 and 1 of how "desperate" the invader group is.
