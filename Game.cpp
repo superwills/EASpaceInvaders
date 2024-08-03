@@ -485,7 +485,10 @@ void Game::init() {
   sdl->loadSpritesheetAnimation( AnimationId::BulletPlayerArrow, "assets/ims/bullet-player.png", 2, Vector2f( 8, 16 ) );
   sdl->loadSpritesheetAnimation( AnimationId::BulletPlayerBall, "assets/ims/bullet-ball.png", 2, Vector2f( 16, 16 ) );
   Animation& thickLaser = sdl->loadSpritesheetAnimation( AnimationId::BulletLaser, "assets/ims/bullet-laser-no-outline.png", 2, Vector2f( 8, 16 ) );
-  for( auto &frame : thickLaser.frames ) {
+  int thickLaserInitNumFrames = thickLaser.frames.size();
+  for( int i = 0; i < thickLaserInitNumFrames; i++ ) {
+    Animation::Frame &frame = thickLaser.frames[ i ];
+
     // add color banded 
     frame.duration = .02;
     frame.color = SDL_RandomSolidColor();

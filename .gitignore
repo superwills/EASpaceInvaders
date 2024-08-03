@@ -1,2 +1,7 @@
+#mac
 .DS_Store
 UserInterfaceState.xcuserstate
+
+#windows
+x64
+.vs

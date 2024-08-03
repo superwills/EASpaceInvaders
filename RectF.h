@@ -3,7 +3,11 @@
 #include "randomUtil.h"
 #include "Vectorf.h"
 
+#if __APPLE__
 #include <SDL2/SDL.h>
+#else
+#include <SDL.h>
+#endif
 
 struct RectF {
   // pos is TOP LEFT of rectangle.

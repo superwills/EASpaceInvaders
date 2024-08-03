@@ -15,6 +15,14 @@ using std::map, std::shared_ptr;
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
+
+// If you link the SDL libraries here, you don't
+// have to worry about setting the project settings
+#pragma comment( lib, "SDL2.lib" )
+#pragma comment( lib, "SDL2main.lib" )
+#pragma comment( lib, "SDL2_image.lib" )
+#pragma comment( lib, "SDL2_mixer.lib" )
+#pragma comment( lib, "SDL2_ttf.lib" )
 #endif
 
 #include "Animation.h"

@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <stdarg.h>
 using std::string, std::vector;
 
 #define skip continue

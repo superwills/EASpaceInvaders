@@ -6,6 +6,7 @@
 struct Texture;
 
 #include <vector>
+#include <optional>
 using std::shared_ptr, std::vector;
 
 struct RectF;

@@ -174,6 +174,8 @@ Animation SDLWindow::getAnimation( AnimationId animationId ) {
 Animation& SDLWindow::loadSpritesheetAnimation( AnimationId animationId, const string &filename, int numFrames, const Vector2f &frameSize, SDL_Color color, bool cycles ) {
   // All frames use the same tex.
   shared_ptr<Texture> tex = loadTexture( filename );
+
+  info( "Loaded texture `%s`", filename.c_str() );
   RectF srcRect;
   srcRect.size = frameSize;
   

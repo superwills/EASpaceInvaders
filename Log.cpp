@@ -15,8 +15,7 @@ const char* ErrorLevelName[] = {
 	"","","" //5,6,7
 } ;
 
-tm* getCurrentTime()
-{
+tm* getCurrentTime() {
 	static time_t raw ;
 
 	// grab the current time
