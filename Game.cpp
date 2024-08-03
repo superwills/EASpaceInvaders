@@ -803,7 +803,7 @@ void Game::draw() {
   
   // Apply shake effect
   RectF windowRect = sdl->getWindowRectangle();
-  windowRect.pos += Vector2f::random( -ShakeMagnitude, ShakeMagnitude )*shakeTimeRemaining;
+  windowRect.pos += Vector2f::random( 0, ShakeMagnitude )*shakeTimeRemaining;
   sdl->setViewport( windowRect.toSDLRect() );
   
   drawDebug();
